@@ -180,26 +180,27 @@ if 'source' in projections.columns:
         # Add projection comparison view
         st.markdown("### 📊 Projection Source Comparison")
         
-        # Top players comparison
-        with st.expander("🔥 Top Players - Multi-Source Comparison", expanded=False):
-            top_players = projections.groupby('player_name')['proj_points'].mean().nlargest(10).index
-            
-            for player in top_players:
-                player_comparisons = get_projection_comparison(player, projections)
-                if len(player_comparisons) > 1:
-                    st.write(f"**{player}:**")
-                    comp_cols = st.columns(len(player_comparisons) + 1)
-                    
-                    sources_list = list(player_comparisons.keys())
-                    points_list = list(player_comparisons.values())
-                    avg_points = sum(points_list) / len(points_list)
-                    
-                    for i, (source, points) in enumerate(player_comparisons.items()):
-                        with comp_cols[i]:
-                            st.metric(source, f"{points:.1f} pts")
-                    
-                    with comp_cols[-1]:
-                        st.metric("Average", f"{avg_points:.1f} pts", delta=f"{max(points_list) - min(points_list):.1f} spread")
+        # Top players comparison (only show if multiple sources)
+        if len(sources) > 1:
+            with st.expander("🔥 Top Players - Multi-Source Comparison", expanded=False):
+                top_players = projections.groupby('player_name')['proj_points'].mean().nlargest(10).index
+                
+                for player in top_players:
+                    player_comparisons = get_projection_comparison(player, projections)
+                    if len(player_comparisons) > 1:
+                        st.write(f"**{player}:**")
+                        comp_cols = st.columns(len(player_comparisons) + 1)
+                        
+                        sources_list = list(player_comparisons.keys())
+                        points_list = list(player_comparisons.values())
+                        avg_points = sum(points_list) / len(points_list)
+                        
+                        for i, (source, points) in enumerate(player_comparisons.items()):
+                            with comp_cols[i]:
+                                st.metric(source, f"{points:.1f} pts")
+                        
+                        with comp_cols[-1]:
+                            st.metric("Average", f"{avg_points:.1f} pts", delta=f"{max(points_list) - min(points_list):.1f} spread")
 
 # Source selector
 if 'source' in projections.columns:
@@ -226,7 +227,7 @@ starters_ids    = selected_roster.get('starters', [])
 
 # Start/Sit Advice
 st.markdown("---")
-source_display = selected_source if 'source' in projections.columns and 'selected_source' in locals() else "Available Data"
+source_display = selected_source if 'source' in projections.columns and 'selected_source' in locals() else "Sleeper"
 st.markdown(f"### 🔍 Start/Sit Advice for {selected_manager}")
 st.caption(f"Based on {source_display} projections")
 optimal = build_optimal_lineup(player_ids, players, working_projections)
