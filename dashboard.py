@@ -8,7 +8,8 @@ from pandas.errors import EmptyDataError
 
 # ─── Config ───────────────────────────────────────────────────────────────────
 LEAGUE_ID       = '1185263580356419584'
-PROJ_FILE       = "projections.csv"
+PROJ_FILE       = "projections_combined.csv"
+COMPARISON_FILE = "projections_combined_comparison.csv"
 FALLBACK_FILE   = "projections_fallback.csv"
 FRESHNESS_HOURS = 24
 
@@ -34,11 +35,23 @@ def load_projections():
             df = pd.read_csv(FALLBACK_FILE)
         except (FileNotFoundError, EmptyDataError):
             st.error("❌ No projection data available. Please run the scraper.")
-            return pd.DataFrame(columns=["player_name","proj_points","position"])
+            return pd.DataFrame(columns=["player_name","proj_points","position","source"])
     df['player_name'] = df['player_name'].str.strip()
     df['position']    = df['position'].str.upper()
     df['proj_points'] = pd.to_numeric(df['proj_points'], errors='coerce')
+    # Add source column if it doesn't exist (for backward compatibility)
+    if 'source' not in df.columns:
+        df['source'] = 'FantasyPros'
     return df.dropna()
+
+@st.cache_data  
+def load_comparison_data():
+    """Load side-by-side comparison data from multiple sources"""
+    try:
+        df = pd.read_csv(COMPARISON_FILE)
+        return df
+    except (FileNotFoundError, EmptyDataError):
+        return pd.DataFrame()
 
 def is_file_stale(path, max_age_hours=FRESHNESS_HOURS):
     if not os.path.exists(path):
@@ -52,9 +65,25 @@ def get_player_name(pid, players):
 def get_player_position(pid, players):
     return players.get(pid, {}).get('position', 'UNK')
 
-def get_projection(name, proj_df):
-    row = proj_df[proj_df['player_name'].str.lower() == name.lower()]
+def get_projection(name, proj_df, source=None):
+    """Get projection for a player, optionally filtered by source"""
+    mask = proj_df['player_name'].str.lower() == name.lower()
+    if source:
+        mask = mask & (proj_df['source'] == source)
+    row = proj_df[mask]
     return float(row['proj_points'].values[0]) if not row.empty else 0.0
+
+def get_projection_comparison(name, proj_df):
+    """Get all projections for a player from different sources"""
+    player_rows = proj_df[proj_df['player_name'].str.lower() == name.lower()]
+    if player_rows.empty:
+        return {}
+    
+    comparison = {}
+    for _, row in player_rows.iterrows():
+        source = row.get('source', 'Unknown')
+        comparison[source] = float(row['proj_points'])
+    return comparison
 
 def build_optimal_lineup(player_ids, players, proj_df):
     entries = []
@@ -121,6 +150,45 @@ if is_file_stale(PROJ_FILE):
 
 users, rosters, players = get_data()
 projections = load_projections()
+comparison_data = load_comparison_data()
+
+# Show data source info
+if 'source' in projections.columns:
+    sources = projections['source'].unique()
+    source_counts = projections['source'].value_counts()
+    st.info(f"📊 **Projection Sources**: {', '.join(sources)} | Total Players: {len(projections)}")
+    
+    # Show breakdown by source  
+    if len(sources) > 1:
+        cols = st.columns(len(sources))
+        for i, source in enumerate(sources):
+            with cols[i]:
+                count = source_counts[source]
+                st.metric(f"{source}", f"{count} players")
+
+        # Add projection comparison view
+        st.markdown("### 📊 Projection Source Comparison")
+        
+        # Top players comparison
+        with st.expander("🔥 Top Players - Multi-Source Comparison", expanded=False):
+            top_players = projections.groupby('player_name')['proj_points'].mean().nlargest(10).index
+            
+            for player in top_players:
+                player_comparisons = get_projection_comparison(player, projections)
+                if len(player_comparisons) > 1:
+                    st.write(f"**{player}:**")
+                    comp_cols = st.columns(len(player_comparisons) + 1)
+                    
+                    sources_list = list(player_comparisons.keys())
+                    points_list = list(player_comparisons.values())
+                    avg_points = sum(points_list) / len(points_list)
+                    
+                    for i, (source, points) in enumerate(player_comparisons.items()):
+                        with comp_cols[i]:
+                            st.metric(source, f"{points:.1f} pts")
+                    
+                    with comp_cols[-1]:
+                        st.metric("Average", f"{avg_points:.1f} pts", delta=f"{max(points_list) - min(points_list):.1f} spread")
 
 # Team selector
 manager_names   = {r['owner_id']: next((u['display_name'] for u in users if u['user_id']==r['owner_id']), 'Unknown') for r in rosters}
