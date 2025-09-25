@@ -41,7 +41,11 @@ def fetch_fp_rankings_html(position: str) -> pd.DataFrame:
             print(f"⚠️ Rankings table not found for {position.upper()}")
             return pd.DataFrame()
         
-        rows = table.find('tbody').find_all('tr')
+        tbody = table.find('tbody')
+        if not tbody:
+            print(f"⚠️ Table body not found for {position.upper()}")
+            return pd.DataFrame()
+        rows = tbody.find_all('tr')
         
         data = []
         for row in rows:
