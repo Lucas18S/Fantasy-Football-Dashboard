@@ -1,15 +1,16 @@
 import pandas as pd
 import os
+import requests
 from datetime import datetime
+from bs4 import BeautifulSoup
+import re
 
 # ─── Configuration ─────────────────────────────────────────────────────────────
 SEASON        = 2025
 SCORING       = "PPR"
 POSITIONS     = ["qb", "rb", "wr", "te"]
-BASE_URL_TPL  = (
-    "https://www.fantasypros.com/nfl/rankings/{position}.php"
-    "?export=csv&season={season}&scoring={scoring}"
-)
+# Updated to use the FantasyPros PPR rankings pages
+BASE_URL_TPL = "https://www.fantasypros.com/nfl/rankings/ppr-{position}.php"
 
 SAVE_PATH     = "projections.csv"
 FALLBACK_PATH = "projections_fallback.csv"
@@ -19,40 +20,67 @@ HISTORY_DIR   = "history"
 os.makedirs(HISTORY_DIR, exist_ok=True)
 
 
-def fetch_fp_rankings_csv(position: str) -> pd.DataFrame:
+def fetch_fp_rankings_html(position: str) -> pd.DataFrame:
     """
-    Fetch the FantasyPros CSV export for a given position and
+    Scrape the FantasyPros HTML rankings table for a given position and
     return a DataFrame with columns: player_name, proj_points, position.
     """
-    url = BASE_URL_TPL.format(position=position, season=SEASON, scoring=SCORING)
+    url = BASE_URL_TPL.format(position=position)
     try:
-        df = pd.read_csv(url)
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        }
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        
+        soup = BeautifulSoup(response.content, 'html.parser')
+        
+        # Find the rankings table
+        table = soup.find('table', {'id': 'data'})
+        if not table:
+            print(f"⚠️ Rankings table not found for {position.upper()}")
+            return pd.DataFrame()
+        
+        rows = table.find('tbody').find_all('tr')
+        
+        data = []
+        for row in rows:
+            cells = row.find_all('td')
+            if len(cells) >= 3:
+                # Extract player name (usually in the 3rd column)
+                player_cell = cells[2]
+                player_link = player_cell.find('a')
+                if player_link:
+                    player_name = player_link.text.strip()
+                    # Remove team abbreviation in parentheses
+                    player_name = re.sub(r'\([^)]*\)', '', player_name).strip()
+                else:
+                    continue
+                
+                # Extract projected points (usually the last column)
+                proj_points_text = cells[-1].text.strip()
+                try:
+                    proj_points = float(proj_points_text)
+                except ValueError:
+                    continue
+                
+                data.append({
+                    'player_name': player_name,
+                    'proj_points': proj_points,
+                    'position': position.upper()
+                })
+        
+        if data:
+            df = pd.DataFrame(data)
+            print(f"✅ Fetched {len(df)} {position.upper()} players")
+            return df
+        else:
+            print(f"⚠️ No valid data found for {position.upper()}")
+            return pd.DataFrame()
+            
     except Exception as e:
-        print(f"⚠️ Failed to fetch {position.upper()} CSV: {e}")
+        print(f"⚠️ Failed to fetch {position.upper()} data: {e}")
         return pd.DataFrame()
-
-    # Check for required columns
-    if "Player" not in df.columns:
-        print(f"⚠️ 'Player' column not found for {position.upper()}")
-        return pd.DataFrame()
-    # Find the fantasy points column (exact "FPTS" or any column containing "FPTS")
-    fpts_col = next((c for c in df.columns if c.upper() == "FPTS"), None)
-    if fpts_col is None:
-        fpts_col = next((c for c in df.columns if "FPTS" in c.upper()), None)
-    if fpts_col is None:
-        print(f"⚠️ Fantasy points column not found for {position.upper()}")
-        return pd.DataFrame()
-
-    # Normalize columns
-    df = df.rename(columns={"Player": "player_name", fpts_col: "proj_points"})
-    df["position"] = position.upper()
-
-    # Keep only the needed fields
-    df = df[["player_name", "proj_points", "position"]].copy()
-    # Clean and ensure numeric projections
-    df["player_name"] = df["player_name"].str.strip()
-    df["proj_points"] = pd.to_numeric(df["proj_points"], errors="coerce")
-    return df.dropna()
 
 
 def get_all_projections():
@@ -62,7 +90,7 @@ def get_all_projections():
     """
     dfs = []
     for pos in POSITIONS:
-        df = fetch_fp_rankings_csv(pos)
+        df = fetch_fp_rankings_html(pos)
         if df.empty:
             print(f"⚠️ No data for {pos.upper()}.")
         else:
