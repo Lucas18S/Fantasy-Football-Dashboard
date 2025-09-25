@@ -78,19 +78,10 @@ def fetch_sleeper_projections():
         # Sort by projection and take comprehensive coverage
         sleeper_projections.sort(key=lambda x: x['proj_points'], reverse=True)
         
-        # Take more comprehensive coverage for better fantasy roster support
-        final_projections = []
-        position_limits = {'QB': 20, 'RB': 40, 'WR': 50, 'TE': 15}  # More realistic coverage
-        position_counts = {'QB': 0, 'RB': 0, 'WR': 0, 'TE': 0}
-        
-        for proj in sleeper_projections:
-            pos = proj['position']
-            if position_counts[pos] < position_limits[pos]:
-                final_projections.append(proj)
-                position_counts[pos] += 1
-        
-        if final_projections:
-            return pd.DataFrame(final_projections)
+        # Include ALL players with teams - no position limits
+        # This ensures comprehensive coverage for any player on fantasy rosters
+        if sleeper_projections:
+            return pd.DataFrame(sleeper_projections)
         else:
             print("⚠️ No relevant Sleeper projections generated")
             return pd.DataFrame()
