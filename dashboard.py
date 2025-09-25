@@ -35,7 +35,7 @@ def load_projections():
             df = pd.read_csv(FALLBACK_FILE)
         except (FileNotFoundError, EmptyDataError):
             st.error("❌ No projection data available. Please run the scraper.")
-            return pd.DataFrame(columns=["player_name","proj_points","position","source"])
+            return pd.DataFrame({"player_name": [], "proj_points": [], "position": [], "source": []})
     df['player_name'] = df['player_name'].str.strip()
     df['position']    = df['position'].str.upper()
     df['proj_points'] = pd.to_numeric(df['proj_points'], errors='coerce')
@@ -215,7 +215,7 @@ starters_ids    = selected_roster.get('starters', [])
 
 # Start/Sit Advice
 st.markdown("---")
-source_display = selected_source if 'selected_source' in locals() else "Available Data"
+source_display = selected_source if 'source' in projections.columns and 'selected_source' in locals() else "Available Data"
 st.markdown(f"### 🔍 Start/Sit Advice for {selected_manager}")
 st.caption(f"Based on {source_display} projections")
 optimal = build_optimal_lineup(player_ids, players, working_projections)
