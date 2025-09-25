@@ -248,13 +248,95 @@ if bad:
 else:
     st.info("✅ All your current starters are optimal!")
 
-# Bench Recommendations
+# Complete Roster Analysis
 st.markdown("---")
-st.markdown("### 🪑 Bench Recommendations")
-st.caption(f"Based on {source_display} projections")
+st.markdown("### 📋 Complete Roster Analysis")
+st.caption(f"All your players with projections - Based on {source_display}")
+
+# Get all roster players with projections
+all_roster_players = []
+for pid in player_ids:
+    name = get_player_name(pid, players)
+    pos = get_player_position(pid, players)
+    proj_points = get_projection(name, working_projections)
+    is_starter = pid in starters_ids
+    is_optimal = pid in {p['id'] for slot in optimal.values() for p in slot}
+    
+    # Determine recommendation
+    if is_optimal:
+        recommendation = "✅ START"
+        reason = "In optimal lineup"
+        priority = 1
+    elif is_starter and not is_optimal:
+        recommendation = "⚠️ CONSIDER BENCH"
+        reason = "Currently starting but not optimal"
+        priority = 2
+    elif not is_starter and is_optimal:
+        recommendation = "🔥 SHOULD START"
+        reason = "Not starting but should be in lineup"
+        priority = 0
+    else:
+        recommendation = "🪑 BENCH"
+        reason = "Lower projection than starters"
+        priority = 3
+    
+    all_roster_players.append({
+        'name': name,
+        'position': pos,
+        'projection': proj_points,
+        'is_starter': is_starter,
+        'is_optimal': is_optimal,
+        'recommendation': recommendation,
+        'reason': reason,
+        'priority': priority
+    })
+
+# Sort by priority (most important decisions first) then by projection
+roster_df = pd.DataFrame(all_roster_players)
+roster_df = roster_df.sort_values(['priority', 'projection'], ascending=[True, False])
+
+# Display by position
+positions = ['QB', 'RB', 'WR', 'TE', 'K', 'DEF']
+for pos in positions:
+    pos_players = roster_df[roster_df['position'] == pos]
+    if not pos_players.empty:
+        st.markdown(f"**{pos} Players:**")
+        
+        for _, player in pos_players.iterrows():
+            # Color coding based on recommendation
+            if "START" in player['recommendation']:
+                st.success(f"{player['recommendation']} - {player['name']} — **{player['projection']:.1f} pts** | {player['reason']}")
+            elif "CONSIDER BENCH" in player['recommendation']:
+                st.warning(f"{player['recommendation']} - {player['name']} — **{player['projection']:.1f} pts** | {player['reason']}")
+            elif "SHOULD START" in player['recommendation']:
+                st.info(f"{player['recommendation']} - {player['name']} — **{player['projection']:.1f} pts** | {player['reason']}")
+            else:
+                st.write(f"{player['recommendation']} - {player['name']} — **{player['projection']:.1f} pts** | {player['reason']}")
+
+# Summary stats
+st.markdown("---")
+st.markdown("### 📊 Roster Summary")
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    optimal_total = sum(p['points'] for slot in optimal.values() for p in slot)
+    st.metric("Optimal Lineup Total", f"{optimal_total:.1f} pts")
+
+with col2:
+    current_starter_total = sum([get_projection(get_player_name(pid, players), working_projections) for pid in starters_ids])
+    st.metric("Current Starters Total", f"{current_starter_total:.1f} pts")
+
+with col3:
+    potential_gain = optimal_total - current_starter_total
+    st.metric("Potential Points Gain", f"{potential_gain:+.1f} pts", delta=f"{potential_gain:+.1f}")
+
+# Bench Recommendations (keeping original section but simplified)
+st.markdown("---")
+st.markdown("### 🪑 Top Bench Options")
+st.caption(f"Best bench players available - Based on {source_display}")
 bench_df = get_bench_recommendations(player_ids, players, working_projections, optimal)
 if bench_df.empty:
     st.write("No bench players found.")
 else:
-    for _, row in bench_df.iterrows():
+    for _, row in bench_df.head(5).iterrows():  # Show top 5 only
         st.write(f"- {row['name']} ({row['pos']}) — **{row['points']:.1f} pts**")
