@@ -190,6 +190,22 @@ if 'source' in projections.columns:
                     with comp_cols[-1]:
                         st.metric("Average", f"{avg_points:.1f} pts", delta=f"{max(points_list) - min(points_list):.1f} spread")
 
+# Source selector
+if 'source' in projections.columns:
+    available_sources = ['Best Available (Combined)'] + list(projections['source'].unique())
+    selected_source = st.selectbox("Choose projection source:", available_sources)
+    
+    # Filter projections based on selected source
+    if selected_source == 'Best Available (Combined)':
+        working_projections = projections
+        st.info(f"🎯 Using **combined projections** from all sources")
+    else:
+        working_projections = projections[projections['source'] == selected_source]
+        st.info(f"🎯 Using **{selected_source}** projections only ({len(working_projections)} players)")
+else:
+    working_projections = projections
+    st.info("📊 Using available projection data")
+
 # Team selector
 manager_names   = {r['owner_id']: next((u['display_name'] for u in users if u['user_id']==r['owner_id']), 'Unknown') for r in rosters}
 selected_manager= st.selectbox("Select a team:", list(manager_names.values()))
@@ -199,8 +215,10 @@ starters_ids    = selected_roster.get('starters', [])
 
 # Start/Sit Advice
 st.markdown("---")
+source_display = selected_source if 'selected_source' in locals() else "Available Data"
 st.markdown(f"### 🔍 Start/Sit Advice for {selected_manager}")
-optimal = build_optimal_lineup(player_ids, players, projections)
+st.caption(f"Based on {source_display} projections")
+optimal = build_optimal_lineup(player_ids, players, working_projections)
 total   = 0
 for slot, plist in optimal.items():
     st.markdown(f"**{slot}:**")
@@ -222,7 +240,8 @@ else:
 # Bench Recommendations
 st.markdown("---")
 st.markdown("### 🪑 Bench Recommendations")
-bench_df = get_bench_recommendations(player_ids, players, projections, optimal)
+st.caption(f"Based on {source_display} projections")
+bench_df = get_bench_recommendations(player_ids, players, working_projections, optimal)
 if bench_df.empty:
     st.write("No bench players found.")
 else:
