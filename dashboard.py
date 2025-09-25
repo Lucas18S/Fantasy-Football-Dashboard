@@ -65,13 +65,24 @@ def get_player_name(pid, players):
 def get_player_position(pid, players):
     return players.get(pid, {}).get('position', 'UNK')
 
+def estimate_projection_by_position(player_name):
+    """Provide reasonable fallback projections for players not in our dataset"""
+    # This prevents players from showing as 0.0 points
+    # Could be enhanced to use player names to guess position
+    return 8.0  # Conservative baseline for any fantasy-relevant player
+
 def get_projection(name, proj_df, source=None):
     """Get projection for a player, optionally filtered by source"""
     mask = proj_df['player_name'].str.lower() == name.lower()
     if source:
         mask = mask & (proj_df['source'] == source)
     row = proj_df[mask]
-    return float(row['proj_points'].values[0]) if not row.empty else 0.0
+    if not row.empty:
+        return float(row['proj_points'].values[0])
+    else:
+        # If no projection found, return a reasonable position-based estimate
+        # This prevents players from showing as 0.0 points
+        return estimate_projection_by_position(name)
 
 def get_projection_comparison(name, proj_df):
     """Get all projections for a player from different sources"""

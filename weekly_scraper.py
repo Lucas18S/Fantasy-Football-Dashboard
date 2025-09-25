@@ -210,13 +210,13 @@ def fetch_sleeper_projections():
                 position = player.get('position', '')
                 full_name = f"{player.get('first_name', '')} {player.get('last_name', '')}".strip()
                 
-                # Focus on players who are in our curated list OR have a current team
+                # Include players with teams (current season) or in our curated list
                 team = player.get('team')
-                if not full_name or (not team and full_name not in [name for names in top_current_players.values() for name in names]):
+                if not full_name:
                     continue
                 
-                # Only include if they're current players (have team or in our list)
-                if full_name in top_current_players.get(position, []) or team:
+                # Include if they have a current team OR are in our curated list
+                if team or full_name in top_current_players.get(position, []):
                     # Enhanced projection estimation based on position and relevance
                     base_points = {
                         'QB': 19.5, 'RB': 13.5, 'WR': 12.5, 'TE': 9.5
@@ -240,18 +240,21 @@ def fetch_sleeper_projections():
         # Sort by projection and take reasonable amount per position
         sleeper_projections.sort(key=lambda x: x['proj_points'], reverse=True)
         
-        # Take top performers per position (limited to avoid overwhelming other sources)
+        # Take more comprehensive coverage for better fantasy roster support
         final_projections = []
+        position_limits = {'QB': 20, 'RB': 40, 'WR': 50, 'TE': 15}  # More realistic coverage
         position_counts = {'QB': 0, 'RB': 0, 'WR': 0, 'TE': 0}
         
         for proj in sleeper_projections:
             pos = proj['position']
-            if position_counts[pos] < 6:  # Reduced from 8 to balance with other sources
+            if position_counts[pos] < position_limits[pos]:
                 final_projections.append(proj)
                 position_counts[pos] += 1
                 
-            if all(count >= 6 for count in position_counts.values()):
-                break
+            # Continue until we have good coverage for all positions
+            if all(position_counts[pos] >= min(10, position_limits[pos]) for pos in position_counts.keys()):
+                # We have minimum coverage, but keep going for more complete data
+                pass
         
         if final_projections:
             return pd.DataFrame(final_projections)
