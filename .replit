@@ -16,5 +16,40 @@ run = ["streamlit", "run", "dashboard.py"]
 deploymentTarget = "cloudrun"
 
 [[ports]]
+localPort = 5000
+externalPort = 80
+
+[[ports]]
 localPort = 8501
 externalPort = 80
+
+[[ports]]
+localPort = 41911
+externalPort = 3000
+
+[agent]
+expertMode = true
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Fantasy Dashboard"
+
+[[workflows.workflow]]
+name = "Fantasy Dashboard"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "STREAMLIT_SERVER_HEADLESS=true streamlit run dashboard.py --server.address=0.0.0.0 --server.port=5000 --server.headless=true"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
