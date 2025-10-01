@@ -2,9 +2,9 @@
 
 ## Overview
 
-This is a **multi-user fantasy football dashboard** that provides week-specific start/sit advice using real-time projections from ESPN and Sleeper APIs. The system fetches matchup-adjusted weekly player projections and provides personalized recommendations based on users' Sleeper league rosters.
+This is a **multi-user fantasy football dashboard** that provides week-specific start/sit advice using real-time projections from ESPN and Sleeper APIs. The system fetches matchup-adjusted weekly player projections and provides personalized recommendations based on users' league rosters.
 
-**Key Feature**: Users enter their own Sleeper League ID to get personalized advice for their specific league and roster.
+**Key Feature**: Users choose their platform (Sleeper or ESPN) and enter their League ID to get personalized advice for their specific league and roster.
 
 ## User Preferences
 
@@ -12,7 +12,11 @@ Preferred communication style: Simple, everyday language.
 
 ## Multi-User Setup
 
-The dashboard is designed to be shared with friends and other fantasy football managers. Each user inputs their own Sleeper League ID through the sidebar to access their personal league data.
+The dashboard is designed to be shared with friends and other fantasy football managers. Each user:
+1. Selects their fantasy platform (Sleeper or ESPN)
+2. Enters their League ID through the sidebar
+3. For private ESPN leagues: Optionally provides ESPN_S2 and SWID cookies for authentication
+4. Gets personalized analysis for their specific league and roster
 
 ## System Architecture
 
@@ -24,10 +28,13 @@ The dashboard is designed to be shared with friends and other fantasy football m
 
 ### Data Collection Strategy
 The system uses a multi-source API approach to gather fantasy football data:
-- **League Data**: User-specific Sleeper API data (roster, matchups, league settings)
+- **League Data**: 
+  - Sleeper: User rosters, matchups, and league-specific scoring settings via Sleeper API
+  - ESPN: Team rosters and lineups via espn-api library with optional authentication
 - **Projection Sources**: 
-  - ESPN API: Week-specific matchup-adjusted projections
-  - Sleeper API: Weekly projections calculated with league-specific scoring settings
+  - ESPN API: Week-specific matchup-adjusted projections (427+ players)
+  - Sleeper API: Weekly projections calculated with league-specific scoring settings (379+ players)
+- **Player Matching**: Cross-platform player name matching for ESPN leagues using Sleeper player database
 - **Data Validation**: Pandas-based data cleaning with error handling
 - **No Hardcoded Data**: All league-specific data comes from user input (League IDs)
 

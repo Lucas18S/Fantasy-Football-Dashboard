@@ -150,22 +150,114 @@ if is_file_stale(PROJ_FILE):
 # Sidebar for league configuration
 with st.sidebar:
     st.header("⚙️ Your League")
-    sleeper_league_id = st.text_input(
-        "Sleeper League ID",
-        value="",
-        placeholder="e.g., 1185263580356419584",
-        help="Find this in your Sleeper league URL: sleeper.app/leagues/YOUR_LEAGUE_ID"
+    
+    league_platform = st.radio(
+        "Choose your league platform:",
+        ["Sleeper", "ESPN"],
+        help="Select which fantasy platform your league uses"
     )
+    
+    # Initialize variables
+    sleeper_league_id = ""
+    espn_league_id = ""
+    espn_s2 = ""
+    swid = ""
+    
+    if league_platform == "Sleeper":
+        st.subheader("🏈 Sleeper League")
+        sleeper_league_id = st.text_input(
+            "Sleeper League ID",
+            value="",
+            placeholder="e.g., 1185263580356419584",
+            help="Find this in your Sleeper league URL: sleeper.app/leagues/YOUR_LEAGUE_ID"
+        )
+        if not sleeper_league_id:
+            st.info("Enter your League ID to get started!")
+            st.markdown("**How to find it:** Open your league on Sleeper and copy the ID from the URL")
+    
+    else:  # ESPN
+        st.subheader("🏈 ESPN League")
+        espn_league_id = st.text_input(
+            "ESPN League ID",
+            value="",
+            placeholder="e.g., 529882810",
+            help="Find this in your ESPN league URL"
+        )
+        
+        with st.expander("🔐 ESPN Authentication (for private leagues)", expanded=False):
+            st.caption("Private leagues require these cookies from your browser:")
+            espn_s2 = st.text_input(
+                "ESPN_S2 Cookie",
+                value="",
+                type="password",
+                help="Find in browser cookies after logging into ESPN"
+            )
+            swid = st.text_input(
+                "SWID Cookie",
+                value="",
+                type="password",
+                help="Format: {XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}"
+            )
+            st.caption("⚠️ These are stored only in your browser session")
+
+# Load league data based on selected platform
+if league_platform == "Sleeper":
     if not sleeper_league_id:
-        st.info("Enter your League ID to get started!")
-        st.markdown("**How to find it:** Open your league on Sleeper and copy the ID from the URL")
-
-# Stop if no league ID provided
-if not sleeper_league_id:
-    st.info("👈 Enter your Sleeper League ID in the sidebar to continue")
-    st.stop()
-
-users, rosters, players = get_data(sleeper_league_id)
+        st.info("👈 Enter your Sleeper League ID in the sidebar to continue")
+        st.stop()
+    users, rosters, players = get_data(sleeper_league_id)
+else:  # ESPN
+    if not espn_league_id:
+        st.info("👈 Enter your ESPN League ID in the sidebar to continue")
+        st.stop()
+    
+    # Load ESPN league data
+    try:
+        from espn_api.football import League
+        
+        if espn_s2 and swid:
+            league = League(league_id=int(espn_league_id), year=2025, espn_s2=espn_s2, swid=swid)
+        else:
+            league = League(league_id=int(espn_league_id), year=2025)
+        
+        # Convert ESPN data to similar format as Sleeper
+        users = [{'user_id': str(team.team_id), 'display_name': team.team_name or f"Team {team.team_id}"} 
+                 for team in league.teams]
+        
+        # Get all NFL players for name lookups
+        players_response = requests.get('https://api.sleeper.app/v1/players/nfl').json()
+        players = players_response
+        
+        # Build rosters from ESPN teams
+        rosters = []
+        for team in league.teams:
+            roster_players = []
+            starters = []
+            for player in team.roster:
+                # Try to find player in Sleeper database by name matching
+                player_name = player.name
+                matching_player = None
+                for pid, pdata in players.items():
+                    if pdata.get('full_name', '').lower() == player_name.lower():
+                        matching_player = pid
+                        break
+                
+                if matching_player:
+                    roster_players.append(matching_player)
+                    # Check if player is in starting lineup
+                    if hasattr(player, 'slot_position') and player.slot_position != 'BE':
+                        starters.append(matching_player)
+            
+            rosters.append({
+                'owner_id': str(team.team_id),
+                'players': roster_players,
+                'starters': starters
+            })
+    
+    except Exception as e:
+        st.error(f"❌ Could not load ESPN league: {e}")
+        st.caption("Make sure your League ID is correct and add authentication cookies if it's a private league.")
+        st.stop()
 projections = load_projections()
 comparison_data = load_comparison_data()
 
