@@ -258,6 +258,34 @@ def fetch_sleeper_stats():
         return pd.DataFrame()
 
 
+def fetch_espn_api_projections():
+    """Uses official ESPN API wrapper"""
+    from espn_api.football import League
+    
+    # Get league ID from environment variable or use a default public league
+    league_id = int(os.getenv('ESPN_LEAGUE_ID', '123456'))
+    
+    try:
+        print("🏈 Fetching ESPN API projections...")
+        league = League(league_id=league_id, year=SEASON)
+        
+        all_projections = []
+        for player in league.free_agents(size=500):
+            all_projections.append({
+                'player_name': player.name,
+                'proj_points': player.projected_points,
+                'position': player.position,
+                'source': 'ESPN_API'
+            })
+        
+        print(f"   ✓ ESPN API: {len(all_projections)} players")
+        return pd.DataFrame(all_projections)
+    
+    except Exception as e:
+        print(f"   ⚠️ ESPN API fetch failed: {e}")
+        return pd.DataFrame()
+
+
 def merge_projections(source_dfs):
     """
     Merge projections from multiple sources intelligently
@@ -306,11 +334,12 @@ def get_all_projections():
 
     # Fetch from all sources
     espn_df = fetch_espn_projections()
+    espn_api_df = fetch_espn_api_projections()
     sleeper_df = fetch_sleeper_stats()
     # nfl_df = fetch_nfl_projections()  # Uncomment when implemented
 
     # Merge all sources
-    source_dfs = [df for df in [espn_df, sleeper_df] if not df.empty]
+    source_dfs = [df for df in [espn_df, espn_api_df, sleeper_df] if not df.empty]
 
     if not source_dfs:
         print("\n❌ No data retrieved from any source!")
