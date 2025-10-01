@@ -297,15 +297,28 @@ else:  # ESPN
                 # Try to find player in Sleeper database by name matching
                 player_name = player.name
                 matching_player = None
+                
+                # Try exact match first
                 for pid, pdata in players.items():
                     if pdata.get('full_name', '').lower() == player_name.lower():
                         matching_player = pid
                         break
                 
+                # If no exact match, try partial match (for cases like "D. Smith" vs "David Smith")
+                if not matching_player:
+                    for pid, pdata in players.items():
+                        sleeper_name = pdata.get('full_name', '').lower()
+                        # Check if last names match and first initial matches
+                        if sleeper_name and player_name.lower().split()[-1] in sleeper_name:
+                            # Also check if positions match to avoid wrong player
+                            if hasattr(player, 'position') and player.position == pdata.get('position'):
+                                matching_player = pid
+                                break
+                
                 if matching_player:
                     roster_players.append(matching_player)
                     # Check if player is in starting lineup
-                    if hasattr(player, 'slot_position') and player.slot_position != 'BE':
+                    if hasattr(player, 'lineupSlot') and player.lineupSlot not in [20, 21]:
                         starters.append(matching_player)
             
             rosters.append({
