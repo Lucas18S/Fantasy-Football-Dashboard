@@ -18,11 +18,12 @@ def get_data(league_id):
     try:
         users   = requests.get(f'https://api.sleeper.app/v1/league/{league_id}/users').json()
         rosters = requests.get(f'https://api.sleeper.app/v1/league/{league_id}/rosters').json()
+        league  = requests.get(f'https://api.sleeper.app/v1/league/{league_id}').json()
         players = requests.get('https://api.sleeper.app/v1/players/nfl').json()
-        return users, rosters, players
+        return users, rosters, players, league
     except Exception as e:
         st.error(f"Data load error: {e}")
-        return [], [], {}
+        return [], [], {}, {}
 
 @st.cache_data
 def load_projections():
@@ -84,7 +85,8 @@ def get_projection_comparison(name, proj_df):
         comparison[source] = float(row['proj_points'])
     return comparison
 
-def build_optimal_lineup(player_ids, players, proj_df):
+def build_optimal_lineup(player_ids, players, proj_df, roster_positions):
+    """Build optimal lineup based on league-specific roster configuration"""
     entries = []
     for pid in player_ids:
         name  = get_player_name(pid, players)
@@ -93,37 +95,49 @@ def build_optimal_lineup(player_ids, players, proj_df):
         entries.append({'id': pid, 'name': name, 'pos': pos, 'points': pts})
     df = pd.DataFrame(entries).sort_values('points', ascending=False)
 
-    lineup = {'QB': [], 'RB': [], 'WR': [], 'TE': [], 'FLEX': [], 'SUPERFLEX': [], 'K': [], 'DEF': []}
+    # Initialize lineup with actual roster positions
+    from collections import defaultdict
+    lineup = defaultdict(list)
     used = set()
-    def assign(slot, position, limit):
-        c = 0
-        for _, r in df[df['pos'] == position].iterrows():
-            if r['id'] not in used and c < limit:
+    
+    def assign(slot, eligible_positions):
+        """Assign best available player for this slot"""
+        for _, r in df.iterrows():
+            if r['id'] not in used and r['pos'] in eligible_positions:
                 lineup[slot].append(r)
                 used.add(r['id'])
-                c += 1
-
-    assign('QB',       'QB',  1)
-    assign('RB',       'RB',  2)
-    assign('WR',       'WR',  3)
-    assign('TE',       'TE',  1)
-    assign('K',        'K',   1)
-    assign('DEF',      'DEF', 1)
-
-    # One FLEX (RB/WR/TE)
-    for _, r in df[df['pos'].isin(['RB','WR','TE'])].iterrows():
-        if r['id'] not in used:
-            lineup['FLEX'].append(r)
-            used.add(r['id'])
-            break
-    # One SUPERFLEX (any non-K/DEF)
-    for _, r in df[~df['pos'].isin(['K','DEF'])].iterrows():
-        if r['id'] not in used:
-            lineup['SUPERFLEX'].append(r)
-            used.add(r['id'])
-            break
-
-    return lineup
+                return True
+        return False
+    
+    # Process roster positions in order
+    for slot in roster_positions:
+        # Define eligible positions for each slot type
+        if slot == 'QB':
+            assign(slot, ['QB'])
+        elif slot == 'RB':
+            assign(slot, ['RB'])
+        elif slot == 'WR':
+            assign(slot, ['WR'])
+        elif slot == 'TE':
+            assign(slot, ['TE'])
+        elif slot == 'K':
+            assign(slot, ['K'])
+        elif slot in ['DEF', 'DST']:
+            assign('DEF', ['DEF'])
+        elif slot in ['FLEX', 'REC_FLEX', 'WRT']:
+            assign('FLEX', ['RB', 'WR', 'TE'])
+        elif slot in ['SUPER_FLEX', 'OP']:
+            assign('SUPERFLEX', ['QB', 'RB', 'WR', 'TE'])
+        elif slot == 'RB/WR':
+            assign('RB/WR', ['RB', 'WR'])
+        elif slot == 'WR/TE':
+            assign('WR/TE', ['WR', 'TE'])
+        elif slot == 'RB/WR/TE':
+            assign('RB/WR/TE', ['RB', 'WR', 'TE'])
+        elif slot == 'TQB':
+            assign('TQB', ['QB'])
+    
+    return dict(lineup)
 
 def get_bench_recommendations(player_ids, players, proj_df, optimal):
     all_ids     = set(player_ids)
@@ -205,7 +219,11 @@ if league_platform == "Sleeper":
     if not sleeper_league_id:
         st.info("👈 Enter your Sleeper League ID in the sidebar to continue")
         st.stop()
-    users, rosters, players = get_data(sleeper_league_id)
+    users, rosters, players, league_settings = get_data(sleeper_league_id)
+    
+    # Extract roster configuration from Sleeper league settings
+    roster_positions = league_settings.get('roster_positions', [])
+    league_name = league_settings.get('name', 'Your League')
 else:  # ESPN
     if not espn_league_id:
         st.info("👈 Enter your ESPN League ID in the sidebar to continue")
@@ -227,6 +245,25 @@ else:  # ESPN
         # Get all NFL players for name lookups
         players_response = requests.get('https://api.sleeper.app/v1/players/nfl').json()
         players = players_response
+        
+        # Extract roster configuration from ESPN league settings
+        roster_positions = []
+        league_name = league.settings.name if hasattr(league.settings, 'name') else 'Your League'
+        
+        # Map ESPN roster slots to positions
+        roster_map = league.settings.roster_settings.get('lineup_slot_counts', {}) if hasattr(league.settings, 'roster_settings') else {}
+        
+        # ESPN slot IDs to position names
+        espn_slots = {
+            0: 'QB', 1: 'TQB', 2: 'RB', 3: 'RB/WR', 4: 'WR', 
+            5: 'WR/TE', 6: 'TE', 7: 'OP', 16: 'DST', 17: 'K',
+            20: 'BENCH', 21: 'IR', 23: 'FLEX', 25: 'RB/WR/TE'
+        }
+        
+        for slot_id, count in roster_map.items():
+            position = espn_slots.get(slot_id, f'SLOT_{slot_id}')
+            if position not in ['BENCH', 'IR'] and count > 0:
+                roster_positions.extend([position] * count)
         
         # Build rosters from ESPN teams
         rosters = []
@@ -260,6 +297,26 @@ else:  # ESPN
         st.stop()
 projections = load_projections()
 comparison_data = load_comparison_data()
+
+# Display league roster configuration
+st.markdown("---")
+st.markdown(f"### 🏈 {league_name}")
+
+# Count positions
+from collections import Counter
+position_counts = Counter(roster_positions)
+
+# Display roster configuration
+st.markdown("**Roster Configuration:**")
+roster_display = []
+for position, count in sorted(position_counts.items(), key=lambda x: (
+    ['QB', 'RB', 'WR', 'TE', 'FLEX', 'SUPER_FLEX', 'OP', 'REC_FLEX', 'WRT', 'RB/WR/TE', 'DST', 'K'].index(x[0]) 
+    if x[0] in ['QB', 'RB', 'WR', 'TE', 'FLEX', 'SUPER_FLEX', 'OP', 'REC_FLEX', 'WRT', 'RB/WR/TE', 'DST', 'K'] 
+    else 99, x[0]
+)):
+    roster_display.append(f"{count} {position}")
+
+st.info(" • ".join(roster_display))
 
 # Show data source info
 if 'source' in projections.columns:
@@ -328,7 +385,7 @@ st.markdown("---")
 source_display = selected_source if 'source' in projections.columns and 'selected_source' in locals() else "Sleeper"
 st.markdown(f"### 🔍 Start/Sit Advice for {selected_manager}")
 st.caption(f"Based on {source_display} projections")
-optimal = build_optimal_lineup(player_ids, players, working_projections)
+optimal = build_optimal_lineup(player_ids, players, working_projections, roster_positions)
 total   = 0
 for slot, plist in optimal.items():
     st.markdown(f"**{slot}:**")
