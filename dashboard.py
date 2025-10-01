@@ -273,40 +273,32 @@ else:  # ESPN
         roster_positions = []
         league_name = league.settings.name if hasattr(league.settings, 'name') else 'Your League'
         
-        # Detect roster positions by inspecting ESPN lineup slot names
+        # Detect roster positions using ESPN lineup slot IDs
         try:
             if league.teams:
+                # Map ESPN lineup slot IDs to position names
+                espn_slot_ids = {
+                    0: 'QB', 2: 'RB', 4: 'WR', 6: 'TE', 
+                    16: 'DST', 17: 'K', 23: 'FLEX',
+                    7: 'OP',  # Superflex/OP slot
+                    20: 'BN', 21: 'IR'  # Bench and IR
+                }
+                
                 # Get lineup slots from first team's roster
                 slot_counts = {}
                 sample_team = league.teams[0]
                 
                 for player in sample_team.roster:
-                    # ESPN uses slot_position attribute for the slot name
-                    if hasattr(player, 'slot_position'):
-                        slot_name = player.slot_position
-                        # Skip bench and IR
-                        if slot_name not in ['BE', 'IR']:
-                            slot_counts[slot_name] = slot_counts.get(slot_name, 0) + 1
-                
-                # Map ESPN slot names to our position names
-                espn_slot_mapping = {
-                    'QB': 'QB',
-                    'RB': 'RB',
-                    'WR': 'WR',
-                    'TE': 'TE',
-                    'FLEX': 'FLEX',
-                    'D/ST': 'DST',
-                    'K': 'K',
-                    'OP': 'OP',  # Superflex
-                    'Bench': 'BN',
-                    'IR': 'IR',
-                    'RB/WR/TE': 'FLEX'
-                }
+                    if hasattr(player, 'lineupSlot'):
+                        slot_id = player.lineupSlot
+                        # Skip bench (20) and IR (21)
+                        if slot_id not in [20, 21]:
+                            slot_counts[slot_id] = slot_counts.get(slot_id, 0) + 1
                 
                 # Build roster positions list
-                for slot_name in sorted(slot_counts.keys()):
-                    position = espn_slot_mapping.get(slot_name, slot_name)
-                    count = slot_counts[slot_name]
+                for slot_id in sorted(slot_counts.keys()):
+                    position = espn_slot_ids.get(slot_id, 'FLEX')
+                    count = slot_counts[slot_id]
                     roster_positions.extend([position] * count)
             
             # Fallback if detection didn't work
@@ -404,7 +396,8 @@ if 'source' in projections.columns:
         # Top players comparison (only show if multiple sources)
         if len(sources) > 1:
             with st.expander("🔥 Top Players - Multi-Source Comparison", expanded=False):
-                top_players = projections.groupby('player_name')['proj_points'].mean().nlargest(10).index
+                top_players_df = projections.groupby('player_name', as_index=False)['proj_points'].mean()
+                top_players = top_players_df.nlargest(10, 'proj_points')['player_name'].tolist()
                 
                 for player in top_players:
                     player_comparisons = get_projection_comparison(player, projections)
@@ -424,6 +417,7 @@ if 'source' in projections.columns:
                             st.metric("Average", f"{avg_points:.1f} pts", delta=f"{max(points_list) - min(points_list):.1f} spread")
 
 # Source selector
+selected_source = "Best Available"  # Default value
 if 'source' in projections.columns:
     available_sources = ['Best Available (Combined)'] + list(projections['source'].unique())
     selected_source = st.selectbox("Choose projection source:", available_sources)
@@ -448,7 +442,7 @@ starters_ids    = selected_roster.get('starters', [])
 
 # Start/Sit Advice
 st.markdown("---")
-source_display = selected_source if 'source' in projections.columns and 'selected_source' in locals() else "Sleeper"
+source_display = selected_source if 'source' in projections.columns else "Sleeper"
 st.markdown(f"### 🔍 Start/Sit Advice for {selected_manager}")
 st.caption(f"Based on {source_display} projections")
 
