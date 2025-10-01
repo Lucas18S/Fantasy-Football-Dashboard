@@ -447,16 +447,26 @@ with st.expander("🔍 Debug: Player Details", expanded=False):
     st.write(f"**Roster Positions Detected:** {roster_positions}")
     st.write(f"**Total Players on Roster:** {len(player_ids)}")
     
-    # Show sample players with their positions and projections
+    # Show ALL players with their positions and projections
     debug_players = []
-    for pid in player_ids[:5]:  # Show first 5
+    for pid in player_ids:
         name = get_player_name(pid, players)
         pos = get_player_position(pid, players)
         proj = get_projection(name, working_projections)
-        debug_players.append(f"- {name} ({pos}) - {proj:.1f} pts")
-    st.write("**Sample Players:**")
+        debug_players.append(f"- {name} ({pos}) - Proj: {proj:.1f} pts - ID: {pid}")
+    st.write("**All Players on Roster:**")
     for p in debug_players:
         st.write(p)
+    
+    # Specifically check for Josh Allen
+    josh_allen_ids = [pid for pid in player_ids if 'allen' in get_player_name(pid, players).lower() and 'josh' in get_player_name(pid, players).lower()]
+    if josh_allen_ids:
+        st.write("**Josh Allen Details:**")
+        for pid in josh_allen_ids:
+            name = get_player_name(pid, players)
+            pos = get_player_position(pid, players)
+            proj = get_projection(name, working_projections)
+            st.write(f"- Name: {name}, Position: {pos}, Projection: {proj:.1f} pts, Player ID: {pid}")
 
 optimal = build_optimal_lineup(player_ids, players, working_projections, roster_positions)
 
