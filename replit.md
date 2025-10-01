@@ -18,9 +18,19 @@ The dashboard is designed to be shared with friends and other fantasy football m
 3. For private ESPN leagues: Optionally provides ESPN_S2 and SWID cookies for authentication
 4. Gets personalized analysis for their specific league and roster
 
+## Recent Changes (October 2025)
+
+### Dynamic Roster Configuration Support
+- **League-Specific Lineup Building**: Dashboard now automatically detects and adapts to each league's roster configuration
+- **Supported Formats**: Standard (1 QB, 2 RB, 3 WR), Superflex, 2 QB, various FLEX configurations
+- **Position Types**: QB, RB, WR, TE, FLEX, SUPER_FLEX, OP (Superflex), RB/WR, WR/TE, RB/WR/TE, K, DST/DEF
+- **Visual Display**: Shows league name and roster configuration breakdown before lineup advice
+- **Smart Filtering**: Excludes bench (BN), IR, TAXI, and other non-starting slots
+
 ## System Architecture
 
 ### Core Application Structure
+- **dashboard.py**: Main Streamlit application with multi-platform support (Sleeper/ESPN) and dynamic roster configuration
 - **main.py**: Entry point for Sleeper API integration, handles league data retrieval including users, rosters, and matchups
 - **projections.py**: CSV-based projection data handler with pandas for data processing and analysis
 - **weekly_scraper.py**: Multi-source web scraping engine for collecting player projections from fantasy football websites
