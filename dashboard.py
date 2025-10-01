@@ -468,6 +468,22 @@ st.caption(f"Based on {source_display} projections")
 # Debug info
 st.caption(f"📊 Found {len(player_ids)} players on roster")
 
+# Debug: Show player details
+with st.expander("🔍 Debug: Player Details", expanded=False):
+    st.write(f"**Roster Positions Detected:** {roster_positions}")
+    st.write(f"**Total Players on Roster:** {len(player_ids)}")
+    
+    # Show sample players with their positions and projections
+    debug_players = []
+    for pid in player_ids[:5]:  # Show first 5
+        name = get_player_name(pid, players)
+        pos = get_player_position(pid, players)
+        proj = get_projection(name, working_projections)
+        debug_players.append(f"- {name} ({pos}) - {proj:.1f} pts")
+    st.write("**Sample Players:**")
+    for p in debug_players:
+        st.write(p)
+
 optimal = build_optimal_lineup(player_ids, players, working_projections, roster_positions)
 
 # Check if optimal lineup is empty
@@ -574,7 +590,7 @@ st.markdown("### 📊 Roster Summary")
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    optimal_total = sum(p['points'] for slot in optimal.values() for p in slot)
+    optimal_total = sum(slot['player']['points'] for slot in optimal if slot['player'] is not None)
     st.metric("Optimal Lineup Total", f"{optimal_total:.1f} pts")
 
 with col2:
