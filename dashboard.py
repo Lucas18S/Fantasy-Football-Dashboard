@@ -67,11 +67,31 @@ def get_player_position(pid, players):
 
 def get_projection(name, proj_df, source=None):
     """Get projection for a player, optionally filtered by source"""
+    if not name or name == 'Unknown':
+        return 0.0
+    
+    # Try exact match first
     mask = proj_df['player_name'].str.lower() == name.lower()
     if source:
         mask = mask & (proj_df['source'] == source)
     row = proj_df[mask]
-    return float(row['proj_points'].values[0]) if not row.empty else 0.0
+    
+    if not row.empty:
+        return float(row['proj_points'].values[0])
+    
+    # Try partial match (last name)
+    name_parts = name.lower().split()
+    if len(name_parts) > 1:
+        last_name = name_parts[-1]
+        mask = proj_df['player_name'].str.lower().str.contains(last_name, na=False)
+        if source:
+            mask = mask & (proj_df['source'] == source)
+        row = proj_df[mask]
+        if not row.empty:
+            # Return the highest projection if multiple matches
+            return float(row['proj_points'].max())
+    
+    return 0.0
 
 def get_projection_comparison(name, proj_df):
     """Get all projections for a player from different sources"""
