@@ -2,11 +2,17 @@
 
 ## Overview
 
-This is a fantasy football analytics application that scrapes player projections from multiple sources and integrates with the Sleeper fantasy football API. The system fetches weekly player projections, combines data from various fantasy football websites, and provides tools to analyze fantasy league data including rosters, matchups, and user information.
+This is a **multi-user fantasy football dashboard** that provides week-specific start/sit advice using real-time projections from ESPN and Sleeper APIs. The system fetches matchup-adjusted weekly player projections and provides personalized recommendations based on users' Sleeper league rosters.
+
+**Key Feature**: Users enter their own Sleeper League ID to get personalized advice for their specific league and roster.
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+
+## Multi-User Setup
+
+The dashboard is designed to be shared with friends and other fantasy football managers. Each user inputs their own Sleeper League ID through the sidebar to access their personal league data.
 
 ## System Architecture
 
@@ -17,10 +23,13 @@ Preferred communication style: Simple, everyday language.
 - **schedule_scraper.py**: Automated scheduler using the `schedule` library to run weekly data collection every Thursday at 8:00 AM
 
 ### Data Collection Strategy
-The system uses a multi-source approach to gather fantasy football data:
-- **Primary Data Source**: Sleeper API for real-time league information
-- **Projection Sources**: Web scraping from FantasyPros, ESPN Fantasy, The Athletic, and other fantasy football sites
-- **Data Validation**: Pandas-based data cleaning with error handling for malformed data
+The system uses a multi-source API approach to gather fantasy football data:
+- **League Data**: User-specific Sleeper API data (roster, matchups, league settings)
+- **Projection Sources**: 
+  - ESPN API: Week-specific matchup-adjusted projections
+  - Sleeper API: Weekly projections calculated with league-specific scoring settings
+- **Data Validation**: Pandas-based data cleaning with error handling
+- **No Hardcoded Data**: All league-specific data comes from user input (League IDs)
 
 ### Scheduling and Automation
 - Automated weekly data collection scheduled for Thursday mornings (typical waiver wire day)
@@ -28,9 +37,11 @@ The system uses a multi-source approach to gather fantasy football data:
 - Error handling and logging for failed scraping attempts
 
 ### Data Storage Approach
-- CSV-based storage for projection data (projections.csv, projections_combined.csv)
+- CSV-based storage for universal projection data (projections_combined.csv)
 - Historical data preservation in dedicated history directory
 - Fallback data mechanisms to ensure system reliability
+- **No User Data Storage**: League data is fetched fresh per session via API calls
+- **Privacy**: User league IDs are not stored or logged
 
 ### Error Handling and Reliability
 - Multiple data source fallbacks to prevent single point of failure

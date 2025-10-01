@@ -7,7 +7,6 @@ from datetime import datetime
 from pandas.errors import EmptyDataError
 
 # ─── Config ───────────────────────────────────────────────────────────────────
-LEAGUE_ID       = '1185263580356419584'
 PROJ_FILE       = "projections_combined.csv"
 COMPARISON_FILE = "projections_combined_comparison.csv"
 FALLBACK_FILE   = "projections_fallback.csv"
@@ -15,10 +14,10 @@ FRESHNESS_HOURS = 24
 
 # ─── Data Loading ──────────────────────────────────────────────────────────────
 @st.cache_data
-def get_data():
+def get_data(league_id):
     try:
-        users   = requests.get(f'https://api.sleeper.app/v1/league/{LEAGUE_ID}/users').json()
-        rosters = requests.get(f'https://api.sleeper.app/v1/league/{LEAGUE_ID}/rosters').json()
+        users   = requests.get(f'https://api.sleeper.app/v1/league/{league_id}/users').json()
+        rosters = requests.get(f'https://api.sleeper.app/v1/league/{league_id}/rosters').json()
         players = requests.get('https://api.sleeper.app/v1/players/nfl').json()
         return users, rosters, players
     except Exception as e:
@@ -148,7 +147,25 @@ st.title("🏈 Fantasy Start/Sit Dashboard")
 if is_file_stale(PROJ_FILE):
     st.warning("⚠️ Projections data is over 24 hours old — accuracy may suffer.")
 
-users, rosters, players = get_data()
+# Sidebar for league configuration
+with st.sidebar:
+    st.header("⚙️ Your League")
+    sleeper_league_id = st.text_input(
+        "Sleeper League ID",
+        value="",
+        placeholder="e.g., 1185263580356419584",
+        help="Find this in your Sleeper league URL: sleeper.app/leagues/YOUR_LEAGUE_ID"
+    )
+    if not sleeper_league_id:
+        st.info("Enter your League ID to get started!")
+        st.markdown("**How to find it:** Open your league on Sleeper and copy the ID from the URL")
+
+# Stop if no league ID provided
+if not sleeper_league_id:
+    st.info("👈 Enter your Sleeper League ID in the sidebar to continue")
+    st.stop()
+
+users, rosters, players = get_data(sleeper_league_id)
 projections = load_projections()
 comparison_data = load_comparison_data()
 

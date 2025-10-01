@@ -12,8 +12,8 @@ language = "python3"
 requiredFiles = [".replit", "replit.nix"]
 
 [deployment]
-run = ["streamlit", "run", "dashboard.py"]
-deploymentTarget = "cloudrun"
+run = ["streamlit", "run", "dashboard.py", "--server.address=0.0.0.0", "--server.port=5000", "--server.headless=true"]
+deploymentTarget = "autoscale"
 
 [[ports]]
 localPort = 5000
