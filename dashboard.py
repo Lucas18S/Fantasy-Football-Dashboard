@@ -79,6 +79,19 @@ def get_projection(name, proj_df, source=None):
     if not row.empty:
         return float(row['proj_points'].values[0])
     
+    # Special handling for defenses (e.g., "Vikings D/ST" vs "Minnesota Vikings")
+    if 'd/st' in name.lower() or 'def' in name.lower():
+        # Extract team name from "Vikings D/ST" format
+        team_name = name.lower().replace(' d/st', '').replace(' def', '').strip()
+        # Search for any defense with that team name
+        mask = (proj_df['player_name'].str.lower().str.contains(team_name, na=False)) & \
+               (proj_df['position'].str.upper().isin(['DEF', 'DST']))
+        if source:
+            mask = mask & (proj_df['source'] == source)
+        row = proj_df[mask]
+        if not row.empty:
+            return float(row['proj_points'].max())
+    
     # Try partial match (last name)
     name_parts = name.lower().split()
     if len(name_parts) > 1:
