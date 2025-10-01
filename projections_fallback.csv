@@ -1,812 +1,1615 @@
 player_name,proj_points,position,source
-Dak Prescott,23.5,QB,Sleeper
-Tua Tagovailoa,23.5,QB,Sleeper
-Jalen Hurts,23.5,QB,Sleeper
-Patrick Mahomes,23.5,QB,Sleeper
-Justin Herbert,23.5,QB,Sleeper
-Lamar Jackson,23.5,QB,Sleeper
-Joe Burrow,23.5,QB,Sleeper
-Josh Allen,23.5,QB,Sleeper
-Dwayne Haskins,20.5,QB,Sleeper
-Joe Flacco,20.5,QB,Sleeper
-Davis Mills,20.5,QB,Sleeper
-Drew Lock,20.5,QB,Sleeper
-Matthew Stafford,20.5,QB,Sleeper
-Joe Milton,20.5,QB,Sleeper
-Jalen Morton,20.5,QB,Sleeper
-Sam Darnold,20.5,QB,Sleeper
-Andy Dalton,20.5,QB,Sleeper
-Daniel Jones,20.5,QB,Sleeper
-C.J. Beathard,20.5,QB,Sleeper
-Geno Smith,20.5,QB,Sleeper
-Zach Wilson,20.5,QB,Sleeper
-Seth Henigan,20.5,QB,Sleeper
-Jake Browning,20.5,QB,Sleeper
-Sam Ehlinger,20.5,QB,Sleeper
-Jordan Love,20.5,QB,Sleeper
-Cooper Rush,20.5,QB,Sleeper
-Hendon Hooker,20.5,QB,Sleeper
-Blake Bortles,20.5,QB,Sleeper
-Josh Johnson,20.5,QB,Sleeper
-Jimmy Garoppolo,20.5,QB,Sleeper
-Kirk Cousins,20.5,QB,Sleeper
-Shedeur Sanders,20.5,QB,Sleeper
-Garrett Greene,20.5,QB,Sleeper
-Case Keenum,20.5,QB,Sleeper
-Sean Clifford,20.5,QB,Sleeper
-Aaron Rodgers,20.5,QB,Sleeper
-Tyler Shough,20.5,QB,Sleeper
-Tyrod Taylor,20.5,QB,Sleeper
-Baker Mayfield,20.5,QB,Sleeper
-Emory Jones,20.5,QB,Sleeper
-Will Levis,20.5,QB,Sleeper
-Bryce Young,20.5,QB,Sleeper
-Logan Woodside,20.5,QB,Sleeper
-Tyler Huntley,20.5,QB,Sleeper
-Jake Haener,20.5,QB,Sleeper
-Skylar Thompson,20.5,QB,Sleeper
-Easton Stick,20.5,QB,Sleeper
-Bailey Zappe,20.5,QB,Sleeper
-Nick Schuessler,20.5,QB,Sleeper
-Cam Ward,20.5,QB,Sleeper
-Kenny Pickett,20.5,QB,Sleeper
-Justin Fields,20.5,QB,Sleeper
-Hunter Dekkers,20.5,QB,Sleeper
-Clayton Tune,20.5,QB,Sleeper
-Kedon Slovis,20.5,QB,Sleeper
-Mitchell Trubisky,20.5,QB,Sleeper
-Trevor Lawrence,20.5,QB,Sleeper
-Jaxson Dart,20.5,QB,Sleeper
-Will Grier,20.5,QB,Sleeper
-J.J. McCarthy,20.5,QB,Sleeper
-Riley Leonard,20.5,QB,Sleeper
-Max Brosmer,20.5,QB,Sleeper
-Brandon Allen,20.5,QB,Sleeper
-Connor Bazelak,20.5,QB,Sleeper
-Michael Penix,20.5,QB,Sleeper
-Tommy DeVito,20.5,QB,Sleeper
-Will Howard,20.5,QB,Sleeper
-Shane Buechele,20.5,QB,Sleeper
-Stetson Bennett,20.5,QB,Sleeper
-Anthony Richardson,20.5,QB,Sleeper
-Joshua Dobbs,20.5,QB,Sleeper
-Aidan O'Connell,20.5,QB,Sleeper
-Brett Rypien,20.5,QB,Sleeper
-Jared Goff,20.5,QB,Sleeper
-Trey Lance,20.5,QB,Sleeper
-Jameis Winston,20.5,QB,Sleeper
-Zach Terrell,20.5,QB,Sleeper
-Kurtis Rourke,20.5,QB,Sleeper
-Clayton Thorson,20.5,QB,Sleeper
-Brock Purdy,20.5,QB,Sleeper
-Russell Wilson,20.5,QB,Sleeper
-Chris Oladokun,20.5,QB,Sleeper
-DJ Uiagalelei,20.5,QB,Sleeper
-Brady Cook,20.5,QB,Sleeper
-Bo Nix,20.5,QB,Sleeper
-Desmond Ridder,20.5,QB,Sleeper
-Teddy Bridgewater,20.5,QB,Sleeper
-Kyle Allen,20.5,QB,Sleeper
-Trevor Siemian,20.5,QB,Sleeper
-Carson Wentz,20.5,QB,Sleeper
-Graham Mertz,20.5,QB,Sleeper
-Cam Miller,20.5,QB,Sleeper
-Dillon Gabriel,20.5,QB,Sleeper
-Malik Willis,20.5,QB,Sleeper
-Spencer Rattler,20.5,QB,Sleeper
-Gardner Minshew,20.5,QB,Sleeper
-Mike White,20.5,QB,Sleeper
-Jarrett Stidham,20.5,QB,Sleeper
-Kyle McCord,20.5,QB,Sleeper
-Quinn Ewers,20.5,QB,Sleeper
-Tanner McKee,20.5,QB,Sleeper
-Ben Roethlisberger,20.5,QB,Sleeper
-Sam Hartman,20.5,QB,Sleeper
-Sam Howell,20.5,QB,Sleeper
-Caleb Williams,20.5,QB,Sleeper
-Jeff Driskel,20.5,QB,Sleeper
-Aaron Bailey,20.5,QB,Sleeper
-Jacoby Brissett,20.5,QB,Sleeper
-C.J. Stroud,20.5,QB,Sleeper
-Mason Rudolph,20.5,QB,Sleeper
-Marcus Mariota,20.5,QB,Sleeper
-Deshaun Watson,20.5,QB,Sleeper
-Nick Mullens,20.5,QB,Sleeper
-Jalen Milroe,20.5,QB,Sleeper
-Tyson Bagent,20.5,QB,Sleeper
-Adrian Martinez,20.5,QB,Sleeper
-Mac Jones,20.5,QB,Sleeper
-Jayden Daniels,20.5,QB,Sleeper
-Kyler Murray,20.5,QB,Sleeper
-Drake Maye,20.5,QB,Sleeper
-Skyler Howard,20.5,QB,Sleeper
-Nick Chubb,17.5,RB,Sleeper
-Austin Ekeler,17.5,RB,Sleeper
-Derrick Henry,17.5,RB,Sleeper
-Christian McCaffrey,17.5,RB,Sleeper
-Saquon Barkley,17.5,RB,Sleeper
-Alvin Kamara,17.5,RB,Sleeper
-Jonathan Taylor,17.5,RB,Sleeper
-Davante Adams,16.5,WR,Sleeper
-Tyreek Hill,16.5,WR,Sleeper
-Mike Evans,16.5,WR,Sleeper
-Calvin Ridley,16.5,WR,Sleeper
-Cooper Kupp,16.5,WR,Sleeper
-Keenan Allen,16.5,WR,Sleeper
-Stefon Diggs,16.5,WR,Sleeper
-DeAndre Hopkins,16.5,WR,Sleeper
-Dalvin Cook,16.5,RB,Sleeper
-Le'Veon Bell,14.5,RB,Sleeper
-Salvon Ahmed,14.5,RB,Sleeper
-Bucky Irving,14.5,RB,Sleeper
-Kendall Milton,14.5,RB,Sleeper
-Omarion Hampton,14.5,RB,Sleeper
-Jaleel McLaughlin,14.5,RB,Sleeper
-Pierre Strong,14.5,RB,Sleeper
-Ameer Abdullah,14.5,RB,Sleeper
-Trey Sermon,14.5,RB,Sleeper
-Audric Estime,14.5,RB,Sleeper
-Justice Hill,14.5,RB,Sleeper
-James Cook,14.5,RB,Sleeper
-Rachaad White,14.5,RB,Sleeper
-Chris Brooks,14.5,RB,Sleeper
-Dylan Laube,14.5,RB,Sleeper
-Andrew Beck,14.5,RB,Sleeper
-Kimani Vidal,14.5,RB,Sleeper
-Khalil Herbert,14.5,RB,Sleeper
-Lew Nichols,14.5,RB,Sleeper
-Isaiah Davis,14.5,RB,Sleeper
-Jacardia Wright,14.5,RB,Sleeper
-Clyde Edwards-Helaire,14.5,RB,Sleeper
-TreVeyon Henderson,14.5,RB,Sleeper
-D'Andre Swift,14.5,RB,Sleeper
-Corey Kiner,14.5,RB,Sleeper
-Devin Singletary,14.5,RB,Sleeper
-Ito Smith,14.5,RB,Sleeper
-Elijah Mitchell,14.5,RB,Sleeper
-Brian Robinson,14.5,RB,Sleeper
-Deion Hankins,14.5,RB,Sleeper
-Jeff Wilson,14.5,RB,Sleeper
-Adrian Killins,14.5,RB,Sleeper
-Isiah Pacheco,14.5,RB,Sleeper
-Benny LeMay,14.5,RB,Sleeper
-Trey Benson,14.5,RB,Sleeper
-Jacob Saylors,14.5,RB,Sleeper
-Brashard Smith,14.5,RB,Sleeper
-Deneric Prince,14.5,RB,Sleeper
-Jeremy McNichols,14.5,RB,Sleeper
-James Conner,14.5,RB,Sleeper
-Sean Tucker,14.5,RB,Sleeper
-Michael Carter,14.5,RB,Sleeper
-Nathan Carter,14.5,RB,Sleeper
-Isaac Guerendo,14.5,RB,Sleeper
-Craig Reynolds,14.5,RB,Sleeper
-Jordan Mason,14.5,RB,Sleeper
-Rico Dowdle,14.5,RB,Sleeper
-Alexander Mattison,14.5,RB,Sleeper
-Braelon Allen,14.5,RB,Sleeper
-Keaton Mitchell,14.5,RB,Sleeper
-Tahj Brooks,14.5,RB,Sleeper
-Tyler Badie,14.5,RB,Sleeper
-Blake Corum,14.5,RB,Sleeper
-Kaleb Johnson,14.5,RB,Sleeper
-Woody Marks,14.5,RB,Sleeper
-Cody Schrader,14.5,RB,Sleeper
-British Brooks,14.5,RB,Sleeper
-Tyler Allgeier,14.5,RB,Sleeper
-Julius Chestnut,14.5,RB,Sleeper
-RJ Harvey,14.5,RB,Sleeper
-Jerome Ford,14.5,RB,Sleeper
-Robbie Ouzts,14.5,RB,Sleeper
-JaMycal Hasty,14.5,RB,Sleeper
-Will Shipley,14.5,RB,Sleeper
-Elijah McGuire,14.5,RB,Sleeper
-Tony Pollard,14.5,RB,Sleeper
-George Holani,14.5,RB,Sleeper
-Jacory Croskey-Merritt,14.5,RB,Sleeper
-Antonio Gibson,14.5,RB,Sleeper
-Josh Williams,14.5,RB,Sleeper
-Sincere McCormick,14.5,RB,Sleeper
-Ashton Jeanty,14.5,RB,Sleeper
-Chris Rodriguez,14.5,RB,Sleeper
-Ollie Gordon,14.5,RB,Sleeper
-Keaontay Ingram,14.5,RB,Sleeper
-Tyrone Tracy,14.5,RB,Sleeper
-De'Von Achane,14.5,RB,Sleeper
-Amar Johnson,14.5,RB,Sleeper
-Jalen Richard,14.5,RB,Sleeper
-Dante Miller,14.5,RB,Sleeper
-Bijan Robinson,14.5,RB,Sleeper
-Devin Neal,14.5,RB,Sleeper
-Tyler Goodson,14.5,RB,Sleeper
-Bhayshul Tuten,14.5,RB,Sleeper
-Jaydon Blue,14.5,RB,Sleeper
-Raheem Mostert,14.5,RB,Sleeper
-Zavier Scott,14.5,RB,Sleeper
-Jahmyr Gibbs,14.5,RB,Sleeper
-Gary Brightwell,14.5,RB,Sleeper
-Reggie Gilliam,14.5,RB,Sleeper
-Jordan Scarlett,14.5,RB,Sleeper
-Trevor Etienne,14.5,RB,Sleeper
-Patrick Taylor,14.5,RB,Sleeper
-Lan Larison,14.5,RB,Sleeper
-Brittain Brown,14.5,RB,Sleeper
-Quinshon Judkins,14.5,RB,Sleeper
-Tavien Feaster,14.5,RB,Sleeper
-Kenneth Walker,14.5,RB,Sleeper
-Dameon Pierce,14.5,RB,Sleeper
-MarShawn Lloyd,14.5,RB,Sleeper
-Samaje Perine,14.5,RB,Sleeper
-Kene Nwangwu,14.5,RB,Sleeper
-Eric Gray,14.5,RB,Sleeper
-Kenneth Gainwell,14.5,RB,Sleeper
-Travis Etienne,14.5,RB,Sleeper
-Tyjae Spears,14.5,RB,Sleeper
-Rasheen Ali,14.5,RB,Sleeper
-Kyle Monangai,14.5,RB,Sleeper
-Ronnie Rivers,14.5,RB,Sleeper
-David Montgomery,14.5,RB,Sleeper
-Carlos Washington,14.5,RB,Sleeper
-Jonathon Brooks,14.5,RB,Sleeper
-Dylan Sampson,14.5,RB,Sleeper
-Aaron Jones,14.5,RB,Sleeper
-Raheim Sanders,14.5,RB,Sleeper
-Lawrance Toafili,14.5,RB,Sleeper
-Cam Skattebo,14.5,RB,Sleeper
-DeeJay Dallas,14.5,RB,Sleeper
-Tank Bigsby,14.5,RB,Sleeper
-Joe Mixon,14.5,RB,Sleeper
-Kendre Miller,14.5,RB,Sleeper
-Rhamondre Stevenson,14.5,RB,Sleeper
-Kyren Williams,14.5,RB,Sleeper
-Hassan Haskins,14.5,RB,Sleeper
-Emari Demercado,14.5,RB,Sleeper
-Sione Vaki,14.5,RB,Sleeper
-Jaylen Warren,14.5,RB,Sleeper
-Ty Chandler,14.5,RB,Sleeper
-Carson Steele,14.5,RB,Sleeper
-Frank Gore,14.5,RB,Sleeper
-Chase Brown,14.5,RB,Sleeper
-Glen Coffee,14.5,RB,Sleeper
-Ja'Quinden Jackson,14.5,RB,Sleeper
-Cam Akers,14.5,RB,Sleeper
-DJ Giddens,14.5,RB,Sleeper
-Jordan James,14.5,RB,Sleeper
-Kalel Mullings,14.5,RB,Sleeper
-Ty Johnson,14.5,RB,Sleeper
-LeQuint Allen,14.5,RB,Sleeper
-Keilan Robinson,14.5,RB,Sleeper
-Kye Robichaux,14.5,RB,Sleeper
-Bam Knight,14.5,RB,Sleeper
-Chuba Hubbard,14.5,RB,Sleeper
-Kareem Hunt,14.5,RB,Sleeper
-Kerrith Whyte,14.5,RB,Sleeper
-Dare Ogunbowale,14.5,RB,Sleeper
-Terrell Jennings,14.5,RB,Sleeper
-Najee Harris,14.5,RB,Sleeper
-Raheem Blackshear,14.5,RB,Sleeper
-Malik Davis,14.5,RB,Sleeper
-Roschon Johnson,14.5,RB,Sleeper
-Travis Homer,14.5,RB,Sleeper
-Taquan Mizzell,14.5,RB,Sleeper
-Jarquez Hunter,14.5,RB,Sleeper
-Emanuel Wilson,14.5,RB,Sleeper
-Jordan Mims,14.5,RB,Sleeper
-Zamir White,14.5,RB,Sleeper
-Jawhar Jordan,14.5,RB,Sleeper
-Chris Collier,14.5,RB,Sleeper
-Miles Sanders,14.5,RB,Sleeper
-Josh Jacobs,14.5,RB,Sleeper
-Zach Charbonnet,14.5,RB,Sleeper
-Deuce Vaughn,14.5,RB,Sleeper
-Ulysses Bentley,14.5,RB,Sleeper
-Jaylen Wright,14.5,RB,Sleeper
-Ahmani Marshall,14.5,RB,Sleeper
-Ray Davis,14.5,RB,Sleeper
-Phil Mafah,14.5,RB,Sleeper
-Breece Hall,14.5,RB,Sleeper
-Michael Warren,14.5,RB,Sleeper
-J.K. Dobbins,14.5,RB,Sleeper
-A.J. Dillon,14.5,RB,Sleeper
-Javonte Williams,14.5,RB,Sleeper
-Chase Edmonds,14.5,RB,Sleeper
-Donovan Edwards,14.5,RB,Sleeper
-Kenny McIntosh,14.5,RB,Sleeper
-Wendell Smallwood,14.5,RB,Sleeper
-Parker Washington,13.5,WR,Sleeper
-CeeDee Lamb,13.5,WR,Sleeper
-Jerry Jeudy,13.5,WR,Sleeper
-Jacob Cowing,13.5,WR,Sleeper
-Miles Boykin,13.5,WR,Sleeper
-Kayshon Boutte,13.5,WR,Sleeper
-Devontez Walker,13.5,WR,Sleeper
-LaJohntay Wester,13.5,WR,Sleeper
-Kyle Pitts,13.5,TE,Sleeper
-Josh Kelly,13.5,WR,Sleeper
-Ke'Shawn Williams,13.5,WR,Sleeper
-Brycen Tremayne,13.5,WR,Sleeper
-Johnny Wilson,13.5,WR,Sleeper
-Khalil Shakir,13.5,WR,Sleeper
-Jamaal Pritchett,13.5,WR,Sleeper
-Jahan Dotson,13.5,WR,Sleeper
-Efton Chism,13.5,WR,Sleeper
-Jauan Jennings,13.5,WR,Sleeper
-Malik Washington,13.5,WR,Sleeper
-Charlie Jones,13.5,WR,Sleeper
-Jayden Reed,13.5,WR,Sleeper
-Jason Brownlee,13.5,WR,Sleeper
-Ja'Corey Brooks,13.5,WR,Sleeper
-Quez Watkins,13.5,WR,Sleeper
-Chris Moore,13.5,WR,Sleeper
-Jaxon Smith-Njigba,13.5,WR,Sleeper
-Jaylen Waddle,13.5,WR,Sleeper
-Jahdae Walker,13.5,WR,Sleeper
-Brandin Cooks,13.5,WR,Sleeper
-T.J. Hockenson,13.5,TE,Sleeper
-Rondale Moore,13.5,WR,Sleeper
-Isaac TeSlaa,13.5,WR,Sleeper
-Ladd McConkey,13.5,WR,Sleeper
-Ricky White,13.5,WR,Sleeper
-Casey Washington,13.5,WR,Sleeper
-Rome Odunze,13.5,WR,Sleeper
-Michael Wilson,13.5,WR,Sleeper
-Braxton Berrios,13.5,WR,Sleeper
-John Metchie,13.5,WR,Sleeper
-Nick Westbrook-Ikhine,13.5,WR,Sleeper
-Kalif Raymond,13.5,WR,Sleeper
-KhaDarel Hodge,13.5,WR,Sleeper
-Chris Godwin,13.5,WR,Sleeper
-Simi Fehoko,13.5,WR,Sleeper
-Chandler Brayboy,13.5,WR,Sleeper
-Xavier Weaver,13.5,WR,Sleeper
-Allen Lazard,13.5,WR,Sleeper
-Curtis Samuel,13.5,WR,Sleeper
-Jimmy Holiday,13.5,WR,Sleeper
-Jake Bobo,13.5,WR,Sleeper
-Demarcus Robinson,13.5,WR,Sleeper
-Isaiah Williams,13.5,WR,Sleeper
-Ja'Marr Chase,13.5,WR,Sleeper
-Calvin Austin,13.5,WR,Sleeper
-Austin Trammell,13.5,WR,Sleeper
-Dyami Brown,13.5,WR,Sleeper
-Jalen Tolbert,13.5,WR,Sleeper
-Malik Turner,13.5,WR,Sleeper
-Tee Higgins,13.5,WR,Sleeper
-Maurice Alexander,13.5,WR,Sleeper
-Jamari Thrash,13.5,WR,Sleeper
-Luke Floriea,13.5,WR,Sleeper
-Alex Bachman,13.5,WR,Sleeper
-Britain Covey,13.5,WR,Sleeper
-DeMario Douglas,13.5,WR,Sleeper
-Jalen Nailor,13.5,WR,Sleeper
-Luther Burden,13.5,WR,Sleeper
-Dontayvion Wicks,13.5,WR,Sleeper
-Jalen McMillan,13.5,WR,Sleeper
-Dalevon Campbell,13.5,WR,Sleeper
-Deebo Samuel,13.5,WR,Sleeper
-Christian Watson,13.5,WR,Sleeper
-Caleb Scott,13.5,WR,Sleeper
-Tre' Harris,13.5,WR,Sleeper
-Jakobi Meyers,13.5,WR,Sleeper
-Tommy Mellott,13.5,WR,Sleeper
-Dontae Fleming,13.5,WR,Sleeper
-Jordan Moore,13.5,WR,Sleeper
-Ricky Pearsall,13.5,WR,Sleeper
-Emeka Egbuka,13.5,WR,Sleeper
-Nico Collins,13.5,WR,Sleeper
-Ronnie Bell,13.5,WR,Sleeper
-Luke McCaffrey,13.5,WR,Sleeper
-Mason Tipton,13.5,WR,Sleeper
-Roman Wilson,13.5,WR,Sleeper
-George Pickens,13.5,WR,Sleeper
-Treylon Burks,13.5,WR,Sleeper
-Elijah Moore,13.5,WR,Sleeper
-Garrett Wilson,13.5,WR,Sleeper
-Chris Blair,13.5,WR,Sleeper
-Kristian Wilkerson,13.5,WR,Sleeper
-Nick Williams,13.5,WR,Sleeper
-Lil'Jordan Humphrey,13.5,WR,Sleeper
-Thomas Ives,13.5,WR,Sleeper
-JuJu Smith-Schuster,13.5,WR,Sleeper
-Russell Gage,13.5,WR,Sleeper
-Tim Jones,13.5,WR,Sleeper
-Isaiah Neyor,13.5,WR,Sleeper
-Tutu Atwell,13.5,WR,Sleeper
-Jimmy Horn,13.5,WR,Sleeper
-Velus Jones,13.5,WR,Sleeper
-Savion Williams,13.5,WR,Sleeper
-Bryce Oliver,13.5,WR,Sleeper
-Deven Thompkins,13.5,WR,Sleeper
-Dayton Wade,13.5,WR,Sleeper
-Irvin Charles,13.5,WR,Sleeper
-Tim Patrick,13.5,WR,Sleeper
-Tai Felton,13.5,WR,Sleeper
-Devin Duvernay,13.5,WR,Sleeper
-DeAndre Carter,13.5,WR,Sleeper
-Puka Nacua,13.5,WR,Sleeper
-Andrei Iosivas,13.5,WR,Sleeper
-Malachi Corley,13.5,WR,Sleeper
-Josh Reynolds,13.5,WR,Sleeper
-Chimere Dike,13.5,WR,Sleeper
-A.J. Brown,13.5,WR,Sleeper
-Gunner Olszewski,13.5,WR,Sleeper
-JaQuae Jackson,13.5,WR,Sleeper
-Keith Kirkwood,13.5,WR,Sleeper
-Michael Bandy,13.5,WR,Sleeper
-Stephen Gosnell,13.5,WR,Sleeper
-Dalen Cambre,13.5,WR,Sleeper
-Jaylin Lane,13.5,WR,Sleeper
-Tre Tucker,13.5,WR,Sleeper
-Alec Pierce,13.5,WR,Sleeper
-Rashid Shaheed,13.5,WR,Sleeper
-Olamide Zaccheaus,13.5,WR,Sleeper
-KJ Hill,13.5,WR,Sleeper
-Isaiah Hodgins,13.5,WR,Sleeper
-Jonathan Mingo,13.5,WR,Sleeper
-DJ Moore,13.5,WR,Sleeper
-Dallas Goedert,13.5,TE,Sleeper
-Traeshon Holden,13.5,WR,Sleeper
-Mason Kinsey,13.5,WR,Sleeper
-Adam Thielen,13.5,WR,Sleeper
-Kaden Davis,13.5,WR,Sleeper
-KaVontae Turpin,13.5,WR,Sleeper
-Tyler Lockett,13.5,WR,Sleeper
-James Proche,13.5,WR,Sleeper
-Rashee Rice,13.5,WR,Sleeper
-Myles White,13.5,WR,Sleeper
-Marvin Mims,13.5,WR,Sleeper
-Troy Franklin,13.5,WR,Sleeper
-Hunter Renfrow,13.5,WR,Sleeper
-Cade McDonald,13.5,WR,Sleeper
-DeVonta Smith,13.5,WR,Sleeper
-Travis Hunter,13.5,WR,Sleeper
-David Bell,13.5,WR,Sleeper
-Nick Nash,13.5,WR,Sleeper
-Cody White,13.5,WR,Sleeper
-Drake London,13.5,WR,Sleeper
-Malik Nabers,13.5,WR,Sleeper
-Mack Hollins,13.5,WR,Sleeper
-Hollywood Brown,13.5,WR,Sleeper
-Tay Martin,13.5,WR,Sleeper
-Xavier Worthy,13.5,WR,Sleeper
-Kameron Johnson,13.5,WR,Sleeper
-Elic Ayomanor,13.5,WR,Sleeper
-Quintez Cephus,13.5,WR,Sleeper
-Jack Bech,13.5,WR,Sleeper
-Andy Jones,13.5,WR,Sleeper
-Derius Davis,13.5,WR,Sleeper
-Jameson Williams,13.5,WR,Sleeper
-Cedric Tillman,13.5,WR,Sleeper
-Darnell Mooney,13.5,WR,Sleeper
-Joe Forson,13.5,WR,Sleeper
-Dee Eskridge,13.5,WR,Sleeper
-George Kittle,13.5,TE,Sleeper
-Marvin Harrison,13.5,WR,Sleeper
-Arian Smith,13.5,WR,Sleeper
-Dan Chisena,13.5,WR,Sleeper
-Dont'e Thornton,13.5,WR,Sleeper
-Dominic Lovett,13.5,WR,Sleeper
-Jordan Watkins,13.5,WR,Sleeper
-Jeremiah Webb,13.5,WR,Sleeper
-Terrace Marshall,13.5,WR,Sleeper
-Shedrick Jackson,13.5,WR,Sleeper
-John Jiles,13.5,WR,Sleeper
-Amon-Ra St. Brown,13.5,WR,Sleeper
-Dylan Drummond,13.5,WR,Sleeper
-Coleman Owen,13.5,WR,Sleeper
-Konata Mumpfield,13.5,WR,Sleeper
-Zay Jones,13.5,WR,Sleeper
-Jaylin Noel,13.5,WR,Sleeper
-Pat Bryant,13.5,WR,Sleeper
-Tetairoa McMillan,13.5,WR,Sleeper
-Malik Heath,13.5,WR,Sleeper
-Tru Edwards,13.5,WR,Sleeper
-Gabe Davis,13.5,WR,Sleeper
-Allen Hurns,13.5,WR,Sleeper
-Tejhaun Palmer,13.5,WR,Sleeper
-DeAndre Thompkins,13.5,WR,Sleeper
-Ben Skowronek,13.5,WR,Sleeper
-Trent Taylor,13.5,WR,Sleeper
-Gage Larvadain,13.5,WR,Sleeper
-Brian Thomas,13.5,WR,Sleeper
-Scotty Miller,13.5,WR,Sleeper
-Darius Cooper,13.5,WR,Sleeper
-Tory Horton,13.5,WR,Sleeper
-David Moore,13.5,WR,Sleeper
-Ja'seem Reed,13.5,WR,Sleeper
-Rashod Bateman,13.5,WR,Sleeper
-Kendric Pryor,13.5,WR,Sleeper
-Jacoby Jones,13.5,WR,Sleeper
-Ainias Smith,13.5,WR,Sleeper
-Xavier Gipson,13.5,WR,Sleeper
-Terry McLaurin,13.5,WR,Sleeper
-Christian Kirk,13.5,WR,Sleeper
-AJ Henning,13.5,WR,Sleeper
-Jalen Coker,13.5,WR,Sleeper
-Kendrick Bourne,13.5,WR,Sleeper
-Xavier Hutchinson,13.5,WR,Sleeper
-David Sills,13.5,WR,Sleeper
-Jordan Whittington,13.5,WR,Sleeper
-Joshua Palmer,13.5,WR,Sleeper
-Kyle Williams,13.5,WR,Sleeper
-Romeo Doubs,13.5,WR,Sleeper
-Pat Freiermuth,13.5,TE,Sleeper
-Dareke Young,13.5,WR,Sleeper
-Javon Baker,13.5,WR,Sleeper
-Theo Wease,13.5,WR,Sleeper
-Garrett Scantling,13.5,WR,Sleeper
-Xavier Legette,13.5,WR,Sleeper
-Keon Coleman,13.5,WR,Sleeper
-Justin Shorter,13.5,WR,Sleeper
-Trent Sherfield,13.5,WR,Sleeper
-Xavier Restrepo,13.5,WR,Sleeper
-Bo Melton,13.5,WR,Sleeper
-Thayer Thomas,13.5,WR,Sleeper
-Mark Andrews,13.5,TE,Sleeper
-Jayden Higgins,13.5,WR,Sleeper
-Tylan Wallace,13.5,WR,Sleeper
-Cornelius Johnson,13.5,WR,Sleeper
-Duplicate Player,13.5,WR,Sleeper
-Justin Jefferson,13.5,WR,Sleeper
-Tyrell Shavers,13.5,WR,Sleeper
-Quentin Johnston,13.5,WR,Sleeper
-D.J. Montgomery,13.5,WR,Sleeper
-Isaiah Bond,13.5,WR,Sleeper
-Micah Simon,13.5,WR,Sleeper
-Adonai Mitchell,13.5,WR,Sleeper
-Jamal Agnew,13.5,WR,Sleeper
-Tahj Washington,13.5,WR,Sleeper
-Erik Ezukanma,13.5,WR,Sleeper
-Chris Olave,13.5,WR,Sleeper
-Jackson Meeks,13.5,WR,Sleeper
-Al Riles,13.5,WR,Sleeper
-Quentin Skinner,13.5,WR,Sleeper
-Josh Downs,13.5,WR,Sleeper
-Anthony Gould,13.5,WR,Sleeper
-Brandon Aiyuk,13.5,WR,Sleeper
-Zay Flowers,13.5,WR,Sleeper
-Ryan Miller,13.5,WR,Sleeper
-Wan'Dale Robinson,13.5,WR,Sleeper
-Xavier Smith,13.5,WR,Sleeper
-Van Jefferson,13.5,WR,Sleeper
-Dennis Houston,13.5,WR,Sleeper
-Isaac Whitney,13.5,WR,Sleeper
-Skyy Moore,13.5,WR,Sleeper
-Courtland Sutton,13.5,WR,Sleeper
-Jalin Hyatt,13.5,WR,Sleeper
-Trey Palmer,13.5,WR,Sleeper
-Courtney Jackson,13.5,WR,Sleeper
-Devaughn Vele,13.5,WR,Sleeper
-Ray-Ray McCloud,13.5,WR,Sleeper
-Sterling Shepard,13.5,WR,Sleeper
-Ihmir Smith-Marsette,13.5,WR,Sleeper
-Bub Means,13.5,WR,Sleeper
-Eldridge Massington,13.5,WR,Sleeper
-Kevin Austin,13.5,WR,Sleeper
-Luke Grimm,13.5,WR,Sleeper
-A.T. Perry,13.5,WR,Sleeper
-Junior Bergen,13.5,WR,Sleeper
-Laquon Treadwell,13.5,WR,Sleeper
-Joshua Cephus,13.5,WR,Sleeper
-Nikko Remigio,13.5,WR,Sleeper
-Cedrick Wilson,13.5,WR,Sleeper
-Ryan Flournoy,13.5,WR,Sleeper
-JP Richardson,13.5,WR,Sleeper
-Greg Dortch,13.5,WR,Sleeper
-Da'Quan Felton,13.5,WR,Sleeper
-Myles Price,13.5,WR,Sleeper
-Tank Dell,13.5,WR,Sleeper
-Jared Wayne,13.5,WR,Sleeper
-Travis Kelce,13.5,TE,Sleeper
-Darius Slayton,13.5,WR,Sleeper
-Brennan Presley,13.5,WR,Sleeper
-Darren Waller,13.5,TE,Sleeper
-Jalen Brooks,13.5,WR,Sleeper
-KeAndre Lambert-Smith,13.5,WR,Sleeper
-Tyrone Broden,13.5,WR,Sleeper
-Marquez Valdes-Scantling,13.5,WR,Sleeper
-Jeshaun Jones,13.5,WR,Sleeper
-Bryce Ford-Wheaton,13.5,WR,Sleeper
-Brandon Smith,13.5,WR,Sleeper
-Tom Kennedy,13.5,WR,Sleeper
-Malik Cunningham,13.5,WR,Sleeper
-Will Sheppard,13.5,WR,Sleeper
-Jalen Cropper,13.5,WR,Sleeper
-Justin Watson,13.5,WR,Sleeper
-Ja'Lynn Polk,13.5,WR,Sleeper
-Jordan Addison,13.5,WR,Sleeper
-Beaux Collins,13.5,WR,Sleeper
-Andre Baccellia,13.5,WR,Sleeper
-Tyler Johnson,13.5,WR,Sleeper
-Mitchell Tinsley,13.5,WR,Sleeper
-Michael Pittman,13.5,WR,Sleeper
-Tez Johnson,13.5,WR,Sleeper
-Jermaine Burton,13.5,WR,Sleeper
-DK Metcalf,13.5,WR,Sleeper
-Jakobie Keeney-James,13.5,WR,Sleeper
-Shaq Roland,13.5,WR,Sleeper
-Ashton Dulin,13.5,WR,Sleeper
-Tyquan Thornton,13.5,WR,Sleeper
-Phillip Dorsett,13.5,WR,Sleeper
-Jalen Royals,13.5,WR,Sleeper
-Matthew Golden,13.5,WR,Sleeper
-Noah Brown,13.5,WR,Sleeper
-Oronde Gadsden,10.5,TE,Sleeper
-E.J. Jenkins,10.5,TE,Sleeper
-Mo Alie-Cox,10.5,TE,Sleeper
-Jake Tonges,10.5,TE,Sleeper
-Dax Raymond,10.5,TE,Sleeper
-Noah Gray,10.5,TE,Sleeper
-Colston Loveland,10.5,TE,Sleeper
-Gee Scott,10.5,TE,Sleeper
-Cade Otton,10.5,TE,Sleeper
-Brenden Bates,10.5,TE,Sleeper
-Jalin Conyers,10.5,TE,Sleeper
-Ko Kieft,10.5,TE,Sleeper
-Matt LaCosse,10.5,TE,Sleeper
-Isaac Nauta,10.5,TE,Sleeper
-Barrett Burns,10.5,TE,Sleeper
-Erick All,10.5,TE,Sleeper
-John FitzPatrick,10.5,TE,Sleeper
-Dawson Knox,10.5,TE,Sleeper
-Will Mallory,10.5,TE,Sleeper
-Jake Ferguson,10.5,TE,Sleeper
-Luke Farrell,10.5,TE,Sleeper
-Bronson Kaufusi,10.5,TE,Sleeper
-Zach Ertz,10.5,TE,Sleeper
-Brady Russell,10.5,TE,Sleeper
-Isaiah Likely,10.5,TE,Sleeper
-Grant Calcaterra,10.5,TE,Sleeper
-Sam LaPorta,10.5,TE,Sleeper
-Lee Smith,10.5,TE,Sleeper
-Bryson Nesbit,10.5,TE,Sleeper
-Brenton Strange,10.5,TE,Sleeper
-Jeremy Ruckert,10.5,TE,Sleeper
-Mason Pline,10.5,TE,Sleeper
-Tyler Warren,10.5,TE,Sleeper
-Lawrence Cager,10.5,TE,Sleeper
-Gavin Bartholomew,10.5,TE,Sleeper
-Tyler Higbee,10.5,TE,Sleeper
-Terrance Ferguson,10.5,TE,Sleeper
-Josh Oliver,10.5,TE,Sleeper
-Caleb Lohner,10.5,TE,Sleeper
-Tommy Tremble,10.5,TE,Sleeper
-Tucker Kraft,10.5,TE,Sleeper
-Theo Johnson,10.5,TE,Sleeper
-Zaire Mitchell-Paden,10.5,TE,Sleeper
-Tyree Jackson,10.5,TE,Sleeper
-Daniel Bellinger,10.5,TE,Sleeper
-Bryce Pierre,10.5,TE,Sleeper
-Treyton Welch,10.5,TE,Sleeper
-Tommy Stevens,10.5,TE,Sleeper
-Donnie Ernsberger,10.5,TE,Sleeper
-Nikola Kalinic,10.5,TE,Sleeper
-Hunter Long,10.5,TE,Sleeper
-Kalif Jackson,10.5,TE,Sleeper
-John Stephens,10.5,TE,Sleeper
-Ben Sinnott,10.5,TE,Sleeper
-Jack Doyle,10.5,TE,Sleeper
-Tre Watson,10.5,TE,Sleeper
-Keleki Latu,10.5,TE,Sleeper
-Jack Stoll,10.5,TE,Sleeper
-Brayden Willis,10.5,TE,Sleeper
-Darnell Washington,10.5,TE,Sleeper
-James Mitchell,10.5,TE,Sleeper
-Zach Horton,10.5,TE,Sleeper
-Trey McBride,10.5,TE,Sleeper
-Quintin Morris,10.5,TE,Sleeper
-Sean McKeon,10.5,TE,Sleeper
-Hunter Henry,10.5,TE,Sleeper
-Evan Engram,10.5,TE,Sleeper
-Chris Manhertz,10.5,TE,Sleeper
-Teagan Quitoriano,10.5,TE,Sleeper
-Mitchell Evans,10.5,TE,Sleeper
-Ben Sims,10.5,TE,Sleeper
-Robert Tonyan,10.5,TE,Sleeper
-Eric Saubert,10.5,TE,Sleeper
-Tyler Conklin,10.5,TE,Sleeper
-Patrick Herbert,10.5,TE,Sleeper
-Mike Gesicki,10.5,TE,Sleeper
-Thomas Yassmin,10.5,TE,Sleeper
-Darren Fells,10.5,TE,Sleeper
-Nick Kallerup,10.5,TE,Sleeper
-Adam Trautman,10.5,TE,Sleeper
-Julian Hill,10.5,TE,Sleeper
-Thomas Fidone,10.5,TE,Sleeper
-Payne Durham,10.5,TE,Sleeper
-Davis Allen,10.5,TE,Sleeper
-Mark Redman,10.5,TE,Sleeper
-Blake Whiteheart,10.5,TE,Sleeper
-Brevin Jordan,10.5,TE,Sleeper
-Foster Moreau,10.5,TE,Sleeper
-Feleipe Franks,10.5,TE,Sleeper
-Moliki Matavao,10.5,TE,Sleeper
-Cameron Latu,10.5,TE,Sleeper
-Nick Vannett,10.5,TE,Sleeper
-Taysom Hill,10.5,TE,Sleeper
-Jared Wiley,10.5,TE,Sleeper
-Albert Okwuegbunam,10.5,TE,Sleeper
-Brock Wright,10.5,TE,Sleeper
-Brevyn Spann-Ford,10.5,TE,Sleeper
-Franko House,10.5,TE,Sleeper
-Connor Heyward,10.5,TE,Sleeper
-Dalton Kincaid,10.5,TE,Sleeper
-Cam Grandy,10.5,TE,Sleeper
-Luke Musgrave,10.5,TE,Sleeper
-Kenny Yeboah,10.5,TE,Sleeper
-Cole Kmet,10.5,TE,Sleeper
-Sal Cannella,10.5,TE,Sleeper
-Ben Yurosek,10.5,TE,Sleeper
-Drew Sample,10.5,TE,Sleeper
-Stone Smartt,10.5,TE,Sleeper
-CJ Dippre,10.5,TE,Sleeper
-Messiah Swinson,10.5,TE,Sleeper
-Levine Toilolo,10.5,TE,Sleeper
-Tanner Conner,10.5,TE,Sleeper
-Max Mang,10.5,TE,Sleeper
-Eric Ebron,10.5,TE,Sleeper
-Ross Dwelley,10.5,TE,Sleeper
-Caden Prieskorn,10.5,TE,Sleeper
-Jelani Woods,10.5,TE,Sleeper
-Charlie Woerner,10.5,TE,Sleeper
-Gunnar Helm,10.5,TE,Sleeper
-Thomas Odukoya,10.5,TE,Sleeper
-Mason Taylor,10.5,TE,Sleeper
-Ian Thomas,10.5,TE,Sleeper
-AJ Barner,10.5,TE,Sleeper
-Temarrick Hemingway,10.5,TE,Sleeper
-Josh Whyle,10.5,TE,Sleeper
-Travis Vokolek,10.5,TE,Sleeper
-Jake Briningstool,10.5,TE,Sleeper
-Noah Fant,10.5,TE,Sleeper
-Luke Lachey,10.5,TE,Sleeper
-Elijah Arroyo,10.5,TE,Sleeper
-Donald Parham,10.5,TE,Sleeper
-Colson Yankoff,10.5,TE,Sleeper
-Austin Hooper,10.5,TE,Sleeper
-Ja'Tavion Sanders,10.5,TE,Sleeper
-Durham Smythe,10.5,TE,Sleeper
-Hayden Rucci,10.5,TE,Sleeper
-Kylen Granson,10.5,TE,Sleeper
-David Martin-Robinson,10.5,TE,Sleeper
-Joshua Perkins,10.5,TE,Sleeper
-Will Dissly,10.5,TE,Sleeper
-Greg Dulcich,10.5,TE,Sleeper
-Harold Fannin,10.5,TE,Sleeper
-Josiah Deguara,10.5,TE,Sleeper
-Jonnu Smith,10.5,TE,Sleeper
-Lucas Krull,10.5,TE,Sleeper
-Drew Ogletree,10.5,TE,Sleeper
-Carter Runyon,10.5,TE,Sleeper
-Princeton Fant,10.5,TE,Sleeper
-Harrison Bryant,10.5,TE,Sleeper
-Charlie Kolar,10.5,TE,Sleeper
-Joshua Simon,10.5,TE,Sleeper
-Michael Mayer,10.5,TE,Sleeper
-Shane Zylstra,10.5,TE,Sleeper
-Tip Reiman,10.5,TE,Sleeper
-Luke Schoonmaker,10.5,TE,Sleeper
-Elijah Higgins,10.5,TE,Sleeper
-Joel Wilson,10.5,TE,Sleeper
-Nate Adkins,10.5,TE,Sleeper
-Jack Westover,10.5,TE,Sleeper
-Stephen Carlson,10.5,TE,Sleeper
-Chig Okonkwo,10.5,TE,Sleeper
-Rivaldo Fairweather,10.5,TE,Sleeper
-Wyatt Houston,10.5,TE,Sleeper
-Johnny Mundt,10.5,TE,Sleeper
-Irv Smith,10.5,TE,Sleeper
-Brock Bowers,10.5,TE,Sleeper
-Dalton Schultz,10.5,TE,Sleeper
-Jackson Hawes,10.5,TE,Sleeper
-David Njoku,10.5,TE,Sleeper
-Tanner Hudson,10.5,TE,Sleeper
-Patrick Murtagh,10.5,TE,Sleeper
-Juwan Johnson,10.5,TE,Sleeper
-Tucker Fisk,10.5,TE,Sleeper
-John Bates,10.5,TE,Sleeper
-Tanner Taula,10.5,TE,Sleeper
-Devin Culp,10.5,TE,Sleeper
-Cade Stover,10.5,TE,Sleeper
-Colby Parkinson,10.5,TE,Sleeper
-Matt Sokol,10.5,TE,Sleeper
+Le'Veon Bell,8.0,RB,Sleeper
+Brandon Aubrey,7.0,K,Sleeper
+Parker Washington,7.0,WR,Sleeper
+CeeDee Lamb,7.0,WR,Sleeper
+Bucky Irving,8.0,RB,Sleeper
+Kendall Milton,8.0,RB,Sleeper
+Jerry Jeudy,7.0,WR,Sleeper
+Miles Boykin,7.0,WR,Sleeper
+Kayshon Boutte,7.0,WR,Sleeper
+Omarion Hampton,8.0,RB,Sleeper
+Jaleel McLaughlin,8.0,RB,Sleeper
+Devontez Walker,7.0,WR,Sleeper
+Oronde Gadsden,6.0,TE,Sleeper
+LaJohntay Wester,7.0,WR,Sleeper
+Kyle Pitts,6.0,TE,Sleeper
+Dwayne Haskins,12.0,QB,Sleeper
+E.J. Jenkins,6.0,TE,Sleeper
+Joe Flacco,12.0,QB,Sleeper
+Mo Alie-Cox,6.0,TE,Sleeper
+Robbie Chosen,7.0,WR,Sleeper
+Josh Kelly,7.0,WR,Sleeper
+Jake Tonges,6.0,TE,Sleeper
+Ke'Shawn Williams,7.0,WR,Sleeper
+Dax Raymond,6.0,TE,Sleeper
+Brycen Tremayne,7.0,WR,Sleeper
+Pierre Strong,8.0,RB,Sleeper
+Davis Mills,12.0,QB,Sleeper
+Ameer Abdullah,8.0,RB,Sleeper
+Drew Lock,12.0,QB,Sleeper
+Trey Sermon,8.0,RB,Sleeper
+Audric Estime,8.0,RB,Sleeper
+Houston Texans,7.0,DEF,Sleeper
+Dak Prescott,12.0,QB,Sleeper
+Matthew Stafford,12.0,QB,Sleeper
+Khalil Shakir,7.0,WR,Sleeper
+Noah Gray,6.0,TE,Sleeper
+New England Patriots,7.0,DEF,Sleeper
+Joe Milton,12.0,QB,Sleeper
+Justice Hill,8.0,RB,Sleeper
+Jamaal Pritchett,7.0,WR,Sleeper
+Colston Loveland,6.0,TE,Sleeper
+James Cook,8.0,RB,Sleeper
+Jalen Morton,12.0,QB,Sleeper
+Jahan Dotson,7.0,WR,Sleeper
+Efton Chism,7.0,WR,Sleeper
+Jauan Jennings,7.0,WR,Sleeper
+Rachaad White,8.0,RB,Sleeper
+Malik Washington,7.0,WR,Sleeper
+Sam Darnold,12.0,QB,Sleeper
+Charlie Jones,7.0,WR,Sleeper
+Andy Dalton,12.0,QB,Sleeper
+Jason Brownlee,7.0,WR,Sleeper
+Ja'Corey Brooks,7.0,WR,Sleeper
+Gee Scott,6.0,TE,Sleeper
+Chris Brooks,8.0,RB,Sleeper
+Dylan Laube,8.0,RB,Sleeper
+Andrew Beck,8.0,RB,Sleeper
+Quez Watkins,7.0,WR,Sleeper
+Cade Otton,6.0,TE,Sleeper
+Chris Moore,7.0,WR,Sleeper
+Brenden Bates,6.0,TE,Sleeper
+Kimani Vidal,8.0,RB,Sleeper
+Khalil Herbert,8.0,RB,Sleeper
+Harrison Butker,7.0,K,Sleeper
+Jaxon Smith-Njigba,7.0,WR,Sleeper
+Lew Nichols,8.0,RB,Sleeper
+Isaiah Davis,8.0,RB,Sleeper
+Jaylen Waddle,7.0,WR,Sleeper
+Jahdae Walker,7.0,WR,Sleeper
+Jacardia Wright,8.0,RB,Sleeper
+Baltimore Ravens,7.0,DEF,Sleeper
+Matt LaCosse,6.0,TE,Sleeper
+Clyde Edwards-Helaire,8.0,RB,Sleeper
+Younghoe Koo,7.0,K,Sleeper
+Brandin Cooks,7.0,WR,Sleeper
+Daniel Jones,12.0,QB,Sleeper
+T.J. Hockenson,6.0,TE,Sleeper
+Ryan Fitzgerald,7.0,K,Sleeper
+Chad Ryland,7.0,K,Sleeper
+TreVeyon Henderson,8.0,RB,Sleeper
+Alex Kessman,7.0,K,Sleeper
+C.J. Beathard,12.0,QB,Sleeper
+Isaac TeSlaa,7.0,WR,Sleeper
+D'Andre Swift,8.0,RB,Sleeper
+Geno Smith,12.0,QB,Sleeper
+Corey Kiner,8.0,RB,Sleeper
+Tua Tagovailoa,12.0,QB,Sleeper
+Devin Singletary,8.0,RB,Sleeper
+Ito Smith,8.0,RB,Sleeper
+Jalen Hurts,12.0,QB,Sleeper
+Zach Wilson,12.0,QB,Sleeper
+Elijah Mitchell,8.0,RB,Sleeper
+Ladd McConkey,7.0,WR,Sleeper
+Ricky White,7.0,WR,Sleeper
+Brian Robinson,8.0,RB,Sleeper
+Casey Washington,7.0,WR,Sleeper
+Jake Browning,12.0,QB,Sleeper
+Sam Ehlinger,12.0,QB,Sleeper
+Jeff Wilson,8.0,RB,Sleeper
+Barrett Burns,6.0,TE,Sleeper
+Rome Odunze,7.0,WR,Sleeper
+Michael Wilson,7.0,WR,Sleeper
+Pittsburgh Steelers,7.0,DEF,Sleeper
+Jordan Love,12.0,QB,Sleeper
+Braxton Berrios,7.0,WR,Sleeper
+Matt Gay,7.0,K,Sleeper
+Indianapolis Colts,7.0,DEF,Sleeper
+John Metchie,7.0,WR,Sleeper
+Erick All,6.0,TE,Sleeper
+Nick Westbrook-Ikhine,7.0,WR,Sleeper
+Kalif Raymond,7.0,WR,Sleeper
+KhaDarel Hodge,7.0,WR,Sleeper
+Cooper Rush,12.0,QB,Sleeper
+Hendon Hooker,12.0,QB,Sleeper
+John FitzPatrick,6.0,TE,Sleeper
+Chris Godwin,7.0,WR,Sleeper
+Dawson Knox,6.0,TE,Sleeper
+Simi Fehoko,7.0,WR,Sleeper
+Chandler Brayboy,7.0,WR,Sleeper
+Blake Bortles,12.0,QB,Sleeper
+Xavier Weaver,7.0,WR,Sleeper
+Josh Johnson,12.0,QB,Sleeper
+Jimmy Garoppolo,12.0,QB,Sleeper
+Cameron Dicker,7.0,K,Sleeper
+Will Mallory,6.0,TE,Sleeper
+Isiah Pacheco,8.0,RB,Sleeper
+Kirk Cousins,12.0,QB,Sleeper
+Allen Lazard,7.0,WR,Sleeper
+Jake Ferguson,6.0,TE,Sleeper
+Luke Farrell,6.0,TE,Sleeper
+Curtis Samuel,7.0,WR,Sleeper
+Benny LeMay,8.0,RB,Sleeper
+Bronson Kaufusi,6.0,TE,Sleeper
+Zach Ertz,6.0,TE,Sleeper
+Brady Russell,6.0,TE,Sleeper
+Trey Benson,8.0,RB,Sleeper
+Mark McNamee,7.0,K,Sleeper
+Jimmy Holiday,7.0,WR,Sleeper
+Jake Bobo,7.0,WR,Sleeper
+Isaiah Likely,6.0,TE,Sleeper
+Patrick Mahomes,12.0,QB,Sleeper
+Arizona Cardinals,7.0,DEF,Sleeper
+Demarcus Robinson,7.0,WR,Sleeper
+Isaiah Williams,7.0,WR,Sleeper
+Shedeur Sanders,12.0,QB,Sleeper
+Seattle Seahawks,7.0,DEF,Sleeper
+Ja'Marr Chase,7.0,WR,Sleeper
+Grant Calcaterra,6.0,TE,Sleeper
+Calvin Austin,7.0,WR,Sleeper
+Austin Trammell,7.0,WR,Sleeper
+Dyami Brown,7.0,WR,Sleeper
+Las Vegas Raiders,7.0,DEF,Sleeper
+Evan McPherson,7.0,K,Sleeper
+Jalen Tolbert,7.0,WR,Sleeper
+Justin Herbert,12.0,QB,Sleeper
+Malik Turner,7.0,WR,Sleeper
+Tee Higgins,7.0,WR,Sleeper
+Sam LaPorta,6.0,TE,Sleeper
+Leroy Watson,6.0,TE,Sleeper
+Garrett Greene,12.0,QB,Sleeper
+Lee Smith,6.0,TE,Sleeper
+Maurice Alexander,7.0,WR,Sleeper
+Jamari Thrash,7.0,WR,Sleeper
+Luke Floriea,7.0,WR,Sleeper
+Alex Bachman,7.0,WR,Sleeper
+Jacob Saylors,8.0,RB,Sleeper
+Britain Covey,7.0,WR,Sleeper
+DeMario Douglas,7.0,WR,Sleeper
+Jalen Nailor,7.0,WR,Sleeper
+Case Keenum,12.0,QB,Sleeper
+Luther Burden,7.0,WR,Sleeper
+Dontayvion Wicks,7.0,WR,Sleeper
+New York Jets,7.0,DEF,Sleeper
+Brashard Smith,8.0,RB,Sleeper
+Lamar Jackson,12.0,QB,Sleeper
+Jake Moody,7.0,K,Sleeper
+Jeremy McNichols,8.0,RB,Sleeper
+Dalevon Campbell,7.0,WR,Sleeper
+Sean Clifford,12.0,QB,Sleeper
+Davante Adams,7.0,WR,Sleeper
+Aaron Rodgers,12.0,QB,Sleeper
+Deebo Samuel,7.0,WR,Sleeper
+Bryson Nesbit,6.0,TE,Sleeper
+Brenton Strange,6.0,TE,Sleeper
+Tyler Shough,12.0,QB,Sleeper
+Tyrod Taylor,12.0,QB,Sleeper
+Chase McLaughlin,7.0,K,Sleeper
+Baker Mayfield,12.0,QB,Sleeper
+Jeremy Ruckert,6.0,TE,Sleeper
+Tyler Warren,6.0,TE,Sleeper
+Andre Szmyt,7.0,K,Sleeper
+Lawrence Cager,6.0,TE,Sleeper
+Sean Tucker,8.0,RB,Sleeper
+Michael Carter,8.0,RB,Sleeper
+Christian Watson,7.0,WR,Sleeper
+Nathan Carter,8.0,RB,Sleeper
+Caleb Scott,7.0,WR,Sleeper
+Tre' Harris,7.0,WR,Sleeper
+Jakobi Meyers,7.0,WR,Sleeper
+Tommy Mellott,7.0,WR,Sleeper
+Dontae Fleming,7.0,WR,Sleeper
+Isaac Guerendo,8.0,RB,Sleeper
+Jude McAtamney,7.0,K,Sleeper
+Gavin Bartholomew,6.0,TE,Sleeper
+Tyler Higbee,6.0,TE,Sleeper
+Jordan Moore,7.0,WR,Sleeper
+Nick Chubb,8.0,RB,Sleeper
+Ricky Pearsall,7.0,WR,Sleeper
+Emeka Egbuka,7.0,WR,Sleeper
+Nico Collins,7.0,WR,Sleeper
+Craig Reynolds,8.0,RB,Sleeper
+Bryce Young,12.0,QB,Sleeper
+Terrance Ferguson,6.0,TE,Sleeper
+Dallas Cowboys,7.0,DEF,Sleeper
+Ronnie Bell,7.0,WR,Sleeper
+Josh Oliver,6.0,TE,Sleeper
+Jordan Mason,8.0,RB,Sleeper
+Logan Woodside,12.0,QB,Sleeper
+Luke McCaffrey,7.0,WR,Sleeper
+Jake Elliott,7.0,K,Sleeper
+Rico Dowdle,8.0,RB,Sleeper
+Mason Tipton,7.0,WR,Sleeper
+Roman Wilson,7.0,WR,Sleeper
+Tyler Huntley,12.0,QB,Sleeper
+Caleb Lohner,6.0,TE,Sleeper
+George Pickens,7.0,WR,Sleeper
+Tommy Tremble,6.0,TE,Sleeper
+Tucker Kraft,6.0,TE,Sleeper
+Jake Haener,12.0,QB,Sleeper
+Theo Johnson,6.0,TE,Sleeper
+Braelon Allen,8.0,RB,Sleeper
+Elijah Moore,7.0,WR,Sleeper
+Zaire Mitchell-Paden,6.0,TE,Sleeper
+Garrett Wilson,7.0,WR,Sleeper
+Keaton Mitchell,8.0,RB,Sleeper
+Chris Blair,7.0,WR,Sleeper
+Tahj Brooks,8.0,RB,Sleeper
+Kristian Wilkerson,7.0,WR,Sleeper
+Tyler Badie,8.0,RB,Sleeper
+Nick Williams,7.0,WR,Sleeper
+Washington Commanders,7.0,DEF,Sleeper
+Blake Corum,8.0,RB,Sleeper
+Daniel Bellinger,6.0,TE,Sleeper
+Bryce Pierre,6.0,TE,Sleeper
+Lil'Jordan Humphrey,7.0,WR,Sleeper
+Kaleb Johnson,8.0,RB,Sleeper
+Treyton Welch,6.0,TE,Sleeper
+Woody Marks,8.0,RB,Sleeper
+Cody Schrader,8.0,RB,Sleeper
+JuJu Smith-Schuster,7.0,WR,Sleeper
+British Brooks,8.0,RB,Sleeper
+Russell Gage,7.0,WR,Sleeper
+Tyreek Hill,7.0,WR,Sleeper
+Tim Jones,7.0,WR,Sleeper
+Isaiah Neyor,7.0,WR,Sleeper
+Easton Stick,12.0,QB,Sleeper
+Los Angeles Chargers,7.0,DEF,Sleeper
+Mike Evans,7.0,WR,Sleeper
+Tutu Atwell,7.0,WR,Sleeper
+Tommy Stevens,6.0,TE,Sleeper
+Tyler Allgeier,8.0,RB,Sleeper
+Jimmy Horn,7.0,WR,Sleeper
+Julius Chestnut,8.0,RB,Sleeper
+Nikola Kalinic,6.0,TE,Sleeper
+RJ Harvey,8.0,RB,Sleeper
+Bailey Zappe,12.0,QB,Sleeper
+Velus Jones,7.0,WR,Sleeper
+Hunter Long,6.0,TE,Sleeper
+Savion Williams,7.0,WR,Sleeper
+Kalif Jackson,6.0,TE,Sleeper
+Bryce Oliver,7.0,WR,Sleeper
+Deven Thompkins,7.0,WR,Sleeper
+Irvin Charles,7.0,WR,Sleeper
+Tim Patrick,7.0,WR,Sleeper
+Ben Sinnott,6.0,TE,Sleeper
+Jack Doyle,6.0,TE,Sleeper
+Derrick Henry,8.0,RB,Sleeper
+Nick Schuessler,12.0,QB,Sleeper
+Cam Ward,12.0,QB,Sleeper
+Jerome Ford,8.0,RB,Sleeper
+D'Ernest Johnson,8.0,RB,Sleeper
+Tai Felton,7.0,WR,Sleeper
+Devin Duvernay,7.0,WR,Sleeper
+Puka Nacua,7.0,WR,Sleeper
+Andrei Iosivas,7.0,WR,Sleeper
+Tre Watson,6.0,TE,Sleeper
+JaMycal Hasty,8.0,RB,Sleeper
+Keleki Latu,6.0,TE,Sleeper
+Malachi Corley,7.0,WR,Sleeper
+Tampa Bay Buccaneers,7.0,DEF,Sleeper
+Calvin Ridley,7.0,WR,Sleeper
+Josh Reynolds,7.0,WR,Sleeper
+Jack Stoll,6.0,TE,Sleeper
+Brayden Willis,6.0,TE,Sleeper
+Kenny Pickett,12.0,QB,Sleeper
+Darnell Washington,6.0,TE,Sleeper
+Will Shipley,8.0,RB,Sleeper
+Chimere Dike,7.0,WR,Sleeper
+Cleveland Browns,7.0,DEF,Sleeper
+A.J. Brown,7.0,WR,Sleeper
+Christian McCaffrey,8.0,RB,Sleeper
+Gunner Olszewski,7.0,WR,Sleeper
+Elijah McGuire,8.0,RB,Sleeper
+JaQuae Jackson,7.0,WR,Sleeper
+Justin Fields,12.0,QB,Sleeper
+Keith Kirkwood,7.0,WR,Sleeper
+Saquon Barkley,8.0,RB,Sleeper
+Hunter Dekkers,12.0,QB,Sleeper
+James Mitchell,6.0,TE,Sleeper
+Zach Horton,6.0,TE,Sleeper
+Tony Pollard,8.0,RB,Sleeper
+Michael Bandy,7.0,WR,Sleeper
+Stephen Gosnell,7.0,WR,Sleeper
+George Holani,8.0,RB,Sleeper
+Clayton Tune,12.0,QB,Sleeper
+Dalen Cambre,7.0,WR,Sleeper
+Jaylin Lane,7.0,WR,Sleeper
+Tre Tucker,7.0,WR,Sleeper
+Trey McBride,6.0,TE,Sleeper
+Quintin Morris,6.0,TE,Sleeper
+Alec Pierce,7.0,WR,Sleeper
+Sean McKeon,6.0,TE,Sleeper
+Kedon Slovis,12.0,QB,Sleeper
+Hunter Henry,6.0,TE,Sleeper
+Mitchell Trubisky,12.0,QB,Sleeper
+Trevor Lawrence,12.0,QB,Sleeper
+Jaxson Dart,12.0,QB,Sleeper
+Evan Engram,6.0,TE,Sleeper
+Jacory Croskey-Merritt,8.0,RB,Sleeper
+Chris Manhertz,6.0,TE,Sleeper
+Will Grier,12.0,QB,Sleeper
+Antonio Gibson,8.0,RB,Sleeper
+Josh Williams,8.0,RB,Sleeper
+Matt Prater,7.0,K,Sleeper
+Teagan Quitoriano,6.0,TE,Sleeper
+J.J. McCarthy,12.0,QB,Sleeper
+Sincere McCormick,8.0,RB,Sleeper
+Rashid Shaheed,7.0,WR,Sleeper
+Olamide Zaccheaus,7.0,WR,Sleeper
+KJ Hill,7.0,WR,Sleeper
+Will Reichard,7.0,K,Sleeper
+Isaiah Hodgins,7.0,WR,Sleeper
+Ashton Jeanty,8.0,RB,Sleeper
+Riley Leonard,12.0,QB,Sleeper
+Mitchell Evans,6.0,TE,Sleeper
+Atlanta Falcons,7.0,DEF,Sleeper
+Chris Rodriguez,8.0,RB,Sleeper
+DJ Moore,7.0,WR,Sleeper
+Dallas Goedert,6.0,TE,Sleeper
+Traeshon Holden,7.0,WR,Sleeper
+Carolina Panthers,7.0,DEF,Sleeper
+Mason Kinsey,7.0,WR,Sleeper
+Adam Thielen,7.0,WR,Sleeper
+Ben Sims,6.0,TE,Sleeper
+Kaden Davis,7.0,WR,Sleeper
+Ollie Gordon,8.0,RB,Sleeper
+Robert Tonyan,6.0,TE,Sleeper
+Eric Saubert,6.0,TE,Sleeper
+Tyler Conklin,6.0,TE,Sleeper
+KaVontae Turpin,7.0,WR,Sleeper
+Tyrone Tracy,8.0,RB,Sleeper
+Max Brosmer,12.0,QB,Sleeper
+Patrick Herbert,6.0,TE,Sleeper
+Tyler Lockett,7.0,WR,Sleeper
+James Proche,7.0,WR,Sleeper
+Brandon Allen,12.0,QB,Sleeper
+Rashee Rice,7.0,WR,Sleeper
+Myles White,7.0,WR,Sleeper
+Connor Bazelak,12.0,QB,Sleeper
+Jacksonville Jaguars,7.0,DEF,Sleeper
+De'Von Achane,8.0,RB,Sleeper
+Marvin Mims,7.0,WR,Sleeper
+Michael Penix,12.0,QB,Sleeper
+Mike Gesicki,6.0,TE,Sleeper
+Los Angeles Rams,7.0,DEF,Sleeper
+Amar Johnson,8.0,RB,Sleeper
+Thomas Yassmin,6.0,TE,Sleeper
+Troy Franklin,7.0,WR,Sleeper
+Hunter Renfrow,7.0,WR,Sleeper
+Darren Fells,6.0,TE,Sleeper
+Jalen Richard,8.0,RB,Sleeper
+Nick Kallerup,6.0,TE,Sleeper
+Dante Miller,8.0,RB,Sleeper
+Adam Trautman,6.0,TE,Sleeper
+Bijan Robinson,8.0,RB,Sleeper
+DeVonta Smith,7.0,WR,Sleeper
+Travis Hunter,7.0,WR,Sleeper
+Tommy DeVito,12.0,QB,Sleeper
+Devin Neal,8.0,RB,Sleeper
+Shane Buechele,12.0,QB,Sleeper
+David Bell,7.0,WR,Sleeper
+Tyler Goodson,8.0,RB,Sleeper
+Bhayshul Tuten,8.0,RB,Sleeper
+Chris Boswell,7.0,K,Sleeper
+Nick Nash,7.0,WR,Sleeper
+Jaydon Blue,8.0,RB,Sleeper
+Lenny Krieg,7.0,K,Sleeper
+Cody White,7.0,WR,Sleeper
+Raheem Mostert,8.0,RB,Sleeper
+Drake London,7.0,WR,Sleeper
+Mack Hollins,7.0,WR,Sleeper
+Hollywood Brown,7.0,WR,Sleeper
+Julian Hill,6.0,TE,Sleeper
+Tay Martin,7.0,WR,Sleeper
+Thomas Fidone,6.0,TE,Sleeper
+Stetson Bennett,12.0,QB,Sleeper
+Anthony Richardson,12.0,QB,Sleeper
+Xavier Worthy,7.0,WR,Sleeper
+Kameron Johnson,7.0,WR,Sleeper
+Payne Durham,6.0,TE,Sleeper
+Davis Allen,6.0,TE,Sleeper
+Joshua Dobbs,12.0,QB,Sleeper
+Brett Rypien,12.0,QB,Sleeper
+Elic Ayomanor,7.0,WR,Sleeper
+Mark Redman,6.0,TE,Sleeper
+Blake Whiteheart,6.0,TE,Sleeper
+Zavier Scott,8.0,RB,Sleeper
+Jahmyr Gibbs,8.0,RB,Sleeper
+Quintez Cephus,7.0,WR,Sleeper
+Jared Goff,12.0,QB,Sleeper
+Cooper Kupp,7.0,WR,Sleeper
+Trey Lance,12.0,QB,Sleeper
+Jack Bech,7.0,WR,Sleeper
+New Orleans Saints,7.0,DEF,Sleeper
+Green Bay Packers,7.0,DEF,Sleeper
+Derius Davis,7.0,WR,Sleeper
+Feleipe Franks,6.0,TE,Sleeper
+Cam Little,7.0,K,Sleeper
+Jameson Williams,7.0,WR,Sleeper
+Darnell Mooney,7.0,WR,Sleeper
+Dee Eskridge,7.0,WR,Sleeper
+Moliki Matavao,6.0,TE,Sleeper
+Gary Brightwell,8.0,RB,Sleeper
+Marvin Harrison,7.0,WR,Sleeper
+Cameron Latu,6.0,TE,Sleeper
+Jameis Winston,12.0,QB,Sleeper
+Zach Terrell,12.0,QB,Sleeper
+Keenan Allen,7.0,WR,Sleeper
+Nick Vannett,6.0,TE,Sleeper
+Kurtis Rourke,12.0,QB,Sleeper
+Reggie Gilliam,8.0,RB,Sleeper
+Jared Wiley,6.0,TE,Sleeper
+Trevor Etienne,8.0,RB,Sleeper
+Arian Smith,7.0,WR,Sleeper
+Dan Chisena,7.0,WR,Sleeper
+Albert Okwuegbunam,6.0,TE,Sleeper
+Clayton Thorson,12.0,QB,Sleeper
+Brittain Brown,8.0,RB,Sleeper
+Charlie Smyth,7.0,K,Sleeper
+Brock Purdy,12.0,QB,Sleeper
+Russell Wilson,12.0,QB,Sleeper
+Dont'e Thornton,7.0,WR,Sleeper
+Dominic Lovett,7.0,WR,Sleeper
+Brock Wright,6.0,TE,Sleeper
+Brevyn Spann-Ford,6.0,TE,Sleeper
+Quinshon Judkins,8.0,RB,Sleeper
+Jordan Watkins,7.0,WR,Sleeper
+Jeremiah Webb,7.0,WR,Sleeper
+Terrace Marshall,7.0,WR,Sleeper
+Shedrick Jackson,7.0,WR,Sleeper
+Tavien Feaster,8.0,RB,Sleeper
+Franko House,6.0,TE,Sleeper
+Connor Heyward,6.0,TE,Sleeper
+Kenneth Walker,8.0,RB,Sleeper
+Dalton Kincaid,6.0,TE,Sleeper
+John Jiles,7.0,WR,Sleeper
+Cam Grandy,6.0,TE,Sleeper
+Amon-Ra St. Brown,7.0,WR,Sleeper
+Chris Oladokun,12.0,QB,Sleeper
+Dylan Drummond,7.0,WR,Sleeper
+Coleman Owen,7.0,WR,Sleeper
+DJ Uiagalelei,12.0,QB,Sleeper
+Konata Mumpfield,7.0,WR,Sleeper
+Luke Musgrave,6.0,TE,Sleeper
+Dameon Pierce,8.0,RB,Sleeper
+Zay Jones,7.0,WR,Sleeper
+Samaje Perine,8.0,RB,Sleeper
+Brady Cook,12.0,QB,Sleeper
+Kene Nwangwu,8.0,RB,Sleeper
+Jaylin Noel,7.0,WR,Sleeper
+Eric Gray,8.0,RB,Sleeper
+Pat Bryant,7.0,WR,Sleeper
+Cole Kmet,6.0,TE,Sleeper
+Tetairoa McMillan,7.0,WR,Sleeper
+Blake Grupe,7.0,K,Sleeper
+Malik Heath,7.0,WR,Sleeper
+Sal Cannella,6.0,TE,Sleeper
+Tru Edwards,7.0,WR,Sleeper
+Ben Yurosek,6.0,TE,Sleeper
+Gabe Davis,7.0,WR,Sleeper
+Wil Lutz,7.0,K,Sleeper
+Allen Hurns,7.0,WR,Sleeper
+Tejhaun Palmer,7.0,WR,Sleeper
+Bo Nix,12.0,QB,Sleeper
+Stefon Diggs,7.0,WR,Sleeper
+Kenneth Gainwell,8.0,RB,Sleeper
+Travis Etienne,8.0,RB,Sleeper
+Drew Sample,6.0,TE,Sleeper
+Ben Skowronek,7.0,WR,Sleeper
+Stone Smartt,6.0,TE,Sleeper
+CJ Dippre,6.0,TE,Sleeper
+Rasheen Ali,8.0,RB,Sleeper
+Kyle Monangai,8.0,RB,Sleeper
+Ronnie Rivers,8.0,RB,Sleeper
+Messiah Swinson,6.0,TE,Sleeper
+Tanner Conner,6.0,TE,Sleeper
+Desmond Ridder,12.0,QB,Sleeper
+Teddy Bridgewater,12.0,QB,Sleeper
+Eddy Pineiro,7.0,K,Sleeper
+Gage Larvadain,7.0,WR,Sleeper
+Brian Thomas,7.0,WR,Sleeper
+David Montgomery,8.0,RB,Sleeper
+Max Mang,6.0,TE,Sleeper
+Scotty Miller,7.0,WR,Sleeper
+Carlos Washington,8.0,RB,Sleeper
+Jonathon Brooks,8.0,RB,Sleeper
+Kyle Allen,12.0,QB,Sleeper
+Tory Horton,7.0,WR,Sleeper
+Dylan Sampson,8.0,RB,Sleeper
+Ross Dwelley,6.0,TE,Sleeper
+Caden Prieskorn,6.0,TE,Sleeper
+Ja'seem Reed,7.0,WR,Sleeper
+Jelani Woods,6.0,TE,Sleeper
+Miami Dolphins,7.0,DEF,Sleeper
+Charlie Woerner,6.0,TE,Sleeper
+Gunnar Helm,6.0,TE,Sleeper
+Rashod Bateman,7.0,WR,Sleeper
+Kendric Pryor,7.0,WR,Sleeper
+Jacoby Jones,7.0,WR,Sleeper
+Thomas Odukoya,6.0,TE,Sleeper
+Ainias Smith,7.0,WR,Sleeper
+Xavier Gipson,7.0,WR,Sleeper
+Terry McLaurin,7.0,WR,Sleeper
+Christian Kirk,7.0,WR,Sleeper
+Raheim Sanders,8.0,RB,Sleeper
+AJ Henning,7.0,WR,Sleeper
+Kendrick Bourne,7.0,WR,Sleeper
+Mason Taylor,6.0,TE,Sleeper
+Lawrance Toafili,8.0,RB,Sleeper
+Cam Skattebo,8.0,RB,Sleeper
+Xavier Hutchinson,7.0,WR,Sleeper
+David Sills,7.0,WR,Sleeper
+DeeJay Dallas,8.0,RB,Sleeper
+Jordan Whittington,7.0,WR,Sleeper
+Trevor Siemian,12.0,QB,Sleeper
+Ian Thomas,6.0,TE,Sleeper
+Tank Bigsby,8.0,RB,Sleeper
+Detroit Lions,7.0,DEF,Sleeper
+Joe Mixon,8.0,RB,Sleeper
+AJ Barner,6.0,TE,Sleeper
+Buffalo Bills,7.0,DEF,Sleeper
+Kendre Miller,8.0,RB,Sleeper
+Joshua Palmer,7.0,WR,Sleeper
+Rhamondre Stevenson,8.0,RB,Sleeper
+Kyle Williams,7.0,WR,Sleeper
+Temarrick Hemingway,6.0,TE,Sleeper
+Kyren Williams,8.0,RB,Sleeper
+Philadelphia Eagles,7.0,DEF,Sleeper
+Romeo Doubs,7.0,WR,Sleeper
+Hassan Haskins,8.0,RB,Sleeper
+Carson Wentz,12.0,QB,Sleeper
+Graham Mertz,12.0,QB,Sleeper
+Pat Freiermuth,6.0,TE,Sleeper
+Dareke Young,7.0,WR,Sleeper
+Emari Demercado,8.0,RB,Sleeper
+Javon Baker,7.0,WR,Sleeper
+Theo Wease,7.0,WR,Sleeper
+Cam Miller,12.0,QB,Sleeper
+Garrett Scantling,7.0,WR,Sleeper
+Dillon Gabriel,12.0,QB,Sleeper
+Josh Whyle,6.0,TE,Sleeper
+Travis Vokolek,6.0,TE,Sleeper
+Malik Willis,12.0,QB,Sleeper
+Sione Vaki,8.0,RB,Sleeper
+Jaylen Warren,8.0,RB,Sleeper
+Spencer Rattler,12.0,QB,Sleeper
+Gardner Minshew,12.0,QB,Sleeper
+Mike White,12.0,QB,Sleeper
+San Francisco 49ers,7.0,DEF,Sleeper
+Jarrett Stidham,12.0,QB,Sleeper
+Kyle McCord,12.0,QB,Sleeper
+Xavier Legette,7.0,WR,Sleeper
+Carson Steele,8.0,RB,Sleeper
+Keon Coleman,7.0,WR,Sleeper
+Justin Shorter,7.0,WR,Sleeper
+Frank Gore,8.0,RB,Sleeper
+Noah Fant,6.0,TE,Sleeper
+Ben Sauls,7.0,K,Sleeper
+Luke Lachey,6.0,TE,Sleeper
+Quinn Ewers,12.0,QB,Sleeper
+Trent Sherfield,7.0,WR,Sleeper
+Chase Brown,8.0,RB,Sleeper
+Xavier Restrepo,7.0,WR,Sleeper
+Bo Melton,7.0,WR,Sleeper
+Thayer Thomas,7.0,WR,Sleeper
+Elijah Arroyo,6.0,TE,Sleeper
+Glen Coffee,8.0,RB,Sleeper
+Ja'Quinden Jackson,8.0,RB,Sleeper
+Mark Andrews,6.0,TE,Sleeper
+Jayden Higgins,7.0,WR,Sleeper
+Tylan Wallace,7.0,WR,Sleeper
+Cornelius Johnson,7.0,WR,Sleeper
+Colson Yankoff,6.0,TE,Sleeper
+Austin Hooper,6.0,TE,Sleeper
+Justin Jefferson,7.0,WR,Sleeper
+Tyrell Shavers,7.0,WR,Sleeper
+Ja'Tavion Sanders,6.0,TE,Sleeper
+Andy Borregales,7.0,K,Sleeper
+Tanner McKee,12.0,QB,Sleeper
+Durham Smythe,6.0,TE,Sleeper
+Quentin Johnston,7.0,WR,Sleeper
+New York Giants,7.0,DEF,Sleeper
+Isaiah Bond,7.0,WR,Sleeper
+Tennessee Titans,7.0,DEF,Sleeper
+Micah Simon,7.0,WR,Sleeper
+Adonai Mitchell,7.0,WR,Sleeper
+Hayden Rucci,6.0,TE,Sleeper
+Cam Akers,8.0,RB,Sleeper
+Jamal Agnew,7.0,WR,Sleeper
+Tahj Washington,7.0,WR,Sleeper
+DJ Giddens,8.0,RB,Sleeper
+Jordan James,8.0,RB,Sleeper
+Erik Ezukanma,7.0,WR,Sleeper
+Chris Olave,7.0,WR,Sleeper
+Josh Allen,12.0,QB,Sleeper
+Jackson Meeks,7.0,WR,Sleeper
+Al Riles,7.0,WR,Sleeper
+Quentin Skinner,7.0,WR,Sleeper
+Nick Folk,7.0,K,Sleeper
+Josh Downs,7.0,WR,Sleeper
+Anthony Gould,7.0,WR,Sleeper
+Kylen Granson,6.0,TE,Sleeper
+David Martin-Robinson,6.0,TE,Sleeper
+Joshua Perkins,6.0,TE,Sleeper
+Will Dissly,6.0,TE,Sleeper
+Ty Johnson,8.0,RB,Sleeper
+Brandon Aiyuk,7.0,WR,Sleeper
+LeQuint Allen,8.0,RB,Sleeper
+Zay Flowers,7.0,WR,Sleeper
+Greg Dulcich,6.0,TE,Sleeper
+Harold Fannin,6.0,TE,Sleeper
+Ryan Miller,7.0,WR,Sleeper
+Josiah Deguara,6.0,TE,Sleeper
+Jonnu Smith,6.0,TE,Sleeper
+Wan'Dale Robinson,7.0,WR,Sleeper
+Keilan Robinson,8.0,RB,Sleeper
+Lucas Krull,6.0,TE,Sleeper
+Xavier Smith,7.0,WR,Sleeper
+Van Jefferson,7.0,WR,Sleeper
+Drew Ogletree,6.0,TE,Sleeper
+Dennis Houston,7.0,WR,Sleeper
+Carter Bradley,12.0,QB,Sleeper
+Parker Romo,7.0,K,Sleeper
+Joey Slye,7.0,K,Sleeper
+Carter Runyon,6.0,TE,Sleeper
+Skyy Moore,7.0,WR,Sleeper
+Courtland Sutton,7.0,WR,Sleeper
+Jalin Hyatt,7.0,WR,Sleeper
+Chicago Bears,7.0,DEF,Sleeper
+Trey Palmer,7.0,WR,Sleeper
+Courtney Jackson,7.0,WR,Sleeper
+Bam Knight,8.0,RB,Sleeper
+Chuba Hubbard,8.0,RB,Sleeper
+Princeton Fant,6.0,TE,Sleeper
+Devaughn Vele,7.0,WR,Sleeper
+Joshua Karty,7.0,K,Sleeper
+Harrison Bryant,6.0,TE,Sleeper
+Ray-Ray McCloud,7.0,WR,Sleeper
+Kareem Hunt,8.0,RB,Sleeper
+Charlie Kolar,6.0,TE,Sleeper
+Joshua Simon,6.0,TE,Sleeper
+Sterling Shepard,7.0,WR,Sleeper
+Kerrith Whyte,8.0,RB,Sleeper
+Dare Ogunbowale,8.0,RB,Sleeper
+Ihmir Smith-Marsette,7.0,WR,Sleeper
+Eldridge Massington,7.0,WR,Sleeper
+Terrell Jennings,8.0,RB,Sleeper
+Kevin Austin,7.0,WR,Sleeper
+Cincinnati Bengals,7.0,DEF,Sleeper
+Tyler Loop,7.0,K,Sleeper
+Michael Mayer,6.0,TE,Sleeper
+Ben Roethlisberger,12.0,QB,Sleeper
+Cairo Santos,7.0,K,Sleeper
+Malik Davis,8.0,RB,Sleeper
+Luke Grimm,7.0,WR,Sleeper
+Sam Hartman,12.0,QB,Sleeper
+A.T. Perry,7.0,WR,Sleeper
+Roschon Johnson,8.0,RB,Sleeper
+Junior Bergen,7.0,WR,Sleeper
+Ka'imi Fairbairn,7.0,K,Sleeper
+Laquon Treadwell,7.0,WR,Sleeper
+Sam Howell,12.0,QB,Sleeper
+Caleb Williams,12.0,QB,Sleeper
+Alvin Kamara,8.0,RB,Sleeper
+Jarquez Hunter,8.0,RB,Sleeper
+Nikko Remigio,7.0,WR,Sleeper
+Tip Reiman,6.0,TE,Sleeper
+Cedrick Wilson,7.0,WR,Sleeper
+Ryan Flournoy,7.0,WR,Sleeper
+Jeff Driskel,12.0,QB,Sleeper
+Aaron Bailey,12.0,QB,Sleeper
+Luke Schoonmaker,6.0,TE,Sleeper
+Emanuel Wilson,8.0,RB,Sleeper
+JP Richardson,7.0,WR,Sleeper
+Jason Myers,7.0,K,Sleeper
+Jacoby Brissett,12.0,QB,Sleeper
+C.J. Stroud,12.0,QB,Sleeper
+Elijah Higgins,6.0,TE,Sleeper
+Mason Rudolph,12.0,QB,Sleeper
+Joel Wilson,6.0,TE,Sleeper
+Greg Dortch,7.0,WR,Sleeper
+Myles Price,7.0,WR,Sleeper
+Denver Broncos,7.0,DEF,Sleeper
+Nate Adkins,6.0,TE,Sleeper
+Tank Dell,7.0,WR,Sleeper
+Marcus Mariota,12.0,QB,Sleeper
+Jake Bates,7.0,K,Sleeper
+Jared Wayne,7.0,WR,Sleeper
+Travis Kelce,6.0,TE,Sleeper
+Jordan Mims,8.0,RB,Sleeper
+Darius Slayton,7.0,WR,Sleeper
+Deshaun Watson,12.0,QB,Sleeper
+Nick Mullens,12.0,QB,Sleeper
+Brennan Presley,7.0,WR,Sleeper
+Zamir White,8.0,RB,Sleeper
+Jawhar Jordan,8.0,RB,Sleeper
+Daniel Carlson,7.0,K,Sleeper
+Jalen Milroe,12.0,QB,Sleeper
+Darren Waller,6.0,TE,Sleeper
+Chris Collier,8.0,RB,Sleeper
+DeAndre Hopkins,7.0,WR,Sleeper
+Jalen Brooks,7.0,WR,Sleeper
+Jack Westover,6.0,TE,Sleeper
+Stephen Carlson,6.0,TE,Sleeper
+Chig Okonkwo,6.0,TE,Sleeper
+Miles Sanders,8.0,RB,Sleeper
+KeAndre Lambert-Smith,7.0,WR,Sleeper
+Tyrone Broden,7.0,WR,Sleeper
+Tyson Bagent,12.0,QB,Sleeper
+Marquez Valdes-Scantling,7.0,WR,Sleeper
+Blake Watson,8.0,RB,Sleeper
+Rivaldo Fairweather,6.0,TE,Sleeper
+Jeshaun Jones,7.0,WR,Sleeper
+Brandon McManus,7.0,K,Sleeper
+Wyatt Houston,6.0,TE,Sleeper
+Brandon Smith,7.0,WR,Sleeper
+Josh Jacobs,8.0,RB,Sleeper
+Zach Charbonnet,8.0,RB,Sleeper
+Adrian Martinez,12.0,QB,Sleeper
+Parris Campbell,7.0,WR,Sleeper
+Johnny Mundt,6.0,TE,Sleeper
+Mac Jones,12.0,QB,Sleeper
+Deuce Vaughn,8.0,RB,Sleeper
+Brock Bowers,6.0,TE,Sleeper
+Ulysses Bentley,8.0,RB,Sleeper
+Jayden Daniels,12.0,QB,Sleeper
+Tom Kennedy,7.0,WR,Sleeper
+Spencer Shrader,7.0,K,Sleeper
+Malik Cunningham,7.0,WR,Sleeper
+Dalton Schultz,6.0,TE,Sleeper
+Jaylen Wright,8.0,RB,Sleeper
+Jackson Hawes,6.0,TE,Sleeper
+Will Sheppard,7.0,WR,Sleeper
+Jalen Cropper,7.0,WR,Sleeper
+Ahmani Marshall,8.0,RB,Sleeper
+Jordan Addison,7.0,WR,Sleeper
+David Njoku,6.0,TE,Sleeper
+Kyler Murray,12.0,QB,Sleeper
+Tanner Hudson,6.0,TE,Sleeper
+Beaux Collins,7.0,WR,Sleeper
+Andre Baccellia,7.0,WR,Sleeper
+Tyler Johnson,7.0,WR,Sleeper
+Mitch Tinsley,7.0,WR,Sleeper
+Michael Pittman,7.0,WR,Sleeper
+Ray Davis,8.0,RB,Sleeper
+Patrick Murtagh,6.0,TE,Sleeper
+Juwan Johnson,6.0,TE,Sleeper
+Tez Johnson,7.0,WR,Sleeper
+Tucker Fisk,6.0,TE,Sleeper
+Jermaine Burton,7.0,WR,Sleeper
+DK Metcalf,7.0,WR,Sleeper
+Breece Hall,8.0,RB,Sleeper
+Jakobie Keeney-James,7.0,WR,Sleeper
+Kansas City Chiefs,7.0,DEF,Sleeper
+John Bates,6.0,TE,Sleeper
+Shaq Roland,7.0,WR,Sleeper
+Ashton Dulin,7.0,WR,Sleeper
+J.K. Dobbins,8.0,RB,Sleeper
+Jonathan Taylor,8.0,RB,Sleeper
+Drake Maye,12.0,QB,Sleeper
+A.J. Dillon,8.0,RB,Sleeper
+Tanner Taula,6.0,TE,Sleeper
+Devin Culp,6.0,TE,Sleeper
+Javonte Williams,8.0,RB,Sleeper
+Chase Edmonds,8.0,RB,Sleeper
+Minnesota Vikings,7.0,DEF,Sleeper
+Tyquan Thornton,7.0,WR,Sleeper
+Skyler Howard,12.0,QB,Sleeper
+Phillip Dorsett,7.0,WR,Sleeper
+Colby Parkinson,6.0,TE,Sleeper
+Donovan Edwards,8.0,RB,Sleeper
+Matt Sokol,6.0,TE,Sleeper
+Riley Patterson,7.0,K,Sleeper
+Jalen Royals,7.0,WR,Sleeper
+Matthew Golden,7.0,WR,Sleeper
+Wendell Smallwood,8.0,RB,Sleeper
+Noah Brown,7.0,WR,Sleeper
+A.J. Brown,7.0,WR,Combined (Sleeper)
+A.J. Dillon,8.0,RB,Combined (Sleeper)
+A.T. Perry,7.0,WR,Combined (Sleeper)
+AJ Barner,6.0,TE,Combined (Sleeper)
+AJ Henning,7.0,WR,Combined (Sleeper)
+Aaron Bailey,12.0,QB,Combined (Sleeper)
+Aaron Rodgers,12.0,QB,Combined (Sleeper)
+Adam Thielen,7.0,WR,Combined (Sleeper)
+Adam Trautman,6.0,TE,Combined (Sleeper)
+Adonai Mitchell,7.0,WR,Combined (Sleeper)
+Adrian Martinez,12.0,QB,Combined (Sleeper)
+Ahmani Marshall,8.0,RB,Combined (Sleeper)
+Ainias Smith,7.0,WR,Combined (Sleeper)
+Al Riles,7.0,WR,Combined (Sleeper)
+Albert Okwuegbunam,6.0,TE,Combined (Sleeper)
+Alec Pierce,7.0,WR,Combined (Sleeper)
+Alex Bachman,7.0,WR,Combined (Sleeper)
+Alex Kessman,7.0,K,Combined (Sleeper)
+Allen Hurns,7.0,WR,Combined (Sleeper)
+Allen Lazard,7.0,WR,Combined (Sleeper)
+Alvin Kamara,8.0,RB,Combined (Sleeper)
+Amar Johnson,8.0,RB,Combined (Sleeper)
+Ameer Abdullah,8.0,RB,Combined (Sleeper)
+Amon-Ra St. Brown,7.0,WR,Combined (Sleeper)
+Andre Baccellia,7.0,WR,Combined (Sleeper)
+Andre Szmyt,7.0,K,Combined (Sleeper)
+Andrei Iosivas,7.0,WR,Combined (Sleeper)
+Andrew Beck,8.0,RB,Combined (Sleeper)
+Andy Borregales,7.0,K,Combined (Sleeper)
+Andy Dalton,12.0,QB,Combined (Sleeper)
+Anthony Gould,7.0,WR,Combined (Sleeper)
+Anthony Richardson,12.0,QB,Combined (Sleeper)
+Antonio Gibson,8.0,RB,Combined (Sleeper)
+Arian Smith,7.0,WR,Combined (Sleeper)
+Arizona Cardinals,7.0,DEF,Combined (Sleeper)
+Ashton Dulin,7.0,WR,Combined (Sleeper)
+Ashton Jeanty,8.0,RB,Combined (Sleeper)
+Atlanta Falcons,7.0,DEF,Combined (Sleeper)
+Audric Estime,8.0,RB,Combined (Sleeper)
+Austin Hooper,6.0,TE,Combined (Sleeper)
+Austin Trammell,7.0,WR,Combined (Sleeper)
+Bailey Zappe,12.0,QB,Combined (Sleeper)
+Baker Mayfield,12.0,QB,Combined (Sleeper)
+Baltimore Ravens,7.0,DEF,Combined (Sleeper)
+Bam Knight,8.0,RB,Combined (Sleeper)
+Barrett Burns,6.0,TE,Combined (Sleeper)
+Beaux Collins,7.0,WR,Combined (Sleeper)
+Ben Roethlisberger,12.0,QB,Combined (Sleeper)
+Ben Sauls,7.0,K,Combined (Sleeper)
+Ben Sims,6.0,TE,Combined (Sleeper)
+Ben Sinnott,6.0,TE,Combined (Sleeper)
+Ben Skowronek,7.0,WR,Combined (Sleeper)
+Ben Yurosek,6.0,TE,Combined (Sleeper)
+Benny LeMay,8.0,RB,Combined (Sleeper)
+Bhayshul Tuten,8.0,RB,Combined (Sleeper)
+Bijan Robinson,8.0,RB,Combined (Sleeper)
+Blake Bortles,12.0,QB,Combined (Sleeper)
+Blake Corum,8.0,RB,Combined (Sleeper)
+Blake Grupe,7.0,K,Combined (Sleeper)
+Blake Watson,8.0,RB,Combined (Sleeper)
+Blake Whiteheart,6.0,TE,Combined (Sleeper)
+Bo Melton,7.0,WR,Combined (Sleeper)
+Bo Nix,12.0,QB,Combined (Sleeper)
+Brady Cook,12.0,QB,Combined (Sleeper)
+Brady Russell,6.0,TE,Combined (Sleeper)
+Braelon Allen,8.0,RB,Combined (Sleeper)
+Brandin Cooks,7.0,WR,Combined (Sleeper)
+Brandon Aiyuk,7.0,WR,Combined (Sleeper)
+Brandon Allen,12.0,QB,Combined (Sleeper)
+Brandon Aubrey,7.0,K,Combined (Sleeper)
+Brandon McManus,7.0,K,Combined (Sleeper)
+Brandon Smith,7.0,WR,Combined (Sleeper)
+Brashard Smith,8.0,RB,Combined (Sleeper)
+Braxton Berrios,7.0,WR,Combined (Sleeper)
+Brayden Willis,6.0,TE,Combined (Sleeper)
+Breece Hall,8.0,RB,Combined (Sleeper)
+Brenden Bates,6.0,TE,Combined (Sleeper)
+Brennan Presley,7.0,WR,Combined (Sleeper)
+Brenton Strange,6.0,TE,Combined (Sleeper)
+Brett Rypien,12.0,QB,Combined (Sleeper)
+Brevyn Spann-Ford,6.0,TE,Combined (Sleeper)
+Brian Robinson,8.0,RB,Combined (Sleeper)
+Brian Thomas,7.0,WR,Combined (Sleeper)
+Britain Covey,7.0,WR,Combined (Sleeper)
+British Brooks,8.0,RB,Combined (Sleeper)
+Brittain Brown,8.0,RB,Combined (Sleeper)
+Brock Bowers,6.0,TE,Combined (Sleeper)
+Brock Purdy,12.0,QB,Combined (Sleeper)
+Brock Wright,6.0,TE,Combined (Sleeper)
+Bronson Kaufusi,6.0,TE,Combined (Sleeper)
+Bryce Oliver,7.0,WR,Combined (Sleeper)
+Bryce Pierre,6.0,TE,Combined (Sleeper)
+Bryce Young,12.0,QB,Combined (Sleeper)
+Brycen Tremayne,7.0,WR,Combined (Sleeper)
+Bryson Nesbit,6.0,TE,Combined (Sleeper)
+Bucky Irving,8.0,RB,Combined (Sleeper)
+Buffalo Bills,7.0,DEF,Combined (Sleeper)
+C.J. Beathard,12.0,QB,Combined (Sleeper)
+C.J. Stroud,12.0,QB,Combined (Sleeper)
+CJ Dippre,6.0,TE,Combined (Sleeper)
+Cade Otton,6.0,TE,Combined (Sleeper)
+Caden Prieskorn,6.0,TE,Combined (Sleeper)
+Cairo Santos,7.0,K,Combined (Sleeper)
+Caleb Lohner,6.0,TE,Combined (Sleeper)
+Caleb Scott,7.0,WR,Combined (Sleeper)
+Caleb Williams,12.0,QB,Combined (Sleeper)
+Calvin Austin,7.0,WR,Combined (Sleeper)
+Calvin Ridley,7.0,WR,Combined (Sleeper)
+Cam Akers,8.0,RB,Combined (Sleeper)
+Cam Grandy,6.0,TE,Combined (Sleeper)
+Cam Little,7.0,K,Combined (Sleeper)
+Cam Miller,12.0,QB,Combined (Sleeper)
+Cam Skattebo,8.0,RB,Combined (Sleeper)
+Cam Ward,12.0,QB,Combined (Sleeper)
+Cameron Dicker,7.0,K,Combined (Sleeper)
+Cameron Latu,6.0,TE,Combined (Sleeper)
+Carlos Washington,8.0,RB,Combined (Sleeper)
+Carolina Panthers,7.0,DEF,Combined (Sleeper)
+Carson Steele,8.0,RB,Combined (Sleeper)
+Carson Wentz,12.0,QB,Combined (Sleeper)
+Carter Bradley,12.0,QB,Combined (Sleeper)
+Carter Runyon,6.0,TE,Combined (Sleeper)
+Case Keenum,12.0,QB,Combined (Sleeper)
+Casey Washington,7.0,WR,Combined (Sleeper)
+Cedrick Wilson,7.0,WR,Combined (Sleeper)
+CeeDee Lamb,7.0,WR,Combined (Sleeper)
+Chad Ryland,7.0,K,Combined (Sleeper)
+Chandler Brayboy,7.0,WR,Combined (Sleeper)
+Charlie Jones,7.0,WR,Combined (Sleeper)
+Charlie Kolar,6.0,TE,Combined (Sleeper)
+Charlie Smyth,7.0,K,Combined (Sleeper)
+Charlie Woerner,6.0,TE,Combined (Sleeper)
+Chase Brown,8.0,RB,Combined (Sleeper)
+Chase Edmonds,8.0,RB,Combined (Sleeper)
+Chase McLaughlin,7.0,K,Combined (Sleeper)
+Chicago Bears,7.0,DEF,Combined (Sleeper)
+Chig Okonkwo,6.0,TE,Combined (Sleeper)
+Chimere Dike,7.0,WR,Combined (Sleeper)
+Chris Blair,7.0,WR,Combined (Sleeper)
+Chris Boswell,7.0,K,Combined (Sleeper)
+Chris Brooks,8.0,RB,Combined (Sleeper)
+Chris Collier,8.0,RB,Combined (Sleeper)
+Chris Godwin,7.0,WR,Combined (Sleeper)
+Chris Manhertz,6.0,TE,Combined (Sleeper)
+Chris Moore,7.0,WR,Combined (Sleeper)
+Chris Oladokun,12.0,QB,Combined (Sleeper)
+Chris Olave,7.0,WR,Combined (Sleeper)
+Chris Rodriguez,8.0,RB,Combined (Sleeper)
+Christian Kirk,7.0,WR,Combined (Sleeper)
+Christian McCaffrey,8.0,RB,Combined (Sleeper)
+Christian Watson,7.0,WR,Combined (Sleeper)
+Chuba Hubbard,8.0,RB,Combined (Sleeper)
+Cincinnati Bengals,7.0,DEF,Combined (Sleeper)
+Clayton Thorson,12.0,QB,Combined (Sleeper)
+Clayton Tune,12.0,QB,Combined (Sleeper)
+Cleveland Browns,7.0,DEF,Combined (Sleeper)
+Clyde Edwards-Helaire,8.0,RB,Combined (Sleeper)
+Cody Schrader,8.0,RB,Combined (Sleeper)
+Cody White,7.0,WR,Combined (Sleeper)
+Colby Parkinson,6.0,TE,Combined (Sleeper)
+Cole Kmet,6.0,TE,Combined (Sleeper)
+Coleman Owen,7.0,WR,Combined (Sleeper)
+Colson Yankoff,6.0,TE,Combined (Sleeper)
+Colston Loveland,6.0,TE,Combined (Sleeper)
+Connor Bazelak,12.0,QB,Combined (Sleeper)
+Connor Heyward,6.0,TE,Combined (Sleeper)
+Cooper Kupp,7.0,WR,Combined (Sleeper)
+Cooper Rush,12.0,QB,Combined (Sleeper)
+Corey Kiner,8.0,RB,Combined (Sleeper)
+Cornelius Johnson,7.0,WR,Combined (Sleeper)
+Courtland Sutton,7.0,WR,Combined (Sleeper)
+Courtney Jackson,7.0,WR,Combined (Sleeper)
+Craig Reynolds,8.0,RB,Combined (Sleeper)
+Curtis Samuel,7.0,WR,Combined (Sleeper)
+D'Andre Swift,8.0,RB,Combined (Sleeper)
+D'Ernest Johnson,8.0,RB,Combined (Sleeper)
+DJ Giddens,8.0,RB,Combined (Sleeper)
+DJ Moore,7.0,WR,Combined (Sleeper)
+DJ Uiagalelei,12.0,QB,Combined (Sleeper)
+DK Metcalf,7.0,WR,Combined (Sleeper)
+Dak Prescott,12.0,QB,Combined (Sleeper)
+Dalen Cambre,7.0,WR,Combined (Sleeper)
+Dalevon Campbell,7.0,WR,Combined (Sleeper)
+Dallas Cowboys,7.0,DEF,Combined (Sleeper)
+Dallas Goedert,6.0,TE,Combined (Sleeper)
+Dalton Kincaid,6.0,TE,Combined (Sleeper)
+Dalton Schultz,6.0,TE,Combined (Sleeper)
+Dameon Pierce,8.0,RB,Combined (Sleeper)
+Dan Chisena,7.0,WR,Combined (Sleeper)
+Daniel Bellinger,6.0,TE,Combined (Sleeper)
+Daniel Carlson,7.0,K,Combined (Sleeper)
+Daniel Jones,12.0,QB,Combined (Sleeper)
+Dante Miller,8.0,RB,Combined (Sleeper)
+Dare Ogunbowale,8.0,RB,Combined (Sleeper)
+Dareke Young,7.0,WR,Combined (Sleeper)
+Darius Slayton,7.0,WR,Combined (Sleeper)
+Darnell Mooney,7.0,WR,Combined (Sleeper)
+Darnell Washington,6.0,TE,Combined (Sleeper)
+Darren Fells,6.0,TE,Combined (Sleeper)
+Darren Waller,6.0,TE,Combined (Sleeper)
+Davante Adams,7.0,WR,Combined (Sleeper)
+David Bell,7.0,WR,Combined (Sleeper)
+David Martin-Robinson,6.0,TE,Combined (Sleeper)
+David Montgomery,8.0,RB,Combined (Sleeper)
+David Njoku,6.0,TE,Combined (Sleeper)
+David Sills,7.0,WR,Combined (Sleeper)
+Davis Allen,6.0,TE,Combined (Sleeper)
+Davis Mills,12.0,QB,Combined (Sleeper)
+Dawson Knox,6.0,TE,Combined (Sleeper)
+Dax Raymond,6.0,TE,Combined (Sleeper)
+De'Von Achane,8.0,RB,Combined (Sleeper)
+DeAndre Hopkins,7.0,WR,Combined (Sleeper)
+DeMario Douglas,7.0,WR,Combined (Sleeper)
+DeVonta Smith,7.0,WR,Combined (Sleeper)
+Dee Eskridge,7.0,WR,Combined (Sleeper)
+DeeJay Dallas,8.0,RB,Combined (Sleeper)
+Deebo Samuel,7.0,WR,Combined (Sleeper)
+Demarcus Robinson,7.0,WR,Combined (Sleeper)
+Dennis Houston,7.0,WR,Combined (Sleeper)
+Denver Broncos,7.0,DEF,Combined (Sleeper)
+Derius Davis,7.0,WR,Combined (Sleeper)
+Derrick Henry,8.0,RB,Combined (Sleeper)
+Deshaun Watson,12.0,QB,Combined (Sleeper)
+Desmond Ridder,12.0,QB,Combined (Sleeper)
+Detroit Lions,7.0,DEF,Combined (Sleeper)
+Deuce Vaughn,8.0,RB,Combined (Sleeper)
+Devaughn Vele,7.0,WR,Combined (Sleeper)
+Deven Thompkins,7.0,WR,Combined (Sleeper)
+Devin Culp,6.0,TE,Combined (Sleeper)
+Devin Duvernay,7.0,WR,Combined (Sleeper)
+Devin Neal,8.0,RB,Combined (Sleeper)
+Devin Singletary,8.0,RB,Combined (Sleeper)
+Devontez Walker,7.0,WR,Combined (Sleeper)
+Dillon Gabriel,12.0,QB,Combined (Sleeper)
+Dominic Lovett,7.0,WR,Combined (Sleeper)
+Donovan Edwards,8.0,RB,Combined (Sleeper)
+Dont'e Thornton,7.0,WR,Combined (Sleeper)
+Dontae Fleming,7.0,WR,Combined (Sleeper)
+Dontayvion Wicks,7.0,WR,Combined (Sleeper)
+Drake London,7.0,WR,Combined (Sleeper)
+Drake Maye,12.0,QB,Combined (Sleeper)
+Drew Lock,12.0,QB,Combined (Sleeper)
+Drew Ogletree,6.0,TE,Combined (Sleeper)
+Drew Sample,6.0,TE,Combined (Sleeper)
+Durham Smythe,6.0,TE,Combined (Sleeper)
+Dwayne Haskins,12.0,QB,Combined (Sleeper)
+Dyami Brown,7.0,WR,Combined (Sleeper)
+Dylan Drummond,7.0,WR,Combined (Sleeper)
+Dylan Laube,8.0,RB,Combined (Sleeper)
+Dylan Sampson,8.0,RB,Combined (Sleeper)
+E.J. Jenkins,6.0,TE,Combined (Sleeper)
+Easton Stick,12.0,QB,Combined (Sleeper)
+Eddy Pineiro,7.0,K,Combined (Sleeper)
+Efton Chism,7.0,WR,Combined (Sleeper)
+Eldridge Massington,7.0,WR,Combined (Sleeper)
+Elic Ayomanor,7.0,WR,Combined (Sleeper)
+Elijah Arroyo,6.0,TE,Combined (Sleeper)
+Elijah Higgins,6.0,TE,Combined (Sleeper)
+Elijah McGuire,8.0,RB,Combined (Sleeper)
+Elijah Mitchell,8.0,RB,Combined (Sleeper)
+Elijah Moore,7.0,WR,Combined (Sleeper)
+Emanuel Wilson,8.0,RB,Combined (Sleeper)
+Emari Demercado,8.0,RB,Combined (Sleeper)
+Emeka Egbuka,7.0,WR,Combined (Sleeper)
+Eric Gray,8.0,RB,Combined (Sleeper)
+Eric Saubert,6.0,TE,Combined (Sleeper)
+Erick All,6.0,TE,Combined (Sleeper)
+Erik Ezukanma,7.0,WR,Combined (Sleeper)
+Evan Engram,6.0,TE,Combined (Sleeper)
+Evan McPherson,7.0,K,Combined (Sleeper)
+Feleipe Franks,6.0,TE,Combined (Sleeper)
+Frank Gore,8.0,RB,Combined (Sleeper)
+Franko House,6.0,TE,Combined (Sleeper)
+Gabe Davis,7.0,WR,Combined (Sleeper)
+Gage Larvadain,7.0,WR,Combined (Sleeper)
+Gardner Minshew,12.0,QB,Combined (Sleeper)
+Garrett Greene,12.0,QB,Combined (Sleeper)
+Garrett Scantling,7.0,WR,Combined (Sleeper)
+Garrett Wilson,7.0,WR,Combined (Sleeper)
+Gary Brightwell,8.0,RB,Combined (Sleeper)
+Gavin Bartholomew,6.0,TE,Combined (Sleeper)
+Gee Scott,6.0,TE,Combined (Sleeper)
+Geno Smith,12.0,QB,Combined (Sleeper)
+George Holani,8.0,RB,Combined (Sleeper)
+George Pickens,7.0,WR,Combined (Sleeper)
+Glen Coffee,8.0,RB,Combined (Sleeper)
+Graham Mertz,12.0,QB,Combined (Sleeper)
+Grant Calcaterra,6.0,TE,Combined (Sleeper)
+Green Bay Packers,7.0,DEF,Combined (Sleeper)
+Greg Dortch,7.0,WR,Combined (Sleeper)
+Greg Dulcich,6.0,TE,Combined (Sleeper)
+Gunnar Helm,6.0,TE,Combined (Sleeper)
+Gunner Olszewski,7.0,WR,Combined (Sleeper)
+Harold Fannin,6.0,TE,Combined (Sleeper)
+Harrison Bryant,6.0,TE,Combined (Sleeper)
+Harrison Butker,7.0,K,Combined (Sleeper)
+Hassan Haskins,8.0,RB,Combined (Sleeper)
+Hayden Rucci,6.0,TE,Combined (Sleeper)
+Hendon Hooker,12.0,QB,Combined (Sleeper)
+Hollywood Brown,7.0,WR,Combined (Sleeper)
+Houston Texans,7.0,DEF,Combined (Sleeper)
+Hunter Dekkers,12.0,QB,Combined (Sleeper)
+Hunter Henry,6.0,TE,Combined (Sleeper)
+Hunter Long,6.0,TE,Combined (Sleeper)
+Hunter Renfrow,7.0,WR,Combined (Sleeper)
+Ian Thomas,6.0,TE,Combined (Sleeper)
+Ihmir Smith-Marsette,7.0,WR,Combined (Sleeper)
+Indianapolis Colts,7.0,DEF,Combined (Sleeper)
+Irvin Charles,7.0,WR,Combined (Sleeper)
+Isaac Guerendo,8.0,RB,Combined (Sleeper)
+Isaac TeSlaa,7.0,WR,Combined (Sleeper)
+Isaiah Bond,7.0,WR,Combined (Sleeper)
+Isaiah Davis,8.0,RB,Combined (Sleeper)
+Isaiah Hodgins,7.0,WR,Combined (Sleeper)
+Isaiah Likely,6.0,TE,Combined (Sleeper)
+Isaiah Neyor,7.0,WR,Combined (Sleeper)
+Isaiah Williams,7.0,WR,Combined (Sleeper)
+Isiah Pacheco,8.0,RB,Combined (Sleeper)
+Ito Smith,8.0,RB,Combined (Sleeper)
+J.J. McCarthy,12.0,QB,Combined (Sleeper)
+J.K. Dobbins,8.0,RB,Combined (Sleeper)
+JP Richardson,7.0,WR,Combined (Sleeper)
+Ja'Corey Brooks,7.0,WR,Combined (Sleeper)
+Ja'Marr Chase,7.0,WR,Combined (Sleeper)
+Ja'Quinden Jackson,8.0,RB,Combined (Sleeper)
+Ja'Tavion Sanders,6.0,TE,Combined (Sleeper)
+Ja'seem Reed,7.0,WR,Combined (Sleeper)
+JaMycal Hasty,8.0,RB,Combined (Sleeper)
+JaQuae Jackson,7.0,WR,Combined (Sleeper)
+Jacardia Wright,8.0,RB,Combined (Sleeper)
+Jack Bech,7.0,WR,Combined (Sleeper)
+Jack Doyle,6.0,TE,Combined (Sleeper)
+Jack Stoll,6.0,TE,Combined (Sleeper)
+Jack Westover,6.0,TE,Combined (Sleeper)
+Jackson Hawes,6.0,TE,Combined (Sleeper)
+Jackson Meeks,7.0,WR,Combined (Sleeper)
+Jacksonville Jaguars,7.0,DEF,Combined (Sleeper)
+Jacob Saylors,8.0,RB,Combined (Sleeper)
+Jacoby Brissett,12.0,QB,Combined (Sleeper)
+Jacoby Jones,7.0,WR,Combined (Sleeper)
+Jacory Croskey-Merritt,8.0,RB,Combined (Sleeper)
+Jahan Dotson,7.0,WR,Combined (Sleeper)
+Jahdae Walker,7.0,WR,Combined (Sleeper)
+Jahmyr Gibbs,8.0,RB,Combined (Sleeper)
+Jake Bates,7.0,K,Combined (Sleeper)
+Jake Bobo,7.0,WR,Combined (Sleeper)
+Jake Browning,12.0,QB,Combined (Sleeper)
+Jake Elliott,7.0,K,Combined (Sleeper)
+Jake Ferguson,6.0,TE,Combined (Sleeper)
+Jake Haener,12.0,QB,Combined (Sleeper)
+Jake Moody,7.0,K,Combined (Sleeper)
+Jake Tonges,6.0,TE,Combined (Sleeper)
+Jakobi Meyers,7.0,WR,Combined (Sleeper)
+Jakobie Keeney-James,7.0,WR,Combined (Sleeper)
+Jaleel McLaughlin,8.0,RB,Combined (Sleeper)
+Jalen Brooks,7.0,WR,Combined (Sleeper)
+Jalen Cropper,7.0,WR,Combined (Sleeper)
+Jalen Hurts,12.0,QB,Combined (Sleeper)
+Jalen Milroe,12.0,QB,Combined (Sleeper)
+Jalen Morton,12.0,QB,Combined (Sleeper)
+Jalen Nailor,7.0,WR,Combined (Sleeper)
+Jalen Richard,8.0,RB,Combined (Sleeper)
+Jalen Royals,7.0,WR,Combined (Sleeper)
+Jalen Tolbert,7.0,WR,Combined (Sleeper)
+Jalin Hyatt,7.0,WR,Combined (Sleeper)
+Jamaal Pritchett,7.0,WR,Combined (Sleeper)
+Jamal Agnew,7.0,WR,Combined (Sleeper)
+Jamari Thrash,7.0,WR,Combined (Sleeper)
+Jameis Winston,12.0,QB,Combined (Sleeper)
+James Cook,8.0,RB,Combined (Sleeper)
+James Mitchell,6.0,TE,Combined (Sleeper)
+James Proche,7.0,WR,Combined (Sleeper)
+Jameson Williams,7.0,WR,Combined (Sleeper)
+Jared Goff,12.0,QB,Combined (Sleeper)
+Jared Wayne,7.0,WR,Combined (Sleeper)
+Jared Wiley,6.0,TE,Combined (Sleeper)
+Jarquez Hunter,8.0,RB,Combined (Sleeper)
+Jarrett Stidham,12.0,QB,Combined (Sleeper)
+Jason Brownlee,7.0,WR,Combined (Sleeper)
+Jason Myers,7.0,K,Combined (Sleeper)
+Jauan Jennings,7.0,WR,Combined (Sleeper)
+Javon Baker,7.0,WR,Combined (Sleeper)
+Javonte Williams,8.0,RB,Combined (Sleeper)
+Jawhar Jordan,8.0,RB,Combined (Sleeper)
+Jaxon Smith-Njigba,7.0,WR,Combined (Sleeper)
+Jaxson Dart,12.0,QB,Combined (Sleeper)
+Jayden Daniels,12.0,QB,Combined (Sleeper)
+Jayden Higgins,7.0,WR,Combined (Sleeper)
+Jaydon Blue,8.0,RB,Combined (Sleeper)
+Jaylen Waddle,7.0,WR,Combined (Sleeper)
+Jaylen Warren,8.0,RB,Combined (Sleeper)
+Jaylen Wright,8.0,RB,Combined (Sleeper)
+Jaylin Lane,7.0,WR,Combined (Sleeper)
+Jaylin Noel,7.0,WR,Combined (Sleeper)
+Jeff Driskel,12.0,QB,Combined (Sleeper)
+Jeff Wilson,8.0,RB,Combined (Sleeper)
+Jelani Woods,6.0,TE,Combined (Sleeper)
+Jeremiah Webb,7.0,WR,Combined (Sleeper)
+Jeremy McNichols,8.0,RB,Combined (Sleeper)
+Jeremy Ruckert,6.0,TE,Combined (Sleeper)
+Jermaine Burton,7.0,WR,Combined (Sleeper)
+Jerome Ford,8.0,RB,Combined (Sleeper)
+Jerry Jeudy,7.0,WR,Combined (Sleeper)
+Jeshaun Jones,7.0,WR,Combined (Sleeper)
+Jimmy Garoppolo,12.0,QB,Combined (Sleeper)
+Jimmy Holiday,7.0,WR,Combined (Sleeper)
+Jimmy Horn,7.0,WR,Combined (Sleeper)
+Joe Flacco,12.0,QB,Combined (Sleeper)
+Joe Milton,12.0,QB,Combined (Sleeper)
+Joe Mixon,8.0,RB,Combined (Sleeper)
+Joel Wilson,6.0,TE,Combined (Sleeper)
+Joey Slye,7.0,K,Combined (Sleeper)
+John Bates,6.0,TE,Combined (Sleeper)
+John FitzPatrick,6.0,TE,Combined (Sleeper)
+John Jiles,7.0,WR,Combined (Sleeper)
+John Metchie,7.0,WR,Combined (Sleeper)
+Johnny Mundt,6.0,TE,Combined (Sleeper)
+Jonathan Taylor,8.0,RB,Combined (Sleeper)
+Jonathon Brooks,8.0,RB,Combined (Sleeper)
+Jonnu Smith,6.0,TE,Combined (Sleeper)
+Jordan Addison,7.0,WR,Combined (Sleeper)
+Jordan James,8.0,RB,Combined (Sleeper)
+Jordan Love,12.0,QB,Combined (Sleeper)
+Jordan Mason,8.0,RB,Combined (Sleeper)
+Jordan Mims,8.0,RB,Combined (Sleeper)
+Jordan Moore,7.0,WR,Combined (Sleeper)
+Jordan Watkins,7.0,WR,Combined (Sleeper)
+Jordan Whittington,7.0,WR,Combined (Sleeper)
+Josh Allen,12.0,QB,Combined (Sleeper)
+Josh Downs,7.0,WR,Combined (Sleeper)
+Josh Jacobs,8.0,RB,Combined (Sleeper)
+Josh Johnson,12.0,QB,Combined (Sleeper)
+Josh Kelly,7.0,WR,Combined (Sleeper)
+Josh Oliver,6.0,TE,Combined (Sleeper)
+Josh Reynolds,7.0,WR,Combined (Sleeper)
+Josh Whyle,6.0,TE,Combined (Sleeper)
+Josh Williams,8.0,RB,Combined (Sleeper)
+Joshua Dobbs,12.0,QB,Combined (Sleeper)
+Joshua Karty,7.0,K,Combined (Sleeper)
+Joshua Palmer,7.0,WR,Combined (Sleeper)
+Joshua Perkins,6.0,TE,Combined (Sleeper)
+Joshua Simon,6.0,TE,Combined (Sleeper)
+Josiah Deguara,6.0,TE,Combined (Sleeper)
+JuJu Smith-Schuster,7.0,WR,Combined (Sleeper)
+Jude McAtamney,7.0,K,Combined (Sleeper)
+Julian Hill,6.0,TE,Combined (Sleeper)
+Julius Chestnut,8.0,RB,Combined (Sleeper)
+Junior Bergen,7.0,WR,Combined (Sleeper)
+Justice Hill,8.0,RB,Combined (Sleeper)
+Justin Fields,12.0,QB,Combined (Sleeper)
+Justin Herbert,12.0,QB,Combined (Sleeper)
+Justin Jefferson,7.0,WR,Combined (Sleeper)
+Justin Shorter,7.0,WR,Combined (Sleeper)
+Juwan Johnson,6.0,TE,Combined (Sleeper)
+KJ Hill,7.0,WR,Combined (Sleeper)
+Ka'imi Fairbairn,7.0,K,Combined (Sleeper)
+KaVontae Turpin,7.0,WR,Combined (Sleeper)
+Kaden Davis,7.0,WR,Combined (Sleeper)
+Kaleb Johnson,8.0,RB,Combined (Sleeper)
+Kalif Jackson,6.0,TE,Combined (Sleeper)
+Kalif Raymond,7.0,WR,Combined (Sleeper)
+Kameron Johnson,7.0,WR,Combined (Sleeper)
+Kansas City Chiefs,7.0,DEF,Combined (Sleeper)
+Kareem Hunt,8.0,RB,Combined (Sleeper)
+Kayshon Boutte,7.0,WR,Combined (Sleeper)
+Ke'Shawn Williams,7.0,WR,Combined (Sleeper)
+KeAndre Lambert-Smith,7.0,WR,Combined (Sleeper)
+Keaton Mitchell,8.0,RB,Combined (Sleeper)
+Kedon Slovis,12.0,QB,Combined (Sleeper)
+Keenan Allen,7.0,WR,Combined (Sleeper)
+Keilan Robinson,8.0,RB,Combined (Sleeper)
+Keith Kirkwood,7.0,WR,Combined (Sleeper)
+Keleki Latu,6.0,TE,Combined (Sleeper)
+Kendall Milton,8.0,RB,Combined (Sleeper)
+Kendre Miller,8.0,RB,Combined (Sleeper)
+Kendric Pryor,7.0,WR,Combined (Sleeper)
+Kendrick Bourne,7.0,WR,Combined (Sleeper)
+Kene Nwangwu,8.0,RB,Combined (Sleeper)
+Kenneth Gainwell,8.0,RB,Combined (Sleeper)
+Kenneth Walker,8.0,RB,Combined (Sleeper)
+Kenny Pickett,12.0,QB,Combined (Sleeper)
+Keon Coleman,7.0,WR,Combined (Sleeper)
+Kerrith Whyte,8.0,RB,Combined (Sleeper)
+Kevin Austin,7.0,WR,Combined (Sleeper)
+KhaDarel Hodge,7.0,WR,Combined (Sleeper)
+Khalil Herbert,8.0,RB,Combined (Sleeper)
+Khalil Shakir,7.0,WR,Combined (Sleeper)
+Kimani Vidal,8.0,RB,Combined (Sleeper)
+Kirk Cousins,12.0,QB,Combined (Sleeper)
+Konata Mumpfield,7.0,WR,Combined (Sleeper)
+Kristian Wilkerson,7.0,WR,Combined (Sleeper)
+Kurtis Rourke,12.0,QB,Combined (Sleeper)
+Kyle Allen,12.0,QB,Combined (Sleeper)
+Kyle McCord,12.0,QB,Combined (Sleeper)
+Kyle Monangai,8.0,RB,Combined (Sleeper)
+Kyle Pitts,6.0,TE,Combined (Sleeper)
+Kyle Williams,7.0,WR,Combined (Sleeper)
+Kylen Granson,6.0,TE,Combined (Sleeper)
+Kyler Murray,12.0,QB,Combined (Sleeper)
+Kyren Williams,8.0,RB,Combined (Sleeper)
+LaJohntay Wester,7.0,WR,Combined (Sleeper)
+Ladd McConkey,7.0,WR,Combined (Sleeper)
+Lamar Jackson,12.0,QB,Combined (Sleeper)
+Laquon Treadwell,7.0,WR,Combined (Sleeper)
+Las Vegas Raiders,7.0,DEF,Combined (Sleeper)
+Lawrance Toafili,8.0,RB,Combined (Sleeper)
+Lawrence Cager,6.0,TE,Combined (Sleeper)
+Le'Veon Bell,8.0,RB,Combined (Sleeper)
+LeQuint Allen,8.0,RB,Combined (Sleeper)
+Lee Smith,6.0,TE,Combined (Sleeper)
+Lenny Krieg,7.0,K,Combined (Sleeper)
+Leroy Watson,6.0,TE,Combined (Sleeper)
+Lew Nichols,8.0,RB,Combined (Sleeper)
+Lil'Jordan Humphrey,7.0,WR,Combined (Sleeper)
+Logan Woodside,12.0,QB,Combined (Sleeper)
+Los Angeles Chargers,7.0,DEF,Combined (Sleeper)
+Los Angeles Rams,7.0,DEF,Combined (Sleeper)
+Lucas Krull,6.0,TE,Combined (Sleeper)
+Luke Farrell,6.0,TE,Combined (Sleeper)
+Luke Floriea,7.0,WR,Combined (Sleeper)
+Luke Grimm,7.0,WR,Combined (Sleeper)
+Luke Lachey,6.0,TE,Combined (Sleeper)
+Luke McCaffrey,7.0,WR,Combined (Sleeper)
+Luke Musgrave,6.0,TE,Combined (Sleeper)
+Luke Schoonmaker,6.0,TE,Combined (Sleeper)
+Luther Burden,7.0,WR,Combined (Sleeper)
+Mac Jones,12.0,QB,Combined (Sleeper)
+Mack Hollins,7.0,WR,Combined (Sleeper)
+Malachi Corley,7.0,WR,Combined (Sleeper)
+Malik Cunningham,7.0,WR,Combined (Sleeper)
+Malik Davis,8.0,RB,Combined (Sleeper)
+Malik Heath,7.0,WR,Combined (Sleeper)
+Malik Turner,7.0,WR,Combined (Sleeper)
+Malik Washington,7.0,WR,Combined (Sleeper)
+Malik Willis,12.0,QB,Combined (Sleeper)
+Marcus Mariota,12.0,QB,Combined (Sleeper)
+Mark Andrews,6.0,TE,Combined (Sleeper)
+Mark McNamee,7.0,K,Combined (Sleeper)
+Mark Redman,6.0,TE,Combined (Sleeper)
+Marquez Valdes-Scantling,7.0,WR,Combined (Sleeper)
+Marvin Harrison,7.0,WR,Combined (Sleeper)
+Marvin Mims,7.0,WR,Combined (Sleeper)
+Mason Kinsey,7.0,WR,Combined (Sleeper)
+Mason Rudolph,12.0,QB,Combined (Sleeper)
+Mason Taylor,6.0,TE,Combined (Sleeper)
+Mason Tipton,7.0,WR,Combined (Sleeper)
+Matt Gay,7.0,K,Combined (Sleeper)
+Matt LaCosse,6.0,TE,Combined (Sleeper)
+Matt Prater,7.0,K,Combined (Sleeper)
+Matt Sokol,6.0,TE,Combined (Sleeper)
+Matthew Golden,7.0,WR,Combined (Sleeper)
+Matthew Stafford,12.0,QB,Combined (Sleeper)
+Maurice Alexander,7.0,WR,Combined (Sleeper)
+Max Brosmer,12.0,QB,Combined (Sleeper)
+Max Mang,6.0,TE,Combined (Sleeper)
+Messiah Swinson,6.0,TE,Combined (Sleeper)
+Miami Dolphins,7.0,DEF,Combined (Sleeper)
+Micah Simon,7.0,WR,Combined (Sleeper)
+Michael Bandy,7.0,WR,Combined (Sleeper)
+Michael Carter,8.0,RB,Combined (Sleeper)
+Michael Mayer,6.0,TE,Combined (Sleeper)
+Michael Penix,12.0,QB,Combined (Sleeper)
+Michael Pittman,7.0,WR,Combined (Sleeper)
+Michael Wilson,7.0,WR,Combined (Sleeper)
+Mike Evans,7.0,WR,Combined (Sleeper)
+Mike Gesicki,6.0,TE,Combined (Sleeper)
+Mike White,12.0,QB,Combined (Sleeper)
+Miles Boykin,7.0,WR,Combined (Sleeper)
+Miles Sanders,8.0,RB,Combined (Sleeper)
+Minnesota Vikings,7.0,DEF,Combined (Sleeper)
+Mitch Tinsley,7.0,WR,Combined (Sleeper)
+Mitchell Evans,6.0,TE,Combined (Sleeper)
+Mitchell Trubisky,12.0,QB,Combined (Sleeper)
+Mo Alie-Cox,6.0,TE,Combined (Sleeper)
+Moliki Matavao,6.0,TE,Combined (Sleeper)
+Myles Price,7.0,WR,Combined (Sleeper)
+Myles White,7.0,WR,Combined (Sleeper)
+Nate Adkins,6.0,TE,Combined (Sleeper)
+Nathan Carter,8.0,RB,Combined (Sleeper)
+New England Patriots,7.0,DEF,Combined (Sleeper)
+New Orleans Saints,7.0,DEF,Combined (Sleeper)
+New York Giants,7.0,DEF,Combined (Sleeper)
+New York Jets,7.0,DEF,Combined (Sleeper)
+Nick Chubb,8.0,RB,Combined (Sleeper)
+Nick Folk,7.0,K,Combined (Sleeper)
+Nick Kallerup,6.0,TE,Combined (Sleeper)
+Nick Mullens,12.0,QB,Combined (Sleeper)
+Nick Nash,7.0,WR,Combined (Sleeper)
+Nick Schuessler,12.0,QB,Combined (Sleeper)
+Nick Vannett,6.0,TE,Combined (Sleeper)
+Nick Westbrook-Ikhine,7.0,WR,Combined (Sleeper)
+Nick Williams,7.0,WR,Combined (Sleeper)
+Nico Collins,7.0,WR,Combined (Sleeper)
+Nikko Remigio,7.0,WR,Combined (Sleeper)
+Nikola Kalinic,6.0,TE,Combined (Sleeper)
+Noah Brown,7.0,WR,Combined (Sleeper)
+Noah Fant,6.0,TE,Combined (Sleeper)
+Noah Gray,6.0,TE,Combined (Sleeper)
+Olamide Zaccheaus,7.0,WR,Combined (Sleeper)
+Ollie Gordon,8.0,RB,Combined (Sleeper)
+Omarion Hampton,8.0,RB,Combined (Sleeper)
+Oronde Gadsden,6.0,TE,Combined (Sleeper)
+Parker Romo,7.0,K,Combined (Sleeper)
+Parker Washington,7.0,WR,Combined (Sleeper)
+Parris Campbell,7.0,WR,Combined (Sleeper)
+Pat Bryant,7.0,WR,Combined (Sleeper)
+Pat Freiermuth,6.0,TE,Combined (Sleeper)
+Patrick Herbert,6.0,TE,Combined (Sleeper)
+Patrick Mahomes,12.0,QB,Combined (Sleeper)
+Patrick Murtagh,6.0,TE,Combined (Sleeper)
+Payne Durham,6.0,TE,Combined (Sleeper)
+Philadelphia Eagles,7.0,DEF,Combined (Sleeper)
+Phillip Dorsett,7.0,WR,Combined (Sleeper)
+Pierre Strong,8.0,RB,Combined (Sleeper)
+Pittsburgh Steelers,7.0,DEF,Combined (Sleeper)
+Princeton Fant,6.0,TE,Combined (Sleeper)
+Puka Nacua,7.0,WR,Combined (Sleeper)
+Quentin Johnston,7.0,WR,Combined (Sleeper)
+Quentin Skinner,7.0,WR,Combined (Sleeper)
+Quez Watkins,7.0,WR,Combined (Sleeper)
+Quinn Ewers,12.0,QB,Combined (Sleeper)
+Quinshon Judkins,8.0,RB,Combined (Sleeper)
+Quintez Cephus,7.0,WR,Combined (Sleeper)
+Quintin Morris,6.0,TE,Combined (Sleeper)
+RJ Harvey,8.0,RB,Combined (Sleeper)
+Rachaad White,8.0,RB,Combined (Sleeper)
+Raheem Mostert,8.0,RB,Combined (Sleeper)
+Raheim Sanders,8.0,RB,Combined (Sleeper)
+Rashee Rice,7.0,WR,Combined (Sleeper)
+Rasheen Ali,8.0,RB,Combined (Sleeper)
+Rashid Shaheed,7.0,WR,Combined (Sleeper)
+Rashod Bateman,7.0,WR,Combined (Sleeper)
+Ray Davis,8.0,RB,Combined (Sleeper)
+Ray-Ray McCloud,7.0,WR,Combined (Sleeper)
+Reggie Gilliam,8.0,RB,Combined (Sleeper)
+Rhamondre Stevenson,8.0,RB,Combined (Sleeper)
+Ricky Pearsall,7.0,WR,Combined (Sleeper)
+Ricky White,7.0,WR,Combined (Sleeper)
+Rico Dowdle,8.0,RB,Combined (Sleeper)
+Riley Leonard,12.0,QB,Combined (Sleeper)
+Riley Patterson,7.0,K,Combined (Sleeper)
+Rivaldo Fairweather,6.0,TE,Combined (Sleeper)
+Robbie Chosen,7.0,WR,Combined (Sleeper)
+Robert Tonyan,6.0,TE,Combined (Sleeper)
+Roman Wilson,7.0,WR,Combined (Sleeper)
+Rome Odunze,7.0,WR,Combined (Sleeper)
+Romeo Doubs,7.0,WR,Combined (Sleeper)
+Ronnie Bell,7.0,WR,Combined (Sleeper)
+Ronnie Rivers,8.0,RB,Combined (Sleeper)
+Roschon Johnson,8.0,RB,Combined (Sleeper)
+Ross Dwelley,6.0,TE,Combined (Sleeper)
+Russell Gage,7.0,WR,Combined (Sleeper)
+Russell Wilson,12.0,QB,Combined (Sleeper)
+Ryan Fitzgerald,7.0,K,Combined (Sleeper)
+Ryan Flournoy,7.0,WR,Combined (Sleeper)
+Ryan Miller,7.0,WR,Combined (Sleeper)
+Sal Cannella,6.0,TE,Combined (Sleeper)
+Sam Darnold,12.0,QB,Combined (Sleeper)
+Sam Ehlinger,12.0,QB,Combined (Sleeper)
+Sam Hartman,12.0,QB,Combined (Sleeper)
+Sam Howell,12.0,QB,Combined (Sleeper)
+Sam LaPorta,6.0,TE,Combined (Sleeper)
+Samaje Perine,8.0,RB,Combined (Sleeper)
+San Francisco 49ers,7.0,DEF,Combined (Sleeper)
+Saquon Barkley,8.0,RB,Combined (Sleeper)
+Savion Williams,7.0,WR,Combined (Sleeper)
+Scotty Miller,7.0,WR,Combined (Sleeper)
+Sean Clifford,12.0,QB,Combined (Sleeper)
+Sean McKeon,6.0,TE,Combined (Sleeper)
+Sean Tucker,8.0,RB,Combined (Sleeper)
+Seattle Seahawks,7.0,DEF,Combined (Sleeper)
+Shane Buechele,12.0,QB,Combined (Sleeper)
+Shaq Roland,7.0,WR,Combined (Sleeper)
+Shedeur Sanders,12.0,QB,Combined (Sleeper)
+Shedrick Jackson,7.0,WR,Combined (Sleeper)
+Simi Fehoko,7.0,WR,Combined (Sleeper)
+Sincere McCormick,8.0,RB,Combined (Sleeper)
+Sione Vaki,8.0,RB,Combined (Sleeper)
+Skyler Howard,12.0,QB,Combined (Sleeper)
+Skyy Moore,7.0,WR,Combined (Sleeper)
+Spencer Rattler,12.0,QB,Combined (Sleeper)
+Spencer Shrader,7.0,K,Combined (Sleeper)
+Stefon Diggs,7.0,WR,Combined (Sleeper)
+Stephen Carlson,6.0,TE,Combined (Sleeper)
+Stephen Gosnell,7.0,WR,Combined (Sleeper)
+Sterling Shepard,7.0,WR,Combined (Sleeper)
+Stetson Bennett,12.0,QB,Combined (Sleeper)
+Stone Smartt,6.0,TE,Combined (Sleeper)
+T.J. Hockenson,6.0,TE,Combined (Sleeper)
+Tahj Brooks,8.0,RB,Combined (Sleeper)
+Tahj Washington,7.0,WR,Combined (Sleeper)
+Tai Felton,7.0,WR,Combined (Sleeper)
+Tampa Bay Buccaneers,7.0,DEF,Combined (Sleeper)
+Tank Bigsby,8.0,RB,Combined (Sleeper)
+Tank Dell,7.0,WR,Combined (Sleeper)
+Tanner Conner,6.0,TE,Combined (Sleeper)
+Tanner Hudson,6.0,TE,Combined (Sleeper)
+Tanner McKee,12.0,QB,Combined (Sleeper)
+Tanner Taula,6.0,TE,Combined (Sleeper)
+Tavien Feaster,8.0,RB,Combined (Sleeper)
+Tay Martin,7.0,WR,Combined (Sleeper)
+Teagan Quitoriano,6.0,TE,Combined (Sleeper)
+Teddy Bridgewater,12.0,QB,Combined (Sleeper)
+Tee Higgins,7.0,WR,Combined (Sleeper)
+Tejhaun Palmer,7.0,WR,Combined (Sleeper)
+Temarrick Hemingway,6.0,TE,Combined (Sleeper)
+Tennessee Titans,7.0,DEF,Combined (Sleeper)
+Terrace Marshall,7.0,WR,Combined (Sleeper)
+Terrance Ferguson,6.0,TE,Combined (Sleeper)
+Terrell Jennings,8.0,RB,Combined (Sleeper)
+Terry McLaurin,7.0,WR,Combined (Sleeper)
+Tetairoa McMillan,7.0,WR,Combined (Sleeper)
+Tez Johnson,7.0,WR,Combined (Sleeper)
+Thayer Thomas,7.0,WR,Combined (Sleeper)
+Theo Johnson,6.0,TE,Combined (Sleeper)
+Theo Wease,7.0,WR,Combined (Sleeper)
+Thomas Fidone,6.0,TE,Combined (Sleeper)
+Thomas Odukoya,6.0,TE,Combined (Sleeper)
+Thomas Yassmin,6.0,TE,Combined (Sleeper)
+Tim Jones,7.0,WR,Combined (Sleeper)
+Tim Patrick,7.0,WR,Combined (Sleeper)
+Tip Reiman,6.0,TE,Combined (Sleeper)
+Tom Kennedy,7.0,WR,Combined (Sleeper)
+Tommy DeVito,12.0,QB,Combined (Sleeper)
+Tommy Mellott,7.0,WR,Combined (Sleeper)
+Tommy Stevens,6.0,TE,Combined (Sleeper)
+Tommy Tremble,6.0,TE,Combined (Sleeper)
+Tony Pollard,8.0,RB,Combined (Sleeper)
+Tory Horton,7.0,WR,Combined (Sleeper)
+Traeshon Holden,7.0,WR,Combined (Sleeper)
+Travis Etienne,8.0,RB,Combined (Sleeper)
+Travis Hunter,7.0,WR,Combined (Sleeper)
+Travis Kelce,6.0,TE,Combined (Sleeper)
+Travis Vokolek,6.0,TE,Combined (Sleeper)
+Tre Tucker,7.0,WR,Combined (Sleeper)
+Tre Watson,6.0,TE,Combined (Sleeper)
+Tre' Harris,7.0,WR,Combined (Sleeper)
+TreVeyon Henderson,8.0,RB,Combined (Sleeper)
+Trent Sherfield,7.0,WR,Combined (Sleeper)
+Trevor Etienne,8.0,RB,Combined (Sleeper)
+Trevor Lawrence,12.0,QB,Combined (Sleeper)
+Trevor Siemian,12.0,QB,Combined (Sleeper)
+Trey Benson,8.0,RB,Combined (Sleeper)
+Trey Lance,12.0,QB,Combined (Sleeper)
+Trey McBride,6.0,TE,Combined (Sleeper)
+Trey Palmer,7.0,WR,Combined (Sleeper)
+Trey Sermon,8.0,RB,Combined (Sleeper)
+Treyton Welch,6.0,TE,Combined (Sleeper)
+Troy Franklin,7.0,WR,Combined (Sleeper)
+Tru Edwards,7.0,WR,Combined (Sleeper)
+Tua Tagovailoa,12.0,QB,Combined (Sleeper)
+Tucker Fisk,6.0,TE,Combined (Sleeper)
+Tucker Kraft,6.0,TE,Combined (Sleeper)
+Tutu Atwell,7.0,WR,Combined (Sleeper)
+Ty Johnson,8.0,RB,Combined (Sleeper)
+Tylan Wallace,7.0,WR,Combined (Sleeper)
+Tyler Allgeier,8.0,RB,Combined (Sleeper)
+Tyler Badie,8.0,RB,Combined (Sleeper)
+Tyler Conklin,6.0,TE,Combined (Sleeper)
+Tyler Goodson,8.0,RB,Combined (Sleeper)
+Tyler Higbee,6.0,TE,Combined (Sleeper)
+Tyler Huntley,12.0,QB,Combined (Sleeper)
+Tyler Johnson,7.0,WR,Combined (Sleeper)
+Tyler Lockett,7.0,WR,Combined (Sleeper)
+Tyler Loop,7.0,K,Combined (Sleeper)
+Tyler Shough,12.0,QB,Combined (Sleeper)
+Tyler Warren,6.0,TE,Combined (Sleeper)
+Tyquan Thornton,7.0,WR,Combined (Sleeper)
+Tyreek Hill,7.0,WR,Combined (Sleeper)
+Tyrell Shavers,7.0,WR,Combined (Sleeper)
+Tyrod Taylor,12.0,QB,Combined (Sleeper)
+Tyrone Broden,7.0,WR,Combined (Sleeper)
+Tyrone Tracy,8.0,RB,Combined (Sleeper)
+Tyson Bagent,12.0,QB,Combined (Sleeper)
+Ulysses Bentley,8.0,RB,Combined (Sleeper)
+Van Jefferson,7.0,WR,Combined (Sleeper)
+Velus Jones,7.0,WR,Combined (Sleeper)
+Wan'Dale Robinson,7.0,WR,Combined (Sleeper)
+Washington Commanders,7.0,DEF,Combined (Sleeper)
+Wendell Smallwood,8.0,RB,Combined (Sleeper)
+Wil Lutz,7.0,K,Combined (Sleeper)
+Will Dissly,6.0,TE,Combined (Sleeper)
+Will Grier,12.0,QB,Combined (Sleeper)
+Will Mallory,6.0,TE,Combined (Sleeper)
+Will Reichard,7.0,K,Combined (Sleeper)
+Will Sheppard,7.0,WR,Combined (Sleeper)
+Will Shipley,8.0,RB,Combined (Sleeper)
+Woody Marks,8.0,RB,Combined (Sleeper)
+Wyatt Houston,6.0,TE,Combined (Sleeper)
+Xavier Gipson,7.0,WR,Combined (Sleeper)
+Xavier Hutchinson,7.0,WR,Combined (Sleeper)
+Xavier Legette,7.0,WR,Combined (Sleeper)
+Xavier Restrepo,7.0,WR,Combined (Sleeper)
+Xavier Smith,7.0,WR,Combined (Sleeper)
+Xavier Weaver,7.0,WR,Combined (Sleeper)
+Xavier Worthy,7.0,WR,Combined (Sleeper)
+Younghoe Koo,7.0,K,Combined (Sleeper)
+Zach Charbonnet,8.0,RB,Combined (Sleeper)
+Zach Ertz,6.0,TE,Combined (Sleeper)
+Zach Horton,6.0,TE,Combined (Sleeper)
+Zach Terrell,12.0,QB,Combined (Sleeper)
+Zach Wilson,12.0,QB,Combined (Sleeper)
+Zaire Mitchell-Paden,6.0,TE,Combined (Sleeper)
+Zamir White,8.0,RB,Combined (Sleeper)
+Zavier Scott,8.0,RB,Combined (Sleeper)
+Zay Flowers,7.0,WR,Combined (Sleeper)
+Zay Jones,7.0,WR,Combined (Sleeper)
