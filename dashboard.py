@@ -273,15 +273,7 @@ else:  # ESPN
         roster_positions = []
         league_name = league.settings.name if hasattr(league.settings, 'name') else 'Your League'
         
-        # Map ESPN lineup slot IDs to position names (based on ESPN API documentation)
-        espn_slots = {
-            0: 'QB', 2: 'RB', 4: 'WR', 6: 'TE', 
-            16: 'DST', 17: 'K', 23: 'FLEX',
-            7: 'OP',  # Superflex/OP slot
-            20: 'BENCH', 21: 'IR'
-        }
-        
-        # Detect roster positions from actual team lineups
+        # Detect roster positions by inspecting ESPN lineup slot names
         try:
             if league.teams:
                 # Get lineup slots from first team's roster
@@ -289,14 +281,32 @@ else:  # ESPN
                 sample_team = league.teams[0]
                 
                 for player in sample_team.roster:
-                    slot_id = player.lineupSlot
-                    if slot_id not in [20, 21]:  # Exclude bench and IR
-                        slot_counts[slot_id] = slot_counts.get(slot_id, 0) + 1
+                    # ESPN uses slot_position attribute for the slot name
+                    if hasattr(player, 'slot_position'):
+                        slot_name = player.slot_position
+                        # Skip bench and IR
+                        if slot_name not in ['BE', 'IR']:
+                            slot_counts[slot_name] = slot_counts.get(slot_name, 0) + 1
+                
+                # Map ESPN slot names to our position names
+                espn_slot_mapping = {
+                    'QB': 'QB',
+                    'RB': 'RB',
+                    'WR': 'WR',
+                    'TE': 'TE',
+                    'FLEX': 'FLEX',
+                    'D/ST': 'DST',
+                    'K': 'K',
+                    'OP': 'OP',  # Superflex
+                    'Bench': 'BN',
+                    'IR': 'IR',
+                    'RB/WR/TE': 'FLEX'
+                }
                 
                 # Build roster positions list
-                for slot_id in sorted(slot_counts.keys()):
-                    position = espn_slots.get(slot_id, f'SLOT_{slot_id}')
-                    count = slot_counts[slot_id]
+                for slot_name in sorted(slot_counts.keys()):
+                    position = espn_slot_mapping.get(slot_name, slot_name)
+                    count = slot_counts[slot_name]
                     roster_positions.extend([position] * count)
             
             # Fallback if detection didn't work
