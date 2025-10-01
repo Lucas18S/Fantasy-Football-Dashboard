@@ -258,67 +258,132 @@ def fetch_sleeper_stats():
         return pd.DataFrame()
 
 
-def fetch_espn_api_projections():
-    """Uses official ESPN API wrapper
+def get_current_nfl_week():
+    """Determine current NFL week"""
+    # Allow manual override for testing
+    override_week = os.getenv('ESPN_WEEK')
+    if override_week:
+        return int(override_week)
     
-    For private leagues, set these environment variables:
-    - ESPN_S2: Your espn_s2 cookie
-    - SWID: Your SWID cookie
-    """
-    from espn_api.football import League
-    
-    # Get league ID and auth from environment
-    league_id = int(os.getenv('ESPN_LEAGUE_ID', '529882810'))
-    espn_s2 = os.getenv('ESPN_S2')
-    swid = os.getenv('SWID')
-    
+    # Try to get from ESPN API
     try:
-        print("🏈 Fetching ESPN API projections...")
-        # Try current season first (2024), then SEASON if different
-        current_season = 2024 if SEASON == 2025 else SEASON
+        from espn_api.football import League
+        league_id = int(os.getenv('ESPN_LEAGUE_ID', '529882810'))
+        espn_s2 = os.getenv('ESPN_S2')
+        swid = os.getenv('SWID')
+        current_season = SEASON
         
-        # Initialize league with or without auth
         if espn_s2 and swid:
-            print(f"   → Using authenticated access for private league")
             league = League(league_id=league_id, year=current_season, espn_s2=espn_s2, swid=swid)
         else:
-            print(f"   → Attempting public access (set ESPN_S2 and SWID for private leagues)")
             league = League(league_id=league_id, year=current_season)
         
+        current_week = getattr(league, 'current_week', None)
+        # If season is over (week 18+), default to mid-season week
+        if current_week and current_week <= 17:
+            return current_week
+    except:
+        pass
+    
+    # Default to week 5 (reasonable mid-season default)
+    return 5
+
+
+def fetch_espn_weekly_projections(week=None):
+    """Fetch matchup-adjusted weekly projections from ESPN
+    
+    This gets actual weekly projections that account for:
+    - Opponent defense strength
+    - Home/away matchups
+    - Current injuries
+    - Game conditions
+    """
+    if week is None:
+        week = get_current_nfl_week()
+    
+    current_season = SEASON
+    
+    try:
+        print(f"🏈 Fetching ESPN weekly projections for Week {week}...")
+        
+        # ESPN's public API endpoint for weekly projections
+        url = f"https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/{current_season}/segments/0/leaguedefaults/3"
+        
+        # Position slot IDs in ESPN (for filtering)
+        filter_slot_ids = {
+            0: 'QB', 2: 'RB', 4: 'WR', 6: 'TE', 16: 'DEF', 17: 'K'
+        }
+        
+        # Position mapping by ID (more comprehensive)
+        position_map = {
+            1: 'QB', 2: 'RB', 3: 'RB', 4: 'WR', 5: 'WR', 
+            6: 'TE', 16: 'DEF', 17: 'K', 23: 'FLEX'
+        }
+        
+        # Build filter for weekly projections
+        fantasy_filter = {
+            "players": {
+                "filterSlotIds": {"value": list(filter_slot_ids.keys())},
+                "filterRanksForScoringPeriodIds": {"value": [week]},
+                "filterStatsForSourceIds": {"value": [1]},  # 1 = projected
+                "limit": 1000,
+                "sortPercOwned": {"sortPriority": 1, "sortAsc": False}
+            }
+        }
+        
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+            'x-fantasy-filter': json.dumps(fantasy_filter)
+        }
+        
+        params = {
+            'view': 'kona_player_info'
+        }
+        
+        response = requests.get(url, headers=headers, params=params, timeout=15)
+        
+        if response.status_code != 200:
+            print(f"   ⚠️ ESPN API returned status {response.status_code}")
+            return pd.DataFrame()
+        
+        data = response.json()
         all_projections = []
         
-        # Get free agents (available players)
-        try:
-            free_agents = league.free_agents(size=500)
+        # Parse player data
+        players = data.get('players', [])
+        for player_data in players:
+            player_info = player_data.get('player', {})
             
-            for player in free_agents:
-                # Check if projected_points exists and is valid
-                season_proj = getattr(player, 'projected_points', None) or getattr(player, 'projected_total_points', None) or 0
-                
-                if season_proj > 0:  # Only include players with valid projections
-                    # Convert season totals to weekly average (NFL has 17 regular season games)
-                    weekly_proj = season_proj / 17.0
+            # Get player details
+            full_name = player_info.get('fullName', '')
+            default_pos_id = player_info.get('defaultPositionId', 0)
+            position = position_map.get(default_pos_id, filter_slot_ids.get(default_pos_id, 'UNK'))
+            
+            # Get weekly projected stats
+            stats = player_info.get('stats', [])
+            for stat in stats:
+                # Look for projected stats for this specific week
+                if stat.get('scoringPeriodId') == week and stat.get('statSourceId') == 1:
+                    projected_points = stat.get('appliedTotal', 0)
                     
-                    all_projections.append({
-                        'player_name': player.name,
-                        'proj_points': round(weekly_proj, 1),
-                        'position': player.position,
-                        'source': 'ESPN_API'
-                    })
-        except AttributeError as ae:
-            print(f"   ⚠️ League data incomplete - may need authentication for private league")
-            return pd.DataFrame()
+                    if projected_points > 0:
+                        all_projections.append({
+                            'player_name': full_name,
+                            'proj_points': round(projected_points, 1),
+                            'position': position,
+                            'source': 'ESPN_API'
+                        })
+                    break
         
         if all_projections:
-            print(f"   ✓ ESPN API: {len(all_projections)} players from {current_season} season")
+            print(f"   ✓ ESPN API: {len(all_projections)} players with Week {week} matchup-adjusted projections")
             return pd.DataFrame(all_projections)
         else:
-            print(f"   ⚠️ ESPN API: No valid projections found for {current_season}")
+            print(f"   ⚠️ ESPN API: No weekly projections found for Week {week}")
             return pd.DataFrame()
-    
+            
     except Exception as e:
-        print(f"   ⚠️ ESPN API fetch failed: {e}")
-        print(f"   💡 Tip: For private leagues, add ESPN_S2 and SWID cookies as secrets")
+        print(f"   ⚠️ ESPN weekly projections failed: {e}")
         return pd.DataFrame()
 
 
@@ -370,12 +435,12 @@ def get_all_projections():
 
     # Fetch from all sources
     espn_df = fetch_espn_projections()
-    espn_api_df = fetch_espn_api_projections()
+    espn_weekly_df = fetch_espn_weekly_projections()  # Week-specific matchup-adjusted projections
     sleeper_df = fetch_sleeper_stats()
     # nfl_df = fetch_nfl_projections()  # Uncomment when implemented
 
     # Merge all sources
-    source_dfs = [df for df in [espn_df, espn_api_df, sleeper_df] if not df.empty]
+    source_dfs = [df for df in [espn_df, espn_weekly_df, sleeper_df] if not df.empty]
 
     if not source_dfs:
         print("\n❌ No data retrieved from any source!")
