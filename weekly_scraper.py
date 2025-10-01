@@ -259,30 +259,63 @@ def fetch_sleeper_stats():
 
 
 def fetch_espn_api_projections():
-    """Uses official ESPN API wrapper"""
+    """Uses official ESPN API wrapper
+    
+    For private leagues, set these environment variables:
+    - ESPN_S2: Your espn_s2 cookie
+    - SWID: Your SWID cookie
+    """
     from espn_api.football import League
     
-    # Get league ID from environment variable or use a default public league
-    league_id = int(os.getenv('ESPN_LEAGUE_ID', '123456'))
+    # Get league ID and auth from environment
+    league_id = int(os.getenv('ESPN_LEAGUE_ID', '529882810'))
+    espn_s2 = os.getenv('ESPN_S2')
+    swid = os.getenv('SWID')
     
     try:
         print("🏈 Fetching ESPN API projections...")
-        league = League(league_id=league_id, year=SEASON)
+        # Try current season first (2024), then SEASON if different
+        current_season = 2024 if SEASON == 2025 else SEASON
+        
+        # Initialize league with or without auth
+        if espn_s2 and swid:
+            print(f"   → Using authenticated access for private league")
+            league = League(league_id=league_id, year=current_season, espn_s2=espn_s2, swid=swid)
+        else:
+            print(f"   → Attempting public access (set ESPN_S2 and SWID for private leagues)")
+            league = League(league_id=league_id, year=current_season)
         
         all_projections = []
-        for player in league.free_agents(size=500):
-            all_projections.append({
-                'player_name': player.name,
-                'proj_points': player.projected_points,
-                'position': player.position,
-                'source': 'ESPN_API'
-            })
         
-        print(f"   ✓ ESPN API: {len(all_projections)} players")
-        return pd.DataFrame(all_projections)
+        # Get free agents (available players)
+        try:
+            free_agents = league.free_agents(size=500)
+            
+            for player in free_agents:
+                # Check if projected_points exists and is valid
+                proj_pts = getattr(player, 'projected_points', None) or getattr(player, 'projected_total_points', None) or 0
+                
+                if proj_pts > 0:  # Only include players with valid projections
+                    all_projections.append({
+                        'player_name': player.name,
+                        'proj_points': round(proj_pts, 1),
+                        'position': player.position,
+                        'source': 'ESPN_API'
+                    })
+        except AttributeError as ae:
+            print(f"   ⚠️ League data incomplete - may need authentication for private league")
+            return pd.DataFrame()
+        
+        if all_projections:
+            print(f"   ✓ ESPN API: {len(all_projections)} players from {current_season} season")
+            return pd.DataFrame(all_projections)
+        else:
+            print(f"   ⚠️ ESPN API: No valid projections found for {current_season}")
+            return pd.DataFrame()
     
     except Exception as e:
         print(f"   ⚠️ ESPN API fetch failed: {e}")
+        print(f"   💡 Tip: For private leagues, add ESPN_S2 and SWID cookies as secrets")
         return pd.DataFrame()
 
 
