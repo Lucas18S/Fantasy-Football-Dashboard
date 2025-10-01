@@ -293,12 +293,15 @@ def fetch_espn_api_projections():
             
             for player in free_agents:
                 # Check if projected_points exists and is valid
-                proj_pts = getattr(player, 'projected_points', None) or getattr(player, 'projected_total_points', None) or 0
+                season_proj = getattr(player, 'projected_points', None) or getattr(player, 'projected_total_points', None) or 0
                 
-                if proj_pts > 0:  # Only include players with valid projections
+                if season_proj > 0:  # Only include players with valid projections
+                    # Convert season totals to weekly average (NFL has 17 regular season games)
+                    weekly_proj = season_proj / 17.0
+                    
                     all_projections.append({
                         'player_name': player.name,
-                        'proj_points': round(proj_pts, 1),
+                        'proj_points': round(weekly_proj, 1),
                         'position': player.position,
                         'source': 'ESPN_API'
                     })
