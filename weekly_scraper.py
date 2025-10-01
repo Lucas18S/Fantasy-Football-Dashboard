@@ -183,78 +183,100 @@ def fetch_nfl_projections():
     return pd.DataFrame(all_projections) if all_projections else pd.DataFrame()
 
 
-def fetch_sleeper_stats():
+def fetch_sleeper_weekly_projections(week=None):
     """
-    Fetch actual player stats from Sleeper to supplement projections
-    This gives us real data about player activity
+    Fetch week-specific projections from Sleeper API
+    These are matchup-adjusted weekly projections, not season averages
     """
-    print("😴 Fetching Sleeper player data...")
+    if week is None:
+        week = get_current_nfl_week()
+    
+    print(f"😴 Fetching Sleeper weekly projections for Week {week}...")
 
     try:
-        # Get all NFL players
-        response = requests.get("https://api.sleeper.app/v1/players/nfl",
-                                timeout=15)
-        response.raise_for_status()
-
-        players_data = response.json()
+        # Get weekly projections from Sleeper
+        projections_url = f"https://api.sleeper.app/projections/nfl/{SEASON}/{week}"
+        proj_response = requests.get(projections_url, params={'season_type': 'regular'}, timeout=15)
+        
+        if proj_response.status_code != 200:
+            print(f"   ⚠️ Sleeper projections API returned status {proj_response.status_code}")
+            return pd.DataFrame()
+        
+        weekly_projections = proj_response.json()
+        
+        # Get player info to map IDs to names
+        players_response = requests.get("https://api.sleeper.app/v1/players/nfl", timeout=15)
+        players_response.raise_for_status()
+        players_data = players_response.json()
 
         projections = []
         fantasy_positions = ['QB', 'RB', 'WR', 'TE', 'K', 'DEF']
 
-        for player_id, player in players_data.items():
-            position = player.get('position', '')
+        # Parse weekly projections (it's a list of dictionaries)
+        if isinstance(weekly_projections, list):
+            for proj_entry in weekly_projections:
+                player_id = proj_entry.get('player_id', '')
+                proj_stats = proj_entry.get('stats', {})
+                
+                # Get player info
+                player_info = players_data.get(player_id, {})
+                position = player_info.get('position', '')
+                
+                if position not in fantasy_positions:
+                    continue
+                
+                first_name = player_info.get('first_name', '')
+                last_name = player_info.get('last_name', '')
+                full_name = f"{first_name} {last_name}".strip()
+                
+                if not full_name:
+                    continue
+                
+                # Calculate PPR fantasy points from projections
+                pts_ppr = proj_stats.get('pts_ppr', 0) or proj_stats.get('pts_half_ppr', 0) or proj_stats.get('pts_std', 0) or 0
+                
+                if pts_ppr > 0:
+                    projections.append({
+                        'player_name': full_name,
+                        'proj_points': round(pts_ppr, 1),
+                        'position': position,
+                        'source': 'Sleeper'
+                    })
+        # Handle dictionary format (if API changes)
+        elif isinstance(weekly_projections, dict):
+            for player_id, proj_stats in weekly_projections.items():
+                player_info = players_data.get(player_id, {})
+                position = player_info.get('position', '')
+                
+                if position not in fantasy_positions:
+                    continue
+                
+                first_name = player_info.get('first_name', '')
+                last_name = player_info.get('last_name', '')
+                full_name = f"{first_name} {last_name}".strip()
+                
+                if not full_name:
+                    continue
+                
+                pts_ppr = proj_stats.get('pts_ppr', 0) or proj_stats.get('pts_half_ppr', 0) or proj_stats.get('pts_std', 0) or 0
+                
+                if pts_ppr > 0:
+                    projections.append({
+                        'player_name': full_name,
+                        'proj_points': round(pts_ppr, 1),
+                        'position': position,
+                        'source': 'Sleeper'
+                    })
 
-            if position not in fantasy_positions:
-                continue
-
-            # Only include active players with teams
-            team = player.get('team')
-            status = player.get('status', 'Active')
-
-            if not team or status not in [
-                    'Active', 'Questionable', 'Doubtful'
-            ]:
-                continue
-
-            first_name = player.get('first_name', '')
-            last_name = player.get('last_name', '')
-            full_name = f"{first_name} {last_name}".strip()
-
-            if not full_name:
-                continue
-
-            # Get fantasy points from last season if available
-            # This is better than made-up numbers
-            fantasy_points = player.get('fantasy_points_ppr', 0) or 0
-
-            # Estimate weekly projection from season total
-            games_played = player.get('games_played', 17) or 17
-            weekly_avg = fantasy_points / max(games_played,
-                                              1) if games_played > 0 else 0
-
-            # Use position-based minimums for players without stats
-            if weekly_avg == 0:
-                weekly_avg = {
-                    'QB': 12.0,
-                    'RB': 8.0,
-                    'WR': 7.0,
-                    'TE': 6.0,
-                    'K': 7.0,
-                    'DEF': 7.0
-                }.get(position, 5.0)
-
-            projections.append({
-                'player_name': full_name,
-                'proj_points': round(weekly_avg, 1),
-                'position': position,
-                'source': 'Sleeper'
-            })
-
-        print(f"   ✓ Sleeper: {len(projections)} active players")
-        return pd.DataFrame(projections)
+        if projections:
+            print(f"   ✓ Sleeper: {len(projections)} players with Week {week} projections")
+            return pd.DataFrame(projections)
+        else:
+            print(f"   ⚠️ Sleeper: No weekly projections found for Week {week}")
+            return pd.DataFrame()
 
     except Exception as e:
-        print(f"   ⚠️ Sleeper fetch failed: {e}")
+        print(f"   ⚠️ Sleeper weekly projections failed: {e}")
         return pd.DataFrame()
 
 
@@ -433,14 +455,14 @@ def get_all_projections():
     print(f"📅 Season: {SEASON} | Scoring: {SCORING}")
     print("=" * 60)
 
-    # Fetch from all sources
+    # Fetch from all sources - all weekly projections now
     espn_df = fetch_espn_projections()
     espn_weekly_df = fetch_espn_weekly_projections()  # Week-specific matchup-adjusted projections
-    sleeper_df = fetch_sleeper_stats()
+    sleeper_weekly_df = fetch_sleeper_weekly_projections()  # Week-specific projections
     # nfl_df = fetch_nfl_projections()  # Uncomment when implemented
 
     # Merge all sources
-    source_dfs = [df for df in [espn_df, espn_weekly_df, sleeper_df] if not df.empty]
+    source_dfs = [df for df in [espn_df, espn_weekly_df, sleeper_weekly_df] if not df.empty]
 
     if not source_dfs:
         print("\n❌ No data retrieved from any source!")
