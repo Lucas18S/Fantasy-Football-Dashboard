@@ -107,6 +107,7 @@ def get_projection_comparison(name, proj_df):
 
 def build_optimal_lineup(player_ids, players, proj_df, roster_positions):
     """Build optimal lineup based on league-specific roster configuration"""
+    # Build player entries with projections
     entries = []
     for pid in player_ids:
         name  = get_player_name(pid, players)
@@ -115,53 +116,71 @@ def build_optimal_lineup(player_ids, players, proj_df, roster_positions):
         entries.append({'id': pid, 'name': name, 'pos': pos, 'points': pts})
     df = pd.DataFrame(entries).sort_values('points', ascending=False)
 
-    # Initialize lineup with actual roster positions
-    from collections import defaultdict
-    lineup = defaultdict(list)
+    # Initialize lineup as ordered list to preserve position order
+    lineup = []
     used = set()
     
-    def assign(slot, eligible_positions):
+    def assign_best(slot_name, eligible_positions):
         """Assign best available player for this slot"""
         for _, r in df.iterrows():
             if r['id'] not in used and r['pos'] in eligible_positions:
-                lineup[slot].append(r)
+                lineup.append({
+                    'slot': slot_name,
+                    'player': r.to_dict()
+                })
                 used.add(r['id'])
                 return True
+        # If no player found, add empty slot
+        lineup.append({
+            'slot': slot_name,
+            'player': None
+        })
         return False
     
-    # Process roster positions in order
+    # Process roster positions with numbered slots for duplicates
+    position_counters = {}
+    
     for slot in roster_positions:
+        # Count how many of each position we've seen
+        base_slot = slot
+        if slot in position_counters:
+            position_counters[slot] += 1
+            slot_name = f"{slot}{position_counters[slot]}"
+        else:
+            position_counters[slot] = 1
+            slot_name = f"{slot}1" if roster_positions.count(slot) > 1 else slot
+        
         # Define eligible positions for each slot type
         if slot == 'QB':
-            assign(slot, ['QB'])
+            assign_best(slot_name, ['QB'])
         elif slot == 'RB':
-            assign(slot, ['RB'])
+            assign_best(slot_name, ['RB'])
         elif slot == 'WR':
-            assign(slot, ['WR'])
+            assign_best(slot_name, ['WR'])
         elif slot == 'TE':
-            assign(slot, ['TE'])
+            assign_best(slot_name, ['TE'])
         elif slot == 'K':
-            assign(slot, ['K'])
+            assign_best(slot_name, ['K'])
         elif slot in ['DEF', 'DST']:
-            assign('DEF', ['DEF'])
+            assign_best(slot_name, ['DEF'])
         elif slot in ['FLEX', 'REC_FLEX', 'WRT']:
-            assign('FLEX', ['RB', 'WR', 'TE'])
+            assign_best(slot_name, ['RB', 'WR', 'TE'])
         elif slot in ['SUPER_FLEX', 'OP']:
-            assign('SUPERFLEX', ['QB', 'RB', 'WR', 'TE'])
+            assign_best(slot_name, ['QB', 'RB', 'WR', 'TE'])
         elif slot == 'RB/WR':
-            assign('RB/WR', ['RB', 'WR'])
+            assign_best(slot_name, ['RB', 'WR'])
         elif slot == 'WR/TE':
-            assign('WR/TE', ['WR', 'TE'])
+            assign_best(slot_name, ['WR', 'TE'])
         elif slot == 'RB/WR/TE':
-            assign('RB/WR/TE', ['RB', 'WR', 'TE'])
+            assign_best(slot_name, ['RB', 'WR', 'TE'])
         elif slot == 'TQB':
-            assign('TQB', ['QB'])
+            assign_best(slot_name, ['QB'])
     
-    return dict(lineup)
+    return lineup
 
 def get_bench_recommendations(player_ids, players, proj_df, optimal):
     all_ids     = set(player_ids)
-    optimal_ids = {p['id'] for slot in optimal.values() for p in slot}
+    optimal_ids = {slot['player']['id'] for slot in optimal if slot['player'] is not None}
     bench_ids   = all_ids - optimal_ids
 
     recs = []
@@ -452,25 +471,31 @@ st.caption(f"📊 Found {len(player_ids)} players on roster")
 optimal = build_optimal_lineup(player_ids, players, working_projections, roster_positions)
 
 # Check if optimal lineup is empty
-if not optimal or all(len(plist) == 0 for plist in optimal.values()):
+if not optimal or all(slot['player'] is None for slot in optimal):
     st.error("❌ Could not generate optimal lineup. This might be because:")
     st.write("- Player names don't match between ESPN and projection data")
     st.write("- No projections available for your players")
     st.write(f"- Roster has {len(player_ids)} players")
     st.write(f"- Roster positions: {roster_positions}")
 else:
-    total   = 0
-    for slot, plist in optimal.items():
-        if plist:  # Only show slots that have players
-            st.markdown(f"**{slot}:**")
-            for p in plist:
-                st.write(f"- {p['name']} — **{p['points']:.1f} pts**")
-                total += p['points']
+    st.markdown("### 🎯 Optimal Lineup")
+    total = 0
+    for slot_info in optimal:
+        slot_name = slot_info['slot']
+        player = slot_info['player']
+        
+        if player:
+            st.markdown(f"**{slot_name}:** {player['name']} ({player['pos']}) — **{player['points']:.1f} pts**")
+            total += player['points']
+        else:
+            st.markdown(f"**{slot_name}:** *No eligible player available*")
+    
     st.success(f"✅ Optimal Projected Total: **{total:.1f} pts**")
 
 # Bad starts
 st.markdown("---")
-bad = [pid for pid in starters_ids if pid not in {p['id'] for slot in optimal.values() for p in slot}]
+optimal_ids = {slot['player']['id'] for slot in optimal if slot['player'] is not None}
+bad = [pid for pid in starters_ids if pid not in optimal_ids]
 if bad:
     st.warning("⚠️ Consider benching:")
     for pid in bad:
@@ -490,7 +515,7 @@ for pid in player_ids:
     pos = get_player_position(pid, players)
     proj_points = get_projection(name, working_projections)
     is_starter = pid in starters_ids
-    is_optimal = pid in {p['id'] for slot in optimal.values() for p in slot}
+    is_optimal = pid in optimal_ids
     
     # Determine recommendation
     if is_optimal:
