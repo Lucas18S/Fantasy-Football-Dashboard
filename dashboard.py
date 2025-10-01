@@ -222,7 +222,10 @@ if league_platform == "Sleeper":
     users, rosters, players, league_settings = get_data(sleeper_league_id)
     
     # Extract roster configuration from Sleeper league settings
-    roster_positions = league_settings.get('roster_positions', [])
+    all_positions = league_settings.get('roster_positions', [])
+    # Filter out bench, IR, taxi, and other non-starting slots - we only want starting positions
+    non_starting_slots = ['BN', 'IR', 'TAXI', 'RES', 'PRACTICE_SQUAD']
+    roster_positions = [pos for pos in all_positions if pos not in non_starting_slots]
     league_name = league_settings.get('name', 'Your League')
 else:  # ESPN
     if not espn_league_id:
@@ -251,19 +254,35 @@ else:  # ESPN
         league_name = league.settings.name if hasattr(league.settings, 'name') else 'Your League'
         
         # Map ESPN roster slots to positions
-        roster_map = league.settings.roster_settings.get('lineup_slot_counts', {}) if hasattr(league.settings, 'roster_settings') else {}
+        try:
+            # Try to get lineup slot counts from ESPN settings
+            if hasattr(league.settings, 'roster_settings'):
+                roster_map = league.settings.roster_settings.get('lineup_slot_counts', {})
+            elif hasattr(league, 'roster_settings'):
+                roster_map = league.roster_settings.get('lineup_slot_counts', {})
+            else:
+                roster_map = {}
+            
+            # ESPN slot IDs to position names (comprehensive mapping)
+            espn_slots = {
+                0: 'QB', 1: 'TQB', 2: 'RB', 3: 'RB/WR', 4: 'WR', 
+                5: 'WR/TE', 6: 'TE', 7: 'OP', 16: 'DST', 17: 'K',
+                20: 'BENCH', 21: 'IR', 23: 'FLEX', 25: 'RB/WR/TE'
+            }
+            
+            for slot_id, count in roster_map.items():
+                position = espn_slots.get(slot_id, f'SLOT_{slot_id}')
+                if position not in ['BENCH', 'IR'] and count > 0:
+                    roster_positions.extend([position] * count)
+            
+            # If we didn't get any roster positions, use a default standard lineup
+            if not roster_positions:
+                st.warning("⚠️ Could not detect ESPN roster configuration. Using standard lineup format.")
+                roster_positions = ['QB', 'RB', 'RB', 'WR', 'WR', 'TE', 'FLEX', 'DST', 'K']
         
-        # ESPN slot IDs to position names
-        espn_slots = {
-            0: 'QB', 1: 'TQB', 2: 'RB', 3: 'RB/WR', 4: 'WR', 
-            5: 'WR/TE', 6: 'TE', 7: 'OP', 16: 'DST', 17: 'K',
-            20: 'BENCH', 21: 'IR', 23: 'FLEX', 25: 'RB/WR/TE'
-        }
-        
-        for slot_id, count in roster_map.items():
-            position = espn_slots.get(slot_id, f'SLOT_{slot_id}')
-            if position not in ['BENCH', 'IR'] and count > 0:
-                roster_positions.extend([position] * count)
+        except Exception as e:
+            st.warning(f"⚠️ Error parsing ESPN roster settings: {e}. Using standard lineup.")
+            roster_positions = ['QB', 'RB', 'RB', 'WR', 'WR', 'TE', 'FLEX', 'DST', 'K']
         
         # Build rosters from ESPN teams
         rosters = []
@@ -309,10 +328,10 @@ position_counts = Counter(roster_positions)
 # Display roster configuration
 st.markdown("**Roster Configuration:**")
 roster_display = []
+# Define display order for positions
+position_order = ['QB', 'RB', 'WR', 'TE', 'RB/WR', 'WR/TE', 'RB/WR/TE', 'FLEX', 'REC_FLEX', 'WRT', 'SUPER_FLEX', 'OP', 'TQB', 'DST', 'DEF', 'K']
 for position, count in sorted(position_counts.items(), key=lambda x: (
-    ['QB', 'RB', 'WR', 'TE', 'FLEX', 'SUPER_FLEX', 'OP', 'REC_FLEX', 'WRT', 'RB/WR/TE', 'DST', 'K'].index(x[0]) 
-    if x[0] in ['QB', 'RB', 'WR', 'TE', 'FLEX', 'SUPER_FLEX', 'OP', 'REC_FLEX', 'WRT', 'RB/WR/TE', 'DST', 'K'] 
-    else 99, x[0]
+    position_order.index(x[0]) if x[0] in position_order else 99, x[0]
 )):
     roster_display.append(f"{count} {position}")
 
