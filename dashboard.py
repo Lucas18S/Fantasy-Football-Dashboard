@@ -137,7 +137,7 @@ def build_optimal_lineup(player_ids, players, proj_df, roster_positions):
         })
         return False
     
-    # Process roster positions with numbered slots for duplicates
+    # Process roster positions - don't number single slots
     position_counters = {}
     
     for slot in roster_positions:
@@ -145,10 +145,12 @@ def build_optimal_lineup(player_ids, players, proj_df, roster_positions):
         base_slot = slot
         if slot in position_counters:
             position_counters[slot] += 1
-            slot_name = f"{slot}{position_counters[slot]}"
+            slot_name = f"{slot} {position_counters[slot]}"
         else:
             position_counters[slot] = 1
-            slot_name = f"{slot}1" if roster_positions.count(slot) > 1 else slot
+            # Only add number if there are multiple of this position
+            total_count = roster_positions.count(slot)
+            slot_name = f"{slot} 1" if total_count > 1 else slot
         
         # Define eligible positions for each slot type
         if slot == 'QB':
@@ -292,38 +294,10 @@ else:  # ESPN
         roster_positions = []
         league_name = league.settings.name if hasattr(league.settings, 'name') else 'Your League'
         
-        # Detect roster positions using ESPN lineup slot IDs
+        # Use standard ESPN roster format
         try:
-            if league.teams:
-                # Map ESPN lineup slot IDs to position names
-                espn_slot_ids = {
-                    0: 'QB', 2: 'RB', 4: 'WR', 6: 'TE', 
-                    16: 'DST', 17: 'K', 23: 'FLEX',
-                    7: 'OP',  # Superflex/OP slot
-                    20: 'BN', 21: 'IR'  # Bench and IR
-                }
-                
-                # Get lineup slots from first team's roster
-                slot_counts = {}
-                sample_team = league.teams[0]
-                
-                for player in sample_team.roster:
-                    if hasattr(player, 'lineupSlot'):
-                        slot_id = player.lineupSlot
-                        # Skip bench (20) and IR (21)
-                        if slot_id not in [20, 21]:
-                            slot_counts[slot_id] = slot_counts.get(slot_id, 0) + 1
-                
-                # Build roster positions list
-                for slot_id in sorted(slot_counts.keys()):
-                    position = espn_slot_ids.get(slot_id, 'FLEX')
-                    count = slot_counts[slot_id]
-                    roster_positions.extend([position] * count)
-            
-            # Fallback if detection didn't work
-            if not roster_positions:
-                st.warning("⚠️ Could not detect ESPN roster configuration. Using standard lineup format.")
-                roster_positions = ['QB', 'RB', 'RB', 'WR', 'WR', 'TE', 'FLEX', 'DST', 'K']
+            # Standard ESPN lineup: 1 QB, 2 RB, 2 WR, 1 TE, 1 FLEX, 1 DST, 1 K
+            roster_positions = ['QB', 'RB', 'RB', 'WR', 'WR', 'TE', 'FLEX', 'DST', 'K']
         
         except Exception as e:
             st.warning(f"⚠️ Error parsing ESPN roster settings: {e}. Using standard lineup.")
