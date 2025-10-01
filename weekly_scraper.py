@@ -183,10 +183,82 @@ def fetch_nfl_projections():
     return pd.DataFrame(all_projections) if all_projections else pd.DataFrame()
 
 
+def get_sleeper_league_scoring():
+    """Fetch league-specific scoring settings from Sleeper"""
+    league_id = os.getenv('SLEEPER_LEAGUE_ID', '1185263580356419584')
+    
+    try:
+        url = f"https://api.sleeper.app/v1/league/{league_id}"
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        league_data = response.json()
+        
+        scoring_settings = league_data.get('scoring_settings', {})
+        return scoring_settings
+    except Exception as e:
+        print(f"   ⚠️ Could not fetch league scoring settings: {e}")
+        # Return default PPR scoring as fallback
+        return {'rec': 1.0}
+
+
+def calculate_custom_points(proj_stats, scoring_settings):
+    """Calculate fantasy points based on league-specific scoring settings"""
+    points = 0.0
+    
+    # Passing stats
+    points += proj_stats.get('pass_yd', 0) * scoring_settings.get('pass_yd', 0.04)
+    points += proj_stats.get('pass_td', 0) * scoring_settings.get('pass_td', 4)
+    points += proj_stats.get('pass_int', 0) * scoring_settings.get('pass_int', -2)
+    points += proj_stats.get('pass_2pt', 0) * scoring_settings.get('pass_2pt', 2)
+    
+    # Rushing stats
+    points += proj_stats.get('rush_yd', 0) * scoring_settings.get('rush_yd', 0.1)
+    points += proj_stats.get('rush_td', 0) * scoring_settings.get('rush_td', 6)
+    points += proj_stats.get('rush_2pt', 0) * scoring_settings.get('rush_2pt', 2)
+    
+    # Receiving stats
+    points += proj_stats.get('rec', 0) * scoring_settings.get('rec', 1.0)  # PPR
+    points += proj_stats.get('rec_yd', 0) * scoring_settings.get('rec_yd', 0.1)
+    points += proj_stats.get('rec_td', 0) * scoring_settings.get('rec_td', 6)
+    points += proj_stats.get('rec_2pt', 0) * scoring_settings.get('rec_2pt', 2)
+    
+    # Fumbles
+    points += proj_stats.get('fum_lost', 0) * scoring_settings.get('fum_lost', -2)
+    
+    # Bonus points
+    points += proj_stats.get('bonus_pass_yd_300', 0) * scoring_settings.get('bonus_pass_yd_300', 0)
+    points += proj_stats.get('bonus_pass_yd_400', 0) * scoring_settings.get('bonus_pass_yd_400', 0)
+    points += proj_stats.get('bonus_rush_yd_100', 0) * scoring_settings.get('bonus_rush_yd_100', 0)
+    points += proj_stats.get('bonus_rush_yd_200', 0) * scoring_settings.get('bonus_rush_yd_200', 0)
+    points += proj_stats.get('bonus_rec_yd_100', 0) * scoring_settings.get('bonus_rec_yd_100', 0)
+    points += proj_stats.get('bonus_rec_yd_200', 0) * scoring_settings.get('bonus_rec_yd_200', 0)
+    
+    # Kicker stats
+    points += proj_stats.get('fgm_0_19', 0) * scoring_settings.get('fgm_0_19', 3)
+    points += proj_stats.get('fgm_20_29', 0) * scoring_settings.get('fgm_20_29', 3)
+    points += proj_stats.get('fgm_30_39', 0) * scoring_settings.get('fgm_30_39', 3)
+    points += proj_stats.get('fgm_40_49', 0) * scoring_settings.get('fgm_40_49', 4)
+    points += proj_stats.get('fgm_50p', 0) * scoring_settings.get('fgm_50p', 5)
+    points += proj_stats.get('fgmiss', 0) * scoring_settings.get('fgmiss', 0)
+    points += proj_stats.get('xpm', 0) * scoring_settings.get('xpm', 1)
+    points += proj_stats.get('xpmiss', 0) * scoring_settings.get('xpmiss', 0)
+    
+    # Defense/ST stats
+    points += proj_stats.get('def_td', 0) * scoring_settings.get('def_td', 6)
+    points += proj_stats.get('def_st_td', 0) * scoring_settings.get('def_st_td', 6)
+    points += proj_stats.get('sack', 0) * scoring_settings.get('sack', 1)
+    points += proj_stats.get('int', 0) * scoring_settings.get('int', 2)
+    points += proj_stats.get('fum_rec', 0) * scoring_settings.get('fum_rec', 2)
+    points += proj_stats.get('safe', 0) * scoring_settings.get('safe', 2)
+    points += proj_stats.get('blk_kick', 0) * scoring_settings.get('blk_kick', 2)
+    
+    return points
+
+
 def fetch_sleeper_weekly_projections(week=None):
     """
     Fetch week-specific projections from Sleeper API
-    These are matchup-adjusted weekly projections, not season averages
+    Calculate points using league-specific scoring settings
     """
     if week is None:
         week = get_current_nfl_week()
@@ -194,6 +266,10 @@ def fetch_sleeper_weekly_projections(week=None):
     print(f"😴 Fetching Sleeper weekly projections for Week {week}...")
 
     try:
+        # Get league-specific scoring settings
+        scoring_settings = get_sleeper_league_scoring()
+        print(f"   → Using custom league scoring (PPR value: {scoring_settings.get('rec', 1.0)})")
+        
         # Get weekly projections from Sleeper
         projections_url = f"https://api.sleeper.app/projections/nfl/{SEASON}/{week}"
         proj_response = requests.get(projections_url, params={'season_type': 'regular'}, timeout=15)
@@ -232,13 +308,13 @@ def fetch_sleeper_weekly_projections(week=None):
                 if not full_name:
                     continue
                 
-                # Calculate PPR fantasy points from projections
-                pts_ppr = proj_stats.get('pts_ppr', 0) or proj_stats.get('pts_half_ppr', 0) or proj_stats.get('pts_std', 0) or 0
+                # Calculate fantasy points using league-specific scoring
+                custom_points = calculate_custom_points(proj_stats, scoring_settings)
                 
-                if pts_ppr > 0:
+                if custom_points > 0:
                     projections.append({
                         'player_name': full_name,
-                        'proj_points': round(pts_ppr, 1),
+                        'proj_points': round(custom_points, 1),
                         'position': position,
                         'source': 'Sleeper'
                     })
@@ -258,12 +334,13 @@ def fetch_sleeper_weekly_projections(week=None):
                 if not full_name:
                     continue
                 
-                pts_ppr = proj_stats.get('pts_ppr', 0) or proj_stats.get('pts_half_ppr', 0) or proj_stats.get('pts_std', 0) or 0
+                # Calculate fantasy points using league-specific scoring
+                custom_points = calculate_custom_points(proj_stats, scoring_settings)
                 
-                if pts_ppr > 0:
+                if custom_points > 0:
                     projections.append({
                         'player_name': full_name,
-                        'proj_points': round(pts_ppr, 1),
+                        'proj_points': round(custom_points, 1),
                         'position': position,
                         'source': 'Sleeper'
                     })
