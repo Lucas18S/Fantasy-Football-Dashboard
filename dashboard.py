@@ -327,17 +327,31 @@ else:  # ESPN
                 player_pos = player.position if hasattr(player, 'position') else None
                 matching_player = None
                 
-                # Try exact match with position check
-                for pid, pdata in players.items():
-                    if pdata.get('full_name', '').lower() == player_name.lower():
-                        # Check position matches to avoid duplicate names
-                        if player_pos and pdata.get('position') == player_pos:
-                            matching_player = pid
-                            break
-                        # If no position info, use first match (defense/kicker)
-                        elif not player_pos or player_pos in ['D/ST', 'DEF', 'K']:
-                            matching_player = pid
-                            break
+                # Special handling for defenses - ESPN uses "D/ST", Sleeper uses "DEF"
+                if player_pos in ['D/ST', 'DEF']:
+                    # Find defense by team name
+                    for pid, pdata in players.items():
+                        if pdata.get('position') == 'DEF':
+                            sleeper_name = pdata.get('full_name', '').lower()
+                            # Extract team name from ESPN format (e.g., "Vikings D/ST")
+                            espn_team = player_name.lower().replace(' d/st', '').replace(' def', '').strip()
+                            # Check if team name appears in Sleeper defense name
+                            if espn_team in sleeper_name or sleeper_name.split()[-1] in espn_team:
+                                matching_player = pid
+                                break
+                
+                # Try exact match with position check for regular players
+                if not matching_player:
+                    for pid, pdata in players.items():
+                        if pdata.get('full_name', '').lower() == player_name.lower():
+                            # Check position matches to avoid duplicate names
+                            if player_pos and pdata.get('position') == player_pos:
+                                matching_player = pid
+                                break
+                            # If no position info, use first match (kicker)
+                            elif not player_pos or player_pos == 'K':
+                                matching_player = pid
+                                break
                 
                 # If no exact match, try partial match (for cases like "D. Smith" vs "David Smith")
                 if not matching_player:
