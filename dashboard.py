@@ -421,14 +421,28 @@ st.markdown("---")
 source_display = selected_source if 'source' in projections.columns and 'selected_source' in locals() else "Sleeper"
 st.markdown(f"### 🔍 Start/Sit Advice for {selected_manager}")
 st.caption(f"Based on {source_display} projections")
+
+# Debug info
+st.caption(f"📊 Found {len(player_ids)} players on roster")
+
 optimal = build_optimal_lineup(player_ids, players, working_projections, roster_positions)
-total   = 0
-for slot, plist in optimal.items():
-    st.markdown(f"**{slot}:**")
-    for p in plist:
-        st.write(f"- {p['name']} — **{p['points']:.1f} pts**")
-        total += p['points']
-st.success(f"✅ Optimal Projected Total: **{total:.1f} pts**")
+
+# Check if optimal lineup is empty
+if not optimal or all(len(plist) == 0 for plist in optimal.values()):
+    st.error("❌ Could not generate optimal lineup. This might be because:")
+    st.write("- Player names don't match between ESPN and projection data")
+    st.write("- No projections available for your players")
+    st.write(f"- Roster has {len(player_ids)} players")
+    st.write(f"- Roster positions: {roster_positions}")
+else:
+    total   = 0
+    for slot, plist in optimal.items():
+        if plist:  # Only show slots that have players
+            st.markdown(f"**{slot}:**")
+            for p in plist:
+                st.write(f"- {p['name']} — **{p['points']:.1f} pts**")
+                total += p['points']
+    st.success(f"✅ Optimal Projected Total: **{total:.1f} pts**")
 
 # Bad starts
 st.markdown("---")
