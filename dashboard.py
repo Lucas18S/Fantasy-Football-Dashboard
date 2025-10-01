@@ -309,24 +309,31 @@ else:  # ESPN
             roster_players = []
             starters = []
             for player in team.roster:
-                # Try to find player in Sleeper database by name matching
+                # Try to find player in Sleeper database by name AND position matching
                 player_name = player.name
+                player_pos = player.position if hasattr(player, 'position') else None
                 matching_player = None
                 
-                # Try exact match first
+                # Try exact match with position check
                 for pid, pdata in players.items():
                     if pdata.get('full_name', '').lower() == player_name.lower():
-                        matching_player = pid
-                        break
+                        # Check position matches to avoid duplicate names
+                        if player_pos and pdata.get('position') == player_pos:
+                            matching_player = pid
+                            break
+                        # If no position info, use first match (defense/kicker)
+                        elif not player_pos or player_pos in ['D/ST', 'DEF', 'K']:
+                            matching_player = pid
+                            break
                 
                 # If no exact match, try partial match (for cases like "D. Smith" vs "David Smith")
                 if not matching_player:
                     for pid, pdata in players.items():
                         sleeper_name = pdata.get('full_name', '').lower()
-                        # Check if last names match and first initial matches
+                        # Check if last names match
                         if sleeper_name and player_name.lower().split()[-1] in sleeper_name:
-                            # Also check if positions match to avoid wrong player
-                            if hasattr(player, 'position') and player.position == pdata.get('position'):
+                            # Check if positions match to avoid wrong player
+                            if player_pos and player_pos == pdata.get('position'):
                                 matching_player = pid
                                 break
                 
