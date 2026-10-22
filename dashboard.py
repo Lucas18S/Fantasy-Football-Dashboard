@@ -502,13 +502,31 @@ with st.sidebar:
     league_options = [f"{l.get('name', 'League')} ({l.get('platform')})" for l in saved_leagues]
     league_options.append("+ Connect New League")
     
+    # Determine default index if not already tracking in session state
     default_idx = 0
     for idx, l in enumerate(saved_leagues):
         if l.get("is_default"):
             default_idx = idx
             break
             
-    selected_league_str = st.selectbox("Saved Leagues", league_options, index=default_idx if default_idx < len(league_options) else 0)
+    if "current_league_idx" not in st.session_state or st.session_state["current_league_idx"] >= len(league_options):
+        st.session_state["current_league_idx"] = default_idx
+
+    def on_saved_league_change():
+        selected = st.session_state.get("saved_leagues_select")
+        if selected in league_options:
+            st.session_state["current_league_idx"] = league_options.index(selected)
+        # Clear selected manager so the team dropdown resets to the new league's managers
+        if "selected_manager" in st.session_state:
+            del st.session_state["selected_manager"]
+
+    selected_league_str = st.selectbox(
+        "Saved Leagues",
+        league_options,
+        index=st.session_state["current_league_idx"],
+        key="saved_leagues_select",
+        on_change=on_saved_league_change
+    )
     
     sleeper_league_id = ""
     espn_league_id = ""
@@ -520,24 +538,37 @@ with st.sidebar:
         new_league_name = st.text_input("League Nickname", value="My League", key="new_league_name")
         league_platform = st.radio("Platform", ["Sleeper", "ESPN"], key="new_league_platform")
         if league_platform == "Sleeper":
-            sleeper_league_id = st.text_input("Sleeper League ID", value="", placeholder="e.g. 1337487447067492352", key="new_sleeper_id")
+            new_s_input = st.text_input("Sleeper League ID", value="", placeholder="e.g. 1337487447067492352", key="new_sleeper_id")
+            new_e_input = ""
+            new_s2_input = ""
+            new_swid_input = ""
         else:
-            espn_league_id = st.text_input("ESPN League ID", value="", placeholder="e.g. 529882810", key="new_espn_id")
-            espn_s2 = st.text_input("ESPN_S2 (Private)", type="password", key="new_espn_s2")
-            swid = st.text_input("SWID (Private)", type="password", key="new_swid")
+            new_s_input = ""
+            new_e_input = st.text_input("ESPN League ID", value="", placeholder="e.g. 529882810", key="new_espn_id")
+            new_s2_input = st.text_input("ESPN_S2 (Private)", type="password", key="new_espn_s2")
+            new_swid_input = st.text_input("SWID (Private)", type="password", key="new_swid")
             
         make_default = st.checkbox("Set as default league", value=True, key="chk_new_default")
         if st.button("Save League to Profile", use_container_width=True, key="btn_save_new_league"):
-            if (league_platform == "Sleeper" and sleeper_league_id) or (league_platform == "ESPN" and espn_league_id):
+            s_val = new_s_input.strip()
+            e_val = new_e_input.strip()
+            if (league_platform == "Sleeper" and s_val) or (league_platform == "ESPN" and e_val):
                 auth_manager.save_user_league(current_username, {
-                    "name": new_league_name,
+                    "name": new_league_name.strip() or "My League",
                     "platform": league_platform,
-                    "sleeper_league_id": sleeper_league_id,
-                    "espn_league_id": espn_league_id,
-                    "espn_s2": espn_s2,
-                    "swid": swid,
+                    "sleeper_league_id": s_val,
+                    "espn_league_id": e_val,
+                    "espn_s2": new_s2_input.strip(),
+                    "swid": new_swid_input.strip(),
                     "is_default": make_default
                 })
+                # Immediately select the newly created league index on rerun
+                st.session_state["current_league_idx"] = len(saved_leagues)
+                if "saved_leagues_select" in st.session_state:
+                    del st.session_state["saved_leagues_select"]
+                if "selected_manager" in st.session_state:
+                    del st.session_state["selected_manager"]
+                st.cache_data.clear()
                 st.success("League saved!")
                 st.rerun()
             else:
@@ -545,39 +576,53 @@ with st.sidebar:
     else:
         chosen_idx = league_options.index(selected_league_str)
         active_league_data = saved_leagues[chosen_idx]
+        league_id_key = str(active_league_data.get("id", chosen_idx))
         
         league_platform = active_league_data.get("platform", "Sleeper")
-        sleeper_league_id = active_league_data.get("sleeper_league_id", "")
-        espn_league_id = active_league_data.get("espn_league_id", "")
+        sleeper_league_id = str(active_league_data.get("sleeper_league_id", "")).strip()
+        espn_league_id = str(active_league_data.get("espn_league_id", "")).strip()
         espn_s2 = active_league_data.get("espn_s2", "")
         swid = active_league_data.get("swid", "")
         
         with st.expander("League Settings & Edit", expanded=False):
-            edit_name = st.text_input("Nickname", value=active_league_data.get("name", "League"), key="edit_league_name")
+            edit_name = st.text_input("Nickname", value=active_league_data.get("name", "League"), key=f"name_{league_id_key}")
             if league_platform == "Sleeper":
-                sleeper_league_id = st.text_input("Sleeper League ID", value=sleeper_league_id, key="edit_sleeper_id")
+                upd_sleeper_id = st.text_input("Sleeper League ID", value=sleeper_league_id, key=f"s_id_{league_id_key}")
+                upd_espn_id = ""
+                upd_espn_s2 = ""
+                upd_swid = ""
             else:
-                espn_league_id = st.text_input("ESPN League ID", value=espn_league_id, key="edit_espn_id")
-                espn_s2 = st.text_input("ESPN_S2", value=espn_s2, type="password", key="edit_espn_s2")
-                swid = st.text_input("SWID", value=swid, type="password", key="edit_swid")
+                upd_sleeper_id = ""
+                upd_espn_id = st.text_input("ESPN League ID", value=espn_league_id, key=f"e_id_{league_id_key}")
+                upd_espn_s2 = st.text_input("ESPN_S2", value=espn_s2, type="password", key=f"e_s2_{league_id_key}")
+                upd_swid = st.text_input("SWID", value=swid, type="password", key=f"e_swid_{league_id_key}")
                 
-            set_as_def = st.checkbox("Set as default league", value=active_league_data.get("is_default", False), key="chk_edit_def")
+            set_as_def = st.checkbox("Set as default league", value=active_league_data.get("is_default", False), key=f"def_{league_id_key}")
             col_save, col_del = st.columns(2)
             with col_save:
-                if st.button("Update", key="btn_update_league", use_container_width=True):
-                    active_league_data["name"] = edit_name
-                    active_league_data["sleeper_league_id"] = sleeper_league_id
-                    active_league_data["espn_league_id"] = espn_league_id
-                    active_league_data["espn_s2"] = espn_s2
-                    active_league_data["swid"] = swid
+                if st.button("Update", key=f"btn_upd_{league_id_key}", use_container_width=True):
+                    active_league_data["name"] = edit_name.strip()
+                    if league_platform == "Sleeper":
+                        active_league_data["sleeper_league_id"] = upd_sleeper_id.strip()
+                    else:
+                        active_league_data["espn_league_id"] = upd_espn_id.strip()
+                        active_league_data["espn_s2"] = upd_espn_s2.strip()
+                        active_league_data["swid"] = upd_swid.strip()
                     active_league_data["is_default"] = set_as_def
                     auth_manager.save_user_league(current_username, active_league_data)
+                    st.cache_data.clear()
                     st.success("Updated!")
                     st.rerun()
             with col_del:
-                if len(saved_leagues) > 1 and st.button("Delete", key="btn_del_league", use_container_width=True):
+                if len(saved_leagues) > 1 and st.button("Delete", key=f"btn_del_{league_id_key}", use_container_width=True):
                     auth_manager.delete_user_league(current_username, active_league_data["id"])
-                    st.warning("Deleted.")
+                    st.session_state["current_league_idx"] = 0
+                    if "saved_leagues_select" in st.session_state:
+                        del st.session_state["saved_leagues_select"]
+                    if "selected_manager" in st.session_state:
+                        del st.session_state["selected_manager"]
+                    st.cache_data.clear()
+                    st.warning("Deleted league.")
                     st.rerun()
     
     st.markdown("---")
@@ -679,17 +724,25 @@ tabs = st.tabs(TAB_OPTIONS, default=active_tab)
 with tabs[0]:
     st.subheader(f"Roster Optimization: {league_name}")
     manager_names = {r['owner_id']: next((u['display_name'] for u in users if u['user_id'] == r['owner_id']), f"Team {r['owner_id']}") for r in rosters}
+    manager_list = list(manager_names.values())
+    if not manager_list:
+        st.warning("No teams found for this league.")
+        st.stop()
+        
+    if st.session_state.get('selected_manager') not in manager_list:
+        st.session_state['selected_manager'] = manager_list[0]
+
     selected_manager = st.selectbox(
         "Select Team:", 
-        list(manager_names.values()),
+        manager_list,
         key="selected_manager",
         on_change=set_active_tab,
         args=(TAB_OPTIONS[0],)
     )
-    selected_roster = next(r for r in rosters if manager_names[r['owner_id']] == selected_manager)
+    selected_roster = next((r for r in rosters if manager_names.get(r['owner_id']) == selected_manager), rosters[0] if rosters else {})
     
-    player_ids = selected_roster.get('players', [])
-    starters_ids = selected_roster.get('starters', [])
+    player_ids = selected_roster.get('players', []) if selected_roster else []
+    starters_ids = selected_roster.get('starters', []) if selected_roster else []
 
     optimal = build_optimal_lineup(player_ids, players, working_projections, comp_data, roster_positions)
     optimal_ids = {slot['player']['id'] for slot in optimal if slot['player']}
