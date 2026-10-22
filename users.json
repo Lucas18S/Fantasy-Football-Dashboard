@@ -2,8 +2,8 @@
   "users": {
     "lucas": {
       "username": "lucas",
-      "salt": "bac4c8fdac926f0bd345c16db6d1ef3d",
-      "password_hash": "9ef0d41f5fa7d0edf1a4ba81b1bd0668cb532f6e461a63ca0b1b13205f9e11f1",
+      "salt": "f1e2d46c1857e61badfaf6a9a17ef469",
+      "password_hash": "20084f9422e1d5e453f7995d605da3da864b8de76367714bf4342a30cd5d1064",
       "created_at": "2026-10-22T12:49:19.606091",
       "session_tokens": [],
       "saved_leagues": [
@@ -18,6 +18,29 @@
           "is_default": true
         }
       ]
+    },
+    "lucas18s": {
+      "username": "lucas18s",
+      "display_name": "Lucas18S",
+      "role": "admin",
+      "email": "",
+      "salt": "043618df3fa3965948341d0b9f2c7e44",
+      "password_hash": "eae4311121e1cb20e5cef75521c7674e37d93510ac4ddc87ed299478007e058e",
+      "created_at": "2026-10-22T13:22:38.446660",
+      "session_tokens": [],
+      "saved_leagues": [
+        {
+          "id": "sleeper_main",
+          "name": "Main Sleeper League",
+          "platform": "Sleeper",
+          "sleeper_league_id": "1337487447067492352",
+          "espn_league_id": "",
+          "espn_s2": "",
+          "swid": "",
+          "is_default": true
+        }
+      ]
     }
-  }
+  },
+  "reset_requests": []
 }

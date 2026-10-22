@@ -16,6 +16,7 @@ from backtester import (
     build_historical_backtest_data
 )
 import auth_manager
+import analytics_manager
 
 # ─── Config ───────────────────────────────────────────────────────────────────
 PROJ_FILE       = "projections_combined.csv"
@@ -379,7 +380,7 @@ def render_login_screen():
         
         with tab_login:
             st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
-            username = st.text_input("Username", key="login_username", placeholder="e.g. lucas")
+            username = st.text_input("Username", key="login_username", placeholder="e.g. Lucas18S or lucas")
             password = st.text_input("Password", type="password", key="login_password", placeholder="Enter your password")
             save_login = st.checkbox("Save login on this device (Loads saved leagues)", value=True, key="chk_save_login")
             
@@ -390,6 +391,7 @@ def render_login_screen():
                     norm_user = username.strip().lower()
                     st.session_state.authenticated = True
                     st.session_state.current_user = norm_user
+                    analytics_manager.track_login(norm_user)
                     if save_login:
                         token = auth_manager.create_session_token(norm_user)
                         st.query_params["session"] = token
@@ -397,11 +399,21 @@ def render_login_screen():
                 else:
                     st.error("Invalid username or password.")
                     
+            with st.expander("Forgot Password?", expanded=False):
+                st.markdown("<div style='font-size:0.75rem; color:#5E665E;'>Enter your username or recovery email to submit an access recovery request to the platform administrator (Lucas18S).</div>", unsafe_allow_html=True)
+                recovery_ident = st.text_input("Username or Recovery Email", key="inp_rec_ident")
+                if st.button("Submit Reset Request", key="btn_sub_reset", use_container_width=True):
+                    ok, msg = auth_manager.request_password_reset(recovery_ident)
+                    if ok:
+                        st.success(msg)
+                    else:
+                        st.error(msg)
+                    
             st.markdown("""
             <div style="background-color: #F1F4F1; border: 1px solid #D6DFD6; border-radius: 4px; padding: 10px 12px; margin-top: 18px; font-size: 0.76rem; color: #4A564A;">
-                <strong>Default Credentials:</strong><br>
-                Username: <code>lucas</code> | Password: <code>fantasy2025</code><br>
-                <span style="font-size: 0.72rem; color: #6A756A;">Or switch to the 'Create Account' tab to create a new user.</span>
+                <strong>Administrator Access:</strong> Username: <code>Lucas18S</code> | Password: <code>Packers</code><br>
+                <strong>Standard Account:</strong> Username: <code>lucas</code> | Password: <code>fantasy2025</code><br>
+                <span style="font-size: 0.72rem; color: #6A756A;">Or register your own custom account under the 'Create Account' tab.</span>
             </div>
             """, unsafe_allow_html=True)
             
@@ -410,6 +422,7 @@ def render_login_screen():
             reg_username = st.text_input("New Username", key="reg_username", placeholder="Choose username (min 3 chars)")
             reg_password = st.text_input("New Password", type="password", key="reg_password", placeholder="Choose password (min 4 chars)")
             reg_confirm  = st.text_input("Confirm Password", type="password", key="reg_confirm", placeholder="Repeat password")
+            reg_email    = st.text_input("Recovery Email (Optional)", key="reg_email", placeholder="Used only if you forget your password")
             
             st.markdown("<div style='font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #5B705E; margin-top: 14px;'>Initial League Setup</div>", unsafe_allow_html=True)
             reg_platform = st.selectbox("Platform", ["Sleeper", "ESPN"], key="reg_platform")
@@ -423,11 +436,18 @@ def render_login_screen():
                 elif reg_password != reg_confirm:
                     st.error("Passwords do not match.")
                 else:
-                    ok, msg = auth_manager.register_user(reg_username, reg_password, initial_league_id=reg_league_id, platform=reg_platform)
+                    ok, msg = auth_manager.register_user(
+                        reg_username, 
+                        reg_password, 
+                        email=reg_email,
+                        initial_league_id=reg_league_id, 
+                        platform=reg_platform
+                    )
                     if ok:
                         norm_user = reg_username.strip().lower()
                         st.session_state.authenticated = True
                         st.session_state.current_user = norm_user
+                        analytics_manager.track_login(norm_user)
                         if reg_save_login:
                             token = auth_manager.create_session_token(norm_user)
                             st.query_params["session"] = token
@@ -464,15 +484,28 @@ if is_file_stale(PROJ_FILE):
 with st.sidebar:
     # User Profile & Logout Header
     current_username = st.session_state.get('current_user', 'lucas')
+    current_user_data = auth_manager.get_user(current_username) or {}
+    user_display = current_user_data.get("display_name", current_username)
+    is_user_admin = auth_manager.is_admin(current_username)
+    role_badge = "<span style='background-color:#5B705E; color:#FFFFFF; font-size:0.6rem; font-weight:700; padding:2px 6px; border-radius:3px; text-transform:uppercase; margin-left:6px;'>Admin</span>" if is_user_admin else ""
+    
     st.markdown(f"""
-    <div style="background-color: #FFFFFF; border: 1px solid #E2E7E2; border-radius: 6px; padding: 10px 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+    <div style="background-color: #FFFFFF; border: 1px solid #E2E7E2; border-radius: 6px; padding: 10px 14px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
         <div>
             <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #5B705E;">User Account</div>
-            <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 700; color: #141714;">{current_username.capitalize()}</div>
+            <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 700; color: #141714;">{user_display} {role_badge}</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
     
+    with st.expander("Account & Recovery Email", expanded=False):
+        curr_email = current_user_data.get("email", "")
+        new_email = st.text_input("Recovery Email", value=curr_email, placeholder="e.g. you@example.com", key="side_user_email")
+        if st.button("Save Recovery Email", key="btn_save_rec_email", use_container_width=True):
+            auth_manager.update_user_email(current_username, new_email)
+            st.success("Recovery email saved!")
+            st.rerun()
+
     if st.button("Sign Out", key="btn_signout", use_container_width=True, help="Log out and clear saved session"):
         token = st.query_params.get("session")
         if token:
@@ -702,6 +735,8 @@ with col_m4:
     st.metric("Pipeline Run", last_mod)
 
 # ─── Tab Configuration with State Retention ──────────────────────────────────
+is_admin_user = auth_manager.is_admin(st.session_state.get('current_user', ''))
+
 TAB_OPTIONS = [
     "Lineup Optimizer", 
     "Matchup Simulator", 
@@ -710,13 +745,19 @@ TAB_OPTIONS = [
     "Position Tiers",
     "Model Backtesting"
 ]
+if is_admin_user:
+    TAB_OPTIONS.append("Admin Console")
 
 def set_active_tab(tab_name):
     st.session_state['active_tab'] = tab_name
+    analytics_manager.track_tab_view(tab_name, st.session_state.get('current_user', 'user'))
 
 active_tab = st.session_state.get('active_tab', TAB_OPTIONS[0])
 if active_tab not in TAB_OPTIONS:
     active_tab = TAB_OPTIONS[0]
+
+# Track tab view
+analytics_manager.track_tab_view(active_tab, st.session_state.get('current_user', 'user'))
 
 tabs = st.tabs(TAB_OPTIONS, default=active_tab)
 
@@ -1518,4 +1559,159 @@ with tabs[5]:
             )
         else:
             st.info("No player performances found matching the selected filters. Try broadening your criteria.")
+
+# ─── TAB 7: Administrator Console (Admin Lucas18S Exclusive) ───────────────────
+if is_admin_user:
+    with tabs[6]:
+        st.markdown("""
+        <div style="padding: 4px 0 16px 0; border-bottom: 1px solid #E2E7E2; margin-bottom: 20px;">
+            <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #5B705E; margin-bottom: 4px;">
+                Platform Governance & Telemetry // Master Admin
+            </div>
+            <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.85rem; font-weight: 700; letter-spacing: -0.02em; color: #141714;">
+                ADMINISTRATOR CONSOLE
+            </div>
+            <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.88rem; color: #5E665E; margin-top: 4px;">
+                Monitor user engagement, audit saved leagues, analyze feature view counts, and manage credential recovery requests.
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        all_users = auth_manager.load_users()
+        analytics_data = analytics_manager.get_analytics_summary()
+        pending_resets = auth_manager.get_reset_requests()
+        
+        total_registered = len(all_users)
+        total_leagues_count = sum(len(u.get("saved_leagues", [])) for u in all_users.values())
+        avg_leagues_per_user = round(total_leagues_count / total_registered, 1) if total_registered > 0 else 0
+        
+        tab_views_dict = analytics_data.get("tab_views", {})
+        top_tab = max(tab_views_dict.items(), key=lambda x: x[1])[0] if tab_views_dict else "Lineup Optimizer"
+        
+        # 1. Top KPI Metric Cards
+        col_a1, col_a2, col_a3, col_a4 = st.columns(4)
+        with col_a1:
+            st.metric("Total Users", total_registered)
+        with col_a2:
+            st.metric("Total Tracked Leagues", total_leagues_count)
+        with col_a3:
+            st.metric("Avg Leagues / User", f"{avg_leagues_per_user}")
+        with col_a4:
+            st.metric("Most Viewed Tab", top_tab)
+            
+        st.markdown("---")
+        
+        # 2. Tab Views & Feature Engagement Telemetry
+        st.subheader("Feature Telemetry & Tab Popularity")
+        st.caption("Aggregated view counts across all registered user sessions.")
+        
+        col_chart, col_stat = st.columns([1.6, 1])
+        with col_chart:
+            sorted_views = sorted(tab_views_dict.items(), key=lambda x: x[1], reverse=True)
+            df_views = pd.DataFrame(sorted_views, columns=["Feature Tab", "Total Views"])
+            st.bar_chart(df_views.set_index("Feature Tab"), color="#5B705E", horizontal=True)
+            
+        with col_stat:
+            st.markdown("<div style='font-family:Space Grotesk; font-size:0.85rem; font-weight:700; color:#5B705E; text-transform:uppercase;'>Usage Breakdown</div>", unsafe_allow_html=True)
+            total_views_sum = sum(tab_views_dict.values())
+            for tab_name_iter, view_count in sorted_views:
+                pct = round((view_count / total_views_sum * 100), 1) if total_views_sum > 0 else 0
+                st.markdown(f"**{tab_name_iter}**: {view_count:,} views ({pct}%)")
+            st.caption(f"Total Platform Sessions: **{analytics_data.get('total_logins', 0)}**")
+            
+        st.markdown("---")
+        
+        # 3. Credential Recovery & Password Reset Center
+        st.subheader("Credential Recovery & Password Resets")
+        if pending_resets:
+            st.warning(f"{len(pending_resets)} Pending Password Reset Request(s)")
+            for req in pending_resets:
+                req_id = req.get("id")
+                req_user = req.get("username")
+                req_email = req.get("email") or "Not provided"
+                req_time = req.get("requested_at", "")[:16].replace("T", " ")
+                
+                with st.container():
+                    st.markdown(f"""
+                    <div style="background-color: #FFFDF5; border: 1px solid #E6D8B5; border-radius: 6px; padding: 12px 16px; margin-bottom: 10px;">
+                        <div style="font-weight: 700; color: #8A6D3B;">Request ID: {req_id} | User: <code>{req_user}</code></div>
+                        <div style="font-size: 0.85rem; color: #555;">Recovery Email: {req_email} | Submitted: {req_time}</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
+                    col_rp1, col_rp2 = st.columns([2, 1])
+                    with col_rp1:
+                        new_p = st.text_input(f"New Password for {req_user}", value="Packers2025", key=f"inp_reset_{req_id}")
+                    with col_rp2:
+                        st.markdown("<div style='height:28px;'></div>", unsafe_allow_html=True)
+                        if st.button("Set Password & Resolve", key=f"btn_res_{req_id}", use_container_width=True):
+                            ok, msg = auth_manager.resolve_reset_request(req_id, new_p)
+                            if ok:
+                                st.success(msg)
+                                st.rerun()
+                            else:
+                                st.error(msg)
+        else:
+            st.info("No pending password reset requests. All user accounts operating normally.")
+            
+        with st.expander("Manual Password Override Tool", expanded=False):
+            st.markdown("<div style='font-size:0.85rem; color:#5E665E;'>Select any user to immediately override and assign a new password.</div>", unsafe_allow_html=True)
+            target_account = st.selectbox("Select Target User", list(all_users.keys()), key="sel_target_pwd")
+            override_new_pwd = st.text_input("New Password", key="inp_override_pwd", placeholder="Enter new password (min 4 chars)")
+            if st.button("Apply New Password", key="btn_apply_override_pwd"):
+                if not override_new_pwd:
+                    st.error("Please enter a new password.")
+                else:
+                    ok, msg = auth_manager.admin_set_password(target_account, override_new_pwd)
+                    if ok:
+                        st.success(msg)
+                    else:
+                        st.error(msg)
+
+        st.markdown("---")
+        
+        # 4. User Directory & League Portfolio Auditor
+        st.subheader("Registered Users & League Distribution")
+        
+        user_rows = []
+        platform_counts = {"Sleeper": 0, "ESPN": 0}
+        
+        for u_key, u_val in all_users.items():
+            leagues = u_val.get("saved_leagues", [])
+            for l in leagues:
+                plat = l.get("platform", "Sleeper")
+                platform_counts[plat] = platform_counts.get(plat, 0) + 1
+                
+            user_rows.append({
+                "Username": u_val.get("display_name", u_key),
+                "Role": u_val.get("role", "user").upper(),
+                "Recovery Email": u_val.get("email") or "—",
+                "Total Leagues": len(leagues),
+                "Created Date": u_val.get("created_at", "")[:10]
+            })
+            
+        col_tbl, col_plat = st.columns([2, 1])
+        with col_tbl:
+            st.dataframe(pd.DataFrame(user_rows), use_container_width=True, hide_index=True)
+            
+        with col_plat:
+            st.markdown("<div style='font-family:Space Grotesk; font-size:0.85rem; font-weight:700; color:#5B705E; text-transform:uppercase;'>Platform Share</div>", unsafe_allow_html=True)
+            df_plat = pd.DataFrame(list(platform_counts.items()), columns=["Platform", "Total Leagues"])
+            st.bar_chart(df_plat.set_index("Platform"), color="#5B705E")
+            
+        with st.expander("Danger Zone: Delete User Account", expanded=False):
+            deletable_users = [u for u in all_users.keys() if u != "lucas18s"]
+            if deletable_users:
+                user_to_delete = st.selectbox("Select Account to Delete", deletable_users, key="sel_del_user")
+                st.warning(f"Permanently removes '{user_to_delete}' and all their saved leagues from the database.")
+                if st.button(f"Delete Account '{user_to_delete}'", key="btn_confirm_del", type="primary"):
+                    ok, msg = auth_manager.admin_delete_user(user_to_delete)
+                    if ok:
+                        st.success(msg)
+                        st.rerun()
+                    else:
+                        st.error(msg)
+            else:
+                st.info("No standard user accounts eligible for deletion.")
+
 
