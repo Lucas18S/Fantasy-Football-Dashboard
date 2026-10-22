@@ -1663,41 +1663,221 @@ with tabs[3]:
 
 # ─── TAB 5: Projection Arbitrage ─────────────────────────────────────────────
 with tabs[4]:
-    st.subheader("Model Discrepancy & Arbitrage Matrix")
-    st.markdown("Identifies players where individual projection models (**CBS**, **ESPN**, **FantasyPros**, **NFL**, **NumberFire**, **Sleeper**) have large disagreements. High spread indicates volatility and potential boom/bust candidates.")
+    st.markdown("""
+    <div style="padding: 4px 0 16px 0; border-bottom: 1px solid #E2E7E2; margin-bottom: 20px;">
+        <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #5B705E; margin-bottom: 4px;">
+            Cross-Model Variance & Volatility // Decision Intelligence
+        </div>
+        <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.85rem; font-weight: 700; letter-spacing: -0.02em; color: #141714;">
+            PROJECTION ARBITRAGE & DISCREPANCY MATRIX
+        </div>
+        <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.88rem; color: #5E665E; margin-top: 4px;">
+            Cross-examines individual forecast models (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper) to uncover where platforms sharply disagree.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     if not comp_data.empty and len(comp_data['source'].unique()) > 1:
         pivot_df = comp_data.pivot_table(index=['player_name', 'position'], columns='source', values='proj_points').reset_index()
         sources_found = [c for c in pivot_df.columns if c not in ['player_name', 'position']]
+        
         if len(sources_found) >= 2:
-            pivot_df['Spread (Delta)'] = (pivot_df[sources_found].max(axis=1) - pivot_df[sources_found].min(axis=1)).round(1)
-            pivot_df['Consensus Avg'] = pivot_df[sources_found].mean(axis=1).round(1)
-            pivot_df['Discrepancy %'] = ((pivot_df['Spread (Delta)'] / pivot_df['Consensus Avg']) * 100).round(1)
-            
-            spread_df = pivot_df.sort_values(by='Spread (Delta)', ascending=False).dropna(subset=['Spread (Delta)'])
-            
-            col_filter1, _ = st.columns([1, 3])
-            with col_filter1:
+            pivot_df['Source Count'] = pivot_df[sources_found].notna().sum(axis=1)
+            valid_arb = pivot_df[pivot_df['Source Count'] >= 2].copy()
+
+            valid_arb['Min Proj'] = valid_arb[sources_found].min(axis=1).round(1)
+            valid_arb['Max Proj'] = valid_arb[sources_found].max(axis=1).round(1)
+            valid_arb['Point Spread (Gap)'] = (valid_arb['Max Proj'] - valid_arb['Min Proj']).round(1)
+            valid_arb['Consensus Proj'] = valid_arb[sources_found].mean(axis=1).round(1)
+            valid_arb['Discrepancy %'] = ((valid_arb['Point Spread (Gap)'] / valid_arb['Consensus Proj'].clip(lower=1.0)) * 100).round(0).astype(int)
+
+            def get_bull_bear(row):
+                vals = {s: row[s] for s in sources_found if pd.notna(row[s])}
+                if not vals:
+                    return "—", "—"
+                bull = max(vals.items(), key=lambda x: x[1])
+                bear = min(vals.items(), key=lambda x: x[1])
+                return f"{bull[0]} ({bull[1]:.1f})", f"{bear[0]} ({bear[1]:.1f})"
+
+            bb_tuples = [get_bull_bear(r) for _, r in valid_arb.iterrows()]
+            valid_arb['Highest Model (Bull)'] = [b[0] for b in bb_tuples]
+            valid_arb['Lowest Model (Bear)'] = [b[1] for b in bb_tuples]
+            valid_arb['Projected Range'] = valid_arb['Min Proj'].astype(str) + " – " + valid_arb['Max Proj'].astype(str) + " pts"
+
+            def get_arb_profile(spread):
+                if spread >= 5.0: return "High Disagreement"
+                if spread >= 2.5: return "Moderate Split"
+                return "Strong Consensus"
+
+            valid_arb['Consensus Profile'] = valid_arb['Point Spread (Gap)'].apply(get_arb_profile)
+            valid_arb = valid_arb.rename(columns={'player_name': 'Player', 'position': 'Pos'})
+
+            # 1. Summary KPI Cards
+            col_k1, col_k2, col_k3 = st.columns(3)
+            with col_k1:
+                # Top disputed starter
+                disputed_pool = valid_arb[valid_arb['Consensus Proj'] >= 6.0].sort_values(by='Point Spread (Gap)', ascending=False)
+                top_disputed = disputed_pool.iloc[0] if not disputed_pool.empty else valid_arb.iloc[0]
+                st.metric(
+                    "Widest Model Disagreement", 
+                    f"{top_disputed['Player']} ({top_disputed['Pos']})",
+                    delta=f"{top_disputed['Point Spread (Gap)']:.1f} pt spread ({top_disputed['Lowest Model (Bear)'].split()[0]} vs {top_disputed['Highest Model (Bull)'].split()[0]})",
+                    delta_color="off"
+                )
+            with col_k2:
+                # Top consensus starter
+                consensus_pool = valid_arb[valid_arb['Consensus Proj'] >= 10.0].sort_values(by='Point Spread (Gap)', ascending=True)
+                top_consensus = consensus_pool.iloc[0] if not consensus_pool.empty else valid_arb.iloc[-1]
+                st.metric(
+                    "Strongest Consensus Starter", 
+                    f"{top_consensus['Player']} ({top_consensus['Pos']})",
+                    delta=f"±{top_consensus['Point Spread (Gap)']:.1f} pt spread ({top_consensus['Consensus Proj']:.1f} avg)",
+                    delta_color="normal"
+                )
+            with col_k3:
+                avg_spread = valid_arb['Point Spread (Gap)'].mean()
+                st.metric(
+                    "Average Model Variance", 
+                    f"±{avg_spread:.1f} pts",
+                    delta=f"{len(sources_found)} Models Tracked",
+                    delta_color="off"
+                )
+
+            # 2. Plain-English Explainer Card
+            with st.expander("How to Read This Matrix & Use in Lineup Decisions", expanded=False):
+                st.markdown("""
+                - **Consensus Proj**: The multi-source average expected points across all available models (**CBS**, **ESPN**, **FantasyPros**, **NFL**, **NumberFire**, **Sleeper**).
+                - **Point Spread (Gap)**: The exact difference in points between the most optimistic (Bull) and most pessimistic (Bear) projection models (`Max - Min`).
+                - **Projected Range**: The full spectrum from the lowest forecast to the highest forecast.
+                - **Highest Model (Bull) / Lowest Model (Bear)**: Tells you which platform projects a huge game vs which platform forecasts a quiet week.
+                - **Strategic Rule of Thumb**:
+                  - *Underdog Matchup?* Target **High Disagreement (5.0+ pt gap)** players for high-ceiling boom upside.
+                  - *Favored to Win?* Target **Strong Consensus (<2.5 pt gap)** players for dependable, model-verified safe floors.
+                """)
+
+            st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
+
+            # 3. Interactive Filter Bar
+            fc1, fc2, fc3, fc4 = st.columns([1, 1, 1, 1.2])
+            with fc1:
                 pos_choice = st.selectbox(
                     "Filter Position", 
-                    ["ALL"] + list(spread_df['position'].unique()), 
+                    ["ALL", "QB", "RB", "WR", "TE", "K", "DEF"], 
                     key="disc_pos",
                     on_change=set_active_tab,
                     args=("Projection Arbitrage",)
                 )
-            
-            if pos_choice != "ALL":
-                spread_df = spread_df[spread_df['position'] == pos_choice]
-            
-            cols_to_show = ['player_name', 'position'] + sources_found + ['Spread (Delta)', 'Consensus Avg', 'Discrepancy %']
-            st.dataframe(
-                spread_df[cols_to_show],
-                use_container_width=True,
-                hide_index=True
+            with fc2:
+                profile_choice = st.selectbox(
+                    "Disagreement Profile",
+                    ["ALL Profiles", "High Disagreement (5.0+ pts)", "Moderate Split (2.5 – 5.0 pts)", "Strong Consensus (<2.5 pts)"],
+                    key="disc_profile",
+                    on_change=set_active_tab,
+                    args=("Projection Arbitrage",)
+                )
+            with fc3:
+                min_pts_thresh = st.slider(
+                    "Min Projected Points", 
+                    min_value=0.0, 
+                    max_value=20.0, 
+                    value=5.0, 
+                    step=0.5, 
+                    key="disc_min_pts",
+                    on_change=set_active_tab,
+                    args=("Projection Arbitrage",)
+                )
+            with fc4:
+                search_ply = st.text_input(
+                    "Search Player",
+                    placeholder="e.g. Lamar Jackson, Saquon",
+                    key="disc_search",
+                    on_change=set_active_tab,
+                    args=("Projection Arbitrage",)
+                )
+
+            show_raw_sources = st.checkbox(
+                f"Show individual model projection columns ({', '.join(sources_found)})",
+                value=False,
+                key="disc_show_sources",
+                on_change=set_active_tab,
+                args=("Projection Arbitrage",)
             )
+
+            # Apply Filters
+            filtered_arb = valid_arb[valid_arb['Consensus Proj'] >= min_pts_thresh].copy()
+            if pos_choice != "ALL":
+                filtered_arb = filtered_arb[filtered_arb['Pos'] == pos_choice]
+            if profile_choice != "ALL Profiles":
+                clean_prof = profile_choice.split(" (")[0]
+                filtered_arb = filtered_arb[filtered_arb['Consensus Profile'] == clean_prof]
+            if search_ply.strip():
+                filtered_arb = filtered_arb[filtered_arb['Player'].str.lower().str.contains(search_ply.strip().lower())]
+
+            filtered_arb = filtered_arb.sort_values(by='Point Spread (Gap)', ascending=False)
+
+            # Build Display Columns & Column Config
+            core_cols = [
+                'Player', 
+                'Pos', 
+                'Consensus Proj', 
+                'Point Spread (Gap)', 
+                'Projected Range', 
+                'Highest Model (Bull)', 
+                'Lowest Model (Bear)', 
+                'Consensus Profile'
+            ]
+            if show_raw_sources:
+                display_cols = core_cols + sources_found
+            else:
+                display_cols = core_cols
+
+            col_config = {
+                "Consensus Proj": st.column_config.NumberColumn(
+                    label="Consensus Proj",
+                    help="Multi-model average projected points",
+                    format="%.1f pts"
+                ),
+                "Point Spread (Gap)": st.column_config.NumberColumn(
+                    label="Point Spread (Gap)",
+                    help="Point difference between highest model projection and lowest model projection (Max - Min)",
+                    format="%.1f pts"
+                ),
+                "Projected Range": st.column_config.TextColumn(
+                    label="Projected Range",
+                    help="Lowest model forecast to highest model forecast"
+                ),
+                "Highest Model (Bull)": st.column_config.TextColumn(
+                    label="Highest Model (Bull)",
+                    help="Platform projecting the highest ceiling for this player"
+                ),
+                "Lowest Model (Bear)": st.column_config.TextColumn(
+                    label="Lowest Model (Bear)",
+                    help="Platform projecting the lowest floor for this player"
+                ),
+                "Consensus Profile": st.column_config.TextColumn(
+                    label="Volatility Rating",
+                    help="High Disagreement (>=5 pts) | Moderate Split (2.5-5 pts) | Strong Consensus (<2.5 pts)"
+                )
+            }
+            for s in sources_found:
+                col_config[s] = st.column_config.NumberColumn(
+                    label=s,
+                    help=f"Weekly PPR projection from {s}",
+                    format="%.1f pts"
+                )
+
+            st.dataframe(
+                filtered_arb[display_cols],
+                use_container_width=True,
+                hide_index=True,
+                column_config=col_config
+            )
+            st.caption(f"Showing **{len(filtered_arb)}** players sorted by largest point spread (disagreement). Minimum consensus projection filter is currently set to **{min_pts_thresh:.1f} pts**.")
         else:
             st.info("Multiple projection sources must be present to compute discrepancy matrices.")
-        st.info("Run `python weekly_scraper.py` to populate multiple sources into `projections_combined_comparison.csv`.")
+    else:
+        st.info("Multiple projection sources must be present to compute discrepancy matrices.")
+    st.caption("Run `python weekly_scraper.py` to populate multiple sources into `projections_combined_comparison.csv`.")
 
 # ─── TAB 6: Position Tiers ───────────────────────────────────────────────────
 with tabs[5]:
