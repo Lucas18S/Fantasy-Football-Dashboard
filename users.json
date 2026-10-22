@@ -8,14 +8,34 @@
       "session_tokens": [],
       "saved_leagues": [
         {
-          "id": "sleeper_main",
-          "name": "Main Sleeper League",
+          "id": "sleeper_1337487447067492352",
+          "name": "Dynasty Superflex League",
           "platform": "Sleeper",
           "sleeper_league_id": "1337487447067492352",
           "espn_league_id": "",
           "espn_s2": "",
           "swid": "",
           "is_default": true
+        },
+        {
+          "id": "sleeper_1389358448524668928",
+          "name": "Winterrowd Fam",
+          "platform": "Sleeper",
+          "sleeper_league_id": "1389358448524668928",
+          "espn_league_id": "",
+          "espn_s2": "",
+          "swid": "",
+          "is_default": false
+        },
+        {
+          "id": "sleeper_1312115586901213184",
+          "name": "Nonnie\u2019s Funworld",
+          "platform": "Sleeper",
+          "sleeper_league_id": "1312115586901213184",
+          "espn_league_id": "",
+          "espn_s2": "",
+          "swid": "",
+          "is_default": false
         }
       ]
     },
@@ -30,14 +50,34 @@
       "session_tokens": [],
       "saved_leagues": [
         {
-          "id": "sleeper_main",
-          "name": "Main Sleeper League",
+          "id": "sleeper_1337487447067492352",
+          "name": "Dynasty Superflex League",
           "platform": "Sleeper",
           "sleeper_league_id": "1337487447067492352",
           "espn_league_id": "",
           "espn_s2": "",
           "swid": "",
           "is_default": true
+        },
+        {
+          "id": "sleeper_1389358448524668928",
+          "name": "Winterrowd Fam",
+          "platform": "Sleeper",
+          "sleeper_league_id": "1389358448524668928",
+          "espn_league_id": "",
+          "espn_s2": "",
+          "swid": "",
+          "is_default": false
+        },
+        {
+          "id": "sleeper_1312115586901213184",
+          "name": "Nonnie\u2019s Funworld",
+          "platform": "Sleeper",
+          "sleeper_league_id": "1312115586901213184",
+          "espn_league_id": "",
+          "espn_s2": "",
+          "swid": "",
+          "is_default": false
         }
       ]
     }

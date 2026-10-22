@@ -36,8 +36,41 @@ def _save_data(data: Dict[str, Any]):
     except Exception as e:
         print(f"Error saving {USERS_FILE}: {e}")
 
+DEFAULT_LEAGUES = [
+    {
+        "id": "sleeper_1337487447067492352",
+        "name": "Dynasty Superflex League",
+        "platform": "Sleeper",
+        "sleeper_league_id": "1337487447067492352",
+        "espn_league_id": "",
+        "espn_s2": "",
+        "swid": "",
+        "is_default": True
+    },
+    {
+        "id": "sleeper_1389358448524668928",
+        "name": "Winterrowd Fam",
+        "platform": "Sleeper",
+        "sleeper_league_id": "1389358448524668928",
+        "espn_league_id": "",
+        "espn_s2": "",
+        "swid": "",
+        "is_default": False
+    },
+    {
+        "id": "sleeper_1312115586901213184",
+        "name": "Nonnie’s Funworld",
+        "platform": "Sleeper",
+        "sleeper_league_id": "1312115586901213184",
+        "espn_league_id": "",
+        "espn_s2": "",
+        "swid": "",
+        "is_default": False
+    }
+]
+
 def _seed_initial_database() -> Dict[str, Any]:
-    """Seed initial database with admin Lucas18S and default user."""
+    """Seed initial database with admin Lucas18S and default user with all 3 leagues."""
     users = {}
     
     # 1. Administrator Account: Lucas18S / Packers
@@ -51,18 +84,7 @@ def _seed_initial_database() -> Dict[str, Any]:
         "password_hash": _hash_password("Packers", salt_admin),
         "created_at": datetime.now().isoformat(),
         "session_tokens": [],
-        "saved_leagues": [
-            {
-                "id": "sleeper_main",
-                "name": "Main Sleeper League",
-                "platform": "Sleeper",
-                "sleeper_league_id": "1337487447067492352",
-                "espn_league_id": "",
-                "espn_s2": "",
-                "swid": "",
-                "is_default": True
-            }
-        ]
+        "saved_leagues": [dict(l) for l in DEFAULT_LEAGUES]
     }
     
     # 2. Default standard account: lucas / fantasy2025
@@ -76,18 +98,7 @@ def _seed_initial_database() -> Dict[str, Any]:
         "password_hash": _hash_password("fantasy2025", salt_user),
         "created_at": datetime.now().isoformat(),
         "session_tokens": [],
-        "saved_leagues": [
-            {
-                "id": "sleeper_main",
-                "name": "Main Sleeper League",
-                "platform": "Sleeper",
-                "sleeper_league_id": "1337487447067492352",
-                "espn_league_id": "",
-                "espn_s2": "",
-                "swid": "",
-                "is_default": True
-            }
-        ]
+        "saved_leagues": [dict(l) for l in DEFAULT_LEAGUES]
     }
     
     data = {
@@ -98,9 +109,10 @@ def _seed_initial_database() -> Dict[str, Any]:
     return data
 
 def load_users() -> Dict[str, Any]:
-    """Load users dictionary, ensuring Lucas18S exists as admin."""
+    """Load users dictionary, ensuring Lucas18S exists as admin and all 3 leagues are present."""
     data = _load_data()
     users = data.get("users", {})
+    save_needed = False
     
     # Ensure Lucas18S admin exists and password is set
     if "lucas18s" not in users:
@@ -114,27 +126,35 @@ def load_users() -> Dict[str, Any]:
             "password_hash": _hash_password("Packers", salt),
             "created_at": datetime.now().isoformat(),
             "session_tokens": [],
-            "saved_leagues": [
-                {
-                    "id": "sleeper_main",
-                    "name": "Main Sleeper League",
-                    "platform": "Sleeper",
-                    "sleeper_league_id": "1337487447067492352",
-                    "espn_league_id": "",
-                    "espn_s2": "",
-                    "swid": "",
-                    "is_default": True
-                }
-            ]
+            "saved_leagues": [dict(l) for l in DEFAULT_LEAGUES]
         }
-        data["users"] = users
-        _save_data(data)
+        save_needed = True
     else:
         # Guarantee admin role on lucas18s
         if users["lucas18s"].get("role") != "admin":
             users["lucas18s"]["role"] = "admin"
-            data["users"] = users
-            _save_data(data)
+            save_needed = True
+            
+    # Guarantee that both lucas18s and lucas have all 3 leagues available
+    for u_key in ["lucas18s", "lucas"]:
+        if u_key in users:
+            curr_leagues = users[u_key].get("saved_leagues", [])
+            existing_sids = {str(l.get("sleeper_league_id")) for l in curr_leagues if l.get("platform") == "Sleeper"}
+            for dl in DEFAULT_LEAGUES:
+                if dl["sleeper_league_id"] not in existing_sids:
+                    curr_leagues.append(dict(dl))
+                    existing_sids.add(dl["sleeper_league_id"])
+                    save_needed = True
+            # Update legacy name if present
+            for l in curr_leagues:
+                if l.get("sleeper_league_id") == "1337487447067492352" and l.get("name") == "Main Sleeper League":
+                    l["name"] = "Dynasty Superflex League"
+                    save_needed = True
+            users[u_key]["saved_leagues"] = curr_leagues
+
+    if save_needed:
+        data["users"] = users
+        _save_data(data)
             
     return users
 
@@ -410,3 +430,58 @@ def delete_user_league(username: str, league_id: str) -> bool:
     users[username]["saved_leagues"] = new_leagues
     save_users(users)
     return True
+
+def sync_sleeper_leagues(username: str, sleeper_username: str, year: str = "2026") -> Tuple[bool, str, int]:
+    """Fetch all Sleeper leagues for a Sleeper username and save to user profile."""
+    try:
+        import requests
+        s_user = sleeper_username.strip()
+        if not s_user:
+            return False, "Please enter a Sleeper username.", 0
+        u_res = requests.get(f"https://api.sleeper.app/v1/user/{s_user}", timeout=6)
+        if u_res.status_code != 200:
+            return False, f"Could not find Sleeper user '{s_user}'.", 0
+        u_data = u_res.json()
+        user_id = u_data.get("user_id")
+        if not user_id:
+            return False, f"Invalid Sleeper user '{s_user}'.", 0
+        
+        l_res = requests.get(f"https://api.sleeper.app/v1/user/{user_id}/leagues/nfl/{year}", timeout=8)
+        if l_res.status_code != 200:
+            return False, f"Failed to fetch leagues for season {year}.", 0
+        leagues_data = l_res.json()
+        if not leagues_data:
+            return False, f"No active NFL leagues found for '{s_user}' in {year}.", 0
+        
+        users = load_users()
+        norm_user = username.strip().lower()
+        if norm_user not in users:
+            return False, "User account not found.", 0
+        
+        existing_leagues = users[norm_user].get("saved_leagues", [])
+        existing_sids = {str(l.get("sleeper_league_id")) for l in existing_leagues if l.get("platform") == "Sleeper"}
+        
+        added_count = 0
+        for l in leagues_data:
+            lid_str = str(l.get("league_id"))
+            if lid_str not in existing_sids:
+                is_first = (len(existing_leagues) == 0)
+                new_entry = {
+                    "id": f"sleeper_{lid_str}",
+                    "name": l.get("name", f"Sleeper League {lid_str}"),
+                    "platform": "Sleeper",
+                    "sleeper_league_id": lid_str,
+                    "espn_league_id": "",
+                    "espn_s2": "",
+                    "swid": "",
+                    "is_default": is_first
+                }
+                existing_leagues.append(new_entry)
+                existing_sids.add(lid_str)
+                added_count += 1
+                
+        users[norm_user]["saved_leagues"] = existing_leagues
+        save_users(users)
+        return True, f"Successfully imported {added_count} new league(s) from Sleeper user '{s_user}'!", added_count
+    except Exception as e:
+        return False, f"Error syncing Sleeper leagues: {e}", 0

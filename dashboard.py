@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import textwrap
 import requests
 import pandas as pd
@@ -352,6 +353,17 @@ if 'authenticated' not in st.session_state:
     st.session_state.authenticated = False
     st.session_state.current_user = None
 
+# If user logged out, clear the browser's persistent localStorage token
+if st.session_state.get("clear_local_storage"):
+    components.html("""
+    <script>
+    try {
+        window.parent.localStorage.removeItem('gridiron_session');
+    } catch(e) {}
+    </script>
+    """, height=0, width=0)
+    del st.session_state["clear_local_storage"]
+
 # Check URL query param for saved session token (Persistent Login)
 query_token = st.query_params.get("session")
 if not st.session_state.authenticated and query_token:
@@ -360,6 +372,32 @@ if not st.session_state.authenticated and query_token:
         st.session_state.authenticated = True
         st.session_state.current_user = authenticated_user
         st.query_params["session"] = query_token
+
+# If not authenticated and no token in URL, attempt to restore from client-side localStorage
+if not st.session_state.authenticated and not query_token:
+    components.html("""
+    <script>
+    try {
+        const savedToken = window.parent.localStorage.getItem('gridiron_session');
+        if (savedToken && !window.parent.location.search.includes('session=')) {
+            const url = new URL(window.parent.location.href);
+            url.searchParams.set('session', savedToken);
+            window.parent.location.replace(url.toString());
+        }
+    } catch(e) {}
+    </script>
+    """, height=0, width=0)
+
+# If newly authenticated and requested persistent save, persist token in client-side localStorage
+if st.session_state.authenticated and st.session_state.get("save_token_to_storage"):
+    tok = st.session_state.pop("save_token_to_storage")
+    components.html(f"""
+    <script>
+    try {{
+        window.parent.localStorage.setItem('gridiron_session', '{tok}');
+    }} catch(e) {{}}
+    </script>
+    """, height=0, width=0)
 
 def render_login_screen():
     st.markdown("""
@@ -382,24 +420,62 @@ def render_login_screen():
         
         with tab_login:
             st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
-            username = st.text_input("Username", key="login_username", placeholder="e.g. Lucas18S or lucas")
-            password = st.text_input("Password", type="password", key="login_password", placeholder="Enter your password")
-            save_login = st.checkbox("Save login on this device (Loads saved leagues)", value=True, key="chk_save_login")
             
-            if st.button("Enter Dashboard", use_container_width=True, key="btn_login_submit"):
-                if not username or not password:
-                    st.error("Please enter both username and password.")
-                elif auth_manager.verify_credentials(username, password):
-                    norm_user = username.strip().lower()
+            # 1-Click Quick Access for Lucas18S and Lucas
+            st.markdown("""
+            <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #5B705E; margin-bottom: 6px;">
+                ⚡ 1-Click Quick Sign In
+            </div>
+            """, unsafe_allow_html=True)
+            col_q1, col_q2 = st.columns(2)
+            with col_q1:
+                if st.button("Sign In as Lucas18S", use_container_width=True, key="btn_quick_admin", help="Master Admin • Loads All Saved Leagues"):
                     st.session_state.authenticated = True
-                    st.session_state.current_user = norm_user
-                    analytics_manager.track_login(norm_user)
-                    if save_login:
-                        token = auth_manager.create_session_token(norm_user)
-                        st.query_params["session"] = token
+                    st.session_state.current_user = "lucas18s"
+                    analytics_manager.track_login("lucas18s")
+                    token = auth_manager.create_session_token("lucas18s")
+                    st.query_params["session"] = token
+                    st.session_state["save_token_to_storage"] = token
                     st.rerun()
-                else:
-                    st.error("Invalid username or password.")
+            with col_q2:
+                if st.button("Sign In as lucas", use_container_width=True, key="btn_quick_user", help="Standard Account • Loads All Saved Leagues"):
+                    st.session_state.authenticated = True
+                    st.session_state.current_user = "lucas"
+                    analytics_manager.track_login("lucas")
+                    token = auth_manager.create_session_token("lucas")
+                    st.query_params["session"] = token
+                    st.session_state["save_token_to_storage"] = token
+                    st.rerun()
+
+            st.markdown("""
+            <div style="display: flex; align-items: center; text-align: center; margin: 14px 0 12px 0;">
+                <div style="flex-grow: 1; border-bottom: 1px solid #E2E7E2;"></div>
+                <span style="padding: 0 10px; font-size: 0.72rem; font-weight: 700; color: #8F998F; letter-spacing: 0.05em; text-transform: uppercase;">or manual sign in</span>
+                <div style="flex-grow: 1; border-bottom: 1px solid #E2E7E2;"></div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            with st.form("login_form"):
+                username = st.text_input("Username", key="login_username", placeholder="e.g. Lucas18S or lucas")
+                password = st.text_input("Password", type="password", key="login_password", placeholder="Enter your password")
+                save_login = st.checkbox("Remember me on this device (Auto-sign in)", value=True, key="chk_save_login")
+                submit_login = st.form_submit_button("Enter Dashboard", use_container_width=True)
+
+                if submit_login:
+                    if not username or not password:
+                        st.error("Please enter both username and password.")
+                    elif auth_manager.verify_credentials(username, password):
+                        norm_user = username.strip().lower()
+                        st.session_state.authenticated = True
+                        st.session_state.current_user = norm_user
+                        analytics_manager.track_login(norm_user)
+                        if save_login:
+                            token = auth_manager.create_session_token(norm_user)
+                            st.query_params["session"] = token
+                            st.session_state["save_token_to_storage"] = token
+                        st.rerun()
+                    else:
+                        st.error("Invalid username or password.")
                     
             with st.expander("Forgot Password?", expanded=False):
                 st.markdown("<div style='font-size:0.75rem; color:#5E665E;'>Enter your username or recovery email to submit an access recovery request to the platform administrator (Lucas18S).</div>", unsafe_allow_html=True)
@@ -453,6 +529,7 @@ def render_login_screen():
                         if reg_save_login:
                             token = auth_manager.create_session_token(norm_user)
                             st.query_params["session"] = token
+                            st.session_state["save_token_to_storage"] = token
                         st.rerun()
                     else:
                         st.error(msg)
@@ -515,6 +592,7 @@ with st.sidebar:
             del st.query_params["session"]
         st.session_state.authenticated = False
         st.session_state.current_user = None
+        st.session_state["clear_local_storage"] = True
         st.rerun()
 
     st.markdown("---")
@@ -523,16 +601,7 @@ with st.sidebar:
     user_info = auth_manager.get_user(current_username) or {}
     saved_leagues = user_info.get("saved_leagues", [])
     if not saved_leagues:
-        saved_leagues = [{
-            "id": "sleeper_main",
-            "name": "Main Sleeper League",
-            "platform": "Sleeper",
-            "sleeper_league_id": "1337487447067492352",
-            "espn_league_id": "",
-            "espn_s2": "",
-            "swid": "",
-            "is_default": True
-        }]
+        saved_leagues = list(auth_manager.DEFAULT_LEAGUES)
     
     league_options = [f"{l.get('name', 'League')} ({l.get('platform')})" for l in saved_leagues]
     league_options.append("+ Connect New League")
@@ -569,7 +638,26 @@ with st.sidebar:
     swid = ""
     
     if selected_league_str == "+ Connect New League":
-        st.markdown("<div style='font-size:0.72rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#5B705E; margin-top:8px;'>New League Setup</div>", unsafe_allow_html=True)
+        with st.expander("⚡ Auto-Import All Sleeper Leagues", expanded=True):
+            st.markdown("<div style='font-size:0.75rem; color:#5E665E; margin-bottom:6px;'>Enter your Sleeper username to automatically pull and save every active league you belong to.</div>", unsafe_allow_html=True)
+            default_sync_un = "WinterStorm97" if current_username == "lucas18s" else ""
+            sync_un = st.text_input("Sleeper Username", value=default_sync_un, placeholder="e.g. WinterStorm97", key="inp_sync_sleeper_un")
+            sync_year = st.selectbox("Season", ["2026", "2025"], key="sel_sync_year")
+            if st.button("Import All Sleeper Leagues", use_container_width=True, key="btn_sync_sleeper_leagues"):
+                ok, msg, count = auth_manager.sync_sleeper_leagues(current_username, sync_un, year=sync_year)
+                if ok:
+                    st.cache_data.clear()
+                    st.success(msg)
+                    st.session_state["current_league_idx"] = 0
+                    if "saved_leagues_select" in st.session_state:
+                        del st.session_state["saved_leagues_select"]
+                    if "selected_manager" in st.session_state:
+                        del st.session_state["selected_manager"]
+                    st.rerun()
+                else:
+                    st.error(msg)
+
+        st.markdown("<div style='font-size:0.72rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#5B705E; margin-top:10px;'>Manual League Setup</div>", unsafe_allow_html=True)
         new_league_name = st.text_input("League Nickname", value="My League", key="new_league_name")
         league_platform = st.radio("Platform", ["Sleeper", "ESPN"], key="new_league_platform")
         if league_platform == "Sleeper":
