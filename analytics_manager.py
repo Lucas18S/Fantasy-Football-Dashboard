@@ -11,6 +11,7 @@ def _load_raw_analytics() -> Dict[str, Any]:
             "tab_views": {
                 "Lineup Optimizer": 24,
                 "Matchup Simulator": 18,
+                "Trade Analyzer": 14,
                 "Waiver Radar": 15,
                 "Projection Arbitrage": 9,
                 "Position Tiers": 7,

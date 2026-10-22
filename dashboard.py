@@ -17,6 +17,7 @@ from backtester import (
 )
 import auth_manager
 import analytics_manager
+import trade_engine
 
 # ─── Config ───────────────────────────────────────────────────────────────────
 PROJ_FILE       = "projections_combined.csv"
@@ -740,6 +741,7 @@ is_admin_user = auth_manager.is_admin(st.session_state.get('current_user', ''))
 TAB_OPTIONS = [
     "Lineup Optimizer", 
     "Matchup Simulator", 
+    "Trade Analyzer",
     "Waiver Radar",
     "Projection Arbitrage", 
     "Position Tiers",
@@ -778,7 +780,7 @@ with tabs[0]:
         manager_list,
         key="selected_manager",
         on_change=set_active_tab,
-        args=(TAB_OPTIONS[0],)
+        args=("Lineup Optimizer",)
     )
     selected_roster = next((r for r in rosters if manager_names.get(r['owner_id']) == selected_manager), rosters[0] if rosters else {})
     
@@ -918,7 +920,7 @@ with tabs[1]:
                     matchup_labels,
                     key="matchup_chosen_select",
                     on_change=set_active_tab,
-                    args=(TAB_OPTIONS[1],)
+                    args=("Matchup Simulator",)
                 )
                 team_a_m, team_b_m = matchup_lookup[chosen_matchup]
 
@@ -1066,8 +1068,275 @@ with tabs[1]:
     else:
         st.info("ESPN Matchup fetching is available for Sleeper leagues.")
 
-# ─── TAB 3: Waiver Radar ─────────────────────────────────────────────────────
+# ─── TAB 3: Trade Analyzer ───────────────────────────────────────────────────
 with tabs[2]:
+    st.markdown("""
+    <div style="padding: 4px 0 16px 0; border-bottom: 1px solid #E2E7E2; margin-bottom: 20px;">
+        <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #5B705E; margin-bottom: 4px;">
+            Asset Valuation & Decision Intelligence // Real-Time Trade Engine
+        </div>
+        <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.85rem; font-weight: 700; letter-spacing: -0.02em; color: #141714;">
+            TRADE ANALYZER & VALUE CALCULATOR
+        </div>
+        <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.88rem; color: #5E665E; margin-top: 4px;">
+            Dual-engine evaluation: Cross-reference real-world market equity (FantasyCalc & KeepTradeCut) with true starting lineup point shifts.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    if not rosters:
+        st.info("Connect your league in the sidebar to simulate trades across team rosters.")
+    else:
+        # Detect League Type from Settings
+        is_dynasty_detected = (league_settings.get('type') == 2) if isinstance(league_settings, dict) else False
+        is_superflex_detected = any(pos in ['SUPER_FLEX', 'OP'] for pos in roster_positions) or roster_positions.count('QB') > 1
+
+        # Valuation Settings Bar
+        col_c1, col_c2, col_c3 = st.columns(3)
+        with col_c1:
+            trade_mode = st.radio(
+                "Valuation Format", 
+                ["Dynasty (Asset Lifecycle & Picks)", "Redraft (Single-Season EV)"], 
+                index=0 if is_dynasty_detected else 1, 
+                horizontal=True,
+                key="trade_mode_radio"
+            )
+        with col_c2:
+            qb_mode = st.radio(
+                "Quarterback Format", 
+                ["1 QB", "Superflex / 2QB"], 
+                index=1 if is_superflex_detected else 0, 
+                horizontal=True,
+                key="trade_qb_radio"
+            )
+        with col_c3:
+            scoring_mode = st.radio(
+                "Scoring Format", 
+                ["Full PPR", "Half PPR", "Standard"], 
+                index=0, 
+                horizontal=True,
+                key="trade_ppr_radio"
+            )
+
+        is_dynasty_flag = ("Dynasty" in trade_mode)
+        num_qbs_flag = 2 if "Superflex" in qb_mode else 1
+        ppr_val = 1.0 if "Full" in scoring_mode else (0.5 if "Half" in scoring_mode else 0.0)
+
+        # Load Market Data (FantasyCalc & KeepTradeCut)
+        with st.spinner("Fetching market consensus trade values..."):
+            market_data = trade_engine.fetch_market_values(is_dynasty=is_dynasty_flag, num_qbs=num_qbs_flag, ppr=ppr_val)
+
+        st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
+
+        # Manager Selection (Team A vs Team B)
+        all_manager_names = list(manager_names.values())
+        default_team_a_idx = all_manager_names.index(selected_manager) if selected_manager in all_manager_names else 0
+        
+        col_team_a, col_team_b = st.columns(2)
+        with col_team_a:
+            team_a_name = st.selectbox("Select Proposer (Team A)", all_manager_names, index=default_team_a_idx, key="sel_tr_team_a")
+            team_a_roster_obj = next((r for r in rosters if manager_names.get(r['owner_id']) == team_a_name), rosters[0])
+            team_a_pids = team_a_roster_obj.get('players', [])
+            
+        with col_team_b:
+            other_team_names = [m for m in all_manager_names if m != team_a_name] or all_manager_names
+            team_b_name = st.selectbox("Select Trade Partner (Team B)", other_team_names, index=0, key="sel_tr_team_b")
+            team_b_roster_obj = next((r for r in rosters if manager_names.get(r['owner_id']) == team_b_name), rosters[1] if len(rosters) > 1 else rosters[0])
+            team_b_pids = team_b_roster_obj.get('players', [])
+
+        # Build Player Selection Options with Market Values
+        def build_player_trade_options(pids):
+            options = []
+            pid_map = {}
+            for pid in pids:
+                p_meta = players.get(str(pid), {})
+                p_name = p_meta.get('name') or get_player_name(pid, players)
+                pos = p_meta.get('pos') or p_meta.get('position', '—')
+                team = p_meta.get('team') or '—'
+                val_info = trade_engine.get_player_trade_value(pid if pid in market_data.get('by_sleeper_id', {}) else p_name, market_data, is_dynasty_flag)
+                val = val_info.get("consensus_value", val_info.get("value", 0))
+                label = f"{p_name} ({pos}, {team}) — {val:,} pts"
+                options.append(label)
+                pid_map[label] = pid
+            return sorted(options), pid_map
+
+        opts_a, map_a = build_player_trade_options(team_a_pids)
+        opts_b, map_b = build_player_trade_options(team_b_pids)
+
+        draft_picks_available = market_data.get("draft_picks", [])
+        draft_pick_labels = [f"{dp['name']} — {dp['value']:,} pts" for dp in draft_picks_available]
+        draft_pick_map = {f"{dp['name']} — {dp['value']:,} pts": dp for dp in draft_picks_available}
+
+        # Player & Pick Multiselect Boxes
+        col_sel_a, col_sel_b = st.columns(2)
+        with col_sel_a:
+            st.markdown(f"<div style='font-family:Space Grotesk; font-size:0.85rem; font-weight:700; color:#5B705E; text-transform:uppercase;'>Assets {team_a_name} Sends</div>", unsafe_allow_html=True)
+            chosen_labels_a = st.multiselect(
+                "Select Players:", 
+                opts_a, 
+                key="tr_sel_players_a", 
+                placeholder="Choose players to send..."
+            )
+            chosen_pids_a = [map_a[lbl] for lbl in chosen_labels_a]
+            
+            chosen_picks_a = []
+            if is_dynasty_flag and draft_pick_labels:
+                chosen_pick_labels_a = st.multiselect(
+                    "Include Draft Picks:", 
+                    draft_pick_labels, 
+                    key="tr_sel_picks_a", 
+                    placeholder="Choose draft picks to send..."
+                )
+                chosen_picks_a = [draft_pick_map[lbl] for lbl in chosen_pick_labels_a]
+
+        with col_sel_b:
+            st.markdown(f"<div style='font-family:Space Grotesk; font-size:0.85rem; font-weight:700; color:#5B705E; text-transform:uppercase;'>Assets {team_b_name} Sends</div>", unsafe_allow_html=True)
+            chosen_labels_b = st.multiselect(
+                "Select Players:", 
+                opts_b, 
+                key="tr_sel_players_b", 
+                placeholder="Choose players to receive..."
+            )
+            chosen_pids_b = [map_b[lbl] for lbl in chosen_labels_b]
+            
+            chosen_picks_b = []
+            if is_dynasty_flag and draft_pick_labels:
+                chosen_pick_labels_b = st.multiselect(
+                    "Include Draft Picks:", 
+                    draft_pick_labels, 
+                    key="tr_sel_picks_b", 
+                    placeholder="Choose draft picks to receive..."
+                )
+                chosen_picks_b = [draft_pick_map[lbl] for lbl in chosen_pick_labels_b]
+
+        st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+
+        # Execute Analysis if Assets Selected
+        if chosen_pids_a or chosen_pids_b or chosen_picks_a or chosen_picks_b:
+            trade_result = trade_engine.evaluate_trade(
+                team_a_name=team_a_name,
+                team_b_name=team_b_name,
+                team_a_roster=team_a_pids,
+                team_b_roster=team_b_pids,
+                team_a_sends=chosen_pids_a,
+                team_b_sends=chosen_pids_b,
+                picks_a_sends=chosen_picks_a,
+                picks_b_sends=chosen_picks_b,
+                is_dynasty=is_dynasty_flag,
+                market_data=market_data,
+                players_meta=players,
+                projections=working_projections,
+                comp_data=comp_data,
+                roster_positions=roster_positions,
+                build_optimal_lineup_func=build_optimal_lineup
+            )
+
+            # Strategic Verdict Callout Card
+            badge_color = "#5B705E" if "WIN" in trade_result["verdict_badge"] or "FAIR" in trade_result["verdict_badge"] else "#8A6D3B"
+            st.markdown(f"""
+            <div style="background-color: #FFFFFF; border: 1px solid #E2E7E2; border-left: 5px solid {badge_color}; border-radius: 6px; padding: 16px 20px; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: {badge_color};">
+                        Trade Verdict // Evaluation Summary
+                    </div>
+                    <div style="background-color: #EEF2EE; color: #2D3A2F; font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.05em;">
+                        {trade_result['verdict_badge']}
+                    </div>
+                </div>
+                <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.05rem; font-weight: 600; color: #141714; line-height: 1.35;">
+                    {trade_result['verdict']}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # 4 Core KPI Metric Cards
+            col_m1, col_m2, col_m3, col_m4 = st.columns(4)
+            with col_m1:
+                st.metric(
+                    f"{team_a_name} Lineup Impact", 
+                    f"{trade_result['delta_score_a']:+.1f} pts/wk",
+                    delta=f"{trade_result['delta_score_a']:+.1f} pts",
+                    delta_color="normal"
+                )
+            with col_m2:
+                st.metric(
+                    f"{team_b_name} Lineup Impact", 
+                    f"{trade_result['delta_score_b']:+.1f} pts/wk",
+                    delta=f"{trade_result['delta_score_b']:+.1f} pts",
+                    delta_color="normal"
+                )
+            with col_m3:
+                shift_label = f"+{trade_result['market_diff_a']:,}" if trade_result['market_diff_a'] >= 0 else f"{trade_result['market_diff_a']:,}"
+                st.metric(
+                    "Market Value Shift (A)", 
+                    f"{shift_label} pts",
+                    delta=f"{trade_result['fairness_pct']}% Fair",
+                    delta_color="off"
+                )
+            with col_m4:
+                if is_dynasty_flag and trade_result['avg_age_a_sends'] and trade_result['avg_age_b_sends']:
+                    age_diff = round(trade_result['avg_age_b_sends'] - trade_result['avg_age_a_sends'], 1)
+                    st.metric(
+                        "Dynasty Age Shift (A)", 
+                        f"{trade_result['avg_age_b_sends']} yrs avg",
+                        delta=f"{age_diff:+.1f} yrs"
+                    )
+                else:
+                    st.metric("Trade Fairness Index", f"{trade_result['fairness_pct']}%", delta="Market Equity")
+
+            st.markdown("---")
+
+            # Side-by-Side Detailed Asset Breakdown
+            col_table_a, col_table_b = st.columns(2)
+            with col_table_a:
+                st.subheader(f"Assets {team_a_name} Sends")
+                df_a = pd.DataFrame(trade_result["team_a_gives"])
+                if not df_a.empty:
+                    df_a = df_a.rename(columns={"name": "Player / Pick", "pos": "Pos", "age": "Age", "value": "Market Value", "trend": "30-Day Trend"})
+                    st.dataframe(df_a[["Player / Pick", "Pos", "Age", "Market Value", "30-Day Trend"]], use_container_width=True, hide_index=True)
+                    st.caption(f"**Total Market Value Sent: {trade_result['val_a_sends']:,} pts**")
+                else:
+                    st.info("No assets selected from Team A.")
+
+            with col_table_b:
+                st.subheader(f"Assets {team_b_name} Sends")
+                df_b = pd.DataFrame(trade_result["team_b_gives"])
+                if not df_b.empty:
+                    df_b = df_b.rename(columns={"name": "Player / Pick", "pos": "Pos", "age": "Age", "value": "Market Value", "trend": "30-Day Trend"})
+                    st.dataframe(df_b[["Player / Pick", "Pos", "Age", "Market Value", "30-Day Trend"]], use_container_width=True, hide_index=True)
+                    st.caption(f"**Total Market Value Sent: {trade_result['val_b_sends']:,} pts**")
+                else:
+                    st.info("No assets selected from Team B.")
+
+            # Starting Lineup Shift Comparison Expander
+            with st.expander("View Starting Lineup Optimization Details (Before vs After)", expanded=False):
+                col_lo_a, col_lo_b = st.columns(2)
+                with col_lo_a:
+                    st.markdown(f"**{team_a_name} Starting Lineup Score**")
+                    st.markdown(f"*Before Trade:* **{trade_result['score_a_before']} pts** $\rightarrow$ *After Trade:* **{trade_result['score_a_after']} pts** ({trade_result['delta_score_a']:+.1f} pts/wk)")
+                with col_lo_b:
+                    st.markdown(f"**{team_b_name} Starting Lineup Score**")
+                    st.markdown(f"*Before Trade:* **{trade_result['score_b_before']} pts** $\rightarrow$ *After Trade:* **{trade_result['score_b_after']} pts** ({trade_result['delta_score_b']:+.1f} pts/wk)")
+
+        else:
+            st.info("Select players or draft picks from either team above to analyze market equity and simulated starting lineup point shifts.")
+            
+            # Quick Market Value Reference Leaderboard
+            with st.expander("Market Consensus Trade Value Leaderboard (Top 15)", expanded=False):
+                top_players = sorted(market_data.get("by_name", {}).values(), key=lambda x: x.get("consensus_value", 0), reverse=True)[:15]
+                df_top = pd.DataFrame([{
+                    "Rank": i+1,
+                    "Player": p["name"],
+                    "Pos": p["position"],
+                    "Team": p["team"],
+                    "Age": p.get("age") or "—",
+                    "Consensus Value": f"{p.get('consensus_value', 0):,}",
+                    "30-Day Trend": f"{p.get('trend30Day', 0):+d}"
+                } for i, p in enumerate(top_players)])
+                st.dataframe(df_top, use_container_width=True, hide_index=True)
+
+# ─── TAB 4: Waiver Radar ─────────────────────────────────────────────────────
+with tabs[3]:
     st.subheader("Waiver Wire & Free Agency Radar")
     st.markdown("Screens all unrostered free agents in your league, ranking them by consensus upside, model divergence, and floor/ceiling volatility.")
 
@@ -1182,7 +1451,7 @@ with tabs[2]:
                     ["ALL", "QB", "RB", "WR", "TE", "K", "DEF"], 
                     key="fa_pos",
                     on_change=set_active_tab,
-                    args=(TAB_OPTIONS[2],)
+                    args=("Waiver Radar",)
                 )
             with fc2:
                 badge_options = ["ALL", "Ceiling Target", "Stable Floor", "Consensus Flex", "Volatile Risk", "Speculative Dart"]
@@ -1191,7 +1460,7 @@ with tabs[2]:
                     badge_options, 
                     key="fa_badge",
                     on_change=set_active_tab,
-                    args=(TAB_OPTIONS[2],)
+                    args=("Waiver Radar",)
                 )
             with fc3:
                 min_pts = st.slider(
@@ -1202,7 +1471,7 @@ with tabs[2]:
                     step=0.5, 
                     key="fa_slider",
                     on_change=set_active_tab,
-                    args=(TAB_OPTIONS[2],)
+                    args=("Waiver Radar",)
                 )
 
             filtered_fa = fa_df[fa_df['Proj Pts'] >= min_pts]
@@ -1225,8 +1494,8 @@ with tabs[2]:
                 }
             )
 
-# ─── TAB 4: Projection Arbitrage ─────────────────────────────────────────────
-with tabs[3]:
+# ─── TAB 5: Projection Arbitrage ─────────────────────────────────────────────
+with tabs[4]:
     st.subheader("Model Discrepancy & Arbitrage Matrix")
     st.markdown("Identifies players where individual projection models (**CBS**, **ESPN**, **FantasyPros**, **NFL**, **NumberFire**, **Sleeper**) have large disagreements. High spread indicates volatility and potential boom/bust candidates.")
 
@@ -1247,7 +1516,7 @@ with tabs[3]:
                     ["ALL"] + list(spread_df['position'].unique()), 
                     key="disc_pos",
                     on_change=set_active_tab,
-                    args=(TAB_OPTIONS[3],)
+                    args=("Projection Arbitrage",)
                 )
             
             if pos_choice != "ALL":
@@ -1263,15 +1532,15 @@ with tabs[3]:
             st.info("Multiple projection sources must be present to compute discrepancy matrices.")
         st.info("Run `python weekly_scraper.py` to populate multiple sources into `projections_combined_comparison.csv`.")
 
-# ─── TAB 5: Position Tiers ───────────────────────────────────────────────────
-with tabs[4]:
+# ─── TAB 6: Position Tiers ───────────────────────────────────────────────────
+with tabs[5]:
     st.subheader("Position Consensus Tiers")
     pos_selected = st.selectbox(
         "Select Position Group", 
         ["QB", "RB", "WR", "TE", "K", "DEF"], 
         key="tier_pos",
         on_change=set_active_tab,
-        args=(TAB_OPTIONS[4],)
+        args=("Position Tiers",)
     )
     
     tier_data = working_projections[working_projections['position'] == pos_selected].sort_values(by='proj_points', ascending=False).copy()
@@ -1296,8 +1565,8 @@ with tabs[4]:
     else:
         st.write("No players found for this position.")
 
-# ─── TAB 6: Model Backtesting ────────────────────────────────────────────────
-with tabs[5]:
+# ─── TAB 7: Model Backtesting ────────────────────────────────────────────────
+with tabs[6]:
     st.subheader("Model Accuracy & Empirical Backtesting")
     st.markdown("Evaluates all 6 forecast models against ground-truth NFL box-score performances across completed weeks. Analyzes Mean Absolute Error (MAE), Root Mean Squared Error (RMSE), systematic model bias, rank correlation (Spearman ρ), and ensemble error reduction.")
 
@@ -1305,7 +1574,7 @@ with tabs[5]:
     with c_info:
         st.caption("Automated Weekly Cycle: Ground-truth box scores ingest every Tuesday morning following Monday Night Football to re-evaluate all models.")
     with c_btn:
-        if st.button("Pull Latest Box Scores", key="refresh_bt_scores", help="Re-query NFL ground truth scores and rebuild backtesting evaluations", on_click=set_active_tab, args=(TAB_OPTIONS[5],)):
+        if st.button("Pull Latest Box Scores", key="refresh_bt_scores", help="Re-query NFL ground truth scores and rebuild backtesting evaluations", on_click=set_active_tab, args=("Model Backtesting",)):
             with st.spinner("Ingesting latest box scores from Sleeper API..."):
                 build_historical_backtest_data()
                 st.cache_data.clear()
@@ -1439,7 +1708,7 @@ with tabs[5]:
                 avail_weeks,
                 key="bt_week",
                 on_change=set_active_tab,
-                args=(TAB_OPTIONS[5],)
+                args=("Model Backtesting",)
             )
         with fc2:
             sel_pos = st.selectbox(
@@ -1447,7 +1716,7 @@ with tabs[5]:
                 ["ALL", "QB", "RB", "WR", "TE", "K", "DEF"],
                 key="bt_pos",
                 on_change=set_active_tab,
-                args=(TAB_OPTIONS[5],)
+                args=("Model Backtesting",)
             )
         with fc3:
             outcome_options = [
@@ -1462,7 +1731,7 @@ with tabs[5]:
                 outcome_options,
                 key="bt_outcome",
                 on_change=set_active_tab,
-                args=(TAB_OPTIONS[5],)
+                args=("Model Backtesting",)
             )
         with fc4:
             search_query = st.text_input(
@@ -1470,7 +1739,7 @@ with tabs[5]:
                 placeholder="e.g. CeeDee Lamb, Josh Allen",
                 key="bt_search",
                 on_change=set_active_tab,
-                args=(TAB_OPTIONS[5],)
+                args=("Model Backtesting",)
             )
 
         # Apply Filters
@@ -1523,7 +1792,7 @@ with tabs[5]:
                 value=False,
                 key="bt_show_models",
                 on_change=set_active_tab,
-                args=(TAB_OPTIONS[5],)
+                args=("Model Backtesting",)
             )
 
             base_cols = ['week', 'player_name', 'position', 'Combined', 'actual_pts', 'Delta', 'Accuracy Status', 'Closest Model']
@@ -1560,9 +1829,9 @@ with tabs[5]:
         else:
             st.info("No player performances found matching the selected filters. Try broadening your criteria.")
 
-# ─── TAB 7: Administrator Console (Admin Lucas18S Exclusive) ───────────────────
+# ─── TAB 8: Administrator Console (Admin Lucas18S Exclusive) ───────────────────
 if is_admin_user:
-    with tabs[6]:
+    with tabs[7]:
         st.markdown("""
         <div style="padding: 4px 0 16px 0; border-bottom: 1px solid #E2E7E2; margin-bottom: 20px;">
             <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #5B705E; margin-bottom: 4px;">
