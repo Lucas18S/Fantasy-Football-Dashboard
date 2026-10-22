@@ -1,4 +1,5 @@
 import streamlit as st
+import textwrap
 import requests
 import pandas as pd
 import numpy as np
@@ -1161,6 +1162,29 @@ with tabs[2]:
                 pid_map[label] = p['id']
             return options, pid_map, sorted_players
 
+        def render_roster_by_position_html(roster_player_list, projections_df):
+            pos_groups = {}
+            for p in roster_player_list:
+                pos_groups.setdefault(p['pos'], []).append(p)
+            
+            html = ['<div style="background-color: #FFFFFF; border: 1px solid #E2E7E2; border-radius: 6px; padding: 10px 14px; max-height: 380px; overflow-y: auto;">']
+            for pos_key, p_group in pos_groups.items():
+                html.append(f'<div style="font-family: Space Grotesk, sans-serif; font-size: 0.95rem; font-weight: 800; color: #141714; margin-top: 8px; margin-bottom: 4px; padding-bottom: 2px; border-bottom: 2px solid #5B705E; letter-spacing: 0.05em;">{pos_key}</div>')
+                for p in p_group:
+                    proj_val = get_projection(p['name'], projections_df)
+                    age_info = f" &bull; Age {p['age']}" if p.get('age') else ""
+                    html.append(
+                        f'<div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0; font-size: 0.85rem; border-bottom: 1px solid #F4F6F4;">'
+                        f'<div><span style="font-family: Plus Jakarta Sans, sans-serif; font-weight: 600; color: #141714;">{p["name"]}</span>'
+                        f'<span style="color: #6B7280; font-size: 0.78rem;"> ({p["team"]}{age_info})</span></div>'
+                        f'<div style="text-align: right; font-family: Space Grotesk, sans-serif;">'
+                        f'<span style="font-weight: 700; color: #2D3A2F;">{p["val"]:,} pts</span>'
+                        f'<span style="color: #6B7280; font-size: 0.76rem; margin-left: 6px;">({proj_val:.1f} proj)</span></div>'
+                        f'</div>'
+                    )
+            html.append('</div>')
+            return "".join(html)
+
         opts_a, map_a, list_a = build_player_trade_options(team_a_pids)
         opts_b, map_b, list_b = build_player_trade_options(team_b_pids)
 
@@ -1196,34 +1220,7 @@ with tabs[2]:
                 chosen_picks_a = [draft_pick_map[lbl] for lbl in chosen_pick_labels_a]
 
             with st.expander(f"View {team_a_name}'s Full Roster (Grouped by Position)", expanded=False):
-                pos_groups_a = {}
-                for p in list_a:
-                    pos_groups_a.setdefault(p['pos'], []).append(p)
-                
-                roster_html_a = ['<div style="background-color: #FFFFFF; border: 1px solid #E2E7E2; border-radius: 6px; padding: 10px 14px; max-height: 380px; overflow-y: auto;">']
-                for pos_key, p_group in pos_groups_a.items():
-                    roster_html_a.append(f"""
-                    <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 800; color: #141714; margin-top: 8px; margin-bottom: 4px; padding-bottom: 2px; border-bottom: 2px solid #5B705E; letter-spacing: 0.05em;">
-                        {pos_key}
-                    </div>
-                    """)
-                    for p in p_group:
-                        proj_val = get_projection(p['name'], working_projections)
-                        age_info = f" &bull; Age {p['age']}" if p.get('age') else ""
-                        roster_html_a.append(f"""
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0; font-size: 0.85rem; border-bottom: 1px solid #F4F6F4;">
-                            <div>
-                                <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; color: #141714;">{p['name']}</span>
-                                <span style="color: #6B7280; font-size: 0.78rem;"> ({p['team']}{age_info})</span>
-                            </div>
-                            <div style="text-align: right; font-family: 'Space Grotesk', sans-serif;">
-                                <span style="font-weight: 700; color: #2D3A2F;">{p['val']:,} pts</span>
-                                <span style="color: #6B7280; font-size: 0.76rem; margin-left: 6px;">({proj_val:.1f} proj)</span>
-                            </div>
-                        </div>
-                        """)
-                roster_html_a.append('</div>')
-                st.markdown("".join(roster_html_a), unsafe_allow_html=True)
+                st.markdown(render_roster_by_position_html(list_a, working_projections), unsafe_allow_html=True)
 
         with col_sel_b:
             st.markdown(f"<div style='font-family:Space Grotesk; font-size:0.85rem; font-weight:700; color:#5B705E; text-transform:uppercase;'>Assets {team_b_name} Sends</div>", unsafe_allow_html=True)
@@ -1251,34 +1248,7 @@ with tabs[2]:
                 chosen_picks_b = [draft_pick_map[lbl] for lbl in chosen_pick_labels_b]
 
             with st.expander(f"View {team_b_name}'s Full Roster (Grouped by Position)", expanded=False):
-                pos_groups_b = {}
-                for p in list_b:
-                    pos_groups_b.setdefault(p['pos'], []).append(p)
-                
-                roster_html_b = ['<div style="background-color: #FFFFFF; border: 1px solid #E2E7E2; border-radius: 6px; padding: 10px 14px; max-height: 380px; overflow-y: auto;">']
-                for pos_key, p_group in pos_groups_b.items():
-                    roster_html_b.append(f"""
-                    <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 800; color: #141714; margin-top: 8px; margin-bottom: 4px; padding-bottom: 2px; border-bottom: 2px solid #5B705E; letter-spacing: 0.05em;">
-                        {pos_key}
-                    </div>
-                    """)
-                    for p in p_group:
-                        proj_val = get_projection(p['name'], working_projections)
-                        age_info = f" &bull; Age {p['age']}" if p.get('age') else ""
-                        roster_html_b.append(f"""
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0; font-size: 0.85rem; border-bottom: 1px solid #F4F6F4;">
-                            <div>
-                                <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; color: #141714;">{p['name']}</span>
-                                <span style="color: #6B7280; font-size: 0.78rem;"> ({p['team']}{age_info})</span>
-                            </div>
-                            <div style="text-align: right; font-family: 'Space Grotesk', sans-serif;">
-                                <span style="font-weight: 700; color: #2D3A2F;">{p['val']:,} pts</span>
-                                <span style="color: #6B7280; font-size: 0.76rem; margin-left: 6px;">({proj_val:.1f} proj)</span>
-                            </div>
-                        </div>
-                        """)
-                roster_html_b.append('</div>')
-                st.markdown("".join(roster_html_b), unsafe_allow_html=True)
+                st.markdown(render_roster_by_position_html(list_b, working_projections), unsafe_allow_html=True)
 
         st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 
@@ -1305,13 +1275,13 @@ with tabs[2]:
             # Strategic Verdict Multi-Factor Breakdown Card
             badge_color = trade_result.get("badge_color", "#5B705E")
             breakdown_lines_html = "".join([
-                f"""<div style="display: flex; align-items: baseline; gap: 10px; margin-top: 8px; font-size: 0.88rem; color: #374151;">
-                    <span style="font-weight: 700; color: #1F2937; min-width: 165px; display: inline-block;">&bull; {item['category']}:</span>
-                    <span style="color: #4B5563;">{item['text']}</span>
-                </div>""" for item in trade_result.get("breakdown_lines", [])
+                f'<div style="display: flex; align-items: baseline; gap: 10px; margin-top: 8px; font-size: 0.88rem; color: #374151;">'
+                f'<span style="font-weight: 700; color: #1F2937; min-width: 165px; display: inline-block;">&bull; {item["category"]}:</span>'
+                f'<span style="color: #4B5563;">{item["text"]}</span>'
+                f'</div>' for item in trade_result.get("breakdown_lines", [])
             ])
 
-            st.markdown(f"""
+            verdict_card_html = textwrap.dedent(f"""
             <div style="background-color: #FFFFFF; border: 1px solid #E2E7E2; border-left: 5px solid {badge_color}; border-radius: 6px; padding: 18px 22px; margin-bottom: 20px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                     <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: {badge_color};">
@@ -1331,7 +1301,8 @@ with tabs[2]:
                     {breakdown_lines_html}
                 </div>
             </div>
-            """, unsafe_allow_html=True)
+            """).strip()
+            st.markdown(verdict_card_html, unsafe_allow_html=True)
 
             # 4 Core KPI Metric Cards
             col_m1, col_m2, col_m3, col_m4 = st.columns(4)
@@ -1417,7 +1388,7 @@ with tabs[2]:
                 surplus_team = trade_suggestions.get("surplus_team", "Trade Partner")
                 target_gap = trade_suggestions.get("target_gap", 0)
 
-                st.markdown("""
+                st.markdown(textwrap.dedent("""
                 <div style="margin-top: 24px; margin-bottom: 8px; padding-top: 16px; border-top: 1px solid #E2E7E2;">
                     <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #5B705E; margin-bottom: 4px;">
                         Negotiation Intelligence // Counter-Offer Balancer
@@ -1426,14 +1397,14 @@ with tabs[2]:
                         SUGGESTED ASSETS TO BALANCE THIS TRADE
                     </div>
                 </div>
-                """, unsafe_allow_html=True)
+                """).strip(), unsafe_allow_html=True)
 
-                st.markdown(f"""
+                st.markdown(textwrap.dedent(f"""
                 <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.88rem; color: #5E665E; margin-bottom: 14px;">
                     Currently, <b>{deficit_team}</b> sends more market value than they receive (gap of <b>{target_gap:,} pts</b>). 
                     To bring this deal into parity or incentivize {deficit_team} to accept, ask <b>{surplus_team}</b> to include one of these 3 targeted options:
                 </div>
-                """, unsafe_allow_html=True)
+                """).strip(), unsafe_allow_html=True)
 
                 col_s1, col_s2, col_s3 = st.columns(3)
                 cols = [col_s1, col_s2, col_s3]
@@ -1446,7 +1417,7 @@ with tabs[2]:
                         rationale = sug.get("rationale", "")
                         new_fairness = sug.get("new_fairness", 100.0)
 
-                        st.markdown(f"""
+                        sug_card_html = textwrap.dedent(f"""
                         <div style="background-color: #FFFFFF; border: 1px solid #E2E7E2; border-top: 4px solid #5B705E; border-radius: 6px; padding: 14px; min-height: 210px; display: flex; flex-direction: column; justify-content: space-between;">
                             <div>
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
@@ -1471,7 +1442,8 @@ with tabs[2]:
                                 Resulting Parity: <b>{new_fairness}% Fair</b>
                             </div>
                         </div>
-                        """, unsafe_allow_html=True)
+                        """).strip()
+                        st.markdown(sug_card_html, unsafe_allow_html=True)
 
             st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
 
@@ -2248,12 +2220,12 @@ if is_admin_user:
                 req_time = req.get("requested_at", "")[:16].replace("T", " ")
                 
                 with st.container():
-                    st.markdown(f"""
+                    st.markdown(textwrap.dedent(f"""
                     <div style="background-color: #FFFDF5; border: 1px solid #E6D8B5; border-radius: 6px; padding: 12px 16px; margin-bottom: 10px;">
                         <div style="font-weight: 700; color: #8A6D3B;">Request ID: {req_id} | User: <code>{req_user}</code></div>
                         <div style="font-size: 0.85rem; color: #555;">Recovery Email: {req_email} | Submitted: {req_time}</div>
                     </div>
-                    """, unsafe_allow_html=True)
+                    """).strip(), unsafe_allow_html=True)
                     
                     col_rp1, col_rp2 = st.columns([2, 1])
                     with col_rp1:
