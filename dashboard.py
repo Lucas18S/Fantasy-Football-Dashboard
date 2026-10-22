@@ -1504,7 +1504,7 @@ with tabs[2]:
         col_act_left, col_act_right = st.columns([3, 1])
         with col_act_left:
             analyze_clicked = st.button(
-                "⚡ Analyze Trade", 
+                "Analyze Trade", 
                 type="primary", 
                 use_container_width=True, 
                 disabled=not has_selected_assets,
@@ -1747,11 +1747,11 @@ with tabs[2]:
                     st.markdown(f"*Before Trade:* **{trade_result['score_b_before']} pts** $\rightarrow$ *After Trade:* **{trade_result['score_b_after']} pts** ({trade_result['delta_score_b']:+.1f} pts/wk)")
 
         elif active_trade_result and analyzed_trade_sig != current_trade_sig and has_selected_assets:
-            st.info("💡 Trade selection changed. Click **⚡ Analyze Trade** to calculate the updated trade impact.")
+            st.info("💡 Trade selection changed. Click **Analyze Trade** to calculate the updated trade impact.")
         elif has_selected_assets:
-            st.info("Assets selected. Click **⚡ Analyze Trade** to run valuation and lineup simulations.")
+            st.info("Assets selected. Click **Analyze Trade** to run valuation and lineup simulations.")
         else:
-            st.info("Select players or draft picks from either team above and click **⚡ Analyze Trade** to evaluate market equity and simulated starting lineup point shifts.")
+            st.info("Select players or draft picks from either team above and click **Analyze Trade** to evaluate market equity and simulated starting lineup point shifts.")
             
             # Quick Market Value Reference Leaderboard
             with st.expander("Market Consensus Trade Value Leaderboard (Top 15)", expanded=False):
