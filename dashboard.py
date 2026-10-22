@@ -1487,25 +1487,97 @@ with tabs[2]:
 
         st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 
-        # Execute Analysis if Assets Selected
-        if chosen_pids_a or chosen_pids_b or chosen_picks_a or chosen_picks_b:
-            trade_result = trade_engine.evaluate_trade(
-                team_a_name=team_a_name,
-                team_b_name=team_b_name,
-                team_a_roster=team_a_pids,
-                team_b_roster=team_b_pids,
-                team_a_sends=chosen_pids_a,
-                team_b_sends=chosen_pids_b,
-                picks_a_sends=chosen_picks_a,
-                picks_b_sends=chosen_picks_b,
-                is_dynasty=is_dynasty_flag,
-                market_data=market_data,
-                players_meta=players,
-                projections=working_projections,
-                comp_data=comp_data,
-                roster_positions=roster_positions,
-                build_optimal_lineup_func=build_optimal_lineup
+        # Action Buttons: Explicit 'Analyze Trade' and 'Clear' triggers
+        has_selected_assets = bool(chosen_pids_a or chosen_pids_b or chosen_picks_a or chosen_picks_b)
+        current_trade_sig = (
+            team_a_name,
+            team_b_name,
+            tuple(sorted(chosen_pids_a)),
+            tuple(sorted(chosen_pids_b)),
+            tuple(sorted(p.get('name', '') for p in chosen_picks_a)),
+            tuple(sorted(p.get('name', '') for p in chosen_picks_b)),
+            is_dynasty_flag,
+            num_qbs_flag,
+            ppr_val
+        )
+
+        col_act_left, col_act_right = st.columns([3, 1])
+        with col_act_left:
+            analyze_clicked = st.button(
+                "⚡ Analyze Trade", 
+                type="primary", 
+                use_container_width=True, 
+                disabled=not has_selected_assets,
+                key="btn_analyze_trade",
+                help="Evaluate market parity, starting lineup shifts, and trade balance suggestions."
             )
+        with col_act_right:
+            clear_clicked = st.button(
+                "Clear", 
+                use_container_width=True, 
+                disabled=not has_selected_assets,
+                key="btn_clear_trade",
+                help="Reset selected players and draft picks."
+            )
+
+        if clear_clicked:
+            st.session_state["tr_sel_players_a"] = []
+            st.session_state["tr_sel_players_b"] = []
+            st.session_state["tr_sel_picks_a"] = []
+            st.session_state["tr_sel_picks_b"] = []
+            st.session_state["active_trade_result"] = None
+            st.session_state["active_trade_suggestions"] = None
+            st.session_state["analyzed_trade_sig"] = None
+            st.rerun()
+
+        if analyze_clicked and has_selected_assets:
+            with st.spinner("Analyzing trade equity and calculating lineup impact..."):
+                active_res = trade_engine.evaluate_trade(
+                    team_a_name=team_a_name,
+                    team_b_name=team_b_name,
+                    team_a_roster=team_a_pids,
+                    team_b_roster=team_b_pids,
+                    team_a_sends=chosen_pids_a,
+                    team_b_sends=chosen_pids_b,
+                    picks_a_sends=chosen_picks_a,
+                    picks_b_sends=chosen_picks_b,
+                    is_dynasty=is_dynasty_flag,
+                    market_data=market_data,
+                    players_meta=players,
+                    projections=working_projections,
+                    comp_data=comp_data,
+                    roster_positions=roster_positions,
+                    build_optimal_lineup_func=build_optimal_lineup
+                )
+                active_sugs = trade_engine.generate_balancing_suggestions(
+                    team_a_name=team_a_name,
+                    team_b_name=team_b_name,
+                    team_a_roster=team_a_pids,
+                    team_b_roster=team_b_pids,
+                    team_a_sends=chosen_pids_a,
+                    team_b_sends=chosen_pids_b,
+                    trade_result=active_res,
+                    market_data=market_data,
+                    players_meta=players,
+                    projections=working_projections,
+                    comp_data=comp_data,
+                    roster_positions=roster_positions,
+                    is_dynasty=is_dynasty_flag,
+                    build_optimal_lineup_func=build_optimal_lineup,
+                    get_projection_func=get_projection
+                )
+                st.session_state["active_trade_result"] = active_res
+                st.session_state["active_trade_suggestions"] = active_sugs
+                st.session_state["analyzed_trade_sig"] = current_trade_sig
+
+        active_trade_result = st.session_state.get("active_trade_result")
+        active_trade_suggestions = st.session_state.get("active_trade_suggestions")
+        analyzed_trade_sig = st.session_state.get("analyzed_trade_sig")
+
+        # Render Results only when analysis matches current selection
+        if active_trade_result and analyzed_trade_sig == current_trade_sig:
+            trade_result = active_trade_result
+            trade_suggestions = active_trade_suggestions
 
             # Strategic Verdict Multi-Factor Breakdown Card
             badge_color = trade_result.get("badge_color", "#5B705E")
@@ -1599,24 +1671,6 @@ with tabs[2]:
                     st.info("No assets selected from Team B.")
 
             # Strategic Counter-Balance Suggestions
-            trade_suggestions = trade_engine.generate_balancing_suggestions(
-                team_a_name=team_a_name,
-                team_b_name=team_b_name,
-                team_a_roster=team_a_pids,
-                team_b_roster=team_b_pids,
-                team_a_sends=chosen_pids_a,
-                team_b_sends=chosen_pids_b,
-                trade_result=trade_result,
-                market_data=market_data,
-                players_meta=players,
-                projections=working_projections,
-                comp_data=comp_data,
-                roster_positions=roster_positions,
-                is_dynasty=is_dynasty_flag,
-                build_optimal_lineup_func=build_optimal_lineup,
-                get_projection_func=get_projection
-            )
-
             suggestions_list = trade_suggestions.get("suggestions", [])
             if suggestions_list:
                 deficit_team = trade_suggestions.get("deficit_team", "Receiving Team")
@@ -1692,8 +1746,12 @@ with tabs[2]:
                     st.markdown(f"**{team_b_name} Starting Lineup Score**")
                     st.markdown(f"*Before Trade:* **{trade_result['score_b_before']} pts** $\rightarrow$ *After Trade:* **{trade_result['score_b_after']} pts** ({trade_result['delta_score_b']:+.1f} pts/wk)")
 
+        elif active_trade_result and analyzed_trade_sig != current_trade_sig and has_selected_assets:
+            st.info("💡 Trade selection changed. Click **⚡ Analyze Trade** to calculate the updated trade impact.")
+        elif has_selected_assets:
+            st.info("Assets selected. Click **⚡ Analyze Trade** to run valuation and lineup simulations.")
         else:
-            st.info("Select players or draft picks from either team above to analyze market equity and simulated starting lineup point shifts.")
+            st.info("Select players or draft picks from either team above and click **⚡ Analyze Trade** to evaluate market equity and simulated starting lineup point shifts.")
             
             # Quick Market Value Reference Leaderboard
             with st.expander("Market Consensus Trade Value Leaderboard (Top 15)", expanded=False):
