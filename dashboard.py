@@ -15,6 +15,7 @@ from backtester import (
     enrich_backtest_evaluations,
     build_historical_backtest_data
 )
+import auth_manager
 
 # ─── Config ───────────────────────────────────────────────────────────────────
 PROJ_FILE       = "projections_combined.csv"
@@ -343,6 +344,101 @@ def build_optimal_lineup(player_ids, players, proj_df, comp_df, roster_positions
     
     return lineup
 
+# ─── User Authentication & Persistent Session Control ─────────────────────────
+if 'authenticated' not in st.session_state:
+    st.session_state.authenticated = False
+    st.session_state.current_user = None
+
+# Check URL query param for saved session token (Persistent Login)
+query_token = st.query_params.get("session")
+if not st.session_state.authenticated and query_token:
+    authenticated_user = auth_manager.verify_session_token(query_token)
+    if authenticated_user:
+        st.session_state.authenticated = True
+        st.session_state.current_user = authenticated_user
+        st.query_params["session"] = query_token
+
+def render_login_screen():
+    st.markdown("""
+    <div style="text-align: center; margin: 40px auto 25px auto; max-width: 520px;">
+        <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #5B705E; margin-bottom: 6px;">
+            Gridiron IQ // Access Gateway
+        </div>
+        <div style="font-family: 'Space Grotesk', sans-serif; font-size: 2.2rem; font-weight: 700; letter-spacing: -0.03em; color: #141714; line-height: 1.15;">
+            NFL PREDICTIVE ANALYTICS
+        </div>
+        <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.88rem; color: #5E665E; margin-top: 8px;">
+            Sign in to access personalized lineup optimization, 6-source consensus forecasts, and saved league tracking.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    col_spacer1, col_card, col_spacer2 = st.columns([1, 1.4, 1])
+    with col_card:
+        tab_login, tab_register = st.tabs(["Sign In", "Create Account"])
+        
+        with tab_login:
+            st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+            username = st.text_input("Username", key="login_username", placeholder="e.g. lucas")
+            password = st.text_input("Password", type="password", key="login_password", placeholder="Enter your password")
+            save_login = st.checkbox("Save login on this device (Loads saved leagues)", value=True, key="chk_save_login")
+            
+            if st.button("Enter Dashboard", use_container_width=True, key="btn_login_submit"):
+                if not username or not password:
+                    st.error("Please enter both username and password.")
+                elif auth_manager.verify_credentials(username, password):
+                    norm_user = username.strip().lower()
+                    st.session_state.authenticated = True
+                    st.session_state.current_user = norm_user
+                    if save_login:
+                        token = auth_manager.create_session_token(norm_user)
+                        st.query_params["session"] = token
+                    st.rerun()
+                else:
+                    st.error("Invalid username or password.")
+                    
+            st.markdown("""
+            <div style="background-color: #F1F4F1; border: 1px solid #D6DFD6; border-radius: 4px; padding: 10px 12px; margin-top: 18px; font-size: 0.76rem; color: #4A564A;">
+                <strong>Default Credentials:</strong><br>
+                Username: <code>lucas</code> | Password: <code>fantasy2025</code><br>
+                <span style="font-size: 0.72rem; color: #6A756A;">Or switch to the 'Create Account' tab to create a new user.</span>
+            </div>
+            """, unsafe_allow_html=True)
+            
+        with tab_register:
+            st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+            reg_username = st.text_input("New Username", key="reg_username", placeholder="Choose username (min 3 chars)")
+            reg_password = st.text_input("New Password", type="password", key="reg_password", placeholder="Choose password (min 4 chars)")
+            reg_confirm  = st.text_input("Confirm Password", type="password", key="reg_confirm", placeholder="Repeat password")
+            
+            st.markdown("<div style='font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #5B705E; margin-top: 14px;'>Initial League Setup</div>", unsafe_allow_html=True)
+            reg_platform = st.selectbox("Platform", ["Sleeper", "ESPN"], key="reg_platform")
+            reg_league_id = st.text_input("League ID", value="1337487447067492352" if reg_platform == "Sleeper" else "", key="reg_league_id", placeholder="e.g. 1337487447067492352")
+            
+            reg_save_login = st.checkbox("Save login on this device", value=True, key="chk_reg_save")
+            
+            if st.button("Create Account & Sign In", use_container_width=True, key="btn_register_submit"):
+                if not reg_username or not reg_password:
+                    st.error("Username and password are required.")
+                elif reg_password != reg_confirm:
+                    st.error("Passwords do not match.")
+                else:
+                    ok, msg = auth_manager.register_user(reg_username, reg_password, initial_league_id=reg_league_id, platform=reg_platform)
+                    if ok:
+                        norm_user = reg_username.strip().lower()
+                        st.session_state.authenticated = True
+                        st.session_state.current_user = norm_user
+                        if reg_save_login:
+                            token = auth_manager.create_session_token(norm_user)
+                            st.query_params["session"] = token
+                        st.rerun()
+                    else:
+                        st.error(msg)
+
+if not st.session_state.authenticated:
+    render_login_screen()
+    st.stop()
+
 # ─── Editorial Brand Header (Rhode / Summer Fridays Inspired) ──────────────────
 st.markdown("""
 <div style="padding: 6px 0 20px 0; border-bottom: 1px solid #E2E7E2; margin-bottom: 24px;">
@@ -366,17 +462,123 @@ if is_file_stale(PROJ_FILE):
 
 # ─── Sidebar Configuration ───────────────────────────────────────────────────
 with st.sidebar:
+    # User Profile & Logout Header
+    current_username = st.session_state.get('current_user', 'lucas')
+    st.markdown(f"""
+    <div style="background-color: #FFFFFF; border: 1px solid #E2E7E2; border-radius: 6px; padding: 10px 14px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #5B705E;">User Account</div>
+            <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 700; color: #141714;">{current_username.capitalize()}</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    if st.button("Sign Out", key="btn_signout", use_container_width=True, help="Log out and clear saved session"):
+        token = st.query_params.get("session")
+        if token:
+            auth_manager.revoke_session_token(current_username, token)
+            del st.query_params["session"]
+        st.session_state.authenticated = False
+        st.session_state.current_user = None
+        st.rerun()
+
+    st.markdown("---")
     st.header("League Settings")
-    league_platform = st.radio("Platform", ["Sleeper", "ESPN"])
+    
+    user_info = auth_manager.get_user(current_username) or {}
+    saved_leagues = user_info.get("saved_leagues", [])
+    if not saved_leagues:
+        saved_leagues = [{
+            "id": "sleeper_main",
+            "name": "Main Sleeper League",
+            "platform": "Sleeper",
+            "sleeper_league_id": "1337487447067492352",
+            "espn_league_id": "",
+            "espn_s2": "",
+            "swid": "",
+            "is_default": True
+        }]
+    
+    league_options = [f"{l.get('name', 'League')} ({l.get('platform')})" for l in saved_leagues]
+    league_options.append("+ Connect New League")
+    
+    default_idx = 0
+    for idx, l in enumerate(saved_leagues):
+        if l.get("is_default"):
+            default_idx = idx
+            break
+            
+    selected_league_str = st.selectbox("Saved Leagues", league_options, index=default_idx if default_idx < len(league_options) else 0)
+    
     sleeper_league_id = ""
     espn_league_id = ""
+    espn_s2 = ""
+    swid = ""
     
-    if league_platform == "Sleeper":
-        sleeper_league_id = st.text_input("Sleeper League ID", value="1337487447067492352", placeholder="e.g. 1185263580356419584")
+    if selected_league_str == "+ Connect New League":
+        st.markdown("<div style='font-size:0.72rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; color:#5B705E; margin-top:8px;'>New League Setup</div>", unsafe_allow_html=True)
+        new_league_name = st.text_input("League Nickname", value="My League", key="new_league_name")
+        league_platform = st.radio("Platform", ["Sleeper", "ESPN"], key="new_league_platform")
+        if league_platform == "Sleeper":
+            sleeper_league_id = st.text_input("Sleeper League ID", value="", placeholder="e.g. 1337487447067492352", key="new_sleeper_id")
+        else:
+            espn_league_id = st.text_input("ESPN League ID", value="", placeholder="e.g. 529882810", key="new_espn_id")
+            espn_s2 = st.text_input("ESPN_S2 (Private)", type="password", key="new_espn_s2")
+            swid = st.text_input("SWID (Private)", type="password", key="new_swid")
+            
+        make_default = st.checkbox("Set as default league", value=True, key="chk_new_default")
+        if st.button("Save League to Profile", use_container_width=True, key="btn_save_new_league"):
+            if (league_platform == "Sleeper" and sleeper_league_id) or (league_platform == "ESPN" and espn_league_id):
+                auth_manager.save_user_league(current_username, {
+                    "name": new_league_name,
+                    "platform": league_platform,
+                    "sleeper_league_id": sleeper_league_id,
+                    "espn_league_id": espn_league_id,
+                    "espn_s2": espn_s2,
+                    "swid": swid,
+                    "is_default": make_default
+                })
+                st.success("League saved!")
+                st.rerun()
+            else:
+                st.error("Please enter a valid League ID.")
     else:
-        espn_league_id = st.text_input("ESPN League ID", value="", placeholder="e.g. 529882810")
-        espn_s2 = st.text_input("ESPN_S2 (Private)", type="password")
-        swid = st.text_input("SWID (Private)", type="password")
+        chosen_idx = league_options.index(selected_league_str)
+        active_league_data = saved_leagues[chosen_idx]
+        
+        league_platform = active_league_data.get("platform", "Sleeper")
+        sleeper_league_id = active_league_data.get("sleeper_league_id", "")
+        espn_league_id = active_league_data.get("espn_league_id", "")
+        espn_s2 = active_league_data.get("espn_s2", "")
+        swid = active_league_data.get("swid", "")
+        
+        with st.expander("League Settings & Edit", expanded=False):
+            edit_name = st.text_input("Nickname", value=active_league_data.get("name", "League"), key="edit_league_name")
+            if league_platform == "Sleeper":
+                sleeper_league_id = st.text_input("Sleeper League ID", value=sleeper_league_id, key="edit_sleeper_id")
+            else:
+                espn_league_id = st.text_input("ESPN League ID", value=espn_league_id, key="edit_espn_id")
+                espn_s2 = st.text_input("ESPN_S2", value=espn_s2, type="password", key="edit_espn_s2")
+                swid = st.text_input("SWID", value=swid, type="password", key="edit_swid")
+                
+            set_as_def = st.checkbox("Set as default league", value=active_league_data.get("is_default", False), key="chk_edit_def")
+            col_save, col_del = st.columns(2)
+            with col_save:
+                if st.button("Update", key="btn_update_league", use_container_width=True):
+                    active_league_data["name"] = edit_name
+                    active_league_data["sleeper_league_id"] = sleeper_league_id
+                    active_league_data["espn_league_id"] = espn_league_id
+                    active_league_data["espn_s2"] = espn_s2
+                    active_league_data["swid"] = swid
+                    active_league_data["is_default"] = set_as_def
+                    auth_manager.save_user_league(current_username, active_league_data)
+                    st.success("Updated!")
+                    st.rerun()
+            with col_del:
+                if len(saved_leagues) > 1 and st.button("Delete", key="btn_del_league", use_container_width=True):
+                    auth_manager.delete_user_league(current_username, active_league_data["id"])
+                    st.warning("Deleted.")
+                    st.rerun()
     
     st.markdown("---")
     st.header("Model Settings")

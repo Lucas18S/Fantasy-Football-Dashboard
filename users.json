@@ -1,0 +1,23 @@
+{
+  "users": {
+    "lucas": {
+      "username": "lucas",
+      "salt": "bac4c8fdac926f0bd345c16db6d1ef3d",
+      "password_hash": "9ef0d41f5fa7d0edf1a4ba81b1bd0668cb532f6e461a63ca0b1b13205f9e11f1",
+      "created_at": "2026-10-22T12:49:19.606091",
+      "session_tokens": [],
+      "saved_leagues": [
+        {
+          "id": "sleeper_main",
+          "name": "Main Sleeper League",
+          "platform": "Sleeper",
+          "sleeper_league_id": "1337487447067492352",
+          "espn_league_id": "",
+          "espn_s2": "",
+          "swid": "",
+          "is_default": true
+        }
+      ]
+    }
+  }
+}
