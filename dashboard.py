@@ -579,8 +579,6 @@ with st.sidebar:
     
     user_info = auth_manager.get_user(current_username) or {}
     saved_leagues = user_info.get("saved_leagues", [])
-    if not saved_leagues:
-        saved_leagues = list(auth_manager.DEFAULT_LEAGUES)
     
     league_options = [f"{l.get('name', 'League')} ({l.get('platform')})" for l in saved_leagues]
     league_options.append("+ Connect New League")
@@ -715,8 +713,9 @@ with st.sidebar:
                     st.success("Updated!")
                     st.rerun()
             with col_del:
-                if len(saved_leagues) > 1 and st.button("Delete", key=f"btn_del_{league_id_key}", use_container_width=True):
-                    auth_manager.delete_user_league(current_username, active_league_data["id"])
+                if st.button("Delete League", key=f"btn_del_{league_id_key}", use_container_width=True):
+                    lid_to_del = active_league_data.get("id") or active_league_data.get("sleeper_league_id") or active_league_data.get("espn_league_id")
+                    auth_manager.delete_user_league(current_username, lid_to_del)
                     st.session_state["current_league_idx"] = 0
                     if "saved_leagues_select" in st.session_state:
                         del st.session_state["saved_leagues_select"]

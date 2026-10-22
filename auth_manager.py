@@ -115,16 +115,13 @@ def load_users() -> Dict[str, Any]:
             users["lucas18s"]["role"] = "admin"
             save_needed = True
             
-    # Purge erroneously seeded leagues if present and ensure valid defaults
+    # Purge erroneously seeded leagues if present
     unwanted_ids = {"1389358448524668928", "1312115586901213184"}
     for u_key in users:
         curr_leagues = users[u_key].get("saved_leagues", [])
         filtered = [l for l in curr_leagues if str(l.get("sleeper_league_id")) not in unwanted_ids]
         if len(filtered) != len(curr_leagues):
             curr_leagues = filtered
-            save_needed = True
-        if not curr_leagues:
-            curr_leagues = [dict(l) for l in DEFAULT_LEAGUES]
             save_needed = True
         users[u_key]["saved_leagues"] = curr_leagues
 
@@ -397,8 +394,14 @@ def delete_user_league(username: str, league_id: str) -> bool:
     if username not in users:
         return False
     
+    lid_str = str(league_id).strip()
     leagues = users[username].get("saved_leagues", [])
-    new_leagues = [l for l in leagues if l.get("id") != league_id]
+    new_leagues = [
+        l for l in leagues
+        if str(l.get("id", "")).strip() != lid_str
+        and str(l.get("sleeper_league_id", "")).strip() != lid_str
+        and str(l.get("espn_league_id", "")).strip() != lid_str
+    ]
     
     if new_leagues and not any(l.get("is_default") for l in new_leagues):
         new_leagues[0]["is_default"] = True
