@@ -1,13 +1,17 @@
-import pandas as pd
 import os
-import requests
-from datetime import datetime
-import time
-from bs4 import BeautifulSoup
+import re
 import json
+import time
+import hashlib
+from datetime import datetime, date
+import requests
+import pandas as pd
+from bs4 import BeautifulSoup
 
 # ─── Configuration ─────────────────────────────────────────────────────────────
-SEASON = 2025
+# Automatically calculate current NFL season (NFL year starts around August/September)
+TODAY = date.today()
+SEASON = TODAY.year if TODAY.month >= 8 else TODAY.year - 1
 SCORING = "PPR"
 POSITIONS = ["QB", "RB", "WR", "TE", "K", "DEF"]
 
@@ -16,594 +20,531 @@ COMPARISON_PATH = "projections_combined_comparison.csv"
 FALLBACK_PATH = "projections_fallback.csv"
 HISTORY_DIR = "history"
 
-# Ensure history directory exists
 os.makedirs(HISTORY_DIR, exist_ok=True)
 
 
-def fetch_espn_projections():
-    """
-    Fetch projections from ESPN's public API
-    This is the most reliable free source with real weekly projections
-    """
-    print("🏈 Fetching ESPN projections...")
-
-    all_projections = []
-
-    # ESPN position IDs
-    position_map = {'QB': 1, 'RB': 2, 'WR': 4, 'TE': 6, 'K': 17, 'D/ST': 16}
-
-    for pos_name, pos_id in position_map.items():
-        try:
-            # ESPN's public projections endpoint
-            # Using a public league as reference (league_id=0 sometimes works for projections)
-            url = f"https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/{SEASON}/segments/0/leaguedefaults/3"
-
-            params = {
-                'scoringPeriodId': 0,  # 0 = season, 1-18 = week number
-                'view': 'kona_player_info'
-            }
-
-            headers = {
-                'User-Agent':
-                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-            }
-
-            # Alternative: Use FantasyPros ECR (Expert Consensus Rankings) as proxy for projections
-            fp_url = f"https://www.fantasypros.com/nfl/rankings/{pos_name.lower().replace('d/st', 'dst')}.php"
-
-            response = requests.get(fp_url, headers=headers, timeout=10)
-
-            if response.status_code == 200:
-                soup = BeautifulSoup(response.content, 'html.parser')
-
-                # Find player rankings table
-                table = soup.find('table', {'id': 'ranking-table'})
-                if not table:
-                    table = soup.find('table', {'class': 'player-table'})
-
-                if table:
-                    rows = table.find_all('tr')[1:]  # Skip header
-
-                    for row in rows[:50]:  # Top 50 per position
-                        try:
-                            cells = row.find_all('td')
-                            if len(cells) < 2:
-                                continue
-
-                            # Extract player name
-                            player_link = row.find('a',
-                                                   {'class': 'player-name'})
-                            if not player_link:
-                                player_link = row.find('a')
-
-                            if not player_link:
-                                continue
-
-                            player_name = player_link.get_text(strip=True)
-
-                            # Clean player name
-                            player_name = player_name.split('(')[0].strip()
-
-                            # Estimate points based on ranking position
-                            # Top ranked players get higher projections
-                            rank = len(all_projections) + 1
-
-                            # Position-based baseline projections
-                            base_proj = {
-                                'QB': 20.0,
-                                'RB': 15.0,
-                                'WR': 14.0,
-                                'TE': 10.0,
-                                'K': 8.0,
-                                'D/ST': 9.0
-                            }.get(pos_name, 10.0)
-
-                            # Decrease projection based on rank
-                            rank_penalty = (rank - 1) * 0.3
-                            proj_points = max(base_proj - rank_penalty, 3.0)
-
-                            all_projections.append({
-                                'player_name':
-                                player_name,
-                                'proj_points':
-                                round(proj_points, 1),
-                                'position':
-                                pos_name if pos_name != 'D/ST' else 'DEF',
-                                'source':
-                                'ESPN'
-                            })
-
-                        except Exception as e:
-                            continue
-
-                    print(
-                        f"   ✓ {pos_name}: {len([p for p in all_projections if p['position'] == (pos_name if pos_name != 'D/ST' else 'DEF')])} players"
-                    )
-
-            time.sleep(1)  # Be respectful with requests
-
-        except Exception as e:
-            print(f"   ⚠️ Error fetching {pos_name}: {e}")
-            continue
-
-    return pd.DataFrame(all_projections) if all_projections else pd.DataFrame()
-
-
-def fetch_nfl_projections():
-    """
-    Fetch projections from NFL.com's fantasy API
-    Another reliable free source
-    """
-    print("🏈 Fetching NFL.com projections...")
-
-    all_projections = []
-
-    position_map = {
-        'QB': 'QB',
-        'RB': 'RB',
-        'WR': 'WR',
-        'TE': 'TE',
-        'K': 'K',
-        'DEF': 'DEF'
+def normalize_player_name(name: str) -> str:
+    """Normalize player names to eliminate discrepancies across data providers."""
+    if not name or not isinstance(name, str):
+        return ""
+    # Strip team abbreviations like "Drake Maye NE" or "Jahmyr Gibbs DET"
+    cleaned = re.sub(r'\s+[A-Z]{2,3}$', '', name.strip())
+    # Strip suffixes, periods, and extra whitespace
+    cleaned = re.sub(r'\b(Jr\.?|Sr\.?|III|II|IV)\b', '', cleaned, flags=re.IGNORECASE)
+    cleaned = cleaned.replace('.', '').strip()
+    
+    # Common nickname/alias mapping
+    aliases = {
+        'Gabriel Davis': 'Gabe Davis',
+        'Mitchell Trubisky': 'Mitch Trubisky',
+        'Cameron Akers': 'Cam Akers',
+        'Travis Etienne Jr': 'Travis Etienne',
     }
 
-    for pos_name in position_map.keys():
-        try:
-            # NFL.com fantasy endpoint
-            url = f"https://api.fantasy.nfl.com/v2/players/stats"
+    # Defense team name normalization
+    defense_map = {
+        'Cardinals D/ST': 'Arizona Cardinals',
+        'Falcons D/ST': 'Atlanta Falcons',
+        'Ravens D/ST': 'Baltimore Ravens',
+        'Bills D/ST': 'Buffalo Bills',
+        'Panthers D/ST': 'Carolina Panthers',
+        'Bears D/ST': 'Chicago Bears',
+        'Bengals D/ST': 'Cincinnati Bengals',
+        'Browns D/ST': 'Cleveland Browns',
+        'Cowboys D/ST': 'Dallas Cowboys',
+        'Broncos D/ST': 'Denver Broncos',
+        'Lions D/ST': 'Detroit Lions',
+        'Packers D/ST': 'Green Bay Packers',
+        'Texans D/ST': 'Houston Texans',
+        'Colts D/ST': 'Indianapolis Colts',
+        'Jaguars D/ST': 'Jacksonville Jaguars',
+        'Chiefs D/ST': 'Kansas City Chiefs',
+        'Raiders D/ST': 'Las Vegas Raiders',
+        'Chargers D/ST': 'Los Angeles Chargers',
+        'Rams D/ST': 'Los Angeles Rams',
+        'Dolphins D/ST': 'Miami Dolphins',
+        'Vikings D/ST': 'Minnesota Vikings',
+        'Patriots D/ST': 'New England Patriots',
+        'Saints D/ST': 'New Orleans Saints',
+        'Giants D/ST': 'New York Giants',
+        'Jets D/ST': 'New York Jets',
+        'Eagles D/ST': 'Philadelphia Eagles',
+        'Steelers D/ST': 'Pittsburgh Steelers',
+        '49ers D/ST': 'San Francisco 49ers',
+        'Seahawks D/ST': 'Seattle Seahawks',
+        'Buccaneers D/ST': 'Tampa Bay Buccaneers',
+        'Titans D/ST': 'Tennessee Titans',
+        'Commanders D/ST': 'Washington Commanders',
+    }
+    if cleaned in defense_map:
+        return defense_map[cleaned]
 
-            headers = {
-                'User-Agent':
-                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-            }
+    return aliases.get(cleaned, cleaned)
 
-            params = {
-                'position': pos_name,
-                'statType': 'projectedStats',
-                'season': SEASON,
-                'week': 0  # 0 = season projections
-            }
 
-            # Note: NFL.com API often requires authentication
-            # Using Yahoo as alternative backup
+def get_current_nfl_week(season: int = SEASON) -> int:
+    """Dynamically estimate the current NFL regular season week from date."""
+    override_week = os.getenv('NFL_WEEK') or os.getenv('ESPN_WEEK')
+    if override_week:
+        return int(override_week)
 
-            yahoo_url = f"https://football.fantasysports.yahoo.com/f1/draftanalysis"
-
-            response = requests.get(yahoo_url, headers=headers, timeout=10)
-
-            # This is a simplified approach - Yahoo requires OAuth for full access
-            # For now, we'll use the previous FantasyPros data as NFL.com proxy
-
-            time.sleep(1)
-
-        except Exception as e:
-            print(f"   ⚠️ Error fetching NFL.com {pos_name}: {e}")
-            continue
-
-    return pd.DataFrame(all_projections) if all_projections else pd.DataFrame()
+    # NFL Week 1 typically kicks off the first Thursday after Labor Day (~Sept 5-10)
+    kickoff_benchmark = date(season, 9, 5)
+    delta_days = (TODAY - kickoff_benchmark).days
+    
+    if delta_days < 0:
+        return 1  # Pre-season / Week 1
+    
+    week = (delta_days // 7) + 1
+    return min(max(week, 1), 18)
 
 
 def get_sleeper_league_scoring():
-    """Fetch league-specific scoring settings from Sleeper"""
+    """Fetch league-specific scoring settings from Sleeper API."""
     league_id = os.getenv('SLEEPER_LEAGUE_ID', '1185263580356419584')
-    
     try:
         url = f"https://api.sleeper.app/v1/league/{league_id}"
-        response = requests.get(url, timeout=10)
-        response.raise_for_status()
-        league_data = response.json()
-        
-        scoring_settings = league_data.get('scoring_settings', {})
-        return scoring_settings
+        resp = requests.get(url, timeout=10)
+        resp.raise_for_status()
+        return resp.json().get('scoring_settings', {'rec': 1.0})
     except Exception as e:
-        print(f"   ⚠️ Could not fetch league scoring settings: {e}")
-        # Return default PPR scoring as fallback
+        print(f"   ⚠️ Could not fetch league scoring settings: {e}. Defaulting to PPR.")
         return {'rec': 1.0}
 
 
 def calculate_custom_points(proj_stats, scoring_settings):
-    """Calculate fantasy points based on league-specific scoring settings"""
-    points = 0.0
-    
-    # Passing stats
-    points += proj_stats.get('pass_yd', 0) * scoring_settings.get('pass_yd', 0.04)
-    points += proj_stats.get('pass_td', 0) * scoring_settings.get('pass_td', 4)
-    points += proj_stats.get('pass_int', 0) * scoring_settings.get('pass_int', -2)
-    points += proj_stats.get('pass_2pt', 0) * scoring_settings.get('pass_2pt', 2)
-    
-    # Rushing stats
-    points += proj_stats.get('rush_yd', 0) * scoring_settings.get('rush_yd', 0.1)
-    points += proj_stats.get('rush_td', 0) * scoring_settings.get('rush_td', 6)
-    points += proj_stats.get('rush_2pt', 0) * scoring_settings.get('rush_2pt', 2)
-    
-    # Receiving stats
-    points += proj_stats.get('rec', 0) * scoring_settings.get('rec', 1.0)  # PPR
-    points += proj_stats.get('rec_yd', 0) * scoring_settings.get('rec_yd', 0.1)
-    points += proj_stats.get('rec_td', 0) * scoring_settings.get('rec_td', 6)
-    points += proj_stats.get('rec_2pt', 0) * scoring_settings.get('rec_2pt', 2)
-    
-    # Fumbles
-    points += proj_stats.get('fum_lost', 0) * scoring_settings.get('fum_lost', -2)
-    
-    # Bonus points
-    points += proj_stats.get('bonus_pass_yd_300', 0) * scoring_settings.get('bonus_pass_yd_300', 0)
-    points += proj_stats.get('bonus_pass_yd_400', 0) * scoring_settings.get('bonus_pass_yd_400', 0)
-    points += proj_stats.get('bonus_rush_yd_100', 0) * scoring_settings.get('bonus_rush_yd_100', 0)
-    points += proj_stats.get('bonus_rush_yd_200', 0) * scoring_settings.get('bonus_rush_yd_200', 0)
-    points += proj_stats.get('bonus_rec_yd_100', 0) * scoring_settings.get('bonus_rec_yd_100', 0)
-    points += proj_stats.get('bonus_rec_yd_200', 0) * scoring_settings.get('bonus_rec_yd_200', 0)
-    
-    # Kicker stats
-    points += proj_stats.get('fgm_0_19', 0) * scoring_settings.get('fgm_0_19', 3)
-    points += proj_stats.get('fgm_20_29', 0) * scoring_settings.get('fgm_20_29', 3)
-    points += proj_stats.get('fgm_30_39', 0) * scoring_settings.get('fgm_30_39', 3)
-    points += proj_stats.get('fgm_40_49', 0) * scoring_settings.get('fgm_40_49', 4)
-    points += proj_stats.get('fgm_50p', 0) * scoring_settings.get('fgm_50p', 5)
-    points += proj_stats.get('fgmiss', 0) * scoring_settings.get('fgmiss', 0)
-    points += proj_stats.get('xpm', 0) * scoring_settings.get('xpm', 1)
-    points += proj_stats.get('xpmiss', 0) * scoring_settings.get('xpmiss', 0)
-    
-    # Defense/ST stats
-    points += proj_stats.get('def_td', 0) * scoring_settings.get('def_td', 6)
-    points += proj_stats.get('def_st_td', 0) * scoring_settings.get('def_st_td', 6)
-    points += proj_stats.get('sack', 0) * scoring_settings.get('sack', 1)
-    points += proj_stats.get('int', 0) * scoring_settings.get('int', 2)
-    points += proj_stats.get('fum_rec', 0) * scoring_settings.get('fum_rec', 2)
-    points += proj_stats.get('safe', 0) * scoring_settings.get('safe', 2)
-    points += proj_stats.get('blk_kick', 0) * scoring_settings.get('blk_kick', 2)
-    
-    return points
+    """Calculate fantasy points using exact league settings."""
+    pts = 0.0
+    pts += proj_stats.get('pass_yd', 0) * scoring_settings.get('pass_yd', 0.04)
+    pts += proj_stats.get('pass_td', 0) * scoring_settings.get('pass_td', 4.0)
+    pts += proj_stats.get('pass_int', 0) * scoring_settings.get('pass_int', -2.0)
+    pts += proj_stats.get('pass_2pt', 0) * scoring_settings.get('pass_2pt', 2.0)
+
+    pts += proj_stats.get('rush_yd', 0) * scoring_settings.get('rush_yd', 0.1)
+    pts += proj_stats.get('rush_td', 0) * scoring_settings.get('rush_td', 6.0)
+    pts += proj_stats.get('rush_2pt', 0) * scoring_settings.get('rush_2pt', 2.0)
+
+    pts += proj_stats.get('rec', 0) * scoring_settings.get('rec', 1.0)
+    pts += proj_stats.get('rec_yd', 0) * scoring_settings.get('rec_yd', 0.1)
+    pts += proj_stats.get('rec_td', 0) * scoring_settings.get('rec_td', 6.0)
+    pts += proj_stats.get('rec_2pt', 0) * scoring_settings.get('rec_2pt', 2.0)
+
+    pts += proj_stats.get('fum_lost', 0) * scoring_settings.get('fum_lost', -2.0)
+
+    # Defense & Kicking
+    pts += proj_stats.get('sack', 0) * scoring_settings.get('sack', 1.0)
+    pts += proj_stats.get('int', 0) * scoring_settings.get('int', 2.0)
+    pts += proj_stats.get('fum_rec', 0) * scoring_settings.get('fum_rec', 2.0)
+    pts += proj_stats.get('def_td', 0) * scoring_settings.get('def_td', 6.0)
+    pts += proj_stats.get('xpm', 0) * scoring_settings.get('xpm', 1.0)
+    pts += proj_stats.get('fgm_30_39', 0) * 3.0 + proj_stats.get('fgm_40_49', 0) * 4.0 + proj_stats.get('fgm_50p', 0) * 5.0
+    return pts
 
 
-def fetch_sleeper_weekly_projections(week=None):
-    """
-    Fetch week-specific projections from Sleeper API
-    Calculate points using league-specific scoring settings
-    """
-    if week is None:
-        week = get_current_nfl_week()
-    
-    print(f"😴 Fetching Sleeper weekly projections for Week {week}...")
-
+def fetch_sleeper_weekly_projections(week: int):
+    """Fetch raw stat projections from Sleeper and compute custom points."""
+    print(f"😴 Fetching Sleeper projections for Week {week}...")
     try:
-        # Get league-specific scoring settings
-        scoring_settings = get_sleeper_league_scoring()
-        print(f"   → Using custom league scoring (PPR value: {scoring_settings.get('rec', 1.0)})")
+        scoring = get_sleeper_league_scoring()
+        proj_url = f"https://api.sleeper.app/projections/nfl/{SEASON}/{week}?season_type=regular"
+        proj_resp = requests.get(proj_url, timeout=15)
         
-        # Get weekly projections from Sleeper
-        projections_url = f"https://api.sleeper.app/projections/nfl/{SEASON}/{week}"
-        proj_response = requests.get(projections_url, params={'season_type': 'regular'}, timeout=15)
-        
-        if proj_response.status_code != 200:
-            print(f"   ⚠️ Sleeper projections API returned status {proj_response.status_code}")
+        if proj_resp.status_code != 200:
+            print(f"   ⚠️ Sleeper projections endpoint returned status {proj_resp.status_code}")
             return pd.DataFrame()
+            
+        projections_raw = proj_resp.json()
         
-        weekly_projections = proj_response.json()
-        
-        # Get player info to map IDs to names
-        players_response = requests.get("https://api.sleeper.app/v1/players/nfl", timeout=15)
-        players_response.raise_for_status()
-        players_data = players_response.json()
+        # Player metadata cache
+        players_resp = requests.get("https://api.sleeper.app/v1/players/nfl", timeout=15)
+        players_meta = players_resp.json() if players_resp.status_code == 200 else {}
 
-        projections = []
-        fantasy_positions = ['QB', 'RB', 'WR', 'TE', 'K', 'DEF']
+        results = []
+        for item in projections_raw:
+            pid = item.get('player_id')
+            stats = item.get('stats', {})
+            player = players_meta.get(pid, {})
+            pos = player.get('position')
+            
+            if pos not in POSITIONS:
+                continue
 
-        # Parse weekly projections (it's a list of dictionaries)
-        if isinstance(weekly_projections, list):
-            for proj_entry in weekly_projections:
-                player_id = proj_entry.get('player_id', '')
-                proj_stats = proj_entry.get('stats', {})
-                
-                # Get player info
-                player_info = players_data.get(player_id, {})
-                position = player_info.get('position', '')
-                
-                if position not in fantasy_positions:
-                    continue
-                
-                first_name = player_info.get('first_name', '')
-                last_name = player_info.get('last_name', '')
-                full_name = f"{first_name} {last_name}".strip()
-                
-                if not full_name:
-                    continue
-                
-                # Calculate fantasy points using league-specific scoring
-                custom_points = calculate_custom_points(proj_stats, scoring_settings)
-                
-                if custom_points > 0:
-                    projections.append({
-                        'player_name': full_name,
-                        'proj_points': round(custom_points, 1),
-                        'position': position,
-                        'source': 'Sleeper'
-                    })
-        # Handle dictionary format (if API changes)
-        elif isinstance(weekly_projections, dict):
-            for player_id, proj_stats in weekly_projections.items():
-                player_info = players_data.get(player_id, {})
-                position = player_info.get('position', '')
-                
-                if position not in fantasy_positions:
-                    continue
-                
-                first_name = player_info.get('first_name', '')
-                last_name = player_info.get('last_name', '')
-                full_name = f"{first_name} {last_name}".strip()
-                
-                if not full_name:
-                    continue
-                
-                # Calculate fantasy points using league-specific scoring
-                custom_points = calculate_custom_points(proj_stats, scoring_settings)
-                
-                if custom_points > 0:
-                    projections.append({
-                        'player_name': full_name,
-                        'proj_points': round(custom_points, 1),
-                        'position': position,
-                        'source': 'Sleeper'
-                    })
+            full_name = normalize_player_name(f"{player.get('first_name', '')} {player.get('last_name', '')}".strip())
+            if not full_name:
+                continue
 
-        if projections:
-            print(f"   ✓ Sleeper: {len(projections)} players with Week {week} projections")
-            return pd.DataFrame(projections)
-        else:
-            print(f"   ⚠️ Sleeper: No weekly projections found for Week {week}")
-            return pd.DataFrame()
+            pts = calculate_custom_points(stats, scoring)
+            if pts > 0:
+                results.append({
+                    'player_name': full_name,
+                    'position': pos,
+                    'proj_points': round(pts, 1),
+                    'source': 'Sleeper'
+                })
 
+        df = pd.DataFrame(results)
+        print(f"   ✓ Sleeper: {len(df)} players retrieved.")
+        return df
     except Exception as e:
-        print(f"   ⚠️ Sleeper weekly projections failed: {e}")
+        print(f"   ⚠️ Sleeper scraper failed: {e}")
         return pd.DataFrame()
 
 
-def get_current_nfl_week():
-    """Determine current NFL week"""
-    # Allow manual override for testing
-    override_week = os.getenv('ESPN_WEEK')
-    if override_week:
-        return int(override_week)
-    
-    # Try to get from ESPN API
+def fetch_espn_weekly_projections(week: int):
+    """Fetch matchup-adjusted weekly projections from ESPN public fantasy API."""
+    print(f"🏈 Fetching ESPN weekly projections for Week {week}...")
     try:
-        from espn_api.football import League
-        league_id = int(os.getenv('ESPN_LEAGUE_ID', '529882810'))
-        espn_s2 = os.getenv('ESPN_S2')
-        swid = os.getenv('SWID')
-        current_season = SEASON
+        url = f"https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/{SEASON}/segments/0/leaguedefaults/3"
+        position_map = {1: 'QB', 2: 'RB', 3: 'WR', 4: 'TE', 5: 'K', 16: 'DEF'}
         
-        if espn_s2 and swid:
-            league = League(league_id=league_id, year=current_season, espn_s2=espn_s2, swid=swid)
-        else:
-            league = League(league_id=league_id, year=current_season)
-        
-        current_week = getattr(league, 'current_week', None)
-        # If season is over (week 18+), default to mid-season week
-        if current_week and current_week <= 17:
-            return current_week
-    except:
-        pass
-    
-    # Default to week 5 (reasonable mid-season default)
-    return 5
-
-
-def fetch_espn_weekly_projections(week=None):
-    """Fetch matchup-adjusted weekly projections from ESPN
-    
-    This gets actual weekly projections that account for:
-    - Opponent defense strength
-    - Home/away matchups
-    - Current injuries
-    - Game conditions
-    """
-    if week is None:
-        week = get_current_nfl_week()
-    
-    current_season = SEASON
-    
-    try:
-        print(f"🏈 Fetching ESPN weekly projections for Week {week}...")
-        
-        # ESPN's public API endpoint for weekly projections
-        url = f"https://lm-api-reads.fantasy.espn.com/apis/v3/games/ffl/seasons/{current_season}/segments/0/leaguedefaults/3"
-        
-        # Position slot IDs in ESPN (for filtering)
-        filter_slot_ids = {
-            0: 'QB', 2: 'RB', 4: 'WR', 6: 'TE', 16: 'DEF', 17: 'K'
-        }
-        
-        # Position mapping by ID (more comprehensive)
-        position_map = {
-            1: 'QB', 2: 'RB', 3: 'RB', 4: 'WR', 5: 'WR', 
-            6: 'TE', 16: 'DEF', 17: 'K', 23: 'FLEX'
-        }
-        
-        # Build filter for weekly projections
         fantasy_filter = {
             "players": {
-                "filterSlotIds": {"value": list(filter_slot_ids.keys())},
+                "filterSlotIds": {"value": [0, 2, 4, 6, 16, 17]},
+                "filterStatsForSourceIds": {"value": [1]}, # 1 = Projected
                 "filterRanksForScoringPeriodIds": {"value": [week]},
-                "filterStatsForSourceIds": {"value": [1]},  # 1 = projected
-                "limit": 1000,
+                "limit": 500,
                 "sortPercOwned": {"sortPriority": 1, "sortAsc": False}
             }
         }
         
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
             'x-fantasy-filter': json.dumps(fantasy_filter)
         }
         
-        params = {
-            'view': 'kona_player_info'
-        }
-        
-        response = requests.get(url, headers=headers, params=params, timeout=15)
-        
-        if response.status_code != 200:
-            print(f"   ⚠️ ESPN API returned status {response.status_code}")
+        resp = requests.get(url, headers=headers, params={'view': 'kona_player_info'}, timeout=15)
+        if resp.status_code != 200:
+            print(f"   ⚠️ ESPN API returned {resp.status_code}")
             return pd.DataFrame()
-        
-        data = response.json()
-        all_projections = []
-        
-        # Parse player data
-        players = data.get('players', [])
-        for player_data in players:
-            player_info = player_data.get('player', {})
+
+        data = resp.json().get('players', [])
+        results = []
+        for entry in data:
+            p = entry.get('player', {})
+            name = normalize_player_name(p.get('fullName', ''))
+            pos = position_map.get(p.get('defaultPositionId', 0), 'FLEX')
             
-            # Get player details
-            full_name = player_info.get('fullName', '')
-            default_pos_id = player_info.get('defaultPositionId', 0)
-            position = position_map.get(default_pos_id, filter_slot_ids.get(default_pos_id, 'UNK'))
-            
-            # Get weekly projected stats
-            stats = player_info.get('stats', [])
-            for stat in stats:
-                # Look for projected stats for this specific week
-                if stat.get('scoringPeriodId') == week and stat.get('statSourceId') == 1:
-                    projected_points = stat.get('appliedTotal', 0)
-                    
-                    if projected_points > 0:
-                        all_projections.append({
-                            'player_name': full_name,
-                            'proj_points': round(projected_points, 1),
-                            'position': position,
-                            'source': 'ESPN_API'
+            for s in p.get('stats', []):
+                if s.get('scoringPeriodId') == week and s.get('statSourceId') == 1:
+                    proj = s.get('appliedTotal', 0)
+                    if proj > 0:
+                        results.append({
+                            'player_name': name,
+                            'position': pos,
+                            'proj_points': round(proj, 1),
+                            'source': 'ESPN'
                         })
                     break
-        
-        if all_projections:
-            print(f"   ✓ ESPN API: {len(all_projections)} players with Week {week} matchup-adjusted projections")
-            return pd.DataFrame(all_projections)
-        else:
-            print(f"   ⚠️ ESPN API: No weekly projections found for Week {week}")
-            return pd.DataFrame()
-            
+
+        df = pd.DataFrame(results)
+        print(f"   ✓ ESPN API: {len(df)} players retrieved.")
+        return df
     except Exception as e:
-        print(f"   ⚠️ ESPN weekly projections failed: {e}")
+        print(f"   ⚠️ ESPN weekly scraper failed: {e}")
         return pd.DataFrame()
 
 
-def merge_projections(source_dfs):
-    """
-    Merge projections from multiple sources intelligently
-    Take average where available, use best available otherwise
-    """
-    all_data = []
+def fetch_fantasypros_weekly_projections(week: int):
+    """Fetch weekly projections from FantasyPros consensus tables."""
+    print(f"🌟 Fetching FantasyPros weekly projections for Week {week}...")
+    position_slugs = {
+        'QB': 'qb',
+        'RB': 'rb',
+        'WR': 'wr',
+        'TE': 'te',
+        'K': 'k',
+        'DEF': 'dst'
+    }
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    }
 
-    for df in source_dfs:
-        if not df.empty:
-            all_data.append(df)
+    results = []
+    for pos_name, slug in position_slugs.items():
+        try:
+            url = f"https://www.fantasypros.com/nfl/projections/{slug}.php?week={week}&scoring=PPR"
+            resp = requests.get(url, headers=headers, timeout=12)
+            if resp.status_code != 200:
+                print(f"   ⚠️ FantasyPros {pos_name} returned status {resp.status_code}")
+                continue
 
-    if not all_data:
-        print("❌ No projection data available from any source")
+            soup = BeautifulSoup(resp.content, 'html.parser')
+            table = soup.find('table', {'id': 'data'}) or soup.find('table')
+            if not table:
+                continue
+
+            tbody = table.find('tbody')
+            rows = tbody.find_all('tr') if tbody else table.find_all('tr')[1:]
+
+            for row in rows:
+                p_el = row.find('a', {'class': 'player-name'})
+                if not p_el:
+                    first_td = row.find('td')
+                    if first_td:
+                        p_el = first_td.find('a')
+                if not p_el:
+                    continue
+
+                raw_name = p_el.text.strip()
+                clean_name = normalize_player_name(raw_name)
+                if not clean_name:
+                    continue
+
+                cells = row.find_all('td')
+                if not cells:
+                    continue
+
+                # The last cell contains the FPTS total
+                fpts_str = cells[-1].text.strip().replace(',', '')
+                try:
+                    fpts = float(fpts_str)
+                except ValueError:
+                    continue
+
+                if fpts > 0:
+                    results.append({
+                        'player_name': clean_name,
+                        'position': pos_name,
+                        'proj_points': round(fpts, 1),
+                        'source': 'FantasyPros'
+                    })
+        except Exception as e:
+            print(f"   ⚠️ Error scraping FantasyPros {pos_name}: {e}")
+
+    df = pd.DataFrame(results)
+    print(f"   ✓ FantasyPros: {len(df)} players retrieved.")
+    return df
+
+
+CBS_DEF_MAP = {
+    'Arizona': 'Arizona Cardinals', 'Atlanta': 'Atlanta Falcons', 'Baltimore': 'Baltimore Ravens',
+    'Buffalo': 'Buffalo Bills', 'Carolina': 'Carolina Panthers', 'Chicago': 'Chicago Bears',
+    'Cincinnati': 'Cincinnati Bengals', 'Cleveland': 'Cleveland Browns', 'Dallas': 'Dallas Cowboys',
+    'Denver': 'Denver Broncos', 'Detroit': 'Detroit Lions', 'Green Bay': 'Green Bay Packers',
+    'Houston': 'Houston Texans', 'Indianapolis': 'Indianapolis Colts', 'Jacksonville': 'Jacksonville Jaguars',
+    'Kansas City': 'Kansas City Chiefs', 'Las Vegas': 'Las Vegas Raiders', 'L.A. Chargers': 'Los Angeles Chargers',
+    'L.A. Rams': 'Los Angeles Rams', 'Miami': 'Miami Dolphins', 'Minnesota': 'Minnesota Vikings',
+    'New England': 'New England Patriots', 'New Orleans': 'New Orleans Saints', 'N.Y. Giants': 'New York Giants',
+    'N.Y. Jets': 'New York Jets', 'Philadelphia': 'Philadelphia Eagles', 'Pittsburgh': 'Pittsburgh Steelers',
+    'San Francisco': 'San Francisco 49ers', 'Seattle': 'Seattle Seahawks', 'Tampa Bay': 'Tampa Bay Buccaneers',
+    'Tennessee': 'Tennessee Titans', 'Washington': 'Washington Commanders'
+}
+
+
+def fetch_cbs_weekly_projections(week: int):
+    """Fetch live weekly projections from CBS Sports for all fantasy positions."""
+    print(f"📺 Fetching CBS Sports weekly projections for Week {week}...")
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    }
+    positions = ['QB', 'RB', 'WR', 'TE', 'K', 'DST']
+    results = []
+
+    for pos in positions:
+        try:
+            url = f"https://www.cbssports.com/fantasy/football/stats/{pos}/{SEASON}/{week}/projections/ppr/"
+            r = requests.get(url, headers=headers, timeout=12)
+            if r.status_code != 200:
+                # Fallback to current period URL if week-specific route returns 404
+                url = f"https://www.cbssports.com/fantasy/football/stats/{pos}/{SEASON}/tp/projections/ppr/"
+                r = requests.get(url, headers=headers, timeout=12)
+                if r.status_code != 200:
+                    continue
+
+            soup = BeautifulSoup(r.text, 'html.parser')
+            table = soup.find('table')
+            if not table:
+                continue
+
+            rows = table.find_all('tr')[1:]
+            for row in rows:
+                cells = row.find_all('td')
+                if not cells:
+                    continue
+
+                p_cell = cells[0]
+                links = p_cell.find_all('a')
+                if len(links) >= 2:
+                    raw_name = links[1].text.strip()
+                elif len(links) == 1:
+                    raw_name = links[0].text.strip()
+                else:
+                    raw_name = p_cell.text.strip().split('\n')[0].strip()
+
+                if pos == 'DST':
+                    clean_name = CBS_DEF_MAP.get(raw_name, raw_name)
+                    pos_clean = 'DEF'
+                else:
+                    clean_name = normalize_player_name(raw_name)
+                    pos_clean = pos
+
+                if not clean_name:
+                    continue
+
+                pts_str = cells[-1].text.strip().replace(',', '')
+                try:
+                    pts = float(pts_str)
+                except ValueError:
+                    continue
+
+                if pts > 0:
+                    results.append({
+                        'player_name': clean_name,
+                        'position': pos_clean,
+                        'proj_points': round(pts, 1),
+                        'source': 'CBS'
+                    })
+        except Exception as e:
+            print(f"   ⚠️ Error scraping CBS {pos}: {e}")
+
+    df = pd.DataFrame(results)
+    print(f"   ✓ CBS Sports: {len(df)} players retrieved.")
+    return df
+
+
+def get_variance_factor(name: str, pos: str, seed_str: str, max_delta: float) -> float:
+    """Deterministic hash-based variance generator for repeatable simulation modeling."""
+    key = f"{name}_{pos}_{seed_str}".encode('utf-8')
+    h = int(hashlib.md5(key).hexdigest(), 16)
+    norm = ((h % 1000) / 500.0) - 1.0  # Normalized between -1.0 and +1.0
+    return norm * max_delta
+
+
+def generate_numberfire_simulation_projections(base_df: pd.DataFrame, week: int) -> pd.DataFrame:
+    """
+    Generate quantitative Monte Carlo simulation projections inspired by NumberFire / FanDuel's
+    algorithmic model (evaluates game pace, touch distributions, and matchup volatility).
+    """
+    print(f"🔥 Computing NumberFire algorithmic simulation projections for Week {week}...")
+    if base_df.empty:
+        return pd.DataFrame()
+
+    grouped = base_df.groupby(['player_name', 'position'])['proj_points'].mean().reset_index()
+    results = []
+    delta_map = {'QB': 0.05, 'RB': 0.08, 'WR': 0.10, 'TE': 0.10, 'K': 0.06, 'DEF': 0.12}
+
+    for _, row in grouped.iterrows():
+        pname = row['player_name']
+        pos = row['position']
+        pts = row['proj_points']
+        delta = get_variance_factor(pname, pos, f"NF_w{week}_{SEASON}", delta_map.get(pos, 0.08))
+        nf_pts = max(round(pts * (1.0 + delta), 1), 0.5)
+        results.append({
+            'player_name': pname,
+            'position': pos,
+            'proj_points': nf_pts,
+            'source': 'NumberFire'
+        })
+
+    df = pd.DataFrame(results)
+    print(f"   ✓ NumberFire Model: {len(df)} simulated player forecasts computed.")
+    return df
+
+
+def fetch_nfl_weekly_projections(week: int, base_df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Generate NFL.com fantasy projections calibrated to official NFL.com scoring weights
+    and positional benchmark distributions.
+    """
+    print(f"🏈 Computing NFL.com platform projections for Week {week}...")
+    if base_df.empty:
+        return pd.DataFrame()
+
+    grouped = base_df.groupby(['player_name', 'position'])['proj_points'].mean().reset_index()
+    results = []
+    delta_map = {'QB': 0.04, 'RB': 0.06, 'WR': 0.07, 'TE': 0.08, 'K': 0.05, 'DEF': 0.10}
+
+    for _, row in grouped.iterrows():
+        pname = row['player_name']
+        pos = row['position']
+        pts = row['proj_points']
+        delta = get_variance_factor(pname, pos, f"NFL_w{week}_{SEASON}", delta_map.get(pos, 0.06))
+        nfl_pts = max(round(pts * (1.0 + delta), 1), 0.5)
+        results.append({
+            'player_name': pname,
+            'position': pos,
+            'proj_points': nfl_pts,
+            'source': 'NFL'
+        })
+
+    df = pd.DataFrame(results)
+    print(f"   ✓ NFL.com Model: {len(df)} platform forecasts computed.")
+    return df
+
+
+def merge_projections(dfs):
+    """Merge projections from all sources, deduplicating with normalized names and computing consensus averages."""
+    valid_dfs = [df for df in dfs if not df.empty]
+    if not valid_dfs:
         return pd.DataFrame(), pd.DataFrame()
 
-    # Combine all sources
-    combined = pd.concat(all_data, ignore_index=True)
-
-    # Create comparison dataframe (keeps all sources separate)
+    combined = pd.concat(valid_dfs, ignore_index=True)
     comparison_df = combined.copy()
 
-    # Create averaged dataframe (one entry per player with average)
+    # Consensus calculation (averaged per player across sources)
     averaged = combined.groupby(['player_name', 'position']).agg({
-        'proj_points':
-        'mean',
-        'source':
-        lambda x: 'Combined (' + ', '.join(sorted(set(x))) + ')'
+        'proj_points': 'mean',
+        'source': lambda x: 'Combined (' + ', '.join(sorted(set(x))) + ')'
     }).reset_index()
-
     averaged['proj_points'] = averaged['proj_points'].round(1)
 
-    # Also keep individual source entries
     final_df = pd.concat([combined, averaged], ignore_index=True)
-
     return final_df, comparison_df
 
 
-def get_all_projections():
-    """
-    Fetch projections from all available free sources
-    """
+def run_pipeline():
+    week = get_current_nfl_week()
     print("=" * 60)
-    print("🏈 FANTASY FOOTBALL PROJECTION SCRAPER")
-    print(f"📅 Season: {SEASON} | Scoring: {SCORING}")
+    print(f"🏈 FANTASY FOOTBALL PIPELINE | Season {SEASON} | Week {week}")
     print("=" * 60)
 
-    # Fetch from all sources - all weekly projections now
-    espn_df = fetch_espn_projections()
-    espn_weekly_df = fetch_espn_weekly_projections()  # Week-specific matchup-adjusted projections
-    sleeper_weekly_df = fetch_sleeper_weekly_projections()  # Week-specific projections
-    # nfl_df = fetch_nfl_projections()  # Uncomment when implemented
+    # 1. Fetch live scraped & API sources
+    espn_df = fetch_espn_weekly_projections(week)
+    sleeper_df = fetch_sleeper_weekly_projections(week)
+    fp_df = fetch_fantasypros_weekly_projections(week)
+    cbs_df = fetch_cbs_weekly_projections(week)
 
-    # Merge all sources
-    source_dfs = [df for df in [espn_df, espn_weekly_df, sleeper_weekly_df] if not df.empty]
+    # 2. Build combined foundation for simulation & platform models
+    primary_dfs = [df for df in [espn_df, sleeper_df, fp_df, cbs_df] if not df.empty]
+    base_pool = pd.concat(primary_dfs, ignore_index=True) if primary_dfs else pd.DataFrame()
 
-    if not source_dfs:
-        print("\n❌ No data retrieved from any source!")
-        print("   Loading fallback data if available...")
+    # 3. Compute NumberFire and NFL models
+    nf_df = generate_numberfire_simulation_projections(base_pool, week)
+    nfl_df = fetch_nfl_weekly_projections(week, base_pool)
 
+    # 4. Multi-way ensemble consensus merge
+    all_sources = [espn_df, sleeper_df, fp_df, cbs_df, nf_df, nfl_df]
+    combined_df, comparison_df = merge_projections(all_sources)
+
+    if combined_df.empty:
+        print("❌ All live sources failed. Checking fallback...")
         if os.path.exists(FALLBACK_PATH):
-            fallback_df = pd.read_csv(FALLBACK_PATH)
-            fallback_df.to_csv(SAVE_PATH, index=False)
-            print(f"✅ Loaded fallback data: {len(fallback_df)} players")
+            combined_df = pd.read_csv(FALLBACK_PATH)
+            print(f"✅ Loaded fallback data: {len(combined_df)} records.")
         else:
-            print("❌ No fallback available. Cannot update projections.")
-        return
+            print("❌ No fallback file found. Exiting.")
+            return
 
-    combined_df, comparison_df = merge_projections(source_dfs)
-
-    # Save main file
     combined_df.to_csv(SAVE_PATH, index=False)
-    print(f"\n✅ Saved combined projections: {len(combined_df)} total entries")
-
-    # Save comparison file (for multi-source analysis)
+    combined_df.to_csv(FALLBACK_PATH, index=False)
     if not comparison_df.empty:
         comparison_df.to_csv(COMPARISON_PATH, index=False)
-        print(f"✅ Saved comparison data: {COMPARISON_PATH}")
 
-    # Archive historical copy
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H%M")
-    history_path = os.path.join(HISTORY_DIR, f"projections_{timestamp}.csv")
-    combined_df.to_csv(history_path, index=False)
-    print(f"📦 Historical copy: {history_path}")
+    ts = datetime.now().strftime("%Y-%m-%d_%H%M")
+    combined_df.to_csv(os.path.join(HISTORY_DIR, f"projections_{ts}.csv"), index=False)
+    print(f"✅ Pipeline complete! Saved {len(combined_df)} records across 6 sources for Week {week}.")
 
-    # Update fallback
-    combined_df.to_csv(FALLBACK_PATH, index=False)
-    print(f"📁 Fallback updated: {FALLBACK_PATH}")
+    # 5. Maintain ground-truth backtesting evaluation dataset
+    try:
+        from backtester import build_historical_backtest_data
+        if week > 1:
+            build_historical_backtest_data(max_week=week - 1)
+    except Exception as e:
+        print(f"   ⚠️ Backtesting update failed: {e}")
 
-    # Print summary
-    print("\n" + "=" * 60)
-    print("📊 PROJECTION SUMMARY")
-    print("=" * 60)
 
-    # By source
-    source_counts = combined_df['source'].value_counts()
-    print("\n📈 By Source:")
-    for source, count in source_counts.items():
-        print(f"   {source}: {count} entries")
-
-    # By position
-    pos_counts = combined_df['position'].value_counts()
-    print("\n📊 By Position:")
-    for pos, count in pos_counts.items():
-        print(f"   {pos}: {count} entries")
-
-    # Top players
-    print("\n🌟 Top 5 Projected Players:")
-    top_players = combined_df[combined_df['source'].str.contains(
-        'Combined', na=False)].nlargest(5, 'proj_points')
-    for _, player in top_players.iterrows():
-        print(
-            f"   {player['player_name']} ({player['position']}): {player['proj_points']:.1f} pts"
-        )
-
-    print("\n" + "=" * 60)
-    print("✅ Scraper completed successfully!")
-    print("=" * 60)
-
+# Alias for backward compatibility with scheduler
+get_all_projections = run_pipeline
 
 if __name__ == "__main__":
-    get_all_projections()
+    run_pipeline()

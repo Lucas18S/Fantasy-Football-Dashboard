@@ -1,1544 +1,2648 @@
-player_name,proj_points,position,source
-Ja'Marr Chase,16.2,RB,ESPN_API
-Justin Jefferson,16.9,RB,ESPN_API
-Bijan Robinson,17.5,RB,ESPN_API
-Josh Allen,20.4,QB,ESPN_API
-Lamar Jackson,21.8,QB,ESPN_API
-Trey McBride,12.9,WR,ESPN_API
-Nico Collins,17.9,RB,ESPN_API
-Josh Jacobs,15.5,RB,ESPN_API
-CeeDee Lamb,20.9,RB,ESPN_API
-De'Von Achane,15.8,RB,ESPN_API
-Derrick Henry,18.8,RB,ESPN_API
-Brock Bowers,8.7,WR,ESPN_API
-Jayden Daniels,23.2,QB,ESPN_API
-James Cook,15.5,RB,ESPN_API
-Bucky Irving,9.8,RB,ESPN_API
-Ashton Jeanty,14.4,RB,ESPN_API
-Jaxon Smith-Njigba,12.6,RB,ESPN_API
-Kyren Williams,20.5,RB,ESPN_API
-Drake London,15.3,RB,ESPN_API
-Patrick Mahomes,15.7,QB,ESPN_API
-Garrett Wilson,13.7,RB,ESPN_API
-Brian Thomas Jr.,12.9,RB,ESPN_API
-Brandon Aubrey,8.1,WR,ESPN_API
-Alvin Kamara,19.6,RB,ESPN_API
-Omarion Hampton,18.5,RB,ESPN_API
-DK Metcalf,15.1,RB,ESPN_API
-Chase Brown,9.1,RB,ESPN_API
-Zay Flowers,13.6,RB,ESPN_API
-Chuba Hubbard,14.8,RB,ESPN_API
-Travis Kelce,12.1,WR,ESPN_API
-George Kittle,12.2,WR,ESPN_API
-Baker Mayfield,16.5,QB,ESPN_API
-Kenneth Walker III,17.4,RB,ESPN_API
-Marvin Harrison Jr.,16.0,RB,ESPN_API
-Breece Hall,16.7,RB,ESPN_API
-Tee Higgins,13.0,RB,ESPN_API
-Xavier Worthy,11.4,RB,ESPN_API
-George Pickens,14.3,RB,ESPN_API
-Rome Odunze,8.6,RB,ESPN_API
-Mike Evans,14.9,RB,ESPN_API
-Emeka Egbuka,14.2,RB,ESPN_API
-Terry McLaurin,13.5,RB,ESPN_API
-Tyler Warren,11.2,WR,ESPN_API
-Courtland Sutton,11.4,RB,ESPN_API
-Vikings D/ST,6.2,DEF,ESPN_API
-D'Andre Swift,15.4,RB,ESPN_API
-Javonte Williams,12.7,RB,ESPN_API
-Tetairoa McMillan,14.1,RB,ESPN_API
-Broncos D/ST,7.6,DEF,ESPN_API
-Jaylen Waddle,9.1,RB,ESPN_API
-Cam Skattebo,17.1,RB,ESPN_API
-DJ Moore,13.9,RB,ESPN_API
-Tucker Kraft,10.5,WR,ESPN_API
-Lions D/ST,7.4,DEF,ESPN_API
-Deebo Samuel,16.6,RB,ESPN_API
-Jakobi Meyers,11.7,RB,ESPN_API
-Jake Ferguson,11.9,WR,ESPN_API
-TreVeyon Henderson,8.6,RB,ESPN_API
-Keenan Allen,9.3,RB,ESPN_API
-Travis Etienne Jr.,13.7,RB,ESPN_API
-Chris Olave,13.7,RB,ESPN_API
-Bo Nix,14.4,QB,ESPN_API
-Kyler Murray,17.3,QB,ESPN_API
-Michael Pittman Jr.,13.7,RB,ESPN_API
-Jordan Mason,18.2,RB,ESPN_API
-Quinshon Judkins,14.6,RB,ESPN_API
-Mark Andrews,5.6,WR,ESPN_API
-Jerry Jeudy,10.7,RB,ESPN_API
-Caleb Williams,13.4,QB,ESPN_API
-Chase McLaughlin,8.2,WR,ESPN_API
-Seahawks D/ST,6.0,DEF,ESPN_API
-Steelers D/ST,4.1,DEF,ESPN_API
-Stefon Diggs,13.8,RB,ESPN_API
-Jordan Love,20.0,QB,ESPN_API
-Texans D/ST,3.7,DEF,ESPN_API
-Chris Godwin Jr.,15.5,RB,ESPN_API
-Justin Fields,20.1,QB,ESPN_API
-Daniel Jones,16.8,QB,ESPN_API
-Jordan Addison,10.7,RB,ESPN_API
-Trey Benson,3.8,RB,ESPN_API
-Dak Prescott,18.1,QB,ESPN_API
-Travis Hunter,8.9,RB,ESPN_API
-David Njoku,8.3,WR,ESPN_API
-Keon Coleman,9.8,RB,ESPN_API
-Aaron Jones Sr.,17.7,RB,ESPN_API
-Rhamondre Stevenson,11.6,RB,ESPN_API
-Juwan Johnson,4.5,WR,ESPN_API
-Dalton Kincaid,10.4,WR,ESPN_API
-RJ Harvey,8.3,RB,ESPN_API
-Jacory Croskey-Merritt,7.3,RB,ESPN_API
-Jauan Jennings,10.2,RB,ESPN_API
-Brock Purdy,19.2,QB,ESPN_API
-Hunter Henry,6.5,WR,ESPN_API
-Harrison Butker,8.0,WR,ESPN_API
-Bills D/ST,4.5,DEF,ESPN_API
-Joe Burrow,17.7,QB,ESPN_API
-Zach Charbonnet,8.5,RB,ESPN_API
-Eagles D/ST,5.3,DEF,ESPN_API
-Tyler Loop,7.8,WR,ESPN_API
-Woody Marks,12.0,RB,ESPN_API
-Zach Ertz,7.2,WR,ESPN_API
-Tyreek Hill,13.1,RB,ESPN_API
-Tyrone Tracy Jr.,10.2,RB,ESPN_API
-Chris Boswell,8.3,WR,ESPN_API
-Kyle Pitts Sr.,7.2,WR,ESPN_API
-Ravens D/ST,5.0,DEF,ESPN_API
-Tre Tucker,10.3,RB,ESPN_API
-Packers D/ST,4.5,DEF,ESPN_API
-Rashid Shaheed,13.0,RB,ESPN_API
-Wan'Dale Robinson,13.2,RB,ESPN_API
-C.J. Stroud,17.6,QB,ESPN_API
-Darnell Mooney,12.4,RB,ESPN_API
-Rachaad White,12.1,RB,ESPN_API
-Jayden Reed,15.4,RB,ESPN_API
-Patriots D/ST,6.1,DEF,ESPN_API
-Colts D/ST,5.2,DEF,ESPN_API
-James Conner,13.1,RB,ESPN_API
-Cam Little,7.4,WR,ESPN_API
-Chargers D/ST,5.1,DEF,ESPN_API
-Matthew Stafford,14.3,QB,ESPN_API
-Cardinals D/ST,2.3,DEF,ESPN_API
-Josh Downs,11.3,RB,ESPN_API
-Bhayshul Tuten,4.7,RB,ESPN_API
-Troy Franklin,4.8,RB,ESPN_API
-Browns D/ST,3.5,DEF,ESPN_API
-Brian Robinson Jr.,15.7,RB,ESPN_API
-Kareem Hunt,11.8,RB,ESPN_API
-Brandon Aiyuk,13.8,RB,ESPN_API
-Tyler Bass,8.0,WR,ESPN_API
-Tyler Allgeier,7.5,RB,ESPN_API
-Jerome Ford,13.1,RB,ESPN_API
-Elic Ayomanor,10.4,RB,ESPN_API
-Austin Ekeler,10.5,RB,ESPN_API
-Cairo Santos,7.7,WR,ESPN_API
-Ka'imi Fairbairn,8.1,WR,ESPN_API
-Tank Bigsby,3.7,RB,ESPN_API
-Jaxson Dart,16.2,QB,ESPN_API
-Cedric Tillman,0.9,RB,ESPN_API
-Christian Kirk,12.6,RB,ESPN_API
-Xavier Legette,10.8,RB,ESPN_API
-Brenton Strange,7.4,WR,ESPN_API
-Rams D/ST,2.9,DEF,ESPN_API
-Jayden Higgins,3.4,RB,ESPN_API
-Jonnu Smith,4.1,WR,ESPN_API
-Harold Fannin Jr.,7.7,WR,ESPN_API
-Matt Gay,8.2,WR,ESPN_API
-Trevor Lawrence,15.7,QB,ESPN_API
-Geno Smith,17.3,QB,ESPN_API
-Buccaneers D/ST,4.6,DEF,ESPN_API
-Dylan Sampson,3.5,RB,ESPN_API
-Rashod Bateman,7.1,RB,ESPN_API
-Ollie Gordon II,5.9,RB,ESPN_API
-Jason Myers,8.0,WR,ESPN_API
-Marvin Mims Jr.,1.5,RB,ESPN_API
-Braelon Allen,8.0,RB,ESPN_API
-49ers D/ST,5.3,DEF,ESPN_API
-Justice Hill,8.8,RB,ESPN_API
-Darius Slayton,9.9,RB,ESPN_API
-Tyquan Thornton,1.6,RB,ESPN_API
-Giants D/ST,4.6,DEF,ESPN_API
-Blake Corum,0.0,RB,ESPN_API
-Wil Lutz,7.4,WR,ESPN_API
-Najee Harris,15.4,RB,ESPN_API
-Aaron Rodgers,14.1,QB,ESPN_API
-Chiefs D/ST,5.2,DEF,ESPN_API
-Kendre Miller,1.6,RB,ESPN_API
-Dalton Schultz,7.3,WR,ESPN_API
-Rico Dowdle,10.4,RB,ESPN_API
-Falcons D/ST,5.7,DEF,ESPN_API
-Jaguars D/ST,3.9,DEF,ESPN_API
-Ray Davis,5.2,RB,ESPN_API
-Jason Sanders,7.1,WR,ESPN_API
-Cam Ward,12.0,QB,ESPN_API
-Kayshon Boutte,2.7,RB,ESPN_API
-Sam Darnold,14.9,QB,ESPN_API
-Evan McPherson,8.1,WR,ESPN_API
-Joshua Karty,7.8,WR,ESPN_API
-Jets D/ST,6.8,DEF,ESPN_API
-Calvin Austin III,5.6,RB,ESPN_API
-Isaiah Likely,6.3,WR,ESPN_API
-DeMario Douglas,6.6,RB,ESPN_API
-JuJu Smith-Schuster,7.2,RB,ESPN_API
-Cade Otton,7.8,WR,ESPN_API
-Jalen Coker,0.5,RB,ESPN_API
-Commanders D/ST,7.6,DEF,ESPN_API
-Will Reichard,7.9,WR,ESPN_API
-Emari Demercado,2.2,RB,ESPN_API
-Pat Freiermuth,8.8,WR,ESPN_API
-Tre' Harris,2.5,RB,ESPN_API
-Bears D/ST,5.5,DEF,ESPN_API
-Sterling Shepard,5.5,RB,ESPN_API
-Tory Horton,6.6,RB,ESPN_API
-KaVontae Turpin,4.0,RB,ESPN_API
-Bengals D/ST,3.0,DEF,ESPN_API
-Dont'e Thornton Jr.,6.7,RB,ESPN_API
-Michael Wilson,8.4,RB,ESPN_API
-Mason Taylor,8.0,WR,ESPN_API
-Miles Sanders,7.2,RB,ESPN_API
-Jalen Tolbert,9.4,RB,ESPN_API
-Dontayvion Wicks,12.2,RB,ESPN_API
-Jaylen Wright,1.0,RB,ESPN_API
-Jack Bech,1.6,RB,ESPN_API
-Cowboys D/ST,4.6,DEF,ESPN_API
-Dyami Brown,5.5,RB,ESPN_API
-Daniel Carlson,6.7,WR,ESPN_API
-Tyler Lockett,10.2,RB,ESPN_API
-Isaac TeSlaa,1.6,RB,ESPN_API
-Joey Slye,7.0,WR,ESPN_API
-Isaac Guerendo,2.2,RB,ESPN_API
-Dolphins D/ST,6.5,DEF,ESPN_API
-Eddy Pineiro,7.5,WR,ESPN_API
-Isaiah Bond,6.9,RB,ESPN_API
-Theo Johnson,6.9,WR,ESPN_API
-Amari Cooper,12.8,RB,ESPN_API
-Panthers D/ST,5.3,DEF,ESPN_API
-Brashard Smith,4.0,RB,ESPN_API
-Roschon Johnson,7.0,RB,ESPN_API
-Isaiah Davis,0.0,RB,ESPN_API
-Noah Fant,5.9,WR,ESPN_API
-Ray-Ray McCloud III,10.8,RB,ESPN_API
-Sean Tucker,0.9,RB,ESPN_API
-Kyle Williams,1.7,RB,ESPN_API
-Mike Gesicki,7.2,WR,ESPN_API
-Zavier Scott,5.6,RB,ESPN_API
-DJ Giddens,0.6,RB,ESPN_API
-Pat Bryant,0.8,RB,ESPN_API
-Alec Pierce,5.6,RB,ESPN_API
-Chad Ryland,7.4,WR,ESPN_API
-Tutu Atwell,11.4,RB,ESPN_API
-Luke McCaffrey,6.3,RB,ESPN_API
-Joe Flacco,13.5,QB,ESPN_API
-Adonai Mitchell,5.1,RB,ESPN_API
-Oronde Gadsden II,5.1,WR,ESPN_API
-Elijah Arroyo,3.9,WR,ESPN_API
-Ja'Tavion Sanders,2.5,WR,ESPN_API
-Younghoe Koo,8.1,WR,ESPN_API
-Dillon Gabriel,11.0,QB,ESPN_API
-Raheem Mostert,6.2,RB,ESPN_API
-Tank Dell,10.8,RB,ESPN_API
-Cole Kmet,7.5,WR,ESPN_API
-Josh Reynolds,7.4,RB,ESPN_API
-Saints D/ST,4.3,DEF,ESPN_API
-Ryan Fitzgerald,8.1,WR,ESPN_API
-Samaje Perine,5.8,RB,ESPN_API
-Emanuel Wilson,7.6,RB,ESPN_API
-Raiders D/ST,5.2,DEF,ESPN_API
-Jalen Nailor,2.2,RB,ESPN_API
-Ty Johnson,3.1,RB,ESPN_API
-Chimere Dike,3.6,RB,ESPN_API
-Antonio Gibson,9.8,RB,ESPN_API
-Andy Borregales,7.9,WR,ESPN_API
-Trevor Etienne,0.9,RB,ESPN_API
-AJ Barner,1.8,WR,ESPN_API
-Andrei Iosivas,6.4,RB,ESPN_API
-Olamide Zaccheaus,5.2,RB,ESPN_API
-Dawson Knox,3.2,WR,ESPN_API
-Parker Washington,2.1,RB,ESPN_API
-Noah Gray,3.8,WR,ESPN_API
-Titans D/ST,4.1,DEF,ESPN_API
-Kyle Juszczyk,3.5,RB,ESPN_API
-Demarcus Robinson,10.0,RB,ESPN_API
-Allen Lazard,7.8,RB,ESPN_API
-Jake Moody,8.4,WR,ESPN_API
-Justin Tucker,8.4,WR,ESPN_API
-Blake Grupe,7.9,WR,ESPN_API
-Tommy Tremble,4.2,WR,ESPN_API
-Kirk Cousins,15.5,QB,ESPN_API
-Luke Musgrave,4.4,WR,ESPN_API
-Tahj Brooks,0.2,RB,ESPN_API
-Jalen Milroe,0.2,QB,ESPN_API
-Diontae Johnson,15.3,RB,ESPN_API
-Gabe Davis,10.1,RB,ESPN_API
-Jaleel McLaughlin,8.5,RB,ESPN_API
-Kendrick Bourne,6.5,RB,ESPN_API
-Cam Akers,12.1,RB,ESPN_API
-Jaylin Noel,2.5,RB,ESPN_API
-Jameis Winston,0.2,QB,ESPN_API
-Jaylin Lane,4.0,RB,ESPN_API
-Greg Dortch,8.2,RB,ESPN_API
-Elijah Moore,5.6,RB,ESPN_API
-Jalin Hyatt,7.4,RB,ESPN_API
-Van Jefferson,4.5,RB,ESPN_API
-Jordan Whittington,10.9,RB,ESPN_API
-Jalen Royals,0.5,RB,ESPN_API
-Andre Szmyt,7.0,WR,ESPN_API
-Tyler Conklin,8.0,WR,ESPN_API
-David Moore,0.9,RB,ESPN_API
-Tez Johnson,2.1,RB,ESPN_API
-Austin Hooper,3.6,WR,ESPN_API
-Dare Ogunbowale,6.6,RB,ESPN_API
-Gunnar Helm,3.4,WR,ESPN_API
-Curtis Samuel,7.9,RB,ESPN_API
-Deshaun Watson,15.5,QB,ESPN_API
-Alec Ingold,1.0,RB,ESPN_API
-Darnell Washington,2.4,WR,ESPN_API
-LeQuint Allen Jr.,1.1,RB,ESPN_API
-Jake Bobo,1.7,RB,ESPN_API
-Adam Trautman,1.4,WR,ESPN_API
-KeAndre Lambert-Smith,0.1,RB,ESPN_API
-Ty Chandler,5.4,RB,ESPN_API
-Odell Beckham Jr.,1.2,RB,ESPN_API
-Mack Hollins,6.0,RB,ESPN_API
-Luke Schoonmaker,2.0,WR,ESPN_API
-Hunter Luepke,3.0,RB,ESPN_API
-Xavier Hutchinson,0.5,RB,ESPN_API
-Josh Oliver,2.6,WR,ESPN_API
-Luke Farrell,3.4,WR,ESPN_API
-Zack Moss,12.8,RB,ESPN_API
-Gardner Minshew,9.8,QB,ESPN_API
-Dustin Hopkins,7.7,WR,ESPN_API
-Cade Stover,1.2,WR,ESPN_API
-Jermaine Burton,0.3,RB,ESPN_API
-Mike Williams,7.0,RB,ESPN_API
-Skyy Moore,3.1,RB,ESPN_API
-Myles Price,0.1,RB,ESPN_API
-Braxton Berrios,0.4,RB,ESPN_API
-Davis Allen,1.1,WR,ESPN_API
-Tai Felton,0.0,RB,ESPN_API
-Devin Duvernay,0.8,RB,ESPN_API
-Marquez Valdes-Scantling,4.0,RB,ESPN_API
-Julian Hill,1.7,WR,ESPN_API
-Daniel Bellinger,2.8,WR,ESPN_API
-Nikko Remigio,0.1,RB,ESPN_API
-Tyler Goodson,9.0,RB,ESPN_API
-Tylan Wallace,0.1,RB,ESPN_API
-Jonathan Mingo,7.2,RB,ESPN_API
-Alexander Mattison,11.3,RB,ESPN_API
-Elijah Higgins,2.1,WR,ESPN_API
-Jackson Hawes,2.2,WR,ESPN_API
-Tyrell Shavers,0.5,RB,ESPN_API
-LaJohntay Wester,0.1,RB,ESPN_API
-Mitchell Evans,3.3,WR,ESPN_API
-Beaux Collins,3.2,RB,ESPN_API
-Arian Smith,2.0,RB,ESPN_API
-Charlie Jones,0.4,RB,ESPN_API
-John Bates,0.9,WR,ESPN_API
-Malik Heath,5.0,RB,ESPN_API
-Andy Dalton,12.8,QB,ESPN_API
-Scotty Miller,1.3,RB,ESPN_API
-Charlie Kolar,1.0,WR,ESPN_API
-C.J. Ham,0.8,RB,ESPN_API
-Trey Sermon,12.4,RB,ESPN_API
-Dylan Laube,1.8,RB,ESPN_API
-Ezekiel Elliott,6.2,RB,ESPN_API
-Ja'Lynn Polk,5.9,RB,ESPN_API
-Drew Sample,1.7,WR,ESPN_API
-Patrick Ricard,0.4,RB,ESPN_API
-Mo Alie-Cox,2.8,WR,ESPN_API
-Jeremy Ruckert,2.6,WR,ESPN_API
-Kylen Granson,2.9,WR,ESPN_API
-Foster Moreau,3.5,WR,ESPN_API
-Ryan Flournoy,1.3,RB,ESPN_API
-Pierre Strong Jr.,3.8,RB,ESPN_API
-DeAndre Carter,0.1,RB,ESPN_API
-Payne Durham,1.1,WR,ESPN_API
-Tanner Conner,0.4,WR,ESPN_API
-Trent Sherfield Sr.,1.4,RB,ESPN_API
-Colby Parkinson,10.2,WR,ESPN_API
-Durham Smythe,1.6,WR,ESPN_API
-Derek Carr,12.8,QB,ESPN_API
-Charlie Woerner,0.5,WR,ESPN_API
-Brevyn Spann-Ford,0.6,WR,ESPN_API
-Jacoby Brissett,10.8,QB,ESPN_API
-Xavier Smith,0.0,RB,ESPN_API
-Brycen Tremayne,1.5,RB,ESPN_API
-Justin Watson,5.9,RB,ESPN_API
-Ashton Dulin,0.5,RB,ESPN_API
-Xavier Gipson,2.2,RB,ESPN_API
-Johnny Mundt,4.8,WR,ESPN_API
-Lucas Krull,3.2,WR,ESPN_API
-Tyler Johnson,4.2,RB,ESPN_API
-Deuce Vaughn,1.9,RB,ESPN_API
-Jared Wiley,0.6,WR,ESPN_API
-Hunter Long,1.1,WR,ESPN_API
-Eric Gray,7.1,RB,ESPN_API
-Greg Joseph,7.2,WR,ESPN_API
-Robert Woods,1.7,RB,ESPN_API
-Michael Burton,0.8,RB,ESPN_API
-Greg Zuerlein,7.4,WR,ESPN_API
-Kameron Johnson,2.9,RB,ESPN_API
-Chris Manhertz,0.6,WR,ESPN_API
-Eric Saubert,1.7,WR,ESPN_API
-Connor Heyward,1.4,WR,ESPN_API
-Lil'Jordan Humphrey,5.8,RB,ESPN_API
-Drew Ogletree,1.5,WR,ESPN_API
-Carson Steele,7.3,RB,ESPN_API
-Mason Tipton,2.8,RB,ESPN_API
-Cedrick Wilson Jr.,0.5,RB,ESPN_API
-Austin Seibert,8.4,WR,ESPN_API
-Mecole Hardman,2.0,RB,ESPN_API
-Erick All Jr.,6.6,WR,ESPN_API
-Ameer Abdullah,3.7,RB,ESPN_API
-Nate Adkins,1.4,WR,ESPN_API
-Raheem Blackshear,0.1,RB,ESPN_API
-Brayden Narveson,8.0,WR,ESPN_API
-Blake Whiteheart,1.1,WR,ESPN_API
-Feleipe Franks,0.5,WR,ESPN_API
-Jamaal Williams,6.2,RB,ESPN_API
-Bryce Ford-Wheaton,3.8,RB,ESPN_API
-DeeJay Dallas,0.1,RB,ESPN_API
-Ihmir Smith-Marsette,1.8,RB,ESPN_API
-Avery Williams,0.1,RB,ESPN_API
-Harrison Bryant,4.0,WR,ESPN_API
-Pharaoh Brown,1.7,WR,ESPN_API
-Laviska Shenault Jr.,1.3,RB,ESPN_API
-Trayveon Williams,0.0,RB,ESPN_API
-British Brooks,0.9,RB,ESPN_API
-Nelson Agholor,5.0,RB,ESPN_API
-Ronnie Bell,1.2,RB,ESPN_API
-Jalen Brooks,4.4,RB,ESPN_API
-Aaron Shampklin,4.7,RB,ESPN_API
-Tyler Huntley,13.8,QB,ESPN_API
-Alex Bachman,1.4,RB,ESPN_API
-Adam Prentice,0.6,RB,ESPN_API
-Ronnie Rivers,3.3,RB,ESPN_API
-D'Ernest Johnson,0.7,RB,ESPN_API
-Brandon Powell,2.4,RB,ESPN_API
-Gerald Everett,1.5,WR,ESPN_API
-JaMycal Hasty,1.2,RB,ESPN_API
-Myles Gaskin,0.1,RB,ESPN_API
-D'Onta Foreman,3.8,RB,ESPN_API
-Evan Hull,4.6,RB,ESPN_API
-Jonathan Ward,1.5,RB,ESPN_API
-Blake Watson,0.9,RB,ESPN_API
-Dante Miller,0.9,RB,ESPN_API
-Jordan Akins,3.3,WR,ESPN_API
-James Proche II,0.0,RB,ESPN_API
-Tre Tucker,9.7,WR,Sleeper
-Davis Allen,1.9,TE,Sleeper
-Xavier Hutchinson,3.5,WR,Sleeper
-Chris Rodriguez,7.3,RB,Sleeper
-Will Mallory,0.0,TE,Sleeper
-Andrei Iosivas,4.9,WR,Sleeper
-Payne Durham,1.2,TE,Sleeper
-Charlie Jones,0.4,WR,Sleeper
-Elijah Higgins,1.3,TE,Sleeper
-Michael Wilson,5.8,WR,Sleeper
-Derius Davis,0.8,WR,Sleeper
-Dalton Kincaid,9.5,TE,Sleeper
-Sam LaPorta,11.9,TE,Sleeper
-Jake Bobo,0.6,WR,Sleeper
-Luke Schoonmaker,2.2,TE,Sleeper
-Chad Ryland,8.5,K,Sleeper
-Blake Grupe,7.6,K,Sleeper
-Mitch Tinsley,1.0,WR,Sleeper
-Xavier Smith,0.0,WR,Sleeper
-Emari Demercado,6.7,RB,Sleeper
-Andre Szmyt,6.6,K,Sleeper
-Zavier Scott,7.1,RB,Sleeper
-Jason Brownlee,0.3,WR,Sleeper
-Nikko Remigio,0.2,WR,Sleeper
-Julian Hill,1.9,TE,Sleeper
-Brandon Aubrey,10.5,K,Sleeper
-Jake Bates,10.2,K,Sleeper
-Spencer Rattler,17.5,QB,Sleeper
-Bo Nix,20.0,QB,Sleeper
-Drake Maye,20.2,QB,Sleeper
-Jayden Daniels,22.7,QB,Sleeper
-Jarquez Hunter,0.5,RB,Sleeper
-Rasheen Ali,1.5,RB,Sleeper
-Isaiah Davis,5.9,RB,Sleeper
-Dylan Laube,0.7,RB,Sleeper
-Ray Davis,6.0,RB,Sleeper
-Will Shipley,2.4,RB,Sleeper
-Bucky Irving,19.1,RB,Sleeper
-Blake Corum,5.4,RB,Sleeper
-Trey Benson,12.7,RB,Sleeper
-Brevyn Spann-Ford,2.4,TE,Sleeper
-Jared Wiley,0.5,TE,Sleeper
-Ben Sinnott,0.7,TE,Sleeper
-Theo Johnson,6.4,TE,Sleeper
-Ja'Tavion Sanders,4.6,TE,Sleeper
-AJ Barner,5.2,TE,Sleeper
-Brock Bowers,14.3,TE,Sleeper
-Malik Washington,9.3,WR,Sleeper
-Jordan Whittington,2.9,WR,Sleeper
-Xavier Worthy,13.3,WR,Sleeper
-Adonai Mitchell,3.2,WR,Sleeper
-Xavier Legette,6.2,WR,Sleeper
-Troy Franklin,7.9,WR,Sleeper
-Marvin Harrison,12.1,WR,Sleeper
-Devontez Walker,1.0,WR,Sleeper
-Brian Thomas,13.4,WR,Sleeper
-Jamari Thrash,5.0,WR,Sleeper
-Ladd McConkey,12.7,WR,Sleeper
-Keon Coleman,10.8,WR,Sleeper
-Ricky Pearsall,11.9,WR,Sleeper
-Jermaine Burton,0.5,WR,Sleeper
-Jaylen Wright,0.6,RB,Sleeper
-Luke McCaffrey,2.1,WR,Sleeper
-Isaac Guerendo,0.4,RB,Sleeper
-Tip Reiman,1.7,TE,Sleeper
-Sione Vaki,0.2,RB,Sleeper
-Anthony Gould,0.2,WR,Sleeper
-Cam Little,8.5,K,Sleeper
-Joshua Karty,9.0,K,Sleeper
-Will Reichard,8.2,K,Sleeper
-Devin Culp,0.1,TE,Sleeper
-Devaughn Vele,2.3,WR,Sleeper
-George Holani,0.6,RB,Sleeper
-Spencer Shrader,8.4,K,Sleeper
-Brashard Smith,2.4,RB,Sleeper
-Jaydon Blue,1.9,RB,Sleeper
-Jordan James,0.1,RB,Sleeper
-Dylan Sampson,3.6,RB,Sleeper
-DJ Giddens,2.4,RB,Sleeper
-Raheim Sanders,0.2,RB,Sleeper
-Mitchell Evans,1.1,TE,Sleeper
-Woody Marks,10.6,RB,Sleeper
-Devin Neal,2.4,RB,Sleeper
-Cam Skattebo,16.4,RB,Sleeper
-Jack Bech,2.9,WR,Sleeper
-Jayden Higgins,4.3,WR,Sleeper
-Tez Johnson,1.9,WR,Sleeper
-Dillon Gabriel,20.0,QB,Sleeper
-Terrance Ferguson,1.8,TE,Sleeper
-RJ Harvey,7.7,RB,Sleeper
-Bhayshul Tuten,6.0,RB,Sleeper
-Pat Bryant,2.1,WR,Sleeper
-Oronde Gadsden,5.1,TE,Sleeper
-Ollie Gordon,6.2,RB,Sleeper
-Tai Felton,0.3,WR,Sleeper
-Tory Horton,6.6,WR,Sleeper
-Mason Taylor,7.1,TE,Sleeper
-Elic Ayomanor,10.4,WR,Sleeper
-Gunnar Helm,3.0,TE,Sleeper
-Isaiah Bond,9.5,WR,Sleeper
-Jalen Royals,3.6,WR,Sleeper
-Harold Fannin,10.4,TE,Sleeper
-Omarion Hampton,18.5,RB,Sleeper
-Jaxson Dart,17.8,QB,Sleeper
-Tre' Harris,2.7,WR,Sleeper
-Quinshon Judkins,14.7,RB,Sleeper
-Emeka Egbuka,14.6,WR,Sleeper
-Tyler Warren,12.7,TE,Sleeper
-Elijah Arroyo,3.3,TE,Sleeper
-Cam Ward,15.1,QB,Sleeper
-Jimmy Horn,1.1,WR,Sleeper
-Tetairoa McMillan,14.9,WR,Sleeper
-Ashton Jeanty,14.1,RB,Sleeper
-TreVeyon Henderson,9.6,RB,Sleeper
-Travis Hunter,8.9,WR,Sleeper
-Trevor Etienne,1.5,RB,Sleeper
-Jacory Croskey-Merritt,8.7,RB,Sleeper
-Isaac TeSlaa,2.8,WR,Sleeper
-Jaylin Noel,2.7,WR,Sleeper
-Arian Smith,1.1,WR,Sleeper
-Chimere Dike,3.7,WR,Sleeper
-Dont'e Thornton,6.1,WR,Sleeper
-Efton Chism,1.1,WR,Sleeper
-Tahj Brooks,4.4,RB,Sleeper
-LeQuint Allen,3.6,RB,Sleeper
-Kyle Williams,1.6,WR,Sleeper
-Jaylin Lane,1.6,WR,Sleeper
-Jackson Hawes,0.8,TE,Sleeper
-KeAndre Lambert-Smith,0.3,WR,Sleeper
-Tyler Loop,8.1,K,Sleeper
-Andy Borregales,6.7,K,Sleeper
-Beaux Collins,3.0,WR,Sleeper
-Ryan Fitzgerald,7.5,K,Sleeper
-Zach Ertz,8.3,TE,Sleeper
-Geno Smith,20.2,QB,Sleeper
-DeAndre Hopkins,3.8,WR,Sleeper
-Travis Kelce,10.2,TE,Sleeper
-Keenan Allen,12.7,WR,Sleeper
-Adam Thielen,3.2,WR,Sleeper
-Davante Adams,14.1,WR,Sleeper
-Brandin Cooks,4.6,WR,Sleeper
-Tyler Lockett,3.1,WR,Sleeper
-Stefon Diggs,10.9,WR,Sleeper
-Darren Waller,7.4,TE,Sleeper
-Jason Myers,8.2,K,Sleeper
-Raheem Mostert,3.5,RB,Sleeper
-Chris Manhertz,0.7,TE,Sleeper
-Carson Wentz,16.7,QB,Sleeper
-Jared Goff,21.8,QB,Sleeper
-Derrick Henry,17.7,RB,Sleeper
-Sterling Shepard,7.6,WR,Sleeper
-Austin Hooper,2.2,TE,Sleeper
-Hunter Henry,10.1,TE,Sleeper
-Chris Moore,1.6,WR,Sleeper
-Tyler Higbee,4.0,TE,Sleeper
-Demarcus Robinson,3.3,WR,Sleeper
-Dak Prescott,21.0,QB,Sleeper
-Ka'imi Fairbairn,8.7,K,Sleeper
-Kalif Raymond,3.3,WR,Sleeper
-Wil Lutz,8.2,K,Sleeper
-David Njoku,9.9,TE,Sleeper
-Christian McCaffrey,23.5,RB,Sleeper
-Alvin Kamara,14.8,RB,Sleeper
-Chris Godwin,11.5,WR,Sleeper
-Cooper Kupp,11.3,WR,Sleeper
-JuJu Smith-Schuster,4.9,WR,Sleeper
-Patrick Mahomes,23.8,QB,Sleeper
-Mo Alie-Cox,0.5,TE,Sleeper
-Evan Engram,6.9,TE,Sleeper
-Zay Jones,3.0,WR,Sleeper
-Curtis Samuel,2.5,WR,Sleeper
-Kareem Hunt,9.3,RB,Sleeper
-Samaje Perine,4.5,RB,Sleeper
-Josh Reynolds,5.3,WR,Sleeper
-Mack Hollins,4.2,WR,Sleeper
-Eric Saubert,1.1,TE,Sleeper
-Jake Elliott,8.8,K,Sleeper
-Matthew Stafford,18.1,QB,Sleeper
-Jeremy McNichols,6.9,RB,Sleeper
-Harrison Butker,9.3,K,Sleeper
-Noah Brown,2.2,WR,Sleeper
-Johnny Mundt,2.1,TE,Sleeper
-Tim Patrick,0.5,WR,Sleeper
-Kendrick Bourne,3.6,WR,Sleeper
-Cooper Rush,12.1,QB,Sleeper
-Dare Ogunbowale,0.8,RB,Sleeper
-Saquon Barkley,16.5,RB,Sleeper
-Baker Mayfield,21.0,QB,Sleeper
-Sam Darnold,19.1,QB,Sleeper
-Christian Kirk,9.1,WR,Sleeper
-Calvin Ridley,10.5,WR,Sleeper
-Josh Allen,26.4,QB,Sleeper
-Nick Chubb,8.3,RB,Sleeper
-Mike Gesicki,4.5,TE,Sleeper
-Ian Thomas,0.7,TE,Sleeper
-Dalton Schultz,7.9,TE,Sleeper
-Will Dissly,2.6,TE,Sleeper
-Mark Andrews,8.2,TE,Sleeper
-Dallas Goedert,9.0,TE,Sleeper
-Courtland Sutton,12.0,WR,Sleeper
-Marquez Valdes-Scantling,0.5,WR,Sleeper
-Daniel Carlson,8.9,K,Sleeper
-Cedrick Wilson,2.8,WR,Sleeper
-Tyler Conklin,1.7,TE,Sleeper
-Trent Sherfield,0.5,WR,Sleeper
-Allen Lazard,1.0,WR,Sleeper
-Eddy Pineiro,7.6,K,Sleeper
-T.J. Hockenson,8.7,TE,Sleeper
-Hollywood Brown,9.3,WR,Sleeper
-Kyler Murray,19.7,QB,Sleeper
-Noah Fant,4.5,TE,Sleeper
-A.J. Brown,13.5,WR,Sleeper
-Daniel Jones,19.7,QB,Sleeper
-Deebo Samuel,12.6,WR,Sleeper
-David Montgomery,11.7,RB,Sleeper
-Dawson Knox,3.2,TE,Sleeper
-Terry McLaurin,13.0,WR,Sleeper
-Jakobi Meyers,13.5,WR,Sleeper
-Hunter Renfrow,1.8,WR,Sleeper
-Tony Pollard,11.6,RB,Sleeper
-Greg Dortch,3.2,WR,Sleeper
-Josh Oliver,2.0,TE,Sleeper
-Justice Hill,7.8,RB,Sleeper
-Drew Sample,1.4,TE,Sleeper
-Ty Johnson,4.3,RB,Sleeper
-Matt Gay,8.8,K,Sleeper
-Jake Browning,17.6,QB,Sleeper
-Devin Singletary,6.4,RB,Sleeper
-Darius Slayton,9.2,WR,Sleeper
-Miles Sanders,5.4,RB,Sleeper
-Ashton Dulin,0.1,WR,Sleeper
-Nick Folk,7.3,K,Sleeper
-Joey Slye,6.7,K,Sleeper
-Chase McLaughlin,8.6,K,Sleeper
-Craig Reynolds,0.5,RB,Sleeper
-Tua Tagovailoa,19.7,QB,Sleeper
-Jerry Jeudy,12.9,WR,Sleeper
-Justin Jefferson,14.9,WR,Sleeper
-Justin Herbert,23.1,QB,Sleeper
-Tee Higgins,10.9,WR,Sleeper
-J.K. Dobbins,12.3,RB,Sleeper
-Jonathan Taylor,19.7,RB,Sleeper
-Michael Pittman,12.6,WR,Sleeper
-A.J. Dillon,0.9,RB,Sleeper
-Van Jefferson,1.3,WR,Sleeper
-Colby Parkinson,0.8,TE,Sleeper
-Adam Trautman,2.1,TE,Sleeper
-Jalen Hurts,22.0,QB,Sleeper
-Antonio Gibson,4.2,RB,Sleeper
-Tyler Johnson,4.6,WR,Sleeper
-Juwan Johnson,11.3,TE,Sleeper
-Rico Dowdle,6.3,RB,Sleeper
-Jauan Jennings,11.2,WR,Sleeper
-Nick Westbrook-Ikhine,5.2,WR,Sleeper
-Trevor Lawrence,19.2,QB,Sleeper
-DeVonta Smith,11.8,WR,Sleeper
-Jaylen Waddle,13.5,WR,Sleeper
-Hunter Long,0.4,TE,Sleeper
-Travis Etienne,12.7,RB,Sleeper
-Amon-Ra St. Brown,17.6,WR,Sleeper
-Tutu Atwell,3.5,WR,Sleeper
-Ja'Marr Chase,15.3,WR,Sleeper
-Nico Collins,15.5,WR,Sleeper
-Rashod Bateman,7.5,WR,Sleeper
-Dyami Brown,6.1,WR,Sleeper
-Javonte Williams,16.0,RB,Sleeper
-Justin Fields,22.8,QB,Sleeper
-Chuba Hubbard,15.0,RB,Sleeper
-Tylan Wallace,2.1,WR,Sleeper
-Elijah Moore,1.6,WR,Sleeper
-Kylen Granson,0.5,TE,Sleeper
-Rhamondre Stevenson,10.0,RB,Sleeper
-Dee Eskridge,2.3,WR,Sleeper
-Joshua Palmer,6.5,WR,Sleeper
-Tommy Tremble,3.2,TE,Sleeper
-John Bates,1.3,TE,Sleeper
-Noah Gray,3.4,TE,Sleeper
-Evan McPherson,8.2,K,Sleeper
-Luke Farrell,2.7,TE,Sleeper
-Brock Wright,1.0,TE,Sleeper
-Riley Patterson,8.0,K,Sleeper
-Jake Ferguson,11.7,TE,Sleeper
-Cade Otton,5.4,TE,Sleeper
-Jalen Tolbert,8.8,WR,Sleeper
-Jahan Dotson,3.1,WR,Sleeper
-Bam Knight,0.3,RB,Sleeper
-Hassan Haskins,3.8,RB,Sleeper
-Wan'Dale Robinson,12.9,WR,Sleeper
-Charlie Kolar,1.1,TE,Sleeper
-Dameon Pierce,0.1,RB,Sleeper
-Trey McBride,15.0,TE,Sleeper
-Isaiah Likely,5.7,TE,Sleeper
-Khalil Shakir,10.8,WR,Sleeper
-Rachaad White,6.4,RB,Sleeper
-George Pickens,14.1,WR,Sleeper
-James Cook,17.0,RB,Sleeper
-Zamir White,0.6,RB,Sleeper
-Alec Pierce,5.8,WR,Sleeper
-Jerome Ford,4.9,RB,Sleeper
-Chris Olave,13.1,WR,Sleeper
-Jeremy Ruckert,2.0,TE,Sleeper
-Garrett Wilson,15.8,WR,Sleeper
-John Metchie,0.8,WR,Sleeper
-Jameson Williams,12.3,WR,Sleeper
-Kyren Williams,14.5,RB,Sleeper
-Kenneth Walker,11.9,RB,Sleeper
-Brian Robinson,4.1,RB,Sleeper
-Breece Hall,15.1,RB,Sleeper
-Skyy Moore,0.3,WR,Sleeper
-Grant Calcaterra,1.4,TE,Sleeper
-Jalen Nailor,3.1,WR,Sleeper
-Brock Purdy,21.5,QB,Sleeper
-Tyquan Thornton,3.5,WR,Sleeper
-Isiah Pacheco,8.8,RB,Sleeper
-Tyler Goodson,0.8,RB,Sleeper
-Tyler Badie,2.6,RB,Sleeper
-Chig Okonkwo,7.4,TE,Sleeper
-Daniel Bellinger,1.9,TE,Sleeper
-Julius Chestnut,0.9,RB,Sleeper
-Cameron Dicker,9.9,K,Sleeper
-Jordan Mason,13.7,RB,Sleeper
-Drew Ogletree,1.0,TE,Sleeper
-Stone Smartt,1.1,TE,Sleeper
-Rashid Shaheed,11.3,WR,Sleeper
-Jake Tonges,5.1,TE,Sleeper
-Tucker Fisk,0.6,TE,Sleeper
-KaVontae Turpin,8.9,WR,Sleeper
-Jahmyr Gibbs,19.3,RB,Sleeper
-Chase Brown,12.9,RB,Sleeper
-Tank Bigsby,0.4,RB,Sleeper
-De'Von Achane,22.1,RB,Sleeper
-Bryce Young,18.6,QB,Sleeper
-Brenton Strange,9.0,TE,Sleeper
-Michael Mayer,4.3,TE,Sleeper
-Parker Washington,5.2,WR,Sleeper
-Jaxon Smith-Njigba,17.8,WR,Sleeper
-Trey Palmer,0.5,WR,Sleeper
-Puka Nacua,20.4,WR,Sleeper
-Marvin Mims,7.7,WR,Sleeper
-Jalin Hyatt,5.5,WR,Sleeper
-Josh Downs,8.1,WR,Sleeper
-DeMario Douglas,4.3,WR,Sleeper
-Kayshon Boutte,7.4,WR,Sleeper
-Sean Tucker,1.0,RB,Sleeper
-Keaton Mitchell,1.4,RB,Sleeper
-Zach Charbonnet,10.1,RB,Sleeper
-Quentin Johnston,13.7,WR,Sleeper
-Jordan Addison,9.7,WR,Sleeper
-Kendre Miller,5.3,RB,Sleeper
-C.J. Stroud,15.7,QB,Sleeper
-Zay Flowers,13.5,WR,Sleeper
-Arizona Cardinals,7.0,DEF,Sleeper
-Baltimore Ravens,5.8,DEF,Sleeper
-Buffalo Bills,6.3,DEF,Sleeper
-Carolina Panthers,5.3,DEF,Sleeper
-Cincinnati Bengals,4.1,DEF,Sleeper
-Cleveland Browns,6.0,DEF,Sleeper
-Dallas Cowboys,5.8,DEF,Sleeper
-Denver Broncos,5.7,DEF,Sleeper
-Detroit Lions,6.8,DEF,Sleeper
-Houston Texans,4.6,DEF,Sleeper
-Indianapolis Colts,6.3,DEF,Sleeper
-Jacksonville Jaguars,5.5,DEF,Sleeper
-Kansas City Chiefs,6.3,DEF,Sleeper
-Los Angeles Chargers,5.4,DEF,Sleeper
-Los Angeles Rams,6.1,DEF,Sleeper
-Las Vegas Raiders,4.5,DEF,Sleeper
-Miami Dolphins,6.2,DEF,Sleeper
-Minnesota Vikings,6.7,DEF,Sleeper
-New England Patriots,4.0,DEF,Sleeper
-New Orleans Saints,5.5,DEF,Sleeper
-New York Giants,6.1,DEF,Sleeper
-New York Jets,5.3,DEF,Sleeper
-Philadelphia Eagles,6.2,DEF,Sleeper
-Seattle Seahawks,5.8,DEF,Sleeper
-San Francisco 49ers,5.1,DEF,Sleeper
-Tampa Bay Buccaneers,5.8,DEF,Sleeper
-Tennessee Titans,4.6,DEF,Sleeper
-Washington Commanders,5.2,DEF,Sleeper
-49ers D/ST,5.3,DEF,Combined (ESPN_API)
-A.J. Brown,13.5,WR,Combined (Sleeper)
-A.J. Dillon,0.9,RB,Combined (Sleeper)
-AJ Barner,5.2,TE,Combined (Sleeper)
-AJ Barner,1.8,WR,Combined (ESPN_API)
-Aaron Jones Sr.,17.7,RB,Combined (ESPN_API)
-Aaron Rodgers,14.1,QB,Combined (ESPN_API)
-Aaron Shampklin,4.7,RB,Combined (ESPN_API)
-Adam Prentice,0.6,RB,Combined (ESPN_API)
-Adam Thielen,3.2,WR,Combined (Sleeper)
-Adam Trautman,2.1,TE,Combined (Sleeper)
-Adam Trautman,1.4,WR,Combined (ESPN_API)
-Adonai Mitchell,5.1,RB,Combined (ESPN_API)
-Adonai Mitchell,3.2,WR,Combined (Sleeper)
-Alec Ingold,1.0,RB,Combined (ESPN_API)
-Alec Pierce,5.6,RB,Combined (ESPN_API)
-Alec Pierce,5.8,WR,Combined (Sleeper)
-Alex Bachman,1.4,RB,Combined (ESPN_API)
-Alexander Mattison,11.3,RB,Combined (ESPN_API)
-Allen Lazard,7.8,RB,Combined (ESPN_API)
-Allen Lazard,1.0,WR,Combined (Sleeper)
-Alvin Kamara,17.2,RB,"Combined (ESPN_API, Sleeper)"
-Amari Cooper,12.8,RB,Combined (ESPN_API)
-Ameer Abdullah,3.7,RB,Combined (ESPN_API)
-Amon-Ra St. Brown,17.6,WR,Combined (Sleeper)
-Andre Szmyt,6.6,K,Combined (Sleeper)
-Andre Szmyt,7.0,WR,Combined (ESPN_API)
-Andrei Iosivas,6.4,RB,Combined (ESPN_API)
-Andrei Iosivas,4.9,WR,Combined (Sleeper)
-Andy Borregales,6.7,K,Combined (Sleeper)
-Andy Borregales,7.9,WR,Combined (ESPN_API)
-Andy Dalton,12.8,QB,Combined (ESPN_API)
-Anthony Gould,0.2,WR,Combined (Sleeper)
-Antonio Gibson,7.0,RB,"Combined (ESPN_API, Sleeper)"
-Arian Smith,2.0,RB,Combined (ESPN_API)
-Arian Smith,1.1,WR,Combined (Sleeper)
-Arizona Cardinals,7.0,DEF,Combined (Sleeper)
-Ashton Dulin,0.5,RB,Combined (ESPN_API)
-Ashton Dulin,0.1,WR,Combined (Sleeper)
-Ashton Jeanty,14.2,RB,"Combined (ESPN_API, Sleeper)"
-Austin Ekeler,10.5,RB,Combined (ESPN_API)
-Austin Hooper,2.2,TE,Combined (Sleeper)
-Austin Hooper,3.6,WR,Combined (ESPN_API)
-Austin Seibert,8.4,WR,Combined (ESPN_API)
-Avery Williams,0.1,RB,Combined (ESPN_API)
-Baker Mayfield,18.8,QB,"Combined (ESPN_API, Sleeper)"
-Baltimore Ravens,5.8,DEF,Combined (Sleeper)
-Bam Knight,0.3,RB,Combined (Sleeper)
-Bears D/ST,5.5,DEF,Combined (ESPN_API)
-Beaux Collins,3.2,RB,Combined (ESPN_API)
-Beaux Collins,3.0,WR,Combined (Sleeper)
-Ben Sinnott,0.7,TE,Combined (Sleeper)
-Bengals D/ST,3.0,DEF,Combined (ESPN_API)
-Bhayshul Tuten,5.4,RB,"Combined (ESPN_API, Sleeper)"
-Bijan Robinson,17.5,RB,Combined (ESPN_API)
-Bills D/ST,4.5,DEF,Combined (ESPN_API)
-Blake Corum,2.7,RB,"Combined (ESPN_API, Sleeper)"
-Blake Grupe,7.6,K,Combined (Sleeper)
-Blake Grupe,7.9,WR,Combined (ESPN_API)
-Blake Watson,0.9,RB,Combined (ESPN_API)
-Blake Whiteheart,1.1,WR,Combined (ESPN_API)
-Bo Nix,17.2,QB,"Combined (ESPN_API, Sleeper)"
-Braelon Allen,8.0,RB,Combined (ESPN_API)
-Brandin Cooks,4.6,WR,Combined (Sleeper)
-Brandon Aiyuk,13.8,RB,Combined (ESPN_API)
-Brandon Aubrey,10.5,K,Combined (Sleeper)
-Brandon Aubrey,8.1,WR,Combined (ESPN_API)
-Brandon Powell,2.4,RB,Combined (ESPN_API)
-Brashard Smith,3.2,RB,"Combined (ESPN_API, Sleeper)"
-Braxton Berrios,0.4,RB,Combined (ESPN_API)
-Brayden Narveson,8.0,WR,Combined (ESPN_API)
-Breece Hall,15.9,RB,"Combined (ESPN_API, Sleeper)"
-Brenton Strange,9.0,TE,Combined (Sleeper)
-Brenton Strange,7.4,WR,Combined (ESPN_API)
-Brevyn Spann-Ford,2.4,TE,Combined (Sleeper)
-Brevyn Spann-Ford,0.6,WR,Combined (ESPN_API)
-Brian Robinson,4.1,RB,Combined (Sleeper)
-Brian Robinson Jr.,15.7,RB,Combined (ESPN_API)
-Brian Thomas,13.4,WR,Combined (Sleeper)
-Brian Thomas Jr.,12.9,RB,Combined (ESPN_API)
-British Brooks,0.9,RB,Combined (ESPN_API)
-Brock Bowers,14.3,TE,Combined (Sleeper)
-Brock Bowers,8.7,WR,Combined (ESPN_API)
-Brock Purdy,20.4,QB,"Combined (ESPN_API, Sleeper)"
-Brock Wright,1.0,TE,Combined (Sleeper)
-Broncos D/ST,7.6,DEF,Combined (ESPN_API)
-Browns D/ST,3.5,DEF,Combined (ESPN_API)
-Bryce Ford-Wheaton,3.8,RB,Combined (ESPN_API)
-Bryce Young,18.6,QB,Combined (Sleeper)
-Brycen Tremayne,1.5,RB,Combined (ESPN_API)
-Buccaneers D/ST,4.6,DEF,Combined (ESPN_API)
-Bucky Irving,14.4,RB,"Combined (ESPN_API, Sleeper)"
-Buffalo Bills,6.3,DEF,Combined (Sleeper)
-C.J. Ham,0.8,RB,Combined (ESPN_API)
-C.J. Stroud,16.6,QB,"Combined (ESPN_API, Sleeper)"
-Cade Otton,5.4,TE,Combined (Sleeper)
-Cade Otton,7.8,WR,Combined (ESPN_API)
-Cade Stover,1.2,WR,Combined (ESPN_API)
-Cairo Santos,7.7,WR,Combined (ESPN_API)
-Caleb Williams,13.4,QB,Combined (ESPN_API)
-Calvin Austin III,5.6,RB,Combined (ESPN_API)
-Calvin Ridley,10.5,WR,Combined (Sleeper)
-Cam Akers,12.1,RB,Combined (ESPN_API)
-Cam Little,8.5,K,Combined (Sleeper)
-Cam Little,7.4,WR,Combined (ESPN_API)
-Cam Skattebo,16.8,RB,"Combined (ESPN_API, Sleeper)"
-Cam Ward,13.6,QB,"Combined (ESPN_API, Sleeper)"
-Cameron Dicker,9.9,K,Combined (Sleeper)
-Cardinals D/ST,2.3,DEF,Combined (ESPN_API)
-Carolina Panthers,5.3,DEF,Combined (Sleeper)
-Carson Steele,7.3,RB,Combined (ESPN_API)
-Carson Wentz,16.7,QB,Combined (Sleeper)
-Cedric Tillman,0.9,RB,Combined (ESPN_API)
-Cedrick Wilson,2.8,WR,Combined (Sleeper)
-Cedrick Wilson Jr.,0.5,RB,Combined (ESPN_API)
-CeeDee Lamb,20.9,RB,Combined (ESPN_API)
-Chad Ryland,8.5,K,Combined (Sleeper)
-Chad Ryland,7.4,WR,Combined (ESPN_API)
-Chargers D/ST,5.1,DEF,Combined (ESPN_API)
-Charlie Jones,0.4,RB,Combined (ESPN_API)
-Charlie Jones,0.4,WR,Combined (Sleeper)
-Charlie Kolar,1.1,TE,Combined (Sleeper)
-Charlie Kolar,1.0,WR,Combined (ESPN_API)
-Charlie Woerner,0.5,WR,Combined (ESPN_API)
-Chase Brown,11.0,RB,"Combined (ESPN_API, Sleeper)"
-Chase McLaughlin,8.6,K,Combined (Sleeper)
-Chase McLaughlin,8.2,WR,Combined (ESPN_API)
-Chiefs D/ST,5.2,DEF,Combined (ESPN_API)
-Chig Okonkwo,7.4,TE,Combined (Sleeper)
-Chimere Dike,3.6,RB,Combined (ESPN_API)
-Chimere Dike,3.7,WR,Combined (Sleeper)
-Chris Boswell,8.3,WR,Combined (ESPN_API)
-Chris Godwin,11.5,WR,Combined (Sleeper)
-Chris Godwin Jr.,15.5,RB,Combined (ESPN_API)
-Chris Manhertz,0.7,TE,Combined (Sleeper)
-Chris Manhertz,0.6,WR,Combined (ESPN_API)
-Chris Moore,1.6,WR,Combined (Sleeper)
-Chris Olave,13.7,RB,Combined (ESPN_API)
-Chris Olave,13.1,WR,Combined (Sleeper)
-Chris Rodriguez,7.3,RB,Combined (Sleeper)
-Christian Kirk,12.6,RB,Combined (ESPN_API)
-Christian Kirk,9.1,WR,Combined (Sleeper)
-Christian McCaffrey,23.5,RB,Combined (Sleeper)
-Chuba Hubbard,14.9,RB,"Combined (ESPN_API, Sleeper)"
-Cincinnati Bengals,4.1,DEF,Combined (Sleeper)
-Cleveland Browns,6.0,DEF,Combined (Sleeper)
-Colby Parkinson,0.8,TE,Combined (Sleeper)
-Colby Parkinson,10.2,WR,Combined (ESPN_API)
-Cole Kmet,7.5,WR,Combined (ESPN_API)
-Colts D/ST,5.2,DEF,Combined (ESPN_API)
-Commanders D/ST,7.6,DEF,Combined (ESPN_API)
-Connor Heyward,1.4,WR,Combined (ESPN_API)
-Cooper Kupp,11.3,WR,Combined (Sleeper)
-Cooper Rush,12.1,QB,Combined (Sleeper)
-Courtland Sutton,11.4,RB,Combined (ESPN_API)
-Courtland Sutton,12.0,WR,Combined (Sleeper)
-Cowboys D/ST,4.6,DEF,Combined (ESPN_API)
-Craig Reynolds,0.5,RB,Combined (Sleeper)
-Curtis Samuel,7.9,RB,Combined (ESPN_API)
-Curtis Samuel,2.5,WR,Combined (Sleeper)
-D'Andre Swift,15.4,RB,Combined (ESPN_API)
-D'Ernest Johnson,0.7,RB,Combined (ESPN_API)
-D'Onta Foreman,3.8,RB,Combined (ESPN_API)
-DJ Giddens,1.5,RB,"Combined (ESPN_API, Sleeper)"
-DJ Moore,13.9,RB,Combined (ESPN_API)
-DK Metcalf,15.1,RB,Combined (ESPN_API)
-Dak Prescott,19.6,QB,"Combined (ESPN_API, Sleeper)"
-Dallas Cowboys,5.8,DEF,Combined (Sleeper)
-Dallas Goedert,9.0,TE,Combined (Sleeper)
-Dalton Kincaid,9.5,TE,Combined (Sleeper)
-Dalton Kincaid,10.4,WR,Combined (ESPN_API)
-Dalton Schultz,7.9,TE,Combined (Sleeper)
-Dalton Schultz,7.3,WR,Combined (ESPN_API)
-Dameon Pierce,0.1,RB,Combined (Sleeper)
-Daniel Bellinger,1.9,TE,Combined (Sleeper)
-Daniel Bellinger,2.8,WR,Combined (ESPN_API)
-Daniel Carlson,8.9,K,Combined (Sleeper)
-Daniel Carlson,6.7,WR,Combined (ESPN_API)
-Daniel Jones,18.2,QB,"Combined (ESPN_API, Sleeper)"
-Dante Miller,0.9,RB,Combined (ESPN_API)
-Dare Ogunbowale,3.7,RB,"Combined (ESPN_API, Sleeper)"
-Darius Slayton,9.9,RB,Combined (ESPN_API)
-Darius Slayton,9.2,WR,Combined (Sleeper)
-Darnell Mooney,12.4,RB,Combined (ESPN_API)
-Darnell Washington,2.4,WR,Combined (ESPN_API)
-Darren Waller,7.4,TE,Combined (Sleeper)
-Davante Adams,14.1,WR,Combined (Sleeper)
-David Montgomery,11.7,RB,Combined (Sleeper)
-David Moore,0.9,RB,Combined (ESPN_API)
-David Njoku,9.9,TE,Combined (Sleeper)
-David Njoku,8.3,WR,Combined (ESPN_API)
-Davis Allen,1.9,TE,Combined (Sleeper)
-Davis Allen,1.1,WR,Combined (ESPN_API)
-Dawson Knox,3.2,TE,Combined (Sleeper)
-Dawson Knox,3.2,WR,Combined (ESPN_API)
-De'Von Achane,19.0,RB,"Combined (ESPN_API, Sleeper)"
-DeAndre Carter,0.1,RB,Combined (ESPN_API)
-DeAndre Hopkins,3.8,WR,Combined (Sleeper)
-DeMario Douglas,6.6,RB,Combined (ESPN_API)
-DeMario Douglas,4.3,WR,Combined (Sleeper)
-DeVonta Smith,11.8,WR,Combined (Sleeper)
-Dee Eskridge,2.3,WR,Combined (Sleeper)
-DeeJay Dallas,0.1,RB,Combined (ESPN_API)
-Deebo Samuel,16.6,RB,Combined (ESPN_API)
-Deebo Samuel,12.6,WR,Combined (Sleeper)
-Demarcus Robinson,10.0,RB,Combined (ESPN_API)
-Demarcus Robinson,3.3,WR,Combined (Sleeper)
-Denver Broncos,5.7,DEF,Combined (Sleeper)
-Derek Carr,12.8,QB,Combined (ESPN_API)
-Derius Davis,0.8,WR,Combined (Sleeper)
-Derrick Henry,18.2,RB,"Combined (ESPN_API, Sleeper)"
-Deshaun Watson,15.5,QB,Combined (ESPN_API)
-Detroit Lions,6.8,DEF,Combined (Sleeper)
-Deuce Vaughn,1.9,RB,Combined (ESPN_API)
-Devaughn Vele,2.3,WR,Combined (Sleeper)
-Devin Culp,0.1,TE,Combined (Sleeper)
-Devin Duvernay,0.8,RB,Combined (ESPN_API)
-Devin Neal,2.4,RB,Combined (Sleeper)
-Devin Singletary,6.4,RB,Combined (Sleeper)
-Devontez Walker,1.0,WR,Combined (Sleeper)
-Dillon Gabriel,15.5,QB,"Combined (ESPN_API, Sleeper)"
-Diontae Johnson,15.3,RB,Combined (ESPN_API)
-Dolphins D/ST,6.5,DEF,Combined (ESPN_API)
-Dont'e Thornton,6.1,WR,Combined (Sleeper)
-Dont'e Thornton Jr.,6.7,RB,Combined (ESPN_API)
-Dontayvion Wicks,12.2,RB,Combined (ESPN_API)
-Drake London,15.3,RB,Combined (ESPN_API)
-Drake Maye,20.2,QB,Combined (Sleeper)
-Drew Ogletree,1.0,TE,Combined (Sleeper)
-Drew Ogletree,1.5,WR,Combined (ESPN_API)
-Drew Sample,1.4,TE,Combined (Sleeper)
-Drew Sample,1.7,WR,Combined (ESPN_API)
-Durham Smythe,1.6,WR,Combined (ESPN_API)
-Dustin Hopkins,7.7,WR,Combined (ESPN_API)
-Dyami Brown,5.5,RB,Combined (ESPN_API)
-Dyami Brown,6.1,WR,Combined (Sleeper)
-Dylan Laube,1.2,RB,"Combined (ESPN_API, Sleeper)"
-Dylan Sampson,3.6,RB,"Combined (ESPN_API, Sleeper)"
-Eagles D/ST,5.3,DEF,Combined (ESPN_API)
-Eddy Pineiro,7.6,K,Combined (Sleeper)
-Eddy Pineiro,7.5,WR,Combined (ESPN_API)
-Efton Chism,1.1,WR,Combined (Sleeper)
-Elic Ayomanor,10.4,RB,Combined (ESPN_API)
-Elic Ayomanor,10.4,WR,Combined (Sleeper)
-Elijah Arroyo,3.3,TE,Combined (Sleeper)
-Elijah Arroyo,3.9,WR,Combined (ESPN_API)
-Elijah Higgins,1.3,TE,Combined (Sleeper)
-Elijah Higgins,2.1,WR,Combined (ESPN_API)
-Elijah Moore,5.6,RB,Combined (ESPN_API)
-Elijah Moore,1.6,WR,Combined (Sleeper)
-Emanuel Wilson,7.6,RB,Combined (ESPN_API)
-Emari Demercado,4.4,RB,"Combined (ESPN_API, Sleeper)"
-Emeka Egbuka,14.2,RB,Combined (ESPN_API)
-Emeka Egbuka,14.6,WR,Combined (Sleeper)
-Eric Gray,7.1,RB,Combined (ESPN_API)
-Eric Saubert,1.1,TE,Combined (Sleeper)
-Eric Saubert,1.7,WR,Combined (ESPN_API)
-Erick All Jr.,6.6,WR,Combined (ESPN_API)
-Evan Engram,6.9,TE,Combined (Sleeper)
-Evan Hull,4.6,RB,Combined (ESPN_API)
-Evan McPherson,8.2,K,Combined (Sleeper)
-Evan McPherson,8.1,WR,Combined (ESPN_API)
-Ezekiel Elliott,6.2,RB,Combined (ESPN_API)
-Falcons D/ST,5.7,DEF,Combined (ESPN_API)
-Feleipe Franks,0.5,WR,Combined (ESPN_API)
-Foster Moreau,3.5,WR,Combined (ESPN_API)
-Gabe Davis,10.1,RB,Combined (ESPN_API)
-Gardner Minshew,9.8,QB,Combined (ESPN_API)
-Garrett Wilson,13.7,RB,Combined (ESPN_API)
-Garrett Wilson,15.8,WR,Combined (Sleeper)
-Geno Smith,18.8,QB,"Combined (ESPN_API, Sleeper)"
-George Holani,0.6,RB,Combined (Sleeper)
-George Kittle,12.2,WR,Combined (ESPN_API)
-George Pickens,14.3,RB,Combined (ESPN_API)
-George Pickens,14.1,WR,Combined (Sleeper)
-Gerald Everett,1.5,WR,Combined (ESPN_API)
-Giants D/ST,4.6,DEF,Combined (ESPN_API)
-Grant Calcaterra,1.4,TE,Combined (Sleeper)
-Greg Dortch,8.2,RB,Combined (ESPN_API)
-Greg Dortch,3.2,WR,Combined (Sleeper)
-Greg Joseph,7.2,WR,Combined (ESPN_API)
-Greg Zuerlein,7.4,WR,Combined (ESPN_API)
-Gunnar Helm,3.0,TE,Combined (Sleeper)
-Gunnar Helm,3.4,WR,Combined (ESPN_API)
-Harold Fannin,10.4,TE,Combined (Sleeper)
-Harold Fannin Jr.,7.7,WR,Combined (ESPN_API)
-Harrison Bryant,4.0,WR,Combined (ESPN_API)
-Harrison Butker,9.3,K,Combined (Sleeper)
-Harrison Butker,8.0,WR,Combined (ESPN_API)
-Hassan Haskins,3.8,RB,Combined (Sleeper)
-Hollywood Brown,9.3,WR,Combined (Sleeper)
-Houston Texans,4.6,DEF,Combined (Sleeper)
-Hunter Henry,10.1,TE,Combined (Sleeper)
-Hunter Henry,6.5,WR,Combined (ESPN_API)
-Hunter Long,0.4,TE,Combined (Sleeper)
-Hunter Long,1.1,WR,Combined (ESPN_API)
-Hunter Luepke,3.0,RB,Combined (ESPN_API)
-Hunter Renfrow,1.8,WR,Combined (Sleeper)
-Ian Thomas,0.7,TE,Combined (Sleeper)
-Ihmir Smith-Marsette,1.8,RB,Combined (ESPN_API)
-Indianapolis Colts,6.3,DEF,Combined (Sleeper)
-Isaac Guerendo,1.3,RB,"Combined (ESPN_API, Sleeper)"
-Isaac TeSlaa,1.6,RB,Combined (ESPN_API)
-Isaac TeSlaa,2.8,WR,Combined (Sleeper)
-Isaiah Bond,6.9,RB,Combined (ESPN_API)
-Isaiah Bond,9.5,WR,Combined (Sleeper)
-Isaiah Davis,3.0,RB,"Combined (ESPN_API, Sleeper)"
-Isaiah Likely,5.7,TE,Combined (Sleeper)
-Isaiah Likely,6.3,WR,Combined (ESPN_API)
-Isiah Pacheco,8.8,RB,Combined (Sleeper)
-J.K. Dobbins,12.3,RB,Combined (Sleeper)
-Ja'Lynn Polk,5.9,RB,Combined (ESPN_API)
-Ja'Marr Chase,16.2,RB,Combined (ESPN_API)
-Ja'Marr Chase,15.3,WR,Combined (Sleeper)
-Ja'Tavion Sanders,4.6,TE,Combined (Sleeper)
-Ja'Tavion Sanders,2.5,WR,Combined (ESPN_API)
-JaMycal Hasty,1.2,RB,Combined (ESPN_API)
-Jack Bech,1.6,RB,Combined (ESPN_API)
-Jack Bech,2.9,WR,Combined (Sleeper)
-Jackson Hawes,0.8,TE,Combined (Sleeper)
-Jackson Hawes,2.2,WR,Combined (ESPN_API)
-Jacksonville Jaguars,5.5,DEF,Combined (Sleeper)
-Jacoby Brissett,10.8,QB,Combined (ESPN_API)
-Jacory Croskey-Merritt,8.0,RB,"Combined (ESPN_API, Sleeper)"
-Jaguars D/ST,3.9,DEF,Combined (ESPN_API)
-Jahan Dotson,3.1,WR,Combined (Sleeper)
-Jahmyr Gibbs,19.3,RB,Combined (Sleeper)
-Jake Bates,10.2,K,Combined (Sleeper)
-Jake Bobo,1.7,RB,Combined (ESPN_API)
-Jake Bobo,0.6,WR,Combined (Sleeper)
-Jake Browning,17.6,QB,Combined (Sleeper)
-Jake Elliott,8.8,K,Combined (Sleeper)
-Jake Ferguson,11.7,TE,Combined (Sleeper)
-Jake Ferguson,11.9,WR,Combined (ESPN_API)
-Jake Moody,8.4,WR,Combined (ESPN_API)
-Jake Tonges,5.1,TE,Combined (Sleeper)
-Jakobi Meyers,11.7,RB,Combined (ESPN_API)
-Jakobi Meyers,13.5,WR,Combined (Sleeper)
-Jaleel McLaughlin,8.5,RB,Combined (ESPN_API)
-Jalen Brooks,4.4,RB,Combined (ESPN_API)
-Jalen Coker,0.5,RB,Combined (ESPN_API)
-Jalen Hurts,22.0,QB,Combined (Sleeper)
-Jalen Milroe,0.2,QB,Combined (ESPN_API)
-Jalen Nailor,2.2,RB,Combined (ESPN_API)
-Jalen Nailor,3.1,WR,Combined (Sleeper)
-Jalen Royals,0.5,RB,Combined (ESPN_API)
-Jalen Royals,3.6,WR,Combined (Sleeper)
-Jalen Tolbert,9.4,RB,Combined (ESPN_API)
-Jalen Tolbert,8.8,WR,Combined (Sleeper)
-Jalin Hyatt,7.4,RB,Combined (ESPN_API)
-Jalin Hyatt,5.5,WR,Combined (Sleeper)
-Jamaal Williams,6.2,RB,Combined (ESPN_API)
-Jamari Thrash,5.0,WR,Combined (Sleeper)
-Jameis Winston,0.2,QB,Combined (ESPN_API)
-James Conner,13.1,RB,Combined (ESPN_API)
-James Cook,16.2,RB,"Combined (ESPN_API, Sleeper)"
-James Proche II,0.0,RB,Combined (ESPN_API)
-Jameson Williams,12.3,WR,Combined (Sleeper)
-Jared Goff,21.8,QB,Combined (Sleeper)
-Jared Wiley,0.5,TE,Combined (Sleeper)
-Jared Wiley,0.6,WR,Combined (ESPN_API)
-Jarquez Hunter,0.5,RB,Combined (Sleeper)
-Jason Brownlee,0.3,WR,Combined (Sleeper)
-Jason Myers,8.2,K,Combined (Sleeper)
-Jason Myers,8.0,WR,Combined (ESPN_API)
-Jason Sanders,7.1,WR,Combined (ESPN_API)
-Jauan Jennings,10.2,RB,Combined (ESPN_API)
-Jauan Jennings,11.2,WR,Combined (Sleeper)
-Javonte Williams,14.4,RB,"Combined (ESPN_API, Sleeper)"
-Jaxon Smith-Njigba,12.6,RB,Combined (ESPN_API)
-Jaxon Smith-Njigba,17.8,WR,Combined (Sleeper)
-Jaxson Dart,17.0,QB,"Combined (ESPN_API, Sleeper)"
-Jayden Daniels,23.0,QB,"Combined (ESPN_API, Sleeper)"
-Jayden Higgins,3.4,RB,Combined (ESPN_API)
-Jayden Higgins,4.3,WR,Combined (Sleeper)
-Jayden Reed,15.4,RB,Combined (ESPN_API)
-Jaydon Blue,1.9,RB,Combined (Sleeper)
-Jaylen Waddle,9.1,RB,Combined (ESPN_API)
-Jaylen Waddle,13.5,WR,Combined (Sleeper)
-Jaylen Wright,0.8,RB,"Combined (ESPN_API, Sleeper)"
-Jaylin Lane,4.0,RB,Combined (ESPN_API)
-Jaylin Lane,1.6,WR,Combined (Sleeper)
-Jaylin Noel,2.5,RB,Combined (ESPN_API)
-Jaylin Noel,2.7,WR,Combined (Sleeper)
-Jeremy McNichols,6.9,RB,Combined (Sleeper)
-Jeremy Ruckert,2.0,TE,Combined (Sleeper)
-Jeremy Ruckert,2.6,WR,Combined (ESPN_API)
-Jermaine Burton,0.3,RB,Combined (ESPN_API)
-Jermaine Burton,0.5,WR,Combined (Sleeper)
-Jerome Ford,9.0,RB,"Combined (ESPN_API, Sleeper)"
-Jerry Jeudy,10.7,RB,Combined (ESPN_API)
-Jerry Jeudy,12.9,WR,Combined (Sleeper)
-Jets D/ST,6.8,DEF,Combined (ESPN_API)
-Jimmy Horn,1.1,WR,Combined (Sleeper)
-Joe Burrow,17.7,QB,Combined (ESPN_API)
-Joe Flacco,13.5,QB,Combined (ESPN_API)
-Joey Slye,6.7,K,Combined (Sleeper)
-Joey Slye,7.0,WR,Combined (ESPN_API)
-John Bates,1.3,TE,Combined (Sleeper)
-John Bates,0.9,WR,Combined (ESPN_API)
-John Metchie,0.8,WR,Combined (Sleeper)
-Johnny Mundt,2.1,TE,Combined (Sleeper)
-Johnny Mundt,4.8,WR,Combined (ESPN_API)
-Jonathan Mingo,7.2,RB,Combined (ESPN_API)
-Jonathan Taylor,19.7,RB,Combined (Sleeper)
-Jonathan Ward,1.5,RB,Combined (ESPN_API)
-Jonnu Smith,4.1,WR,Combined (ESPN_API)
-Jordan Addison,10.7,RB,Combined (ESPN_API)
-Jordan Addison,9.7,WR,Combined (Sleeper)
-Jordan Akins,3.3,WR,Combined (ESPN_API)
-Jordan James,0.1,RB,Combined (Sleeper)
-Jordan Love,20.0,QB,Combined (ESPN_API)
-Jordan Mason,16.0,RB,"Combined (ESPN_API, Sleeper)"
-Jordan Whittington,10.9,RB,Combined (ESPN_API)
-Jordan Whittington,2.9,WR,Combined (Sleeper)
-Josh Allen,23.4,QB,"Combined (ESPN_API, Sleeper)"
-Josh Downs,11.3,RB,Combined (ESPN_API)
-Josh Downs,8.1,WR,Combined (Sleeper)
-Josh Jacobs,15.5,RB,Combined (ESPN_API)
-Josh Oliver,2.0,TE,Combined (Sleeper)
-Josh Oliver,2.6,WR,Combined (ESPN_API)
-Josh Reynolds,7.4,RB,Combined (ESPN_API)
-Josh Reynolds,5.3,WR,Combined (Sleeper)
-Joshua Karty,9.0,K,Combined (Sleeper)
-Joshua Karty,7.8,WR,Combined (ESPN_API)
-Joshua Palmer,6.5,WR,Combined (Sleeper)
-JuJu Smith-Schuster,7.2,RB,Combined (ESPN_API)
-JuJu Smith-Schuster,4.9,WR,Combined (Sleeper)
-Julian Hill,1.9,TE,Combined (Sleeper)
-Julian Hill,1.7,WR,Combined (ESPN_API)
-Julius Chestnut,0.9,RB,Combined (Sleeper)
-Justice Hill,8.3,RB,"Combined (ESPN_API, Sleeper)"
-Justin Fields,21.5,QB,"Combined (ESPN_API, Sleeper)"
-Justin Herbert,23.1,QB,Combined (Sleeper)
-Justin Jefferson,16.9,RB,Combined (ESPN_API)
-Justin Jefferson,14.9,WR,Combined (Sleeper)
-Justin Tucker,8.4,WR,Combined (ESPN_API)
-Justin Watson,5.9,RB,Combined (ESPN_API)
-Juwan Johnson,11.3,TE,Combined (Sleeper)
-Juwan Johnson,4.5,WR,Combined (ESPN_API)
-Ka'imi Fairbairn,8.7,K,Combined (Sleeper)
-Ka'imi Fairbairn,8.1,WR,Combined (ESPN_API)
-KaVontae Turpin,4.0,RB,Combined (ESPN_API)
-KaVontae Turpin,8.9,WR,Combined (Sleeper)
-Kalif Raymond,3.3,WR,Combined (Sleeper)
-Kameron Johnson,2.9,RB,Combined (ESPN_API)
-Kansas City Chiefs,6.3,DEF,Combined (Sleeper)
-Kareem Hunt,10.6,RB,"Combined (ESPN_API, Sleeper)"
-Kayshon Boutte,2.7,RB,Combined (ESPN_API)
-Kayshon Boutte,7.4,WR,Combined (Sleeper)
-KeAndre Lambert-Smith,0.1,RB,Combined (ESPN_API)
-KeAndre Lambert-Smith,0.3,WR,Combined (Sleeper)
-Keaton Mitchell,1.4,RB,Combined (Sleeper)
-Keenan Allen,9.3,RB,Combined (ESPN_API)
-Keenan Allen,12.7,WR,Combined (Sleeper)
-Kendre Miller,3.4,RB,"Combined (ESPN_API, Sleeper)"
-Kendrick Bourne,6.5,RB,Combined (ESPN_API)
-Kendrick Bourne,3.6,WR,Combined (Sleeper)
-Kenneth Walker,11.9,RB,Combined (Sleeper)
-Kenneth Walker III,17.4,RB,Combined (ESPN_API)
-Keon Coleman,9.8,RB,Combined (ESPN_API)
-Keon Coleman,10.8,WR,Combined (Sleeper)
-Khalil Shakir,10.8,WR,Combined (Sleeper)
-Kirk Cousins,15.5,QB,Combined (ESPN_API)
-Kyle Juszczyk,3.5,RB,Combined (ESPN_API)
-Kyle Pitts Sr.,7.2,WR,Combined (ESPN_API)
-Kyle Williams,1.7,RB,Combined (ESPN_API)
-Kyle Williams,1.6,WR,Combined (Sleeper)
-Kylen Granson,0.5,TE,Combined (Sleeper)
-Kylen Granson,2.9,WR,Combined (ESPN_API)
-Kyler Murray,18.5,QB,"Combined (ESPN_API, Sleeper)"
-Kyren Williams,17.5,RB,"Combined (ESPN_API, Sleeper)"
-LaJohntay Wester,0.1,RB,Combined (ESPN_API)
-Ladd McConkey,12.7,WR,Combined (Sleeper)
-Lamar Jackson,21.8,QB,Combined (ESPN_API)
-Las Vegas Raiders,4.5,DEF,Combined (Sleeper)
-Laviska Shenault Jr.,1.3,RB,Combined (ESPN_API)
-LeQuint Allen,3.6,RB,Combined (Sleeper)
-LeQuint Allen Jr.,1.1,RB,Combined (ESPN_API)
-Lil'Jordan Humphrey,5.8,RB,Combined (ESPN_API)
-Lions D/ST,7.4,DEF,Combined (ESPN_API)
-Los Angeles Chargers,5.4,DEF,Combined (Sleeper)
-Los Angeles Rams,6.1,DEF,Combined (Sleeper)
-Lucas Krull,3.2,WR,Combined (ESPN_API)
-Luke Farrell,2.7,TE,Combined (Sleeper)
-Luke Farrell,3.4,WR,Combined (ESPN_API)
-Luke McCaffrey,6.3,RB,Combined (ESPN_API)
-Luke McCaffrey,2.1,WR,Combined (Sleeper)
-Luke Musgrave,4.4,WR,Combined (ESPN_API)
-Luke Schoonmaker,2.2,TE,Combined (Sleeper)
-Luke Schoonmaker,2.0,WR,Combined (ESPN_API)
-Mack Hollins,6.0,RB,Combined (ESPN_API)
-Mack Hollins,4.2,WR,Combined (Sleeper)
-Malik Heath,5.0,RB,Combined (ESPN_API)
-Malik Washington,9.3,WR,Combined (Sleeper)
-Mark Andrews,8.2,TE,Combined (Sleeper)
-Mark Andrews,5.6,WR,Combined (ESPN_API)
-Marquez Valdes-Scantling,4.0,RB,Combined (ESPN_API)
-Marquez Valdes-Scantling,0.5,WR,Combined (Sleeper)
-Marvin Harrison,12.1,WR,Combined (Sleeper)
-Marvin Harrison Jr.,16.0,RB,Combined (ESPN_API)
-Marvin Mims,7.7,WR,Combined (Sleeper)
-Marvin Mims Jr.,1.5,RB,Combined (ESPN_API)
-Mason Taylor,7.1,TE,Combined (Sleeper)
-Mason Taylor,8.0,WR,Combined (ESPN_API)
-Mason Tipton,2.8,RB,Combined (ESPN_API)
-Matt Gay,8.8,K,Combined (Sleeper)
-Matt Gay,8.2,WR,Combined (ESPN_API)
-Matthew Stafford,16.2,QB,"Combined (ESPN_API, Sleeper)"
-Mecole Hardman,2.0,RB,Combined (ESPN_API)
-Miami Dolphins,6.2,DEF,Combined (Sleeper)
-Michael Burton,0.8,RB,Combined (ESPN_API)
-Michael Mayer,4.3,TE,Combined (Sleeper)
-Michael Pittman,12.6,WR,Combined (Sleeper)
-Michael Pittman Jr.,13.7,RB,Combined (ESPN_API)
-Michael Wilson,8.4,RB,Combined (ESPN_API)
-Michael Wilson,5.8,WR,Combined (Sleeper)
-Mike Evans,14.9,RB,Combined (ESPN_API)
-Mike Gesicki,4.5,TE,Combined (Sleeper)
-Mike Gesicki,7.2,WR,Combined (ESPN_API)
-Mike Williams,7.0,RB,Combined (ESPN_API)
-Miles Sanders,6.3,RB,"Combined (ESPN_API, Sleeper)"
-Minnesota Vikings,6.7,DEF,Combined (Sleeper)
-Mitch Tinsley,1.0,WR,Combined (Sleeper)
-Mitchell Evans,1.1,TE,Combined (Sleeper)
-Mitchell Evans,3.3,WR,Combined (ESPN_API)
-Mo Alie-Cox,0.5,TE,Combined (Sleeper)
-Mo Alie-Cox,2.8,WR,Combined (ESPN_API)
-Myles Gaskin,0.1,RB,Combined (ESPN_API)
-Myles Price,0.1,RB,Combined (ESPN_API)
-Najee Harris,15.4,RB,Combined (ESPN_API)
-Nate Adkins,1.4,WR,Combined (ESPN_API)
-Nelson Agholor,5.0,RB,Combined (ESPN_API)
-New England Patriots,4.0,DEF,Combined (Sleeper)
-New Orleans Saints,5.5,DEF,Combined (Sleeper)
-New York Giants,6.1,DEF,Combined (Sleeper)
-New York Jets,5.3,DEF,Combined (Sleeper)
-Nick Chubb,8.3,RB,Combined (Sleeper)
-Nick Folk,7.3,K,Combined (Sleeper)
-Nick Westbrook-Ikhine,5.2,WR,Combined (Sleeper)
-Nico Collins,17.9,RB,Combined (ESPN_API)
-Nico Collins,15.5,WR,Combined (Sleeper)
-Nikko Remigio,0.1,RB,Combined (ESPN_API)
-Nikko Remigio,0.2,WR,Combined (Sleeper)
-Noah Brown,2.2,WR,Combined (Sleeper)
-Noah Fant,4.5,TE,Combined (Sleeper)
-Noah Fant,5.9,WR,Combined (ESPN_API)
-Noah Gray,3.4,TE,Combined (Sleeper)
-Noah Gray,3.8,WR,Combined (ESPN_API)
-Odell Beckham Jr.,1.2,RB,Combined (ESPN_API)
-Olamide Zaccheaus,5.2,RB,Combined (ESPN_API)
-Ollie Gordon,6.2,RB,Combined (Sleeper)
-Ollie Gordon II,5.9,RB,Combined (ESPN_API)
-Omarion Hampton,18.5,RB,"Combined (ESPN_API, Sleeper)"
-Oronde Gadsden,5.1,TE,Combined (Sleeper)
-Oronde Gadsden II,5.1,WR,Combined (ESPN_API)
-Packers D/ST,4.5,DEF,Combined (ESPN_API)
-Panthers D/ST,5.3,DEF,Combined (ESPN_API)
-Parker Washington,2.1,RB,Combined (ESPN_API)
-Parker Washington,5.2,WR,Combined (Sleeper)
-Pat Bryant,0.8,RB,Combined (ESPN_API)
-Pat Bryant,2.1,WR,Combined (Sleeper)
-Pat Freiermuth,8.8,WR,Combined (ESPN_API)
-Patrick Mahomes,19.8,QB,"Combined (ESPN_API, Sleeper)"
-Patrick Ricard,0.4,RB,Combined (ESPN_API)
-Patriots D/ST,6.1,DEF,Combined (ESPN_API)
-Payne Durham,1.2,TE,Combined (Sleeper)
-Payne Durham,1.1,WR,Combined (ESPN_API)
-Pharaoh Brown,1.7,WR,Combined (ESPN_API)
-Philadelphia Eagles,6.2,DEF,Combined (Sleeper)
-Pierre Strong Jr.,3.8,RB,Combined (ESPN_API)
-Puka Nacua,20.4,WR,Combined (Sleeper)
-Quentin Johnston,13.7,WR,Combined (Sleeper)
-Quinshon Judkins,14.6,RB,"Combined (ESPN_API, Sleeper)"
-RJ Harvey,8.0,RB,"Combined (ESPN_API, Sleeper)"
-Rachaad White,9.2,RB,"Combined (ESPN_API, Sleeper)"
-Raheem Blackshear,0.1,RB,Combined (ESPN_API)
-Raheem Mostert,4.8,RB,"Combined (ESPN_API, Sleeper)"
-Raheim Sanders,0.2,RB,Combined (Sleeper)
-Raiders D/ST,5.2,DEF,Combined (ESPN_API)
-Rams D/ST,2.9,DEF,Combined (ESPN_API)
-Rasheen Ali,1.5,RB,Combined (Sleeper)
-Rashid Shaheed,13.0,RB,Combined (ESPN_API)
-Rashid Shaheed,11.3,WR,Combined (Sleeper)
-Rashod Bateman,7.1,RB,Combined (ESPN_API)
-Rashod Bateman,7.5,WR,Combined (Sleeper)
-Ravens D/ST,5.0,DEF,Combined (ESPN_API)
-Ray Davis,5.6,RB,"Combined (ESPN_API, Sleeper)"
-Ray-Ray McCloud III,10.8,RB,Combined (ESPN_API)
-Rhamondre Stevenson,10.8,RB,"Combined (ESPN_API, Sleeper)"
-Ricky Pearsall,11.9,WR,Combined (Sleeper)
-Rico Dowdle,8.4,RB,"Combined (ESPN_API, Sleeper)"
-Riley Patterson,8.0,K,Combined (Sleeper)
-Robert Woods,1.7,RB,Combined (ESPN_API)
-Rome Odunze,8.6,RB,Combined (ESPN_API)
-Ronnie Bell,1.2,RB,Combined (ESPN_API)
-Ronnie Rivers,3.3,RB,Combined (ESPN_API)
-Roschon Johnson,7.0,RB,Combined (ESPN_API)
-Ryan Fitzgerald,7.5,K,Combined (Sleeper)
-Ryan Fitzgerald,8.1,WR,Combined (ESPN_API)
-Ryan Flournoy,1.3,RB,Combined (ESPN_API)
-Saints D/ST,4.3,DEF,Combined (ESPN_API)
-Sam Darnold,17.0,QB,"Combined (ESPN_API, Sleeper)"
-Sam LaPorta,11.9,TE,Combined (Sleeper)
-Samaje Perine,5.2,RB,"Combined (ESPN_API, Sleeper)"
-San Francisco 49ers,5.1,DEF,Combined (Sleeper)
-Saquon Barkley,16.5,RB,Combined (Sleeper)
-Scotty Miller,1.3,RB,Combined (ESPN_API)
-Seahawks D/ST,6.0,DEF,Combined (ESPN_API)
-Sean Tucker,1.0,RB,"Combined (ESPN_API, Sleeper)"
-Seattle Seahawks,5.8,DEF,Combined (Sleeper)
-Sione Vaki,0.2,RB,Combined (Sleeper)
-Skyy Moore,3.1,RB,Combined (ESPN_API)
-Skyy Moore,0.3,WR,Combined (Sleeper)
-Spencer Rattler,17.5,QB,Combined (Sleeper)
-Spencer Shrader,8.4,K,Combined (Sleeper)
-Steelers D/ST,4.1,DEF,Combined (ESPN_API)
-Stefon Diggs,13.8,RB,Combined (ESPN_API)
-Stefon Diggs,10.9,WR,Combined (Sleeper)
-Sterling Shepard,5.5,RB,Combined (ESPN_API)
-Sterling Shepard,7.6,WR,Combined (Sleeper)
-Stone Smartt,1.1,TE,Combined (Sleeper)
-T.J. Hockenson,8.7,TE,Combined (Sleeper)
-Tahj Brooks,2.3,RB,"Combined (ESPN_API, Sleeper)"
-Tai Felton,0.0,RB,Combined (ESPN_API)
-Tai Felton,0.3,WR,Combined (Sleeper)
-Tampa Bay Buccaneers,5.8,DEF,Combined (Sleeper)
-Tank Bigsby,2.1,RB,"Combined (ESPN_API, Sleeper)"
-Tank Dell,10.8,RB,Combined (ESPN_API)
-Tanner Conner,0.4,WR,Combined (ESPN_API)
-Tee Higgins,13.0,RB,Combined (ESPN_API)
-Tee Higgins,10.9,WR,Combined (Sleeper)
-Tennessee Titans,4.6,DEF,Combined (Sleeper)
-Terrance Ferguson,1.8,TE,Combined (Sleeper)
-Terry McLaurin,13.5,RB,Combined (ESPN_API)
-Terry McLaurin,13.0,WR,Combined (Sleeper)
-Tetairoa McMillan,14.1,RB,Combined (ESPN_API)
-Tetairoa McMillan,14.9,WR,Combined (Sleeper)
-Texans D/ST,3.7,DEF,Combined (ESPN_API)
-Tez Johnson,2.1,RB,Combined (ESPN_API)
-Tez Johnson,1.9,WR,Combined (Sleeper)
-Theo Johnson,6.4,TE,Combined (Sleeper)
-Theo Johnson,6.9,WR,Combined (ESPN_API)
-Tim Patrick,0.5,WR,Combined (Sleeper)
-Tip Reiman,1.7,TE,Combined (Sleeper)
-Titans D/ST,4.1,DEF,Combined (ESPN_API)
-Tommy Tremble,3.2,TE,Combined (Sleeper)
-Tommy Tremble,4.2,WR,Combined (ESPN_API)
-Tony Pollard,11.6,RB,Combined (Sleeper)
-Tory Horton,6.6,RB,Combined (ESPN_API)
-Tory Horton,6.6,WR,Combined (Sleeper)
-Travis Etienne,12.7,RB,Combined (Sleeper)
-Travis Etienne Jr.,13.7,RB,Combined (ESPN_API)
-Travis Hunter,8.9,RB,Combined (ESPN_API)
-Travis Hunter,8.9,WR,Combined (Sleeper)
-Travis Kelce,10.2,TE,Combined (Sleeper)
-Travis Kelce,12.1,WR,Combined (ESPN_API)
-Trayveon Williams,0.0,RB,Combined (ESPN_API)
-Tre Tucker,10.3,RB,Combined (ESPN_API)
-Tre Tucker,9.7,WR,Combined (Sleeper)
-Tre' Harris,2.5,RB,Combined (ESPN_API)
-Tre' Harris,2.7,WR,Combined (Sleeper)
-TreVeyon Henderson,9.1,RB,"Combined (ESPN_API, Sleeper)"
-Trent Sherfield,0.5,WR,Combined (Sleeper)
-Trent Sherfield Sr.,1.4,RB,Combined (ESPN_API)
-Trevor Etienne,1.2,RB,"Combined (ESPN_API, Sleeper)"
-Trevor Lawrence,17.4,QB,"Combined (ESPN_API, Sleeper)"
-Trey Benson,8.2,RB,"Combined (ESPN_API, Sleeper)"
-Trey McBride,15.0,TE,Combined (Sleeper)
-Trey McBride,12.9,WR,Combined (ESPN_API)
-Trey Palmer,0.5,WR,Combined (Sleeper)
-Trey Sermon,12.4,RB,Combined (ESPN_API)
-Troy Franklin,4.8,RB,Combined (ESPN_API)
-Troy Franklin,7.9,WR,Combined (Sleeper)
-Tua Tagovailoa,19.7,QB,Combined (Sleeper)
-Tucker Fisk,0.6,TE,Combined (Sleeper)
-Tucker Kraft,10.5,WR,Combined (ESPN_API)
-Tutu Atwell,11.4,RB,Combined (ESPN_API)
-Tutu Atwell,3.5,WR,Combined (Sleeper)
-Ty Chandler,5.4,RB,Combined (ESPN_API)
-Ty Johnson,3.7,RB,"Combined (ESPN_API, Sleeper)"
-Tylan Wallace,0.1,RB,Combined (ESPN_API)
-Tylan Wallace,2.1,WR,Combined (Sleeper)
-Tyler Allgeier,7.5,RB,Combined (ESPN_API)
-Tyler Badie,2.6,RB,Combined (Sleeper)
-Tyler Bass,8.0,WR,Combined (ESPN_API)
-Tyler Conklin,1.7,TE,Combined (Sleeper)
-Tyler Conklin,8.0,WR,Combined (ESPN_API)
-Tyler Goodson,4.9,RB,"Combined (ESPN_API, Sleeper)"
-Tyler Higbee,4.0,TE,Combined (Sleeper)
-Tyler Huntley,13.8,QB,Combined (ESPN_API)
-Tyler Johnson,4.2,RB,Combined (ESPN_API)
-Tyler Johnson,4.6,WR,Combined (Sleeper)
-Tyler Lockett,10.2,RB,Combined (ESPN_API)
-Tyler Lockett,3.1,WR,Combined (Sleeper)
-Tyler Loop,8.1,K,Combined (Sleeper)
-Tyler Loop,7.8,WR,Combined (ESPN_API)
-Tyler Warren,12.7,TE,Combined (Sleeper)
-Tyler Warren,11.2,WR,Combined (ESPN_API)
-Tyquan Thornton,1.6,RB,Combined (ESPN_API)
-Tyquan Thornton,3.5,WR,Combined (Sleeper)
-Tyreek Hill,13.1,RB,Combined (ESPN_API)
-Tyrell Shavers,0.5,RB,Combined (ESPN_API)
-Tyrone Tracy Jr.,10.2,RB,Combined (ESPN_API)
-Van Jefferson,4.5,RB,Combined (ESPN_API)
-Van Jefferson,1.3,WR,Combined (Sleeper)
-Vikings D/ST,6.2,DEF,Combined (ESPN_API)
-Wan'Dale Robinson,13.2,RB,Combined (ESPN_API)
-Wan'Dale Robinson,12.9,WR,Combined (Sleeper)
-Washington Commanders,5.2,DEF,Combined (Sleeper)
-Wil Lutz,8.2,K,Combined (Sleeper)
-Wil Lutz,7.4,WR,Combined (ESPN_API)
-Will Dissly,2.6,TE,Combined (Sleeper)
-Will Mallory,0.0,TE,Combined (Sleeper)
-Will Reichard,8.2,K,Combined (Sleeper)
-Will Reichard,7.9,WR,Combined (ESPN_API)
-Will Shipley,2.4,RB,Combined (Sleeper)
-Woody Marks,11.3,RB,"Combined (ESPN_API, Sleeper)"
-Xavier Gipson,2.2,RB,Combined (ESPN_API)
-Xavier Hutchinson,0.5,RB,Combined (ESPN_API)
-Xavier Hutchinson,3.5,WR,Combined (Sleeper)
-Xavier Legette,10.8,RB,Combined (ESPN_API)
-Xavier Legette,6.2,WR,Combined (Sleeper)
-Xavier Smith,0.0,RB,Combined (ESPN_API)
-Xavier Smith,0.0,WR,Combined (Sleeper)
-Xavier Worthy,11.4,RB,Combined (ESPN_API)
-Xavier Worthy,13.3,WR,Combined (Sleeper)
-Younghoe Koo,8.1,WR,Combined (ESPN_API)
-Zach Charbonnet,9.3,RB,"Combined (ESPN_API, Sleeper)"
-Zach Ertz,8.3,TE,Combined (Sleeper)
-Zach Ertz,7.2,WR,Combined (ESPN_API)
-Zack Moss,12.8,RB,Combined (ESPN_API)
-Zamir White,0.6,RB,Combined (Sleeper)
-Zavier Scott,6.4,RB,"Combined (ESPN_API, Sleeper)"
-Zay Flowers,13.6,RB,Combined (ESPN_API)
-Zay Flowers,13.5,WR,Combined (Sleeper)
-Zay Jones,3.0,WR,Combined (Sleeper)
+player_name,position,proj_points,source
+Jahmyr Gibbs,RB,26.0,ESPN
+Christian McCaffrey,RB,21.9,ESPN
+Puka Nacua,WR,24.8,ESPN
+Jaxon Smith-Njigba,WR,20.1,ESPN
+Amon-Ra St Brown,WR,19.5,ESPN
+CeeDee Lamb,WR,18.5,ESPN
+Bijan Robinson,RB,19.2,ESPN
+Ja'Marr Chase,WR,22.1,ESPN
+Jonathan Taylor,RB,14.9,ESPN
+Trey McBride,TE,15.9,ESPN
+Brock Bowers,TE,18.5,ESPN
+Derrick Henry,RB,20.1,ESPN
+Kenneth Walker,RB,19.0,ESPN
+Justin Jefferson,WR,18.5,ESPN
+Ashton Jeanty,RB,17.0,ESPN
+Drake London,WR,17.1,ESPN
+Chris Olave,WR,15.7,ESPN
+Kyren Williams,RB,19.6,ESPN
+Nico Collins,WR,16.7,ESPN
+Javonte Williams,RB,16.5,ESPN
+Malik Nabers,WR,17.7,ESPN
+George Pickens,WR,13.2,ESPN
+Zay Flowers,WR,17.4,ESPN
+Garrett Wilson,WR,15.1,ESPN
+Lamar Jackson,QB,19.9,ESPN
+Chase Brown,RB,14.6,ESPN
+Tetairoa McMillan,WR,15.8,ESPN
+Brock Purdy,QB,20.4,ESPN
+George Kittle,TE,16.7,ESPN
+DeVonta Smith,WR,16.6,ESPN
+Saquon Barkley,RB,14.7,ESPN
+Joe Burrow,QB,19.4,ESPN
+Drake Maye,QB,20.6,ESPN
+Tyler Warren,TE,10.6,ESPN
+Bucky Irving,RB,14.1,ESPN
+D'Andre Swift,RB,14.9,ESPN
+Christian Watson,WR,16.7,ESPN
+Tee Higgins,WR,14.4,ESPN
+Sam LaPorta,TE,12.7,ESPN
+Breece Hall,RB,15.5,ESPN
+Brandon Aubrey,K,8.2,ESPN
+Jeremiyah Love,RB,11.9,ESPN
+AJ Brown,WR,16.0,ESPN
+Rashee Rice,WR,13.5,ESPN
+Jaylen Warren,RB,17.7,ESPN
+Isaiah Likely,TE,14.3,ESPN
+Emeka Egbuka,WR,13.6,ESPN
+Chuba Hubbard,RB,14.5,ESPN
+Seattle Seahawks,DEF,4.8,ESPN
+Patrick Mahomes,QB,15.6,ESPN
+Travis Kelce,TE,9.9,ESPN
+Quinshon Judkins,RB,13.8,ESPN
+Cam Skattebo,RB,6.5,ESPN
+Pittsburgh Steelers,DEF,6.4,ESPN
+Matthew Golden,WR,16.9,ESPN
+Aaron Jones,RB,12.3,ESPN
+Matthew Stafford,QB,18.6,ESPN
+Rhamondre Stevenson,RB,11.5,ESPN
+Ka'imi Fairbairn,K,11.3,ESPN
+Michael Wilson,WR,12.4,ESPN
+Colston Loveland,TE,11.5,ESPN
+Dak Prescott,QB,16.8,ESPN
+Jaylen Waddle,WR,11.1,ESPN
+Tucker Kraft,TE,12.1,ESPN
+Luther Burden,WR,12.7,ESPN
+DK Metcalf,WR,14.9,ESPN
+Jameson Williams,WR,10.8,ESPN
+Jared Goff,QB,18.5,ESPN
+Jalen Coker,WR,15.4,ESPN
+Josh Jacobs,RB,12.6,ESPN
+Houston Texans,DEF,7.2,ESPN
+Caleb Williams,QB,17.7,ESPN
+Harold Fannin,TE,8.3,ESPN
+Jordan Love,QB,19.6,ESPN
+Jason Myers,K,9.5,ESPN
+Minnesota Vikings,DEF,8.1,ESPN
+Tony Pollard,RB,13.4,ESPN
+Spencer Shrader,K,9.7,ESPN
+Carnell Tate,WR,11.1,ESPN
+Denver Broncos,DEF,6.4,ESPN
+Rome Odunze,WR,10.2,ESPN
+Bryce Young,QB,17.7,ESPN
+David Montgomery,RB,13.3,ESPN
+Dallas Goedert,TE,11.0,ESPN
+JK Dobbins,RB,13.5,ESPN
+Braelon Allen,RB,7.8,ESPN
+Los Angeles Rams,DEF,4.6,ESPN
+Denzel Boston,WR,12.1,ESPN
+Baltimore Ravens,DEF,5.1,ESPN
+Kyle Monangai,RB,10.8,ESPN
+Kyle Pitts,TE,9.8,ESPN
+TreVeyon Henderson,RB,7.1,ESPN
+Ollie Gordon,RB,11.8,ESPN
+Will Reichard,K,11.5,ESPN
+RJ Harvey,RB,11.4,ESPN
+Emanuel Wilson,RB,7.8,ESPN
+Marvin Harrison,WR,7.4,ESPN
+Tyler Shough,QB,15.3,ESPN
+Xavier Worthy,WR,9.4,ESPN
+Juwan Johnson,TE,8.7,ESPN
+Kansas City Chiefs,DEF,6.8,ESPN
+Josh Downs,WR,8.4,ESPN
+Blake Corum,RB,10.0,ESPN
+Mark Andrews,TE,8.8,ESPN
+Jordan Addison,WR,10.9,ESPN
+Germie Bernard,WR,13.4,ESPN
+Woody Marks,RB,9.2,ESPN
+Courtland Sutton,WR,8.9,ESPN
+New England Patriots,DEF,4.0,ESPN
+CJ Stroud,QB,19.2,ESPN
+Devaughn Vele,WR,10.3,ESPN
+Eddy Pineiro,K,8.2,ESPN
+Tyler Loop,K,9.5,ESPN
+Zach Charbonnet,RB,9.4,ESPN
+Harrison Butker,K,10.3,ESPN
+Alvin Kamara,RB,8.2,ESPN
+Wan'Dale Robinson,WR,8.5,ESPN
+Jordan Mason,RB,10.3,ESPN
+Bo Nix,QB,16.1,ESPN
+Jake Ferguson,TE,5.9,ESPN
+MarShawn Lloyd,RB,3.2,ESPN
+Rico Dowdle,RB,7.8,ESPN
+TJ Hockenson,TE,10.5,ESPN
+Kirk Cousins,QB,16.4,ESPN
+San Francisco 49ers,DEF,4.4,ESPN
+Pat Freiermuth,TE,10.0,ESPN
+Kyler Murray,QB,18.0,ESPN
+Kenny Gainwell,RB,6.7,ESPN
+Tre Tucker,WR,10.5,ESPN
+Dominic Zvada,K,10.8,ESPN
+Cleveland Browns,DEF,6.3,ESPN
+New York Jets,DEF,7.3,ESPN
+Dameon Pierce,RB,6.4,ESPN
+Chris Boswell,K,11.4,ESPN
+Tyler Allgeier,RB,7.3,ESPN
+Chris Godwin,WR,8.7,ESPN
+Hunter Henry,TE,8.2,ESPN
+KC Concepcion,WR,8.9,ESPN
+Philadelphia Eagles,DEF,4.6,ESPN
+Matt Gay,K,9.7,ESPN
+Keenan Allen,WR,9.0,ESPN
+Brian Robinson,RB,6.1,ESPN
+Aaron Rodgers,QB,19.5,ESPN
+Jake Bates,K,9.1,ESPN
+Makai Lemon,WR,6.6,ESPN
+Kendre Miller,RB,9.4,ESPN
+DeMario Douglas,WR,10.5,ESPN
+Sam Darnold,QB,12.8,ESPN
+Malik Washington,WR,10.2,ESPN
+Dontayvion Wicks,WR,9.0,ESPN
+Dalton Schultz,TE,8.6,ESPN
+Tyjae Spears,RB,6.5,ESPN
+Kenyon Sadiq,TE,5.2,ESPN
+Rashid Shaheed,WR,7.9,ESPN
+Tank Dell,WR,1.7,ESPN
+Omar Cooper,WR,7.4,ESPN
+Baker Mayfield,QB,15.1,ESPN
+Cairo Santos,K,8.8,ESPN
+Jacoby Brissett,QB,14.3,ESPN
+Detroit Lions,DEF,4.5,ESPN
+Tampa Bay Buccaneers,DEF,4.6,ESPN
+Chase McLaughlin,K,8.6,ESPN
+Carolina Panthers,DEF,6.2,ESPN
+Kaelon Black,RB,6.4,ESPN
+Evan McPherson,K,7.4,ESPN
+Michael Mayer,TE,8.4,ESPN
+Tyler Higbee,TE,7.4,ESPN
+Mike Washington,RB,5.6,ESPN
+Kalif Raymond,WR,5.3,ESPN
+Chicago Bears,DEF,4.9,ESPN
+Deshaun Watson,QB,14.2,ESPN
+Adonai Mitchell,WR,7.3,ESPN
+Cincinnati Bengals,DEF,3.2,ESPN
+Daniel Jones,QB,9.6,ESPN
+Mike Gesicki,TE,7.0,ESPN
+Tennessee Titans,DEF,7.2,ESPN
+Emmett Johnson,RB,5.2,ESPN
+Rashod Bateman,WR,7.1,ESPN
+Jaylin Noel,WR,7.4,ESPN
+Trey Smack,K,9.3,ESPN
+Darren Waller,TE,5.8,ESPN
+Dallas Cowboys,DEF,6.2,ESPN
+Michael Penix,QB,14.6,ESPN
+Green Bay Packers,DEF,3.0,ESPN
+Indianapolis Colts,DEF,3.7,ESPN
+Ja'Kobi Lane,WR,5.5,ESPN
+Tyrone Tracy,RB,5.6,ESPN
+Jerry Jeudy,WR,5.9,ESPN
+Ryan Flournoy,WR,8.9,ESPN
+New York Giants,DEF,3.3,ESPN
+JJ McCarthy,QB,16.4,ESPN
+Caleb Douglas,WR,7.1,ESPN
+Christian Kirk,WR,8.0,ESPN
+Samaje Perine,RB,6.1,ESPN
+Cooper Kupp,WR,6.4,ESPN
+Darius Cooper,WR,4.0,ESPN
+Pierre Strong,RB,3.9,ESPN
+Geno Smith,QB,16.0,ESPN
+Justice Hill,RB,6.2,ESPN
+Ryan Fitzgerald,K,9.5,ESPN
+Kendrick Bourne,WR,7.8,ESPN
+George Holani,RB,3.6,ESPN
+Calvin Ridley,WR,3.5,ESPN
+Nick Folk,K,7.2,ESPN
+AJ Barner,TE,7.4,ESPN
+Malik Willis,QB,12.8,ESPN
+Jaleel McLaughlin,RB,5.3,ESPN
+Las Vegas Raiders,DEF,3.5,ESPN
+Chad Ryland,K,9.5,ESPN
+Jake Elliott,K,6.9,ESPN
+Malachi Fields,WR,7.4,ESPN
+Jaylen Wright,RB,4.6,ESPN
+Kayshon Boutte,WR,2.9,ESPN
+Cam Ward,QB,11.5,ESPN
+Wil Lutz,K,8.6,ESPN
+Jalen Nailor,WR,5.7,ESPN
+Tanner McKee,QB,15.5,ESPN
+Cade Otton,TE,7.5,ESPN
+Atlanta Falcons,DEF,3.0,ESPN
+New Orleans Saints,DEF,3.7,ESPN
+Jauan Jennings,WR,2.0,ESPN
+Darnell Washington,TE,7.9,ESPN
+Dohnte Meyers,WR,5.8,ESPN
+Xavier Hutchinson,WR,3.6,ESPN
+Efton Chism,WR,8.3,ESPN
+Evan Engram,TE,5.7,ESPN
+Jahan Dotson,WR,7.7,ESPN
+Colby Parkinson,TE,8.1,ESPN
+Gunnar Helm,TE,3.7,ESPN
+Isaac TeSlaa,WR,7.3,ESPN
+Brandin Cooks,WR,6.3,ESPN
+Chris Bell,WR,5.4,ESPN
+Daniel Carlson,K,7.1,ESPN
+Devin Singletary,RB,4.8,ESPN
+Andy Borregales,K,7.6,ESPN
+Zachariah Branch,WR,3.5,ESPN
+Konata Mumpfield,WR,6.1,ESPN
+Seth McGowan,RB,2.6,ESPN
+KaVontae Turpin,WR,2.4,ESPN
+Cyrus Allen,WR,2.0,ESPN
+Andre Szmyt,K,8.5,ESPN
+Jalen Royals,WR,5.0,ESPN
+Darnell Mooney,WR,4.7,ESPN
+Greg Dulcich,TE,5.7,ESPN
+Savion Williams,WR,7.9,ESPN
+Kyle Williams,WR,4.3,ESPN
+Isaiah Williams,WR,0.9,ESPN
+Chimere Dike,WR,2.4,ESPN
+Jacob Cowing,WR,4.8,ESPN
+Ted Hurst,WR,7.5,ESPN
+Corey Kiner,RB,2.2,ESPN
+Tommy Tremble,TE,5.0,ESPN
+Arizona Cardinals,DEF,4.2,ESPN
+Cole Kmet,TE,3.1,ESPN
+Jason Sanders,K,9.0,ESPN
+Jordan James,RB,0.0,ESPN
+Miami Dolphins,DEF,4.7,ESPN
+Myles Price,WR,0.6,ESPN
+Sione Vaki,RB,4.4,ESPN
+Jacob Saylors,RB,0.1,ESPN
+Laquon Treadwell,WR,5.9,ESPN
+Marvin Mims,WR,5.5,ESPN
+Zavion Thomas,WR,1.6,ESPN
+Noah Fant,TE,2.7,ESPN
+Troy Franklin,WR,4.1,ESPN
+Joey Slye,K,7.2,ESPN
+Kyle Juszczyk,RB,3.7,ESPN
+Jalen Tolbert,WR,0.7,ESPN
+Sean Tucker,RB,2.2,ESPN
+Brycen Tremayne,WR,4.4,ESPN
+Trevor Etienne,RB,0.1,ESPN
+Tory Horton,WR,2.0,ESPN
+Eli Raridon,TE,5.0,ESPN
+AJ Dillon,RB,3.3,ESPN
+Jordan Watkins,WR,7.4,ESPN
+Tyler Goodson,RB,3.2,ESPN
+Dylan Laube,RB,2.5,ESPN
+Mason Taylor,TE,5.6,ESPN
+Riley Patterson,K,5.5,ESPN
+Kaden Wetjen,WR,0.2,ESPN
+Noah Gray,TE,3.9,ESPN
+Cody White,WR,3.7,ESPN
+Theo Johnson,TE,3.3,ESPN
+Tutu Atwell,WR,3.7,ESPN
+Kevin Coleman,WR,5.8,ESPN
+Tyler Badie,RB,2.6,ESPN
+Jordan Whittington,WR,3.2,ESPN
+Dont'e Thornton,WR,1.2,ESPN
+Rasheen Ali,RB,0.0,ESPN
+Bryce Lance,WR,5.1,ESPN
+Elic Ayomanor,WR,3.8,ESPN
+Erick All,TE,4.5,ESPN
+Jonnu Smith,TE,2.0,ESPN
+Kene Nwangwu,RB,0.2,ESPN
+Luke Schoonmaker,TE,0.6,ESPN
+Jalen Brooks,WR,4.6,ESPN
+CJ Donaldson,RB,4.4,ESPN
+Charlie Jones,WR,1.5,ESPN
+Isaiah Bond,WR,0.4,ESPN
+Barion Brown,WR,0.9,ESPN
+Tez Johnson,WR,4.5,ESPN
+Devontez Walker,WR,2.2,ESPN
+Bo Melton,WR,2.3,ESPN
+Nick Chubb,RB,9.4,ESPN
+Foster Moreau,TE,3.9,ESPN
+Brevyn Spann-Ford,TE,3.2,ESPN
+Hunter Luepke,RB,1.5,ESPN
+Tim Patrick,WR,1.5,ESPN
+Elijah Higgins,TE,4.0,ESPN
+Jahdae Walker,WR,0.5,ESPN
+Austin Hooper,TE,2.0,ESPN
+Mo Alie-Cox,TE,0.9,ESPN
+Lil'Jordan Humphrey,WR,1.5,ESPN
+Ashton Dulin,WR,2.0,ESPN
+Brock Wright,TE,1.7,ESPN
+John Metchie,WR,4.8,ESPN
+LaJohntay Wester,WR,0.1,ESPN
+Kareem Hunt,RB,7.1,ESPN
+Johnny Mundt,TE,1.6,ESPN
+Jonathan Mingo,WR,1.0,ESPN
+Teagan Quitoriano,TE,0.6,ESPN
+Malik Benson,WR,0.1,ESPN
+Patrick Ricard,RB,0.5,ESPN
+Sam Roush,TE,0.5,ESPN
+Drew Sample,TE,2.5,ESPN
+Olamide Zaccheaus,WR,3.1,ESPN
+Adam Trautman,TE,1.0,ESPN
+Tai Felton,WR,1.0,ESPN
+Oscar Delp,TE,0.5,ESPN
+Matt Hibner,TE,3.3,ESPN
+Devin Duvernay,WR,0.1,ESPN
+Nikko Remigio,WR,0.1,ESPN
+Rome Odunze,WR,10.8,Sleeper
+Andy Borregales,K,6.0,Sleeper
+Zavion Thomas,WR,0.8,Sleeper
+Cole Kmet,TE,4.1,Sleeper
+DeMario Douglas,WR,8.5,Sleeper
+Chicago Bears,DEF,5.7,Sleeper
+Cameron Latu,TE,0.5,Sleeper
+Drake Maye,QB,24.8,Sleeper
+Eli Raridon,TE,5.6,Sleeper
+Cairo Santos,K,7.3,Sleeper
+Rhamondre Stevenson,RB,11.1,Sleeper
+Colston Loveland,TE,9.7,Sleeper
+Luther Burden,WR,12.5,Sleeper
+New England Patriots,DEF,5.2,Sleeper
+Kyle Monangai,RB,6.8,Sleeper
+Kyle Williams,WR,4.8,Sleeper
+Sam Roush,TE,2.3,Sleeper
+Hunter Henry,TE,9.4,Sleeper
+AJ Brown,WR,14.8,Sleeper
+Roschon Johnson,RB,4.1,Sleeper
+Caleb Williams,QB,19.9,Sleeper
+D'Andre Swift,RB,15.9,Sleeper
+Corey Kiner,RB,4.9,Sleeper
+TreVeyon Henderson,RB,6.9,Sleeper
+Efton Chism,WR,5.2,Sleeper
+Jahdae Walker,WR,0.7,Sleeper
+Kalif Raymond,WR,7.0,Sleeper
+Michael Wilson,WR,12.7,Sleeper
+Andre Szmyt,K,6.5,Sleeper
+Audric Estime,RB,0.7,Sleeper
+Cade Stover,TE,0.9,Sleeper
+Brock Bowers,TE,16.4,Sleeper
+Jacob Cowing,WR,2.2,Sleeper
+Devontez Walker,WR,4.2,Sleeper
+Will Reichard,K,8.7,Sleeper
+Brashard Smith,RB,0.2,Sleeper
+Jordan James,RB,0.6,Sleeper
+Dylan Sampson,RB,5.5,Sleeper
+Isaiah Bond,WR,2.5,Sleeper
+Isaac TeSlaa,WR,4.4,Sleeper
+Tyler Loop,K,6.9,Sleeper
+Jake Briningstool,TE,0.7,Sleeper
+CJ Donaldson,RB,3.4,Sleeper
+Max Klare,TE,0.6,Sleeper
+Jeremiyah Love,RB,7.8,Sleeper
+Reggie Virgil,WR,0.3,Sleeper
+Kaden Wetjen,WR,0.1,Sleeper
+Tyler Higbee,TE,9.7,Sleeper
+Ka'imi Fairbairn,K,8.6,Sleeper
+Deshaun Watson,QB,16.5,Sleeper
+Patrick Mahomes,QB,18.6,Sleeper
+Zane Gonzalez,K,4.7,Sleeper
+Pharaoh Brown,TE,0.6,Sleeper
+Christian Kirk,WR,5.5,Sleeper
+Eddy Pineiro,K,7.5,Sleeper
+Josh Jacobs,RB,12.5,Sleeper
+Tony Pollard,RB,12.0,Sleeper
+Drew Sample,TE,3.1,Sleeper
+Olamide Zaccheaus,WR,1.9,Sleeper
+Joey Slye,K,6.4,Sleeper
+Chase McLaughlin,K,7.0,Sleeper
+Justin Jefferson,WR,16.9,Sleeper
+JK Dobbins,RB,10.5,Sleeper
+Colby Parkinson,TE,6.8,Sleeper
+Adam Trautman,TE,2.0,Sleeper
+Rico Dowdle,RB,8.3,Sleeper
+Amon-Ra St Brown,WR,19.5,Sleeper
+Ja'Marr Chase,WR,18.8,Sleeper
+Kenny Gainwell,RB,7.4,Sleeper
+Brevin Jordan,TE,0.4,Sleeper
+Rashod Bateman,WR,5.5,Sleeper
+Chuba Hubbard,RB,16.4,Sleeper
+Kylen Granson,TE,0.1,Sleeper
+Pierre Strong,RB,3.5,Sleeper
+Zonovan Knight,RB,3.9,Sleeper
+Kenneth Walker,RB,18.6,Sleeper
+Brian Robinson,RB,5.1,Sleeper
+Connor Heyward,RB,0.6,Sleeper
+Rashid Shaheed,WR,5.8,Sleeper
+Bryce Young,QB,22.1,Sleeper
+Michael Mayer,TE,7.2,Sleeper
+Marvin Mims,WR,4.8,Sleeper
+Tyjae Spears,RB,7.3,Sleeper
+Bijan Robinson,RB,22.7,Sleeper
+Zach Charbonnet,RB,5.5,Sleeper
+Kendre Miller,RB,8.9,Sleeper
+Atlanta Falcons,DEF,4.9,Sleeper
+Carolina Panthers,DEF,5.7,Sleeper
+New York Giants,DEF,5.2,Sleeper
+Josh Whyle,TE,0.4,Sleeper
+Will Mallory,TE,0.4,Sleeper
+Nate Adkins,TE,2.0,Sleeper
+Michael Penix,QB,17.8,Sleeper
+Bo Nix,QB,23.3,Sleeper
+Dylan Laube,RB,0.4,Sleeper
+MarShawn Lloyd,RB,4.5,Sleeper
+Bucky Irving,RB,17.0,Sleeper
+Erick All,TE,1.9,Sleeper
+Ja'Tavion Sanders,TE,0.3,Sleeper
+AJ Barner,TE,7.5,Sleeper
+George Holani,RB,5.9,Sleeper
+Mitchell Evans,TE,1.7,Sleeper
+Tory Horton,WR,3.3,Sleeper
+Matthew Golden,WR,15.3,Sleeper
+Kaleb Johnson,RB,0.2,Sleeper
+Jalen Royals,WR,2.4,Sleeper
+Emeka Egbuka,WR,10.8,Sleeper
+Tahj Brooks,RB,0.5,Sleeper
+Mike Washington,RB,5.6,Sleeper
+Dean Connors,RB,0.1,Sleeper
+Oscar Delp,TE,1.5,Sleeper
+Emmett Johnson,RB,3.8,Sleeper
+Denzel Boston,WR,10.9,Sleeper
+Justin Joly,TE,0.5,Sleeper
+Riley Nowakowski,RB,0.1,Sleeper
+Carsen Ryan,TE,0.2,Sleeper
+Keenan Allen,WR,8.1,Sleeper
+Chris Boswell,K,7.4,Sleeper
+Jared Goff,QB,22.6,Sleeper
+Nick Vannett,TE,0.6,Sleeper
+Wil Lutz,K,6.8,Sleeper
+Evan Engram,TE,5.8,Sleeper
+Samaje Perine,RB,5.6,Sleeper
+Harrison Butker,K,6.6,Sleeper
+Dare Ogunbowale,RB,0.2,Sleeper
+Lamar Jackson,QB,24.1,Sleeper
+Dalton Schultz,TE,8.7,Sleeper
+Courtland Sutton,WR,9.0,Sleeper
+Lil'Jordan Humphrey,WR,2.2,Sleeper
+Travis Homer,RB,0.3,Sleeper
+Matt Gay,K,7.7,Sleeper
+Devin Duvernay,WR,0.2,Sleeper
+Cody White,WR,5.4,Sleeper
+Feleipe Franks,TE,0.1,Sleeper
+Kene Nwangwu,RB,0.1,Sleeper
+Evan McPherson,K,7.3,Sleeper
+Jeremy Ruckert,TE,2.8,Sleeper
+Jameson Williams,WR,12.0,Sleeper
+Breece Hall,RB,14.0,Sleeper
+Greg Dulcich,TE,6.6,Sleeper
+Tyler Badie,RB,3.5,Sleeper
+Ko Kieft,TE,0.0,Sleeper
+Chase Brown,RB,14.8,Sleeper
+Josh Downs,WR,9.2,Sleeper
+Lew Nichols,RB,0.2,Sleeper
+Jordan Addison,WR,8.3,Sleeper
+Zay Flowers,WR,19.2,Sleeper
+Baltimore Ravens,DEF,5.4,Sleeper
+Davis Allen,TE,2.7,Sleeper
+Xavier Hutchinson,WR,2.7,Sleeper
+Payne Durham,TE,0.2,Sleeper
+Charlie Jones,WR,0.2,Sleeper
+Chad Ryland,K,6.6,Sleeper
+Jalen Brooks,WR,3.0,Sleeper
+Mitch Tinsley,WR,1.1,Sleeper
+Blake Whiteheart,TE,2.2,Sleeper
+Jake Bates,K,7.6,Sleeper
+Xavier Worthy,WR,9.0,Sleeper
+Troy Franklin,WR,5.0,Sleeper
+Marvin Harrison,WR,4.1,Sleeper
+Kirk Cousins,QB,19.7,Sleeper
+Tip Reiman,TE,0.9,Sleeper
+DJ Giddens,RB,0.1,Sleeper
+Tez Johnson,WR,3.7,Sleeper
+RJ Harvey,RB,11.6,Sleeper
+Elic Ayomanor,WR,5.8,Sleeper
+Quinshon Judkins,RB,11.3,Sleeper
+Jaylin Noel,WR,5.8,Sleeper
+Chimere Dike,WR,1.8,Sleeper
+Tyler Shough,QB,18.4,Sleeper
+Jordan Watkins,WR,7.2,Sleeper
+Gavin Bartholomew,TE,0.7,Sleeper
+Konata Mumpfield,WR,5.0,Sleeper
+Ryan Fitzgerald,K,6.8,Sleeper
+Germie Bernard,WR,11.5,Sleeper
+Omar Cooper,WR,9.5,Sleeper
+Carnell Tate,WR,12.4,Sleeper
+Ja'Kobi Lane,WR,6.4,Sleeper
+Kenyon Sadiq,TE,6.7,Sleeper
+Cyrus Allen,WR,0.9,Sleeper
+Bryce Lance,WR,2.6,Sleeper
+Eli Heidenreich,RB,0.1,Sleeper
+Jalon Daniels,QB,15.6,Sleeper
+Seydou Traore,TE,0.1,Sleeper
+Colbie Young,WR,2.0,Sleeper
+Barion Brown,WR,0.5,Sleeper
+Trey Smack,K,7.8,Sleeper
+Travis Kelce,TE,11.5,Sleeper
+Mo Alie-Cox,TE,0.9,Sleeper
+Eric Saubert,TE,1.4,Sleeper
+Mike Gesicki,TE,8.2,Sleeper
+Kyler Murray,QB,18.2,Sleeper
+David Montgomery,RB,9.4,Sleeper
+Justice Hill,RB,6.6,Sleeper
+Noah Gray,TE,3.6,Sleeper
+Jalen Tolbert,WR,0.8,Sleeper
+Jahan Dotson,WR,5.5,Sleeper
+Tyler Allgeier,RB,7.4,Sleeper
+Chris Olave,WR,17.1,Sleeper
+John Metchie,WR,1.5,Sleeper
+Christian Watson,WR,17.7,Sleeper
+Puka Nacua,WR,22.3,Sleeper
+Sean Tucker,RB,1.5,Sleeper
+Denver Broncos,DEF,6.3,Sleeper
+Green Bay Packers,DEF,5.0,Sleeper
+Pittsburgh Steelers,DEF,6.3,Sleeper
+San Francisco 49ers,DEF,6.1,Sleeper
+Jacob Saylors,RB,0.3,Sleeper
+JJ McCarthy,QB,15.3,Sleeper
+Isaiah Davis,RB,0.4,Sleeper
+Jordan Whittington,WR,1.7,Sleeper
+Adonai Mitchell,WR,3.6,Sleeper
+Tyrone Tracy,RB,6.7,Sleeper
+Sione Vaki,RB,4.3,Sleeper
+Anthony Gould,WR,0.2,Sleeper
+Devaughn Vele,WR,10.3,Sleeper
+Kameron Johnson,WR,0.4,Sleeper
+Savion Williams,WR,2.4,Sleeper
+Ollie Gordon,RB,13.1,Sleeper
+Gunnar Helm,TE,5.1,Sleeper
+Tyler Warren,TE,10.5,Sleeper
+Cam Ward,QB,15.5,Sleeper
+Tetairoa McMillan,WR,14.2,Sleeper
+LaJohntay Wester,WR,0.3,Sleeper
+Malachi Fields,WR,5.0,Sleeper
+Caleb Douglas,WR,6.2,Sleeper
+KC Concepcion,WR,9.7,Sleeper
+Marlin Klein,TE,1.8,Sleeper
+Chris Bell,WR,5.6,Sleeper
+Zachariah Branch,WR,3.0,Sleeper
+Demond Claiborne,RB,0.7,Sleeper
+Dominic Zvada,K,6.9,Sleeper
+Brandon McManus,K,6.9,Sleeper
+Darren Waller,TE,7.6,Sleeper
+Jason Myers,K,7.4,Sleeper
+Derrick Henry,RB,17.0,Sleeper
+Jacoby Brissett,QB,17.0,Sleeper
+Jonnu Smith,TE,3.1,Sleeper
+Aaron Jones,RB,11.8,Sleeper
+George Kittle,TE,16.8,Sleeper
+David Moore,WR,1.4,Sleeper
+Tim Patrick,WR,3.0,Sleeper
+Robert Tonyan,TE,0.1,Sleeper
+Sam Darnold,QB,16.6,Sleeper
+Daniel Carlson,K,6.9,Sleeper
+Jason Sanders,K,6.6,Sleeper
+Joe Burrow,QB,23.2,Sleeper
+Jerry Jeudy,WR,3.1,Sleeper
+Jordan Love,QB,23.1,Sleeper
+Tutu Atwell,WR,2.1,Sleeper
+Cade Otton,TE,7.6,Sleeper
+Garrett Wilson,WR,16.9,Sleeper
+Malik Willis,QB,16.0,Sleeper
+Jalen Nailor,WR,4.3,Sleeper
+Bo Melton,WR,1.6,Sleeper
+Daniel Bellinger,TE,2.0,Sleeper
+Dareke Young,WR,0.5,Sleeper
+Tank Dell,WR,2.6,Sleeper
+Houston Texans,DEF,7.0,Sleeper
+Indianapolis Colts,DEF,5.2,Sleeper
+Los Angeles Rams,DEF,5.7,Sleeper
+Las Vegas Raiders,DEF,4.4,Sleeper
+Minnesota Vikings,DEF,6.5,Sleeper
+Seattle Seahawks,DEF,5.1,Sleeper
+Elijah Higgins,TE,1.8,Sleeper
+Brycen Tremayne,WR,3.3,Sleeper
+Rasheen Ali,RB,0.3,Sleeper
+Braelon Allen,RB,7.3,Sleeper
+Blake Corum,RB,7.6,Sleeper
+Isaiah Williams,WR,0.6,Sleeper
+Malik Washington,WR,9.6,Sleeper
+Malachi Corley,WR,0.2,Sleeper
+Jaylen Wright,RB,4.8,Sleeper
+Treyton Welch,TE,0.3,Sleeper
+Spencer Shrader,K,8.0,Sleeper
+Cam Skattebo,RB,5.1,Sleeper
+Mason Taylor,TE,5.4,Sleeper
+Ashton Jeanty,RB,15.1,Sleeper
+Myles Price,WR,0.1,Sleeper
+Ted Hurst,WR,4.8,Sleeper
+Kevin Coleman,WR,2.3,Sleeper
+Seth McGowan,RB,2.9,Sleeper
+Max Bredeson,RB,0.1,Sleeper
+Dallen Bentley,TE,0.2,Sleeper
+Geno Smith,QB,19.3,Sleeper
+J Michael Sturdivant,WR,0.3,Sleeper
+Malik McClain,WR,0.1,Sleeper
+DJ Herman,RB,1.1,Sleeper
+Chris Manhertz,TE,0.1,Sleeper
+Laquon Treadwell,WR,3.7,Sleeper
+Austin Hooper,TE,3.4,Sleeper
+Cooper Kupp,WR,6.8,Sleeper
+Noah Fant,TE,5.6,Sleeper
+Ashton Dulin,WR,0.4,Sleeper
+Tee Higgins,WR,15.2,Sleeper
+AJ Dillon,RB,0.7,Sleeper
+Charlie Woerner,TE,0.7,Sleeper
+Darnell Mooney,WR,2.8,Sleeper
+Pat Freiermuth,TE,9.7,Sleeper
+Michael Carter,RB,0.1,Sleeper
+Tommy Tremble,TE,4.5,Sleeper
+Ben Skowronek,WR,1.9,Sleeper
+Luke Farrell,TE,1.9,Sleeper
+Drake London,WR,16.7,Sleeper
+Wan'Dale Robinson,WR,10.3,Sleeper
+Isaiah Likely,TE,12.1,Sleeper
+Kyren Williams,RB,20.0,Sleeper
+Brock Purdy,QB,24.6,Sleeper
+Jelani Woods,TE,0.6,Sleeper
+Jaylen Warren,RB,16.9,Sleeper
+Kayshon Boutte,WR,3.3,Sleeper
+Arizona Cardinals,DEF,4.9,Sleeper
+Cincinnati Bengals,DEF,5.0,Sleeper
+Kansas City Chiefs,DEF,5.4,Sleeper
+Miami Dolphins,DEF,5.1,Sleeper
+New Orleans Saints,DEF,4.9,Sleeper
+Tre Tucker,WR,9.2,Sleeper
+Rashee Rice,WR,12.6,Sleeper
+Sam LaPorta,TE,13.0,Sleeper
+Jared Wayne,WR,1.1,Sleeper
+Nikko Remigio,WR,0.1,Sleeper
+Emanuel Wilson,RB,7.8,Sleeper
+Jaleel McLaughlin,RB,1.5,Sleeper
+Theo Johnson,TE,2.7,Sleeper
+Malik Nabers,WR,14.0,Sleeper
+Jalen Coker,WR,15.7,Sleeper
+Woody Marks,RB,11.7,Sleeper
+Tai Felton,WR,1.5,Sleeper
+Harold Fannin,TE,11.0,Sleeper
+Trevor Etienne,RB,2.6,Sleeper
+Ben Yurosek,TE,0.2,Sleeper
+Dohnte Meyers,WR,3.1,Sleeper
+Josh Cuevas,TE,1.8,Sleeper
+Jack Endries,TE,0.1,Sleeper
+Adam Randall,RB,0.2,Sleeper
+Bauer Sharp,TE,0.1,Sleeper
+Matt Hibner,TE,2.7,Sleeper
+Malik Benson,WR,0.8,Sleeper
+Deion Burks,WR,0.1,Sleeper
+Kaelon Black,RB,5.6,Sleeper
+Will Kacmarek,TE,1.3,Sleeper
+Brandin Cooks,WR,7.5,Sleeper
+Christian McCaffrey,RB,21.2,Sleeper
+Alvin Kamara,RB,7.6,Sleeper
+Chris Godwin,WR,9.7,Sleeper
+Matthew Stafford,QB,20.9,Sleeper
+Kendrick Bourne,WR,7.8,Sleeper
+Calvin Ridley,WR,2.6,Sleeper
+Ian Thomas,TE,0.6,Sleeper
+Mark Andrews,TE,9.4,Sleeper
+Tyler Conklin,TE,0.4,Sleeper
+TJ Hockenson,TE,9.6,Sleeper
+DK Metcalf,WR,12.4,Sleeper
+Daniel Jones,QB,11.3,Sleeper
+Foster Moreau,TE,3.2,Sleeper
+Devin Singletary,RB,5.4,Sleeper
+Nick Folk,K,7.2,Sleeper
+Jonathan Taylor,RB,17.7,Sleeper
+DeeJay Dallas,RB,1.6,Sleeper
+Juwan Johnson,TE,10.4,Sleeper
+Jauan Jennings,WR,5.7,Sleeper
+Jaylen Waddle,WR,12.9,Sleeper
+Kyle Pitts,TE,8.8,Sleeper
+Nico Collins,WR,17.5,Sleeper
+Tylan Wallace,WR,0.8,Sleeper
+Brock Wright,TE,1.8,Sleeper
+Trey McBride,TE,15.5,Sleeper
+Tay Martin,WR,0.3,Sleeper
+Julius Chestnut,RB,0.2,Sleeper
+Jordan Mason,RB,9.6,Sleeper
+Drew Ogletree,TE,0.5,Sleeper
+Jahmyr Gibbs,RB,25.5,Sleeper
+Darnell Washington,TE,6.7,Sleeper
+Tucker Kraft,TE,11.6,Sleeper
+Jaxon Smith-Njigba,WR,23.5,Sleeper
+Aaron Rodgers,QB,21.4,Sleeper
+CJ Stroud,QB,21.5,Sleeper
+Cleveland Browns,DEF,6.4,Sleeper
+Detroit Lions,DEF,5.0,Sleeper
+New York Jets,DEF,6.6,Sleeper
+Tampa Bay Buccaneers,DEF,5.4,Sleeper
+Tennessee Titans,DEF,6.2,Sleeper
+DeVonta Smith,WR,13.7,Sleeper
+Tyler Goodson,RB,3.2,Sleeper
+Emari Demercado,RB,0.5,Sleeper
+Brevyn Spann-Ford,TE,1.1,Sleeper
+Darius Cooper,WR,2.9,Sleeper
+Zach Ertz,TE,2.4,Sleeper
+Saquon Barkley,RB,13.8,Sleeper
+Javonte Williams,RB,17.7,Sleeper
+Elijah Moore,WR,0.3,Sleeper
+George Pickens,WR,11.6,Sleeper
+KaVontae Turpin,WR,2.2,Sleeper
+Dontayvion Wicks,WR,6.3,Sleeper
+Dallas Cowboys,DEF,5.7,Sleeper
+Jonathan Mingo,WR,0.3,Sleeper
+Brandon Aubrey,K,7.9,Sleeper
+Marquise Brown,WR,0.5,Sleeper
+Jake Ferguson,TE,8.0,Sleeper
+Britain Covey,WR,0.1,Sleeper
+Tanner McKee,QB,16.7,Sleeper
+Philadelphia Eagles,DEF,5.2,Sleeper
+Makai Lemon,WR,5.8,Sleeper
+Luke Schoonmaker,TE,1.2,Sleeper
+EJ Jenkins,TE,0.3,Sleeper
+Ryan Flournoy,WR,7.0,Sleeper
+Jake Elliott,K,6.2,Sleeper
+Johnny Mundt,TE,1.0,Sleeper
+Dallas Goedert,TE,11.1,Sleeper
+Dameon Pierce,RB,6.3,Sleeper
+Dak Prescott,QB,18.8,Sleeper
+CeeDee Lamb,WR,17.4,Sleeper
+Drake Maye,QB,20.6,FantasyPros
+Brock Purdy,QB,20.1,FantasyPros
+Lamar Jackson,QB,20.0,FantasyPros
+Joe Burrow,QB,19.8,FantasyPros
+Jordan Love,QB,19.2,FantasyPros
+Jared Goff,QB,18.9,FantasyPros
+CJ Stroud,QB,18.8,FantasyPros
+Matthew Stafford,QB,18.8,FantasyPros
+Caleb Williams,QB,18.6,FantasyPros
+Bryce Young,QB,18.5,FantasyPros
+Jahmyr Gibbs,RB,25.6,FantasyPros
+Bijan Robinson,RB,21.0,FantasyPros
+Christian McCaffrey,RB,20.4,FantasyPros
+Kyren Williams,RB,18.9,FantasyPros
+Derrick Henry,RB,18.6,FantasyPros
+Kenneth Walker,RB,18.3,FantasyPros
+Jonathan Taylor,RB,16.4,FantasyPros
+Jaylen Warren,RB,16.3,FantasyPros
+Chuba Hubbard,RB,16.3,FantasyPros
+Javonte Williams,RB,15.8,FantasyPros
+Puka Nacua,WR,23.8,FantasyPros
+Jaxon Smith-Njigba,WR,21.2,FantasyPros
+Amon-Ra St Brown,WR,19.8,FantasyPros
+Ja'Marr Chase,WR,19.1,FantasyPros
+Zay Flowers,WR,18.2,FantasyPros
+CeeDee Lamb,WR,17.9,FantasyPros
+Justin Jefferson,WR,17.1,FantasyPros
+Nico Collins,WR,17.0,FantasyPros
+Christian Watson,WR,16.8,FantasyPros
+Drake London,WR,16.6,FantasyPros
+Brock Bowers,TE,16.6,FantasyPros
+George Kittle,TE,16.3,FantasyPros
+Trey McBride,TE,15.5,FantasyPros
+Isaiah Likely,TE,13.1,FantasyPros
+Sam LaPorta,TE,12.9,FantasyPros
+Tucker Kraft,TE,11.9,FantasyPros
+Travis Kelce,TE,11.2,FantasyPros
+Colston Loveland,TE,10.8,FantasyPros
+Dallas Goedert,TE,10.7,FantasyPros
+TJ Hockenson,TE,9.9,FantasyPros
+Will Reichard,K,9.5,FantasyPros
+Ka'imi Fairbairn,K,9.4,FantasyPros
+Jake Bates,K,8.3,FantasyPros
+Chris Boswell,K,8.2,FantasyPros
+Matt Gay,K,8.2,FantasyPros
+Jason Myers,K,8.2,FantasyPros
+Ryan Fitzgerald,K,8.2,FantasyPros
+Tyler Loop,K,8.2,FantasyPros
+Jason Sanders,K,8.0,FantasyPros
+Eddy Pineiro,K,7.9,FantasyPros
+Houston Texans,DEF,8.4,FantasyPros
+Minnesota Vikings,DEF,7.8,FantasyPros
+Tennessee Titans,DEF,7.6,FantasyPros
+New York Jets,DEF,7.3,FantasyPros
+Cleveland Browns,DEF,7.0,FantasyPros
+Denver Broncos,DEF,7.0,FantasyPros
+Pittsburgh Steelers,DEF,6.5,FantasyPros
+Chicago Bears,DEF,6.3,FantasyPros
+Dallas Cowboys,DEF,6.1,FantasyPros
+Carolina Panthers,DEF,6.0,FantasyPros
+CJ Stroud,QB,24.0,CBS
+Joe Burrow,QB,23.5,CBS
+Matthew Stafford,QB,23.5,CBS
+Bryce Young,QB,22.5,CBS
+Jared Goff,QB,22.5,CBS
+Brock Purdy,QB,22.4,CBS
+Jordan Love,QB,21.9,CBS
+Caleb Williams,QB,21.2,CBS
+Kyler Murray,QB,21.0,CBS
+Geno Smith,QB,20.8,CBS
+Drake Maye,QB,20.5,CBS
+Tyler Shough,QB,19.6,CBS
+Dak Prescott,QB,19.5,CBS
+Baker Mayfield,QB,19.1,CBS
+Bo Nix,QB,19.0,CBS
+Patrick Mahomes,QB,17.9,CBS
+Kirk Cousins,QB,17.8,CBS
+Aaron Rodgers,QB,17.8,CBS
+Malik Willis,QB,17.7,CBS
+Tyler Huntley,QB,17.1,CBS
+Sam Darnold,QB,17.0,CBS
+Deshaun Watson,QB,16.7,CBS
+Michael Penix,QB,15.3,CBS
+Cam Ward,QB,14.6,CBS
+Jacoby Brissett,QB,14.3,CBS
+Tanner McKee,QB,13.9,CBS
+JJ McCarthy,QB,13.9,CBS
+Daniel Jones,QB,12.4,CBS
+Lamar Jackson,QB,5.8,CBS
+Ty Simpson,QB,2.2,CBS
+Jalon Daniels,QB,1.3,CBS
+Davis Mills,QB,1.1,CBS
+Joshua Dobbs,QB,1.1,CBS
+Drew Lock,QB,1.0,CBS
+Joe Milton,QB,1.0,CBS
+Justin Fields,QB,1.0,CBS
+Kenny Pickett,QB,1.0,CBS
+Mac Jones,QB,1.0,CBS
+Tua Tagovailoa,QB,1.0,CBS
+Stetson Bennett,QB,1.0,CBS
+Jarrett Stidham,QB,1.0,CBS
+Fernando Mendoza,QB,1.0,CBS
+Carson Wentz,QB,1.0,CBS
+Mason Rudolph,QB,1.0,CBS
+Tyrod Taylor,QB,1.0,CBS
+Gardner Minshew,QB,0.9,CBS
+Shedeur Sanders,QB,0.9,CBS
+Spencer Rattler,QB,0.9,CBS
+Sam Howell,QB,0.9,CBS
+Joe Flacco,QB,0.8,CBS
+Cade Klubnik,QB,0.8,CBS
+Jameis Winston,QB,0.7,CBS
+Tommy DeVito,QB,0.5,CBS
+Anthony Richardson,QB,0.4,CBS
+Tyson Bagent,QB,0.4,CBS
+Mitch Trubisky,QB,0.2,CBS
+Cole Payton,QB,0.2,CBS
+Kyle McCord,QB,0.1,CBS
+Jahmyr Gibbs,RB,25.2,CBS
+Bijan Robinson,RB,20.2,CBS
+Kenneth Walker,RB,19.2,CBS
+Kyren Williams,RB,19.1,CBS
+Chuba Hubbard,RB,19.0,CBS
+Derrick Henry,RB,18.0,CBS
+Christian McCaffrey,RB,16.5,CBS
+Jaylen Warren,RB,16.5,CBS
+Chase Brown,RB,16.0,CBS
+Jonathan Taylor,RB,15.6,CBS
+Javonte Williams,RB,14.6,CBS
+Josh Jacobs,RB,14.4,CBS
+Ashton Jeanty,RB,14.3,CBS
+D'Andre Swift,RB,14.1,CBS
+Woody Marks,RB,13.9,CBS
+Bucky Irving,RB,13.8,CBS
+Rhamondre Stevenson,RB,13.2,CBS
+Braelon Allen,RB,12.6,CBS
+Quinshon Judkins,RB,11.9,CBS
+Aaron Jones,RB,11.6,CBS
+JK Dobbins,RB,10.4,CBS
+Tony Pollard,RB,10.0,CBS
+Jordan Mason,RB,10.0,CBS
+Ollie Gordon,RB,10.0,CBS
+Alvin Kamara,RB,9.7,CBS
+RJ Harvey,RB,9.1,CBS
+Rico Dowdle,RB,8.7,CBS
+Jonah Coleman,RB,7.9,CBS
+Breece Hall,RB,7.9,CBS
+Zonovan Knight,RB,7.7,CBS
+Cam Skattebo,RB,7.4,CBS
+Dameon Pierce,RB,7.4,CBS
+TreVeyon Henderson,RB,7.3,CBS
+Dylan Sampson,RB,7.3,CBS
+Mike Washington,RB,7.3,CBS
+Justice Hill,RB,7.1,CBS
+Tyjae Spears,RB,7.0,CBS
+Zach Charbonnet,RB,7.0,CBS
+Tyrone Tracy,RB,6.5,CBS
+Kendre Miller,RB,6.3,CBS
+Tyler Allgeier,RB,6.3,CBS
+Brian Robinson,RB,6.2,CBS
+Emanuel Wilson,RB,6.0,CBS
+Blake Corum,RB,5.7,CBS
+David Montgomery,RB,5.7,CBS
+Kenneth Gainwell,RB,5.3,CBS
+Roschon Johnson,RB,5.3,CBS
+Saquon Barkley,RB,5.2,CBS
+Samaje Perine,RB,5.2,CBS
+Kaelon Black,RB,4.7,CBS
+MarShawn Lloyd,RB,4.5,CBS
+George Holani,RB,4.4,CBS
+Jaleel McLaughlin,RB,4.4,CBS
+Devin Singletary,RB,4.3,CBS
+Kyle Juszczyk,RB,3.6,CBS
+Emmett Johnson,RB,3.4,CBS
+CJ Donaldson,RB,3.2,CBS
+DJ Herman,RB,3.0,CBS
+Jaylen Wright,RB,2.9,CBS
+Tyler Badie,RB,2.8,CBS
+AJ Dillon,RB,2.3,CBS
+Adam Randall,RB,1.9,CBS
+Isaiah Davis,RB,1.9,CBS
+Isaac Guerendo,RB,1.7,CBS
+Kyle Monangai,RB,1.7,CBS
+Dylan Laube,RB,1.6,CBS
+Sione Vaki,RB,1.5,CBS
+Lew Nichols,RB,1.5,CBS
+Eli Heidenreich,RB,1.5,CBS
+Demond Claiborne,RB,1.4,CBS
+Kene Nwangwu,RB,1.3,CBS
+Emari Demercado,RB,1.3,CBS
+Dare Ogunbowale,RB,1.3,CBS
+Audric Estime,RB,1.2,CBS
+Zavier Scott,RB,1.2,CBS
+Tyler Goodson,RB,1.2,CBS
+Corey Kiner,RB,1.1,CBS
+Brashard Smith,RB,1.0,CBS
+Sean Tucker,RB,0.9,CBS
+DeeJay Dallas,RB,0.9,CBS
+Andrew Beck,RB,0.9,CBS
+Michael Burton,RB,0.9,CBS
+Hunter Luepke,RB,0.9,CBS
+Pierre Strong,RB,0.8,CBS
+James Conner,RB,0.8,CBS
+Seth McGowan,RB,0.8,CBS
+Jeremiyah Love,RB,0.7,CBS
+Kaytron Allen,RB,0.7,CBS
+Brady Russell,RB,0.7,CBS
+Kaleb Johnson,RB,0.7,CBS
+DJ Giddens,RB,0.7,CBS
+Jaydon Blue,RB,0.7,CBS
+Nicholas Singleton,RB,0.6,CBS
+Jordan James,RB,0.5,CBS
+Jacob Saylors,RB,0.4,CBS
+Tahj Brooks,RB,0.4,CBS
+Rasheen Ali,RB,0.3,CBS
+Trevor Etienne,RB,0.3,CBS
+Patrick Ricard,RB,0.2,CBS
+Julius Chestnut,RB,0.2,CBS
+Puka Nacua,WR,24.3,CBS
+Jaxon Smith-Njigba,WR,20.9,CBS
+Amon-Ra St Brown,WR,19.5,CBS
+CeeDee Lamb,WR,18.4,CBS
+Ja'Marr Chase,WR,18.2,CBS
+Justin Jefferson,WR,18.1,CBS
+Zay Flowers,WR,17.6,CBS
+Garrett Wilson,WR,17.5,CBS
+Nico Collins,WR,17.5,CBS
+Chris Olave,WR,17.4,CBS
+Christian Watson,WR,16.2,CBS
+Drake London,WR,16.0,CBS
+Tetairoa McMillan,WR,15.5,CBS
+Tee Higgins,WR,15.1,CBS
+Matthew Golden,WR,14.3,CBS
+DeVonta Smith,WR,14.2,CBS
+George Pickens,WR,14.2,CBS
+AJ Brown,WR,14.0,CBS
+Jalen Coker,WR,13.5,CBS
+Emeka Egbuka,WR,13.4,CBS
+Malik Nabers,WR,12.6,CBS
+Tre Tucker,WR,12.4,CBS
+Luther Burden,WR,12.2,CBS
+Jameson Williams,WR,12.1,CBS
+Jordan Addison,WR,11.9,CBS
+DK Metcalf,WR,11.9,CBS
+Carnell Tate,WR,11.1,CBS
+Jaylen Waddle,WR,11.0,CBS
+Xavier Worthy,WR,10.9,CBS
+Ja'Kobi Lane,WR,10.8,CBS
+Chris Godwin,WR,10.7,CBS
+Germie Bernard,WR,10.6,CBS
+Omar Cooper,WR,10.5,CBS
+Keenan Allen,WR,10.4,CBS
+Malik Washington,WR,10.3,CBS
+Demario Douglas,WR,10.2,CBS
+Courtland Sutton,WR,9.9,CBS
+Rome Odunze,WR,9.7,CBS
+Josh Downs,WR,9.5,CBS
+Devaughn Vele,WR,9.3,CBS
+Michael Wilson,WR,9.3,CBS
+Marvin Harrison,WR,9.3,CBS
+Jaylin Noel,WR,9.3,CBS
+Denzel Boston,WR,9.2,CBS
+Adonai Mitchell,WR,8.9,CBS
+Wan'Dale Robinson,WR,8.5,CBS
+Kendrick Bourne,WR,8.2,CBS
+Dohnte Meyers,WR,7.9,CBS
+KC Concepcion,WR,7.8,CBS
+Kalif Raymond,WR,7.6,CBS
+Christian Kirk,WR,7.6,CBS
+Rashod Bateman,WR,7.6,CBS
+Cooper Kupp,WR,7.4,CBS
+Caleb Douglas,WR,7.3,CBS
+Dontayvion Wicks,WR,7.3,CBS
+Rashid Shaheed,WR,7.3,CBS
+Ryan Flournoy,WR,7.2,CBS
+Konata Mumpfield,WR,7.0,CBS
+Jerry Jeudy,WR,6.7,CBS
+Isaiah Williams,WR,6.4,CBS
+Tank Dell,WR,6.2,CBS
+Ted Hurst,WR,6.2,CBS
+Isaac TeSlaa,WR,6.1,CBS
+Devontez Walker,WR,6.1,CBS
+Brandin Cooks,WR,6.1,CBS
+Makai Lemon,WR,6.0,CBS
+Bryce Lance,WR,6.0,CBS
+Xavier Hutchinson,WR,6.0,CBS
+Jahan Dotson,WR,6.0,CBS
+Rashee Rice,WR,5.9,CBS
+Kayshon Boutte,WR,5.9,CBS
+Colbie Young,WR,5.8,CBS
+Chris Bell,WR,5.4,CBS
+Darnell Mooney,WR,5.4,CBS
+Elic Ayomanor,WR,5.4,CBS
+Troy Franklin,WR,5.3,CBS
+Deion Burks,WR,5.2,CBS
+Ben Skowronek,WR,5.2,CBS
+Malachi Fields,WR,5.1,CBS
+Jauan Jennings,WR,5.1,CBS
+Efton Chism,WR,5.1,CBS
+Jalen Nailor,WR,5.0,CBS
+Darius Cooper,WR,4.7,CBS
+Savion Williams,WR,4.6,CBS
+Calvin Ridley,WR,4.6,CBS
+Laquon Treadwell,WR,4.6,CBS
+Isaiah Bond,WR,4.6,CBS
+Jordan Whittington,WR,4.3,CBS
+Olamide Zaccheaus,WR,4.2,CBS
+Ashton Dulin,WR,4.0,CBS
+Tez Johnson,WR,4.0,CBS
+Tory Horton,WR,3.9,CBS
+KaVontae Turpin,WR,3.9,CBS
+Cody White,WR,3.8,CBS
+Jalen Brooks,WR,3.8,CBS
+Tutu Atwell,WR,3.8,CBS
+Jalen Royals,WR,3.7,CBS
+Zachariah Branch,WR,3.7,CBS
+Marvin Mims,WR,3.4,CBS
+Brycen Tremayne,WR,3.3,CBS
+Brock Bowers,TE,16.4,CBS
+George Kittle,TE,14.7,CBS
+Trey McBride,TE,14.6,CBS
+Isaiah Likely,TE,13.7,CBS
+Sam LaPorta,TE,13.3,CBS
+Travis Kelce,TE,12.2,CBS
+Tucker Kraft,TE,11.4,CBS
+Dallas Goedert,TE,10.4,CBS
+Harold Fannin,TE,10.4,CBS
+Juwan Johnson,TE,10.1,CBS
+Kyle Pitts,TE,10.1,CBS
+TJ Hockenson,TE,9.8,CBS
+Pat Freiermuth,TE,9.6,CBS
+Tyler Higbee,TE,9.6,CBS
+Mike Gesicki,TE,9.4,CBS
+Hunter Henry,TE,9.4,CBS
+Kenyon Sadiq,TE,9.2,CBS
+Colston Loveland,TE,9.1,CBS
+Mark Andrews,TE,8.6,CBS
+Cade Otton,TE,8.6,CBS
+Jake Ferguson,TE,8.2,CBS
+Darren Waller,TE,7.8,CBS
+Dalton Schultz,TE,7.6,CBS
+Greg Dulcich,TE,7.6,CBS
+Michael Mayer,TE,7.4,CBS
+Evan Engram,TE,7.1,CBS
+Noah Fant,TE,6.7,CBS
+Tommy Tremble,TE,6.4,CBS
+AJ Barner,TE,6.4,CBS
+Colby Parkinson,TE,6.0,CBS
+Darnell Washington,TE,5.8,CBS
+Eli Raridon,TE,5.5,CBS
+Foster Moreau,TE,5.1,CBS
+Jeremy Ruckert,TE,4.7,CBS
+Nate Adkins,TE,4.4,CBS
+Teagan Quitoriano,TE,4.4,CBS
+Mason Taylor,TE,4.1,CBS
+Gunnar Helm,TE,4.0,CBS
+Elijah Higgins,TE,4.0,CBS
+Davis Allen,TE,4.0,CBS
+Brock Wright,TE,3.8,CBS
+Austin Hooper,TE,3.7,CBS
+Cole Kmet,TE,3.5,CBS
+Will Mallory,TE,3.4,CBS
+Jonnu Smith,TE,3.4,CBS
+Josh Cuevas,TE,3.1,CBS
+Charlie Woerner,TE,3.1,CBS
+Daniel Bellinger,TE,3.0,CBS
+Noah Gray,TE,2.7,CBS
+Mitchell Evans,TE,2.7,CBS
+Connor Heyward,TE,2.7,CBS
+Theo Johnson,TE,2.6,CBS
+Mo Alie-Cox,TE,2.5,CBS
+Will Kacmarek,TE,2.4,CBS
+Tyler Warren,TE,2.3,CBS
+Jack Endries,TE,2.1,CBS
+Cade Stover,TE,2.1,CBS
+Max Klare,TE,2.1,CBS
+Marlin Klein,TE,2.0,CBS
+Drew Sample,TE,1.9,CBS
+Erick All,TE,1.9,CBS
+Dallen Bentley,TE,1.9,CBS
+Ian Thomas,TE,1.9,CBS
+Adam Trautman,TE,1.9,CBS
+Blake Whiteheart,TE,1.8,CBS
+Payne Durham,TE,1.8,CBS
+EJ Jenkins,TE,1.7,CBS
+Matthew Hibner,TE,1.6,CBS
+Chris Manhertz,TE,1.6,CBS
+Nick Vannett,TE,1.6,CBS
+Luke Schoonmaker,TE,1.5,CBS
+Josiah Deguara,TE,1.4,CBS
+Brevyn Spann-Ford,TE,1.4,CBS
+Bauer Sharp,TE,1.4,CBS
+Sam Roush,TE,1.4,CBS
+Andrew Ogletree,TE,1.3,CBS
+Oscar Delp,TE,1.3,CBS
+Ja'Tavion Sanders,TE,1.3,CBS
+Carter Runyon,TE,1.2,CBS
+Josh Whyle,TE,1.2,CBS
+Luke Musgrave,TE,1.2,CBS
+Grant Calcaterra,TE,1.1,CBS
+Jared Wiley,TE,1.1,CBS
+Tip Reiman,TE,1.1,CBS
+Jack Stoll,TE,1.1,CBS
+Joe Royer,TE,1.1,CBS
+Thomas Fidone,TE,1.0,CBS
+Kylen Granson,TE,1.0,CBS
+Seydou Traore,TE,0.9,CBS
+Justin Joly,TE,0.9,CBS
+Eli Stowers,TE,0.8,CBS
+Jelani Woods,TE,0.8,CBS
+Johnny Mundt,TE,0.7,CBS
+Ko Kieft,TE,0.6,CBS
+Luke Farrell,TE,0.5,CBS
+Zach Ertz,TE,0.5,CBS
+Max Bredeson,TE,0.2,CBS
+Riley Nowakowski,TE,0.1,CBS
+Will Reichard,K,11.8,CBS
+Ka'imi Fairbairn,K,11.5,CBS
+Jason Sanders,K,10.0,CBS
+Matt Gay,K,9.3,CBS
+Evan McPherson,K,9.3,CBS
+Ryan Fitzgerald,K,9.2,CBS
+Jason Myers,K,9.2,CBS
+Jake Bates,K,9.1,CBS
+Brandon McManus,K,9.0,CBS
+Chris Boswell,K,8.6,CBS
+Nick Folk,K,8.3,CBS
+Wil Lutz,K,8.3,CBS
+Tyler Loop,K,8.1,CBS
+Chase McLaughlin,K,8.1,CBS
+Cairo Santos,K,8.0,CBS
+Spencer Shrader,K,8.0,CBS
+Daniel Carlson,K,7.9,CBS
+Brandon Aubrey,K,7.8,CBS
+Eddy Pineiro,K,7.7,CBS
+Joey Slye,K,7.6,CBS
+Dominic Zvada,K,7.2,CBS
+Harrison Butker,K,7.2,CBS
+Andre Szmyt,K,7.1,CBS
+Trey Smack,K,7.1,CBS
+Chad Ryland,K,6.9,CBS
+Zane Gonzalez,K,6.6,CBS
+Andres Borregales,K,6.5,CBS
+Jake Elliott,K,5.7,CBS
+Minnesota Vikings,DEF,15.7,CBS
+Cleveland Browns,DEF,15.6,CBS
+Houston Texans,DEF,15.3,CBS
+New York Jets,DEF,15.2,CBS
+Tennessee Titans,DEF,15.0,CBS
+Denver Broncos,DEF,14.0,CBS
+Seattle Seahawks,DEF,13.0,CBS
+Chicago Bears,DEF,12.6,CBS
+Los Angeles Rams,DEF,11.4,CBS
+Dallas Cowboys,DEF,10.6,CBS
+Pittsburgh Steelers,DEF,10.5,CBS
+Cincinnati Bengals,DEF,9.6,CBS
+Carolina Panthers,DEF,9.6,CBS
+Kansas City Chiefs,DEF,8.9,CBS
+San Francisco 49ers,DEF,8.9,CBS
+Detroit Lions,DEF,8.7,CBS
+New Orleans Saints,DEF,8.5,CBS
+New England Patriots,DEF,8.1,CBS
+Atlanta Falcons,DEF,8.0,CBS
+Indianapolis Colts,DEF,7.7,CBS
+Arizona Cardinals,DEF,6.8,CBS
+Philadelphia Eagles,DEF,6.7,CBS
+Miami Dolphins,DEF,6.5,CBS
+Tampa Bay Buccaneers,DEF,6.4,CBS
+Baltimore Ravens,DEF,6.4,CBS
+Las Vegas Raiders,DEF,5.3,CBS
+Green Bay Packers,DEF,5.0,CBS
+New York Giants,DEF,4.7,CBS
+AJ Barner,TE,6.9,NumberFire
+AJ Brown,WR,13.6,NumberFire
+AJ Dillon,RB,1.9,NumberFire
+Aaron Jones,RB,12.1,NumberFire
+Aaron Rodgers,QB,20.0,NumberFire
+Adam Randall,RB,1.0,NumberFire
+Adam Trautman,TE,1.5,NumberFire
+Adonai Mitchell,WR,6.0,NumberFire
+Alvin Kamara,RB,7.9,NumberFire
+Amon-Ra St Brown,WR,18.8,NumberFire
+Andre Szmyt,K,7.0,NumberFire
+Andres Borregales,K,6.4,NumberFire
+Andrew Beck,RB,0.9,NumberFire
+Andrew Ogletree,TE,1.3,NumberFire
+Andy Borregales,K,6.5,NumberFire
+Anthony Gould,WR,0.5,NumberFire
+Anthony Richardson,QB,0.5,NumberFire
+Arizona Cardinals,DEF,5.7,NumberFire
+Ashton Dulin,WR,2.3,NumberFire
+Ashton Jeanty,RB,15.5,NumberFire
+Atlanta Falcons,DEF,5.9,NumberFire
+Audric Estime,RB,1.0,NumberFire
+Austin Hooper,TE,3.1,NumberFire
+Baker Mayfield,QB,17.5,NumberFire
+Baltimore Ravens,DEF,6.2,NumberFire
+Barion Brown,WR,0.7,NumberFire
+Bauer Sharp,TE,0.7,NumberFire
+Ben Skowronek,WR,3.5,NumberFire
+Ben Yurosek,TE,0.5,NumberFire
+Bijan Robinson,RB,22.4,NumberFire
+Blake Corum,RB,7.3,NumberFire
+Blake Whiteheart,TE,2.0,NumberFire
+Bo Melton,WR,1.9,NumberFire
+Bo Nix,QB,19.7,NumberFire
+Brady Russell,RB,0.6,NumberFire
+Braelon Allen,RB,9.5,NumberFire
+Brandin Cooks,WR,6.6,NumberFire
+Brandon Aubrey,K,8.2,NumberFire
+Brandon McManus,K,7.5,NumberFire
+Brashard Smith,RB,0.6,NumberFire
+Breece Hall,RB,13.1,NumberFire
+Brevin Jordan,TE,0.5,NumberFire
+Brevyn Spann-Ford,TE,1.8,NumberFire
+Brian Robinson,RB,5.5,NumberFire
+Britain Covey,WR,0.5,NumberFire
+Brock Bowers,TE,17.9,NumberFire
+Brock Purdy,QB,23.0,NumberFire
+Brock Wright,TE,2.4,NumberFire
+Bryce Lance,WR,4.4,NumberFire
+Bryce Young,QB,19.6,NumberFire
+Brycen Tremayne,WR,3.7,NumberFire
+Bucky Irving,RB,15.9,NumberFire
+CJ Donaldson,RB,3.9,NumberFire
+CJ Stroud,QB,21.7,NumberFire
+Cade Klubnik,QB,0.8,NumberFire
+Cade Otton,TE,7.1,NumberFire
+Cade Stover,TE,1.6,NumberFire
+Cairo Santos,K,7.9,NumberFire
+Caleb Douglas,WR,6.9,NumberFire
+Caleb Williams,QB,19.6,NumberFire
+Calvin Ridley,WR,3.7,NumberFire
+Cam Skattebo,RB,6.0,NumberFire
+Cam Ward,QB,14.1,NumberFire
+Cameron Latu,TE,0.5,NumberFire
+Carnell Tate,WR,11.7,NumberFire
+Carolina Panthers,DEF,6.8,NumberFire
+Carsen Ryan,TE,0.5,NumberFire
+Carson Wentz,QB,1.0,NumberFire
+Carter Runyon,TE,1.2,NumberFire
+CeeDee Lamb,WR,18.6,NumberFire
+Chad Ryland,K,8.0,NumberFire
+Charlie Jones,WR,0.9,NumberFire
+Charlie Woerner,TE,1.7,NumberFire
+Chase Brown,RB,15.7,NumberFire
+Chase McLaughlin,K,7.6,NumberFire
+Chicago Bears,DEF,6.8,NumberFire
+Chimere Dike,WR,1.9,NumberFire
+Chris Bell,WR,5.5,NumberFire
+Chris Boswell,K,8.9,NumberFire
+Chris Godwin,WR,9.1,NumberFire
+Chris Manhertz,TE,0.8,NumberFire
+Chris Olave,WR,15.4,NumberFire
+Christian Kirk,WR,7.4,NumberFire
+Christian McCaffrey,RB,20.0,NumberFire
+Christian Watson,WR,16.2,NumberFire
+Chuba Hubbard,RB,16.7,NumberFire
+Cincinnati Bengals,DEF,5.4,NumberFire
+Cleveland Browns,DEF,9.2,NumberFire
+Cody White,WR,4.2,NumberFire
+Colbie Young,WR,4.2,NumberFire
+Colby Parkinson,TE,7.5,NumberFire
+Cole Kmet,TE,3.7,NumberFire
+Cole Payton,QB,0.5,NumberFire
+Colston Loveland,TE,9.7,NumberFire
+Connor Heyward,RB,0.6,NumberFire
+Connor Heyward,TE,2.8,NumberFire
+Cooper Kupp,WR,6.9,NumberFire
+Corey Kiner,RB,2.8,NumberFire
+Courtland Sutton,WR,9.8,NumberFire
+Cyrus Allen,WR,1.4,NumberFire
+D'Andre Swift,RB,14.9,NumberFire
+DJ Giddens,RB,0.5,NumberFire
+DJ Herman,RB,2.1,NumberFire
+DK Metcalf,WR,12.6,NumberFire
+Dak Prescott,QB,17.8,NumberFire
+Dallas Cowboys,DEF,7.6,NumberFire
+Dallas Goedert,TE,11.4,NumberFire
+Dallen Bentley,TE,1.0,NumberFire
+Dalton Schultz,TE,8.8,NumberFire
+Dameon Pierce,RB,6.6,NumberFire
+Daniel Bellinger,TE,2.7,NumberFire
+Daniel Carlson,K,7.0,NumberFire
+Daniel Jones,QB,11.4,NumberFire
+Dare Ogunbowale,RB,0.7,NumberFire
+Dareke Young,WR,0.5,NumberFire
+Darius Cooper,WR,3.5,NumberFire
+Darnell Mooney,WR,3.9,NumberFire
+Darnell Washington,TE,6.7,NumberFire
+Darren Waller,TE,7.1,NumberFire
+David Montgomery,RB,10.2,NumberFire
+David Moore,WR,1.3,NumberFire
+Davis Allen,TE,3.3,NumberFire
+Davis Mills,QB,1.1,NumberFire
+DeMario Douglas,WR,9.8,NumberFire
+DeVonta Smith,WR,15.0,NumberFire
+Dean Connors,RB,0.5,NumberFire
+DeeJay Dallas,RB,1.2,NumberFire
+Deion Burks,WR,2.6,NumberFire
+Demario Douglas,WR,9.7,NumberFire
+Demond Claiborne,RB,1.0,NumberFire
+Denver Broncos,DEF,9.1,NumberFire
+Denzel Boston,WR,10.5,NumberFire
+Derrick Henry,RB,19.2,NumberFire
+Deshaun Watson,QB,16.5,NumberFire
+Detroit Lions,DEF,6.0,NumberFire
+Devaughn Vele,WR,9.7,NumberFire
+Devin Duvernay,WR,0.5,NumberFire
+Devin Singletary,RB,4.9,NumberFire
+Devontez Walker,WR,4.0,NumberFire
+Dohnte Meyers,WR,5.4,NumberFire
+Dominic Zvada,K,8.4,NumberFire
+Dont'e Thornton,WR,1.1,NumberFire
+Dontayvion Wicks,WR,8.1,NumberFire
+Drake London,WR,18.2,NumberFire
+Drake Maye,QB,21.3,NumberFire
+Drew Lock,QB,1.0,NumberFire
+Drew Ogletree,TE,0.5,NumberFire
+Drew Sample,TE,2.6,NumberFire
+Dylan Laube,RB,1.5,NumberFire
+Dylan Sampson,RB,6.4,NumberFire
+EJ Jenkins,TE,1.0,NumberFire
+Eddy Pineiro,K,7.4,NumberFire
+Efton Chism,WR,6.6,NumberFire
+Eli Heidenreich,RB,0.7,NumberFire
+Eli Raridon,TE,5.7,NumberFire
+Eli Stowers,TE,0.7,NumberFire
+Elic Ayomanor,WR,4.8,NumberFire
+Elijah Higgins,TE,3.2,NumberFire
+Elijah Moore,WR,0.5,NumberFire
+Emanuel Wilson,RB,7.5,NumberFire
+Emari Demercado,RB,1.0,NumberFire
+Emeka Egbuka,WR,11.9,NumberFire
+Emmett Johnson,RB,4.3,NumberFire
+Eric Saubert,TE,1.5,NumberFire
+Erick All,TE,3.0,NumberFire
+Evan Engram,TE,6.6,NumberFire
+Evan McPherson,K,8.0,NumberFire
+Feleipe Franks,TE,0.5,NumberFire
+Fernando Mendoza,QB,1.0,NumberFire
+Foster Moreau,TE,4.4,NumberFire
+Gardner Minshew,QB,0.9,NumberFire
+Garrett Wilson,WR,17.9,NumberFire
+Gavin Bartholomew,TE,0.7,NumberFire
+Geno Smith,QB,18.4,NumberFire
+George Holani,RB,4.6,NumberFire
+George Kittle,TE,15.3,NumberFire
+George Pickens,WR,13.4,NumberFire
+Germie Bernard,WR,12.7,NumberFire
+Grant Calcaterra,TE,1.0,NumberFire
+Green Bay Packers,DEF,4.3,NumberFire
+Greg Dulcich,TE,6.8,NumberFire
+Gunnar Helm,TE,3.9,NumberFire
+Harold Fannin,TE,10.3,NumberFire
+Harrison Butker,K,7.6,NumberFire
+Houston Texans,DEF,8.8,NumberFire
+Hunter Henry,TE,8.5,NumberFire
+Hunter Luepke,RB,1.2,NumberFire
+Ian Thomas,TE,1.2,NumberFire
+Indianapolis Colts,DEF,5.6,NumberFire
+Isaac Guerendo,RB,1.6,NumberFire
+Isaac TeSlaa,WR,5.6,NumberFire
+Isaiah Bond,WR,2.5,NumberFire
+Isaiah Davis,RB,1.2,NumberFire
+Isaiah Likely,TE,13.2,NumberFire
+Isaiah Williams,WR,2.6,NumberFire
+J Michael Sturdivant,WR,0.5,NumberFire
+JJ McCarthy,QB,15.1,NumberFire
+JK Dobbins,RB,10.6,NumberFire
+Ja'Kobi Lane,WR,7.2,NumberFire
+Ja'Marr Chase,WR,19.3,NumberFire
+Ja'Tavion Sanders,TE,0.8,NumberFire
+Jack Endries,TE,1.2,NumberFire
+Jack Stoll,TE,1.0,NumberFire
+Jacob Cowing,WR,3.6,NumberFire
+Jacob Saylors,RB,0.5,NumberFire
+Jacoby Brissett,QB,14.7,NumberFire
+Jahan Dotson,WR,6.6,NumberFire
+Jahdae Walker,WR,0.7,NumberFire
+Jahmyr Gibbs,RB,24.2,NumberFire
+Jake Bates,K,8.1,NumberFire
+Jake Briningstool,TE,0.6,NumberFire
+Jake Elliott,K,6.0,NumberFire
+Jake Ferguson,TE,7.5,NumberFire
+Jaleel McLaughlin,RB,3.9,NumberFire
+Jalen Brooks,WR,3.9,NumberFire
+Jalen Coker,WR,15.7,NumberFire
+Jalen Nailor,WR,4.6,NumberFire
+Jalen Royals,WR,4.0,NumberFire
+Jalen Tolbert,WR,0.8,NumberFire
+Jalon Daniels,QB,8.1,NumberFire
+Jameis Winston,QB,0.7,NumberFire
+James Conner,RB,0.8,NumberFire
+Jameson Williams,WR,10.7,NumberFire
+Jared Goff,QB,20.8,NumberFire
+Jared Wayne,WR,1.2,NumberFire
+Jared Wiley,TE,1.1,NumberFire
+Jarrett Stidham,QB,1.0,NumberFire
+Jason Myers,K,8.5,NumberFire
+Jason Sanders,K,8.3,NumberFire
+Jauan Jennings,WR,4.3,NumberFire
+Javonte Williams,RB,15.7,NumberFire
+Jaxon Smith-Njigba,WR,20.0,NumberFire
+Jaydon Blue,RB,0.7,NumberFire
+Jaylen Waddle,WR,11.3,NumberFire
+Jaylen Warren,RB,18.2,NumberFire
+Jaylen Wright,RB,3.8,NumberFire
+Jaylin Noel,WR,7.2,NumberFire
+Jelani Woods,TE,0.7,NumberFire
+Jeremiyah Love,RB,6.8,NumberFire
+Jeremy Ruckert,TE,3.5,NumberFire
+Jerry Jeudy,WR,5.4,NumberFire
+Joe Burrow,QB,20.7,NumberFire
+Joe Flacco,QB,0.8,NumberFire
+Joe Milton,QB,1.0,NumberFire
+Joe Royer,TE,1.2,NumberFire
+Joey Slye,K,7.3,NumberFire
+John Metchie,WR,3.1,NumberFire
+Johnny Mundt,TE,1.1,NumberFire
+Jonah Coleman,RB,7.8,NumberFire
+Jonathan Mingo,WR,0.7,NumberFire
+Jonathan Taylor,RB,16.0,NumberFire
+Jonnu Smith,TE,3.1,NumberFire
+Jordan Addison,WR,10.2,NumberFire
+Jordan James,RB,0.5,NumberFire
+Jordan Love,QB,21.0,NumberFire
+Jordan Mason,RB,10.1,NumberFire
+Jordan Watkins,WR,7.3,NumberFire
+Jordan Whittington,WR,3.1,NumberFire
+Josh Cuevas,TE,2.2,NumberFire
+Josh Downs,WR,9.3,NumberFire
+Josh Jacobs,RB,12.5,NumberFire
+Josh Whyle,TE,0.7,NumberFire
+Joshua Dobbs,QB,1.1,NumberFire
+Josiah Deguara,TE,1.5,NumberFire
+Julius Chestnut,RB,0.5,NumberFire
+Justice Hill,RB,6.2,NumberFire
+Justin Fields,QB,1.0,NumberFire
+Justin Jefferson,WR,18.1,NumberFire
+Justin Joly,TE,0.7,NumberFire
+Juwan Johnson,TE,9.6,NumberFire
+KC Concepcion,WR,8.7,NumberFire
+Ka'imi Fairbairn,K,10.6,NumberFire
+KaVontae Turpin,WR,2.6,NumberFire
+Kaden Wetjen,WR,0.5,NumberFire
+Kaelon Black,RB,5.3,NumberFire
+Kaleb Johnson,RB,0.5,NumberFire
+Kalif Raymond,WR,6.1,NumberFire
+Kameron Johnson,WR,0.5,NumberFire
+Kansas City Chiefs,DEF,7.7,NumberFire
+Kareem Hunt,RB,7.0,NumberFire
+Kayshon Boutte,WR,3.7,NumberFire
+Kaytron Allen,RB,0.7,NumberFire
+Keenan Allen,WR,10.0,NumberFire
+Kendre Miller,RB,8.3,NumberFire
+Kendrick Bourne,WR,7.9,NumberFire
+Kene Nwangwu,RB,0.6,NumberFire
+Kenneth Gainwell,RB,5.0,NumberFire
+Kenneth Walker,RB,18.2,NumberFire
+Kenny Gainwell,RB,7.2,NumberFire
+Kenny Pickett,QB,1.0,NumberFire
+Kenyon Sadiq,TE,7.4,NumberFire
+Kevin Coleman,WR,3.7,NumberFire
+Kirk Cousins,QB,18.1,NumberFire
+Ko Kieft,TE,0.5,NumberFire
+Konata Mumpfield,WR,6.3,NumberFire
+Kyle Juszczyk,RB,3.7,NumberFire
+Kyle McCord,QB,0.5,NumberFire
+Kyle Monangai,RB,6.3,NumberFire
+Kyle Pitts,TE,10.4,NumberFire
+Kyle Williams,WR,4.5,NumberFire
+Kylen Granson,TE,0.6,NumberFire
+Kyler Murray,QB,18.2,NumberFire
+Kyren Williams,RB,18.5,NumberFire
+LaJohntay Wester,WR,0.5,NumberFire
+Lamar Jackson,QB,18.1,NumberFire
+Laquon Treadwell,WR,4.8,NumberFire
+Las Vegas Raiders,DEF,4.6,NumberFire
+Lew Nichols,RB,0.9,NumberFire
+Lil'Jordan Humphrey,WR,1.9,NumberFire
+Los Angeles Rams,DEF,7.6,NumberFire
+Luke Farrell,TE,1.2,NumberFire
+Luke Musgrave,TE,1.3,NumberFire
+Luke Schoonmaker,TE,1.2,NumberFire
+Luther Burden,WR,11.6,NumberFire
+Mac Jones,QB,1.0,NumberFire
+Makai Lemon,WR,6.0,NumberFire
+Malachi Corley,WR,0.5,NumberFire
+Malachi Fields,WR,6.0,NumberFire
+Malik Benson,WR,0.5,NumberFire
+Malik McClain,WR,0.5,NumberFire
+Malik Nabers,WR,14.9,NumberFire
+Malik Washington,WR,10.0,NumberFire
+Malik Willis,QB,15.6,NumberFire
+MarShawn Lloyd,RB,4.3,NumberFire
+Mark Andrews,TE,8.5,NumberFire
+Marlin Klein,TE,1.9,NumberFire
+Marquise Brown,WR,0.5,NumberFire
+Marvin Harrison,WR,6.8,NumberFire
+Marvin Mims,WR,4.4,NumberFire
+Mason Rudolph,QB,1.0,NumberFire
+Mason Taylor,TE,5.3,NumberFire
+Matt Gay,K,8.6,NumberFire
+Matt Hibner,TE,2.8,NumberFire
+Matthew Golden,WR,15.0,NumberFire
+Matthew Hibner,TE,1.7,NumberFire
+Matthew Stafford,QB,20.1,NumberFire
+Max Bredeson,RB,0.5,NumberFire
+Max Bredeson,TE,0.5,NumberFire
+Max Klare,TE,1.4,NumberFire
+Miami Dolphins,DEF,4.8,NumberFire
+Michael Burton,RB,0.8,NumberFire
+Michael Carter,RB,0.5,NumberFire
+Michael Mayer,TE,7.5,NumberFire
+Michael Penix,QB,16.3,NumberFire
+Michael Wilson,WR,11.2,NumberFire
+Mike Gesicki,TE,7.4,NumberFire
+Mike Washington,RB,5.7,NumberFire
+Minnesota Vikings,DEF,10.0,NumberFire
+Mitch Tinsley,WR,1.1,NumberFire
+Mitch Trubisky,QB,0.5,NumberFire
+Mitchell Evans,TE,2.1,NumberFire
+Mo Alie-Cox,TE,1.4,NumberFire
+Myles Price,WR,0.5,NumberFire
+Nate Adkins,TE,3.3,NumberFire
+New England Patriots,DEF,6.1,NumberFire
+New Orleans Saints,DEF,5.6,NumberFire
+New York Giants,DEF,4.6,NumberFire
+New York Jets,DEF,8.3,NumberFire
+Nicholas Singleton,RB,0.6,NumberFire
+Nick Chubb,RB,9.1,NumberFire
+Nick Folk,K,7.6,NumberFire
+Nick Vannett,TE,1.0,NumberFire
+Nico Collins,WR,18.3,NumberFire
+Nikko Remigio,WR,0.5,NumberFire
+Noah Fant,TE,5.1,NumberFire
+Noah Gray,TE,3.2,NumberFire
+Olamide Zaccheaus,WR,3.4,NumberFire
+Ollie Gordon,RB,11.2,NumberFire
+Omar Cooper,WR,8.7,NumberFire
+Oscar Delp,TE,1.0,NumberFire
+Pat Freiermuth,TE,9.1,NumberFire
+Patrick Mahomes,QB,17.7,NumberFire
+Patrick Ricard,RB,0.5,NumberFire
+Payne Durham,TE,1.0,NumberFire
+Pharaoh Brown,TE,0.6,NumberFire
+Philadelphia Eagles,DEF,5.9,NumberFire
+Pierre Strong,RB,2.7,NumberFire
+Pittsburgh Steelers,DEF,7.2,NumberFire
+Puka Nacua,WR,24.1,NumberFire
+Quinshon Judkins,RB,13.1,NumberFire
+RJ Harvey,RB,9.9,NumberFire
+Rashee Rice,WR,11.3,NumberFire
+Rasheen Ali,RB,0.5,NumberFire
+Rashid Shaheed,WR,7.6,NumberFire
+Rashod Bateman,WR,6.4,NumberFire
+Reggie Virgil,WR,0.5,NumberFire
+Rhamondre Stevenson,RB,11.3,NumberFire
+Rico Dowdle,RB,8.0,NumberFire
+Riley Nowakowski,RB,0.5,NumberFire
+Riley Nowakowski,TE,0.5,NumberFire
+Riley Patterson,K,5.7,NumberFire
+Robert Tonyan,TE,0.5,NumberFire
+Rome Odunze,WR,10.8,NumberFire
+Roschon Johnson,RB,4.7,NumberFire
+Ryan Fitzgerald,K,8.9,NumberFire
+Ryan Flournoy,WR,7.6,NumberFire
+Sam Darnold,QB,15.8,NumberFire
+Sam Howell,QB,0.9,NumberFire
+Sam LaPorta,TE,11.9,NumberFire
+Sam Roush,TE,1.4,NumberFire
+Samaje Perine,RB,5.9,NumberFire
+San Francisco 49ers,DEF,6.3,NumberFire
+Saquon Barkley,RB,11.1,NumberFire
+Savion Williams,WR,5.0,NumberFire
+Sean Tucker,RB,1.4,NumberFire
+Seattle Seahawks,DEF,8.1,NumberFire
+Seth McGowan,RB,1.9,NumberFire
+Seydou Traore,TE,0.5,NumberFire
+Shedeur Sanders,QB,0.9,NumberFire
+Sione Vaki,RB,3.3,NumberFire
+Spencer Rattler,QB,0.9,NumberFire
+Spencer Shrader,K,9.0,NumberFire
+Stetson Bennett,QB,1.0,NumberFire
+TJ Hockenson,TE,10.7,NumberFire
+Tahj Brooks,RB,0.5,NumberFire
+Tai Felton,WR,1.3,NumberFire
+Tampa Bay Buccaneers,DEF,5.5,NumberFire
+Tank Dell,WR,3.8,NumberFire
+Tanner McKee,QB,15.8,NumberFire
+Tay Martin,WR,0.5,NumberFire
+Teagan Quitoriano,TE,2.5,NumberFire
+Ted Hurst,WR,6.2,NumberFire
+Tee Higgins,WR,15.5,NumberFire
+Tennessee Titans,DEF,9.2,NumberFire
+Tetairoa McMillan,WR,14.7,NumberFire
+Tez Johnson,WR,3.8,NumberFire
+Theo Johnson,TE,3.0,NumberFire
+Thomas Fidone,TE,1.0,NumberFire
+Tim Patrick,WR,2.1,NumberFire
+Tip Reiman,TE,1.0,NumberFire
+Tommy DeVito,QB,0.5,NumberFire
+Tommy Tremble,TE,4.9,NumberFire
+Tony Pollard,RB,12.6,NumberFire
+Tory Horton,WR,3.3,NumberFire
+Travis Homer,RB,0.5,NumberFire
+Travis Kelce,TE,11.9,NumberFire
+Tre Tucker,WR,11.4,NumberFire
+TreVeyon Henderson,RB,6.8,NumberFire
+Trevor Etienne,RB,1.0,NumberFire
+Trey McBride,TE,15.1,NumberFire
+Trey Smack,K,7.8,NumberFire
+Treyton Welch,TE,0.5,NumberFire
+Troy Franklin,WR,4.9,NumberFire
+Tua Tagovailoa,QB,1.0,NumberFire
+Tucker Kraft,TE,10.8,NumberFire
+Tutu Atwell,WR,3.5,NumberFire
+Ty Simpson,QB,2.3,NumberFire
+Tyjae Spears,RB,6.7,NumberFire
+Tylan Wallace,WR,0.8,NumberFire
+Tyler Allgeier,RB,6.5,NumberFire
+Tyler Badie,RB,3.1,NumberFire
+Tyler Conklin,TE,0.5,NumberFire
+Tyler Goodson,RB,2.7,NumberFire
+Tyler Higbee,TE,9.5,NumberFire
+Tyler Huntley,QB,17.6,NumberFire
+Tyler Loop,K,8.4,NumberFire
+Tyler Shough,QB,17.4,NumberFire
+Tyler Warren,TE,8.6,NumberFire
+Tyrod Taylor,QB,1.0,NumberFire
+Tyrone Tracy,RB,6.7,NumberFire
+Tyson Bagent,QB,0.5,NumberFire
+Wan'Dale Robinson,WR,9.3,NumberFire
+Wil Lutz,K,7.7,NumberFire
+Will Kacmarek,TE,1.7,NumberFire
+Will Mallory,TE,1.9,NumberFire
+Will Reichard,K,10.6,NumberFire
+Woody Marks,RB,12.4,NumberFire
+Xavier Hutchinson,WR,4.3,NumberFire
+Xavier Worthy,WR,10.3,NumberFire
+Zach Charbonnet,RB,6.8,NumberFire
+Zach Ertz,TE,1.5,NumberFire
+Zachariah Branch,WR,3.6,NumberFire
+Zane Gonzalez,K,5.7,NumberFire
+Zavier Scott,RB,1.2,NumberFire
+Zavion Thomas,WR,1.1,NumberFire
+Zay Flowers,WR,18.6,NumberFire
+Zonovan Knight,RB,5.4,NumberFire
+AJ Barner,TE,7.0,NFL
+AJ Brown,WR,14.6,NFL
+AJ Dillon,RB,2.2,NFL
+Aaron Jones,RB,11.6,NFL
+Aaron Rodgers,QB,19.9,NFL
+Adam Randall,RB,1.0,NFL
+Adam Trautman,TE,1.8,NFL
+Adonai Mitchell,WR,6.4,NFL
+Alvin Kamara,RB,8.2,NFL
+Amon-Ra St Brown,WR,19.8,NFL
+Andre Szmyt,K,7.5,NFL
+Andres Borregales,K,6.5,NFL
+Andrew Beck,RB,0.9,NFL
+Andrew Ogletree,TE,1.2,NFL
+Andy Borregales,K,6.9,NFL
+Anthony Gould,WR,0.5,NFL
+Anthony Richardson,QB,0.5,NFL
+Arizona Cardinals,DEF,4.9,NFL
+Ashton Dulin,WR,2.2,NFL
+Ashton Jeanty,RB,15.4,NFL
+Atlanta Falcons,DEF,5.0,NFL
+Audric Estime,RB,1.0,NFL
+Austin Hooper,TE,3.1,NFL
+Baker Mayfield,QB,16.5,NFL
+Baltimore Ravens,DEF,5.9,NFL
+Barion Brown,WR,0.7,NFL
+Bauer Sharp,TE,0.8,NFL
+Ben Skowronek,WR,3.4,NFL
+Ben Yurosek,TE,0.5,NFL
+Bijan Robinson,RB,22.0,NFL
+Blake Corum,RB,8.1,NFL
+Blake Whiteheart,TE,1.9,NFL
+Bo Melton,WR,1.9,NFL
+Bo Nix,QB,19.0,NFL
+Brady Russell,RB,0.7,NFL
+Braelon Allen,RB,9.4,NFL
+Brandin Cooks,WR,7.0,NFL
+Brandon Aubrey,K,7.8,NFL
+Brandon McManus,K,7.8,NFL
+Brashard Smith,RB,0.6,NFL
+Breece Hall,RB,12.3,NFL
+Brevin Jordan,TE,0.5,NFL
+Brevyn Spann-Ford,TE,1.8,NFL
+Brian Robinson,RB,5.5,NFL
+Britain Covey,WR,0.5,NFL
+Brock Bowers,TE,16.8,NFL
+Brock Purdy,QB,22.0,NFL
+Brock Wright,TE,2.3,NFL
+Bryce Lance,WR,4.8,NFL
+Bryce Young,QB,20.5,NFL
+Brycen Tremayne,WR,3.6,NFL
+Bucky Irving,RB,15.4,NFL
+CJ Donaldson,RB,3.8,NFL
+CJ Stroud,QB,20.4,NFL
+Cade Klubnik,QB,0.8,NFL
+Cade Otton,TE,8.2,NFL
+Cade Stover,TE,1.5,NFL
+Cairo Santos,K,8.3,NFL
+Caleb Douglas,WR,7.2,NFL
+Caleb Williams,QB,18.9,NFL
+Calvin Ridley,WR,3.6,NFL
+Cam Skattebo,RB,6.2,NFL
+Cam Ward,QB,13.8,NFL
+Cameron Latu,TE,0.5,NFL
+Carnell Tate,WR,11.6,NFL
+Carolina Panthers,DEF,6.8,NFL
+Carsen Ryan,TE,0.5,NFL
+Carson Wentz,QB,1.0,NFL
+Carter Runyon,TE,1.1,NFL
+CeeDee Lamb,WR,19.1,NFL
+Chad Ryland,K,7.9,NFL
+Charlie Jones,WR,0.9,NFL
+Charlie Woerner,TE,1.8,NFL
+Chase Brown,RB,15.3,NFL
+Chase McLaughlin,K,7.7,NFL
+Chicago Bears,DEF,6.9,NFL
+Chimere Dike,WR,2.2,NFL
+Chris Bell,WR,5.2,NFL
+Chris Boswell,K,8.6,NFL
+Chris Godwin,WR,9.1,NFL
+Chris Manhertz,TE,0.9,NFL
+Chris Olave,WR,15.8,NFL
+Christian Kirk,WR,7.3,NFL
+Christian McCaffrey,RB,19.9,NFL
+Christian Watson,WR,16.7,NFL
+Chuba Hubbard,RB,16.4,NFL
+Cincinnati Bengals,DEF,5.4,NFL
+Cleveland Browns,DEF,9.7,NFL
+Cody White,WR,4.0,NFL
+Colbie Young,WR,3.9,NFL
+Colby Parkinson,TE,6.4,NFL
+Cole Kmet,TE,3.4,NFL
+Cole Payton,QB,0.5,NFL
+Colston Loveland,TE,10.8,NFL
+Connor Heyward,RB,0.6,NFL
+Connor Heyward,TE,2.7,NFL
+Cooper Kupp,WR,6.6,NFL
+Corey Kiner,RB,2.6,NFL
+Courtland Sutton,WR,9.7,NFL
+Cyrus Allen,WR,1.6,NFL
+D'Andre Swift,RB,15.8,NFL
+DJ Giddens,RB,0.5,NFL
+DJ Herman,RB,2.1,NFL
+DK Metcalf,WR,13.5,NFL
+Dak Prescott,QB,18.7,NFL
+Dallas Cowboys,DEF,6.6,NFL
+Dallas Goedert,TE,10.3,NFL
+Dallen Bentley,TE,1.1,NFL
+Dalton Schultz,TE,8.6,NFL
+Dameon Pierce,RB,6.5,NFL
+Daniel Bellinger,TE,2.6,NFL
+Daniel Carlson,K,7.6,NFL
+Daniel Jones,QB,10.8,NFL
+Dare Ogunbowale,RB,0.8,NFL
+Dareke Young,WR,0.5,NFL
+Darius Cooper,WR,3.7,NFL
+Darnell Mooney,WR,4.4,NFL
+Darnell Washington,TE,6.6,NFL
+Darren Waller,TE,7.3,NFL
+David Montgomery,RB,10.0,NFL
+David Moore,WR,1.5,NFL
+Davis Allen,TE,3.3,NFL
+Davis Mills,QB,1.1,NFL
+DeMario Douglas,WR,9.8,NFL
+DeVonta Smith,WR,15.1,NFL
+Dean Connors,RB,0.5,NFL
+DeeJay Dallas,RB,1.2,NFL
+Deion Burks,WR,2.6,NFL
+Demario Douglas,WR,10.3,NFL
+Demond Claiborne,RB,1.0,NFL
+Denver Broncos,DEF,8.5,NFL
+Denzel Boston,WR,10.8,NFL
+Derrick Henry,RB,17.8,NFL
+Deshaun Watson,QB,15.4,NFL
+Detroit Lions,DEF,6.0,NFL
+Devaughn Vele,WR,9.7,NFL
+Devin Duvernay,WR,0.5,NFL
+Devin Singletary,RB,4.8,NFL
+Devontez Walker,WR,4.2,NFL
+Dohnte Meyers,WR,5.9,NFL
+Dominic Zvada,K,8.2,NFL
+Dont'e Thornton,WR,1.2,NFL
+Dontayvion Wicks,WR,7.6,NFL
+Drake London,WR,17.3,NFL
+Drake Maye,QB,20.8,NFL
+Drew Lock,QB,1.0,NFL
+Drew Ogletree,TE,0.5,NFL
+Drew Sample,TE,2.5,NFL
+Dylan Laube,RB,1.6,NFL
+Dylan Sampson,RB,6.7,NFL
+EJ Jenkins,TE,0.9,NFL
+Eddy Pineiro,K,8.1,NFL
+Efton Chism,WR,6.0,NFL
+Eli Heidenreich,RB,0.8,NFL
+Eli Raridon,TE,5.4,NFL
+Eli Stowers,TE,0.9,NFL
+Elic Ayomanor,WR,4.7,NFL
+Elijah Higgins,TE,3.5,NFL
+Elijah Moore,WR,0.5,NFL
+Emanuel Wilson,RB,7.2,NFL
+Emari Demercado,RB,0.9,NFL
+Emeka Egbuka,WR,13.1,NFL
+Emmett Johnson,RB,4.0,NFL
+Eric Saubert,TE,1.4,NFL
+Erick All,TE,2.7,NFL
+Evan Engram,TE,5.7,NFL
+Evan McPherson,K,8.2,NFL
+Feleipe Franks,TE,0.5,NFL
+Fernando Mendoza,QB,1.0,NFL
+Foster Moreau,TE,3.7,NFL
+Gardner Minshew,QB,0.9,NFL
+Garrett Wilson,WR,16.6,NFL
+Gavin Bartholomew,TE,0.7,NFL
+Geno Smith,QB,18.9,NFL
+George Holani,RB,4.5,NFL
+George Kittle,TE,15.5,NFL
+George Pickens,WR,13.2,NFL
+Germie Bernard,WR,11.4,NFL
+Grant Calcaterra,TE,1.1,NFL
+Green Bay Packers,DEF,4.6,NFL
+Greg Dulcich,TE,6.7,NFL
+Gunnar Helm,TE,4.2,NFL
+Harold Fannin,TE,10.6,NFL
+Harrison Butker,K,8.2,NFL
+Houston Texans,DEF,9.3,NFL
+Hunter Henry,TE,9.6,NFL
+Hunter Luepke,RB,1.3,NFL
+Ian Thomas,TE,1.3,NFL
+Indianapolis Colts,DEF,5.4,NFL
+Isaac Guerendo,RB,1.7,NFL
+Isaac TeSlaa,WR,5.8,NFL
+Isaiah Bond,WR,2.5,NFL
+Isaiah Davis,RB,1.1,NFL
+Isaiah Likely,TE,13.8,NFL
+Isaiah Williams,WR,2.8,NFL
+J Michael Sturdivant,WR,0.5,NFL
+JJ McCarthy,QB,14.8,NFL
+JK Dobbins,RB,11.2,NFL
+Ja'Kobi Lane,WR,7.2,NFL
+Ja'Marr Chase,WR,19.7,NFL
+Ja'Tavion Sanders,TE,0.7,NFL
+Jack Endries,TE,1.1,NFL
+Jack Stoll,TE,1.2,NFL
+Jacob Cowing,WR,3.4,NFL
+Jacob Saylors,RB,0.5,NFL
+Jacoby Brissett,QB,15.2,NFL
+Jahan Dotson,WR,6.3,NFL
+Jahdae Walker,WR,0.6,NFL
+Jahmyr Gibbs,RB,26.1,NFL
+Jake Bates,K,8.2,NFL
+Jake Briningstool,TE,0.7,NFL
+Jake Elliott,K,6.6,NFL
+Jake Ferguson,TE,6.9,NFL
+Jaleel McLaughlin,RB,3.6,NFL
+Jalen Brooks,WR,3.6,NFL
+Jalen Coker,WR,15.6,NFL
+Jalen Nailor,WR,5.1,NFL
+Jalen Royals,WR,3.5,NFL
+Jalen Tolbert,WR,0.8,NFL
+Jalon Daniels,QB,8.4,NFL
+Jameis Winston,QB,0.7,NFL
+James Conner,RB,0.8,NFL
+Jameson Williams,WR,12.3,NFL
+Jared Goff,QB,20.3,NFL
+Jared Wayne,WR,1.1,NFL
+Jared Wiley,TE,1.1,NFL
+Jarrett Stidham,QB,1.0,NFL
+Jason Myers,K,8.3,NFL
+Jason Sanders,K,8.6,NFL
+Jauan Jennings,WR,4.3,NFL
+Javonte Williams,RB,15.8,NFL
+Jaxon Smith-Njigba,WR,20.4,NFL
+Jaydon Blue,RB,0.7,NFL
+Jaylen Waddle,WR,11.0,NFL
+Jaylen Warren,RB,17.0,NFL
+Jaylen Wright,RB,4.2,NFL
+Jaylin Noel,WR,7.1,NFL
+Jelani Woods,TE,0.7,NFL
+Jeremiyah Love,RB,6.9,NFL
+Jeremy Ruckert,TE,3.5,NFL
+Jerry Jeudy,WR,5.5,NFL
+Joe Burrow,QB,20.7,NFL
+Joe Flacco,QB,0.8,NFL
+Joe Milton,QB,1.0,NFL
+Joe Royer,TE,1.2,NFL
+Joey Slye,K,6.9,NFL
+John Metchie,WR,3.2,NFL
+Johnny Mundt,TE,1.0,NFL
+Jonah Coleman,RB,8.2,NFL
+Jonathan Mingo,WR,0.7,NFL
+Jonathan Taylor,RB,16.7,NFL
+Jonnu Smith,TE,3.0,NFL
+Jordan Addison,WR,11.1,NFL
+Jordan James,RB,0.5,NFL
+Jordan Love,QB,20.7,NFL
+Jordan Mason,RB,10.1,NFL
+Jordan Watkins,WR,6.9,NFL
+Jordan Whittington,WR,3.0,NFL
+Josh Cuevas,TE,2.5,NFL
+Josh Downs,WR,8.7,NFL
+Josh Jacobs,RB,13.6,NFL
+Josh Whyle,TE,0.8,NFL
+Joshua Dobbs,QB,1.1,NFL
+Josiah Deguara,TE,1.5,NFL
+Julius Chestnut,RB,0.5,NFL
+Justice Hill,RB,6.6,NFL
+Justin Fields,QB,1.0,NFL
+Justin Jefferson,WR,18.1,NFL
+Justin Joly,TE,0.7,NFL
+Juwan Johnson,TE,9.9,NFL
+KC Concepcion,WR,9.0,NFL
+Ka'imi Fairbairn,K,10.0,NFL
+KaVontae Turpin,WR,2.8,NFL
+Kaden Wetjen,WR,0.5,NFL
+Kaelon Black,RB,5.2,NFL
+Kaleb Johnson,RB,0.5,NFL
+Kalif Raymond,WR,6.8,NFL
+Kameron Johnson,WR,0.5,NFL
+Kansas City Chiefs,DEF,7.6,NFL
+Kareem Hunt,RB,7.5,NFL
+Kayshon Boutte,WR,4.3,NFL
+Kaytron Allen,RB,0.7,NFL
+Keenan Allen,WR,8.8,NFL
+Kendre Miller,RB,8.6,NFL
+Kendrick Bourne,WR,8.4,NFL
+Kene Nwangwu,RB,0.5,NFL
+Kenneth Gainwell,RB,5.4,NFL
+Kenneth Walker,RB,18.1,NFL
+Kenny Gainwell,RB,7.0,NFL
+Kenny Pickett,QB,1.0,NFL
+Kenyon Sadiq,TE,6.9,NFL
+Kevin Coleman,WR,4.1,NFL
+Kirk Cousins,QB,18.3,NFL
+Ko Kieft,TE,0.5,NFL
+Konata Mumpfield,WR,5.7,NFL
+Kyle Juszczyk,RB,3.5,NFL
+Kyle McCord,QB,0.5,NFL
+Kyle Monangai,RB,6.3,NFL
+Kyle Pitts,TE,8.9,NFL
+Kyle Williams,WR,4.5,NFL
+Kylen Granson,TE,0.6,NFL
+Kyler Murray,QB,19.6,NFL
+Kyren Williams,RB,19.1,NFL
+LaJohntay Wester,WR,0.5,NFL
+Lamar Jackson,QB,16.9,NFL
+Laquon Treadwell,WR,5.0,NFL
+Las Vegas Raiders,DEF,4.8,NFL
+Lew Nichols,RB,0.9,NFL
+Lil'Jordan Humphrey,WR,1.9,NFL
+Los Angeles Rams,DEF,6.8,NFL
+Luke Farrell,TE,1.1,NFL
+Luke Musgrave,TE,1.2,NFL
+Luke Schoonmaker,TE,1.1,NFL
+Luther Burden,WR,13.1,NFL
+Mac Jones,QB,1.0,NFL
+Makai Lemon,WR,6.4,NFL
+Malachi Corley,WR,0.5,NFL
+Malachi Fields,WR,5.8,NFL
+Malik Benson,WR,0.5,NFL
+Malik McClain,WR,0.5,NFL
+Malik Nabers,WR,14.4,NFL
+Malik Washington,WR,9.9,NFL
+Malik Willis,QB,15.3,NFL
+MarShawn Lloyd,RB,4.1,NFL
+Mark Andrews,TE,9.4,NFL
+Marlin Klein,TE,2.0,NFL
+Marquise Brown,WR,0.5,NFL
+Marvin Harrison,WR,7.2,NFL
+Marvin Mims,WR,4.5,NFL
+Mason Rudolph,QB,1.0,NFL
+Mason Taylor,TE,5.3,NFL
+Matt Gay,K,8.4,NFL
+Matt Hibner,TE,2.9,NFL
+Matthew Golden,WR,15.3,NFL
+Matthew Hibner,TE,1.5,NFL
+Matthew Stafford,QB,19.8,NFL
+Max Bredeson,RB,0.5,NFL
+Max Bredeson,TE,0.5,NFL
+Max Klare,TE,1.4,NFL
+Miami Dolphins,DEF,6.0,NFL
+Michael Burton,RB,0.9,NFL
+Michael Carter,RB,0.5,NFL
+Michael Mayer,TE,8.2,NFL
+Michael Penix,QB,15.4,NFL
+Michael Wilson,WR,11.9,NFL
+Mike Gesicki,TE,8.7,NFL
+Mike Washington,RB,5.8,NFL
+Minnesota Vikings,DEF,8.8,NFL
+Mitch Tinsley,WR,1.0,NFL
+Mitch Trubisky,QB,0.5,NFL
+Mitchell Evans,TE,2.3,NFL
+Mo Alie-Cox,TE,1.5,NFL
+Myles Price,WR,0.5,NFL
+Nate Adkins,TE,3.2,NFL
+New England Patriots,DEF,5.3,NFL
+New Orleans Saints,DEF,5.6,NFL
+New York Giants,DEF,4.6,NFL
+New York Jets,DEF,8.8,NFL
+Nicholas Singleton,RB,0.6,NFL
+Nick Chubb,RB,8.9,NFL
+Nick Folk,K,7.5,NFL
+Nick Vannett,TE,1.2,NFL
+Nico Collins,WR,17.9,NFL
+Nikko Remigio,WR,0.5,NFL
+Noah Fant,TE,5.0,NFL
+Noah Gray,TE,3.2,NFL
+Olamide Zaccheaus,WR,3.1,NFL
+Ollie Gordon,RB,11.5,NFL
+Omar Cooper,WR,8.9,NFL
+Oscar Delp,TE,1.0,NFL
+Pat Freiermuth,TE,9.6,NFL
+Patrick Mahomes,QB,17.5,NFL
+Patrick Ricard,RB,0.5,NFL
+Payne Durham,TE,1.1,NFL
+Pharaoh Brown,TE,0.6,NFL
+Philadelphia Eagles,DEF,5.6,NFL
+Pierre Strong,RB,2.6,NFL
+Pittsburgh Steelers,DEF,7.1,NFL
+Puka Nacua,WR,24.7,NFL
+Quinshon Judkins,RB,12.3,NFL
+RJ Harvey,RB,11.3,NFL
+Rashee Rice,WR,10.8,NFL
+Rasheen Ali,RB,0.5,NFL
+Rashid Shaheed,WR,7.0,NFL
+Rashod Bateman,WR,6.7,NFL
+Reggie Virgil,WR,0.5,NFL
+Rhamondre Stevenson,RB,12.0,NFL
+Rico Dowdle,RB,8.4,NFL
+Riley Nowakowski,RB,0.5,NFL
+Riley Nowakowski,TE,0.5,NFL
+Riley Patterson,K,5.4,NFL
+Robert Tonyan,TE,0.5,NFL
+Rome Odunze,WR,9.8,NFL
+Roschon Johnson,RB,4.8,NFL
+Ryan Fitzgerald,K,8.5,NFL
+Ryan Flournoy,WR,7.7,NFL
+Sam Darnold,QB,14.9,NFL
+Sam Howell,QB,0.9,NFL
+Sam LaPorta,TE,13.8,NFL
+Sam Roush,TE,1.4,NFL
+Samaje Perine,RB,5.9,NFL
+San Francisco 49ers,DEF,7.0,NFL
+Saquon Barkley,RB,11.0,NFL
+Savion Williams,WR,5.2,NFL
+Sean Tucker,RB,1.6,NFL
+Seattle Seahawks,DEF,7.8,NFL
+Seth McGowan,RB,2.2,NFL
+Seydou Traore,TE,0.5,NFL
+Shedeur Sanders,QB,0.9,NFL
+Sione Vaki,RB,3.3,NFL
+Spencer Rattler,QB,0.9,NFL
+Spencer Shrader,K,8.6,NFL
+Stetson Bennett,QB,1.0,NFL
+TJ Hockenson,TE,9.2,NFL
+Tahj Brooks,RB,0.5,NFL
+Tai Felton,WR,1.2,NFL
+Tampa Bay Buccaneers,DEF,5.6,NFL
+Tank Dell,WR,3.4,NFL
+Tanner McKee,QB,15.9,NFL
+Tay Martin,WR,0.5,NFL
+Teagan Quitoriano,TE,2.3,NFL
+Ted Hurst,WR,6.0,NFL
+Tee Higgins,WR,15.6,NFL
+Tennessee Titans,DEF,9.0,NFL
+Tetairoa McMillan,WR,14.5,NFL
+Tez Johnson,WR,4.3,NFL
+Theo Johnson,TE,2.7,NFL
+Thomas Fidone,TE,1.0,NFL
+Tim Patrick,WR,2.2,NFL
+Tip Reiman,TE,1.0,NFL
+Tommy DeVito,QB,0.5,NFL
+Tommy Tremble,TE,5.0,NFL
+Tony Pollard,RB,12.5,NFL
+Tory Horton,WR,3.2,NFL
+Travis Homer,RB,0.5,NFL
+Travis Kelce,TE,12.0,NFL
+Tre Tucker,WR,10.7,NFL
+TreVeyon Henderson,RB,7.1,NFL
+Trevor Etienne,RB,1.0,NFL
+Trey McBride,TE,15.7,NFL
+Trey Smack,K,8.1,NFL
+Treyton Welch,TE,0.5,NFL
+Troy Franklin,WR,4.9,NFL
+Tua Tagovailoa,QB,1.0,NFL
+Tucker Kraft,TE,12.1,NFL
+Tutu Atwell,WR,3.1,NFL
+Ty Simpson,QB,2.3,NFL
+Tyjae Spears,RB,7.0,NFL
+Tylan Wallace,WR,0.7,NFL
+Tyler Allgeier,RB,6.8,NFL
+Tyler Badie,RB,3.0,NFL
+Tyler Conklin,TE,0.5,NFL
+Tyler Goodson,RB,2.4,NFL
+Tyler Higbee,TE,9.1,NFL
+Tyler Huntley,QB,17.0,NFL
+Tyler Loop,K,8.4,NFL
+Tyler Shough,QB,17.3,NFL
+Tyler Warren,TE,8.3,NFL
+Tyrod Taylor,QB,1.0,NFL
+Tyrone Tracy,RB,6.0,NFL
+Tyson Bagent,QB,0.5,NFL
+Wan'Dale Robinson,WR,9.6,NFL
+Wil Lutz,K,7.8,NFL
+Will Kacmarek,TE,1.8,NFL
+Will Mallory,TE,1.8,NFL
+Will Reichard,K,10.1,NFL
+Woody Marks,RB,11.8,NFL
+Xavier Hutchinson,WR,4.2,NFL
+Xavier Worthy,WR,9.5,NFL
+Zach Charbonnet,RB,7.1,NFL
+Zach Ertz,TE,1.5,NFL
+Zachariah Branch,WR,3.2,NFL
+Zane Gonzalez,K,5.5,NFL
+Zavier Scott,RB,1.2,NFL
+Zavion Thomas,WR,1.3,NFL
+Zay Flowers,WR,17.1,NFL
+Zonovan Knight,RB,5.5,NFL
+AJ Barner,TE,7.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+AJ Brown,WR,14.6,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+AJ Dillon,RB,2.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Aaron Jones,RB,11.9,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Aaron Rodgers,QB,19.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Adam Randall,RB,1.0,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Adam Trautman,TE,1.6,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Adonai Mitchell,WR,6.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Alvin Kamara,RB,8.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Amon-Ra St Brown,WR,19.5,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Andre Szmyt,K,7.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Andres Borregales,K,6.5,"Combined (CBS, NFL, NumberFire)"
+Andrew Beck,RB,0.9,"Combined (CBS, NFL, NumberFire)"
+Andrew Ogletree,TE,1.3,"Combined (CBS, NFL, NumberFire)"
+Andy Borregales,K,6.8,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Anthony Gould,WR,0.4,"Combined (NFL, NumberFire, Sleeper)"
+Anthony Richardson,QB,0.5,"Combined (CBS, NFL, NumberFire)"
+Arizona Cardinals,DEF,5.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Ashton Dulin,WR,2.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Ashton Jeanty,RB,15.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Atlanta Falcons,DEF,5.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Audric Estime,RB,1.0,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Austin Hooper,TE,3.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Baker Mayfield,QB,17.0,"Combined (CBS, ESPN, NFL, NumberFire)"
+Baltimore Ravens,DEF,5.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Barion Brown,WR,0.7,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Bauer Sharp,TE,0.8,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Ben Skowronek,WR,3.5,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Ben Yurosek,TE,0.4,"Combined (NFL, NumberFire, Sleeper)"
+Bijan Robinson,RB,21.2,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Blake Corum,RB,7.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Blake Whiteheart,TE,2.0,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Bo Melton,WR,1.9,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Bo Nix,QB,19.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Brady Russell,RB,0.7,"Combined (CBS, NFL, NumberFire)"
+Braelon Allen,RB,9.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Brandin Cooks,WR,6.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Brandon Aubrey,K,8.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Brandon McManus,K,7.8,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Brashard Smith,RB,0.6,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Breece Hall,RB,12.6,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Brevin Jordan,TE,0.5,"Combined (NFL, NumberFire, Sleeper)"
+Brevyn Spann-Ford,TE,1.9,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Brian Robinson,RB,5.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Britain Covey,WR,0.4,"Combined (NFL, NumberFire, Sleeper)"
+Brock Bowers,TE,17.1,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Brock Purdy,QB,22.1,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Brock Wright,TE,2.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Bryce Lance,WR,4.6,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Bryce Young,QB,20.2,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Brycen Tremayne,WR,3.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Bucky Irving,RB,15.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+CJ Donaldson,RB,3.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+CJ Stroud,QB,20.9,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Cade Klubnik,QB,0.8,"Combined (CBS, NFL, NumberFire)"
+Cade Otton,TE,7.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Cade Stover,TE,1.5,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Cairo Santos,K,8.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Caleb Douglas,WR,6.9,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Caleb Williams,QB,19.3,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Calvin Ridley,WR,3.6,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Cam Skattebo,RB,6.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Cam Ward,QB,13.9,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Cameron Latu,TE,0.5,"Combined (NFL, NumberFire, Sleeper)"
+Carnell Tate,WR,11.6,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Carolina Panthers,DEF,6.8,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Carsen Ryan,TE,0.4,"Combined (NFL, NumberFire, Sleeper)"
+Carson Wentz,QB,1.0,"Combined (CBS, NFL, NumberFire)"
+Carter Runyon,TE,1.2,"Combined (CBS, NFL, NumberFire)"
+CeeDee Lamb,WR,18.3,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Chad Ryland,K,7.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Charlie Jones,WR,0.9,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Charlie Woerner,TE,1.8,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Chase Brown,RB,15.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Chase McLaughlin,K,7.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Chicago Bears,DEF,7.2,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Chimere Dike,WR,2.1,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Chris Bell,WR,5.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Chris Boswell,K,8.8,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Chris Godwin,WR,9.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Chris Manhertz,TE,0.8,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Chris Olave,WR,16.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Christian Kirk,WR,7.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Christian McCaffrey,RB,20.0,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Christian Watson,WR,16.7,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Chuba Hubbard,RB,16.6,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Cincinnati Bengals,DEF,5.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Cleveland Browns,DEF,9.0,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Cody White,WR,4.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Colbie Young,WR,4.0,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Colby Parkinson,TE,7.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Cole Kmet,TE,3.6,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Cole Payton,QB,0.4,"Combined (CBS, NFL, NumberFire)"
+Colston Loveland,TE,10.3,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Connor Heyward,RB,0.6,"Combined (NFL, NumberFire, Sleeper)"
+Connor Heyward,TE,2.7,"Combined (CBS, NFL, NumberFire)"
+Cooper Kupp,WR,6.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Corey Kiner,RB,2.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Courtland Sutton,WR,9.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Cyrus Allen,WR,1.5,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+D'Andre Swift,RB,15.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+DJ Giddens,RB,0.4,"Combined (CBS, NFL, NumberFire, Sleeper)"
+DJ Herman,RB,2.1,"Combined (CBS, NFL, NumberFire, Sleeper)"
+DK Metcalf,WR,13.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Dak Prescott,QB,18.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Dallas Cowboys,DEF,7.1,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Dallas Goedert,TE,10.8,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Dallen Bentley,TE,1.0,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Dalton Schultz,TE,8.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Dameon Pierce,RB,6.6,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Daniel Bellinger,TE,2.6,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Daniel Carlson,K,7.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Daniel Jones,QB,11.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Dare Ogunbowale,RB,0.8,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Dareke Young,WR,0.5,"Combined (NFL, NumberFire, Sleeper)"
+Darius Cooper,WR,3.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Darnell Mooney,WR,4.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Darnell Washington,TE,6.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Darren Waller,TE,7.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+David Montgomery,RB,9.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+David Moore,WR,1.4,"Combined (NFL, NumberFire, Sleeper)"
+Davis Allen,TE,3.3,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Davis Mills,QB,1.1,"Combined (CBS, NFL, NumberFire)"
+DeMario Douglas,WR,9.6,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+DeVonta Smith,WR,14.9,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Dean Connors,RB,0.4,"Combined (NFL, NumberFire, Sleeper)"
+DeeJay Dallas,RB,1.2,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Deion Burks,WR,2.6,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Demario Douglas,WR,10.1,"Combined (CBS, NFL, NumberFire)"
+Demond Claiborne,RB,1.0,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Denver Broncos,DEF,8.5,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Denzel Boston,WR,10.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Derrick Henry,RB,18.4,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Deshaun Watson,QB,15.9,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Detroit Lions,DEF,6.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Devaughn Vele,WR,9.9,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Devin Duvernay,WR,0.3,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Devin Singletary,RB,4.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Devontez Walker,WR,4.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Dohnte Meyers,WR,5.6,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Dominic Zvada,K,8.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Dont'e Thornton,WR,1.2,"Combined (ESPN, NFL, NumberFire)"
+Dontayvion Wicks,WR,7.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Drake London,WR,17.0,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Drake Maye,QB,21.4,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Drew Lock,QB,1.0,"Combined (CBS, NFL, NumberFire)"
+Drew Ogletree,TE,0.5,"Combined (NFL, NumberFire, Sleeper)"
+Drew Sample,TE,2.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Dylan Laube,RB,1.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Dylan Sampson,RB,6.5,"Combined (CBS, NFL, NumberFire, Sleeper)"
+EJ Jenkins,TE,1.0,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Eddy Pineiro,K,7.8,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Efton Chism,WR,6.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Eli Heidenreich,RB,0.8,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Eli Raridon,TE,5.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Eli Stowers,TE,0.8,"Combined (CBS, NFL, NumberFire)"
+Elic Ayomanor,WR,4.9,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Elijah Higgins,TE,3.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Elijah Moore,WR,0.4,"Combined (NFL, NumberFire, Sleeper)"
+Emanuel Wilson,RB,7.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Emari Demercado,RB,0.9,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Emeka Egbuka,WR,12.6,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Emmett Johnson,RB,4.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Eric Saubert,TE,1.4,"Combined (NFL, NumberFire, Sleeper)"
+Erick All,TE,2.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Evan Engram,TE,6.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Evan McPherson,K,8.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Feleipe Franks,TE,0.4,"Combined (NFL, NumberFire, Sleeper)"
+Fernando Mendoza,QB,1.0,"Combined (CBS, NFL, NumberFire)"
+Foster Moreau,TE,4.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Gardner Minshew,QB,0.9,"Combined (CBS, NFL, NumberFire)"
+Garrett Wilson,WR,16.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Gavin Bartholomew,TE,0.7,"Combined (NFL, NumberFire, Sleeper)"
+Geno Smith,QB,18.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+George Holani,RB,4.6,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+George Kittle,TE,15.9,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+George Pickens,WR,13.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Germie Bernard,WR,11.9,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Grant Calcaterra,TE,1.1,"Combined (CBS, NFL, NumberFire)"
+Green Bay Packers,DEF,4.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Greg Dulcich,TE,6.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Gunnar Helm,TE,4.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Harold Fannin,TE,10.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Harrison Butker,K,8.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Houston Texans,DEF,9.3,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Hunter Henry,TE,9.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Hunter Luepke,RB,1.2,"Combined (CBS, ESPN, NFL, NumberFire)"
+Ian Thomas,TE,1.2,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Indianapolis Colts,DEF,5.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Isaac Guerendo,RB,1.7,"Combined (CBS, NFL, NumberFire)"
+Isaac TeSlaa,WR,5.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Isaiah Bond,WR,2.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Isaiah Davis,RB,1.2,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Isaiah Likely,TE,13.4,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Isaiah Williams,WR,2.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+J Michael Sturdivant,WR,0.4,"Combined (NFL, NumberFire, Sleeper)"
+JJ McCarthy,QB,15.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+JK Dobbins,RB,11.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Ja'Kobi Lane,WR,7.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Ja'Marr Chase,WR,19.5,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Ja'Tavion Sanders,TE,0.8,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Jack Endries,TE,1.1,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Jack Stoll,TE,1.1,"Combined (CBS, NFL, NumberFire)"
+Jacob Cowing,WR,3.5,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Jacob Saylors,RB,0.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Jacoby Brissett,QB,15.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Jahan Dotson,WR,6.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Jahdae Walker,WR,0.6,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Jahmyr Gibbs,RB,25.4,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Jake Bates,K,8.4,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Jake Briningstool,TE,0.7,"Combined (NFL, NumberFire, Sleeper)"
+Jake Elliott,K,6.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Jake Ferguson,TE,7.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Jaleel McLaughlin,RB,3.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Jalen Brooks,WR,3.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Jalen Coker,WR,15.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Jalen Nailor,WR,4.9,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Jalen Royals,WR,3.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Jalen Tolbert,WR,0.8,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Jalon Daniels,QB,8.4,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Jameis Winston,QB,0.7,"Combined (CBS, NFL, NumberFire)"
+James Conner,RB,0.8,"Combined (CBS, NFL, NumberFire)"
+Jameson Williams,WR,11.6,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Jared Goff,QB,20.6,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Jared Wayne,WR,1.1,"Combined (NFL, NumberFire, Sleeper)"
+Jared Wiley,TE,1.1,"Combined (CBS, NFL, NumberFire)"
+Jarrett Stidham,QB,1.0,"Combined (CBS, NFL, NumberFire)"
+Jason Myers,K,8.5,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Jason Sanders,K,8.4,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Jauan Jennings,WR,4.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Javonte Williams,RB,16.0,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Jaxon Smith-Njigba,WR,21.0,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Jaydon Blue,RB,0.7,"Combined (CBS, NFL, NumberFire)"
+Jaylen Waddle,WR,11.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Jaylen Warren,RB,17.1,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Jaylen Wright,RB,4.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Jaylin Noel,WR,7.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Jelani Woods,TE,0.7,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Jeremiyah Love,RB,6.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Jeremy Ruckert,TE,3.6,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Jerry Jeudy,WR,5.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Joe Burrow,QB,21.2,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Joe Flacco,QB,0.8,"Combined (CBS, NFL, NumberFire)"
+Joe Milton,QB,1.0,"Combined (CBS, NFL, NumberFire)"
+Joe Royer,TE,1.2,"Combined (CBS, NFL, NumberFire)"
+Joey Slye,K,7.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+John Metchie,WR,3.2,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Johnny Mundt,TE,1.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Jonah Coleman,RB,8.0,"Combined (CBS, NFL, NumberFire)"
+Jonathan Mingo,WR,0.7,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Jonathan Taylor,RB,16.2,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Jonnu Smith,TE,2.9,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Jordan Addison,WR,10.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Jordan James,RB,0.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Jordan Love,QB,20.9,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Jordan Mason,RB,10.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Jordan Watkins,WR,7.2,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Jordan Whittington,WR,3.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Josh Cuevas,TE,2.4,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Josh Downs,WR,9.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Josh Jacobs,RB,13.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Josh Whyle,TE,0.8,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Joshua Dobbs,QB,1.1,"Combined (CBS, NFL, NumberFire)"
+Josiah Deguara,TE,1.5,"Combined (CBS, NFL, NumberFire)"
+Julius Chestnut,RB,0.4,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Justice Hill,RB,6.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Justin Fields,QB,1.0,"Combined (CBS, NFL, NumberFire)"
+Justin Jefferson,WR,17.8,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Justin Joly,TE,0.7,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Juwan Johnson,TE,9.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+KC Concepcion,WR,8.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Ka'imi Fairbairn,K,10.2,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+KaVontae Turpin,WR,2.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Kaden Wetjen,WR,0.3,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Kaelon Black,RB,5.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Kaleb Johnson,RB,0.5,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Kalif Raymond,WR,6.6,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Kameron Johnson,WR,0.5,"Combined (NFL, NumberFire, Sleeper)"
+Kansas City Chiefs,DEF,7.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Kareem Hunt,RB,7.2,"Combined (ESPN, NFL, NumberFire)"
+Kayshon Boutte,WR,4.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Kaytron Allen,RB,0.7,"Combined (CBS, NFL, NumberFire)"
+Keenan Allen,WR,9.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Kendre Miller,RB,8.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Kendrick Bourne,WR,8.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Kene Nwangwu,RB,0.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Kenneth Gainwell,RB,5.2,"Combined (CBS, NFL, NumberFire)"
+Kenneth Walker,RB,18.6,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Kenny Gainwell,RB,7.1,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Kenny Pickett,QB,1.0,"Combined (CBS, NFL, NumberFire)"
+Kenyon Sadiq,TE,7.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Kevin Coleman,WR,4.0,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Kirk Cousins,QB,18.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Ko Kieft,TE,0.4,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Konata Mumpfield,WR,6.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Kyle Juszczyk,RB,3.6,"Combined (CBS, ESPN, NFL, NumberFire)"
+Kyle McCord,QB,0.4,"Combined (CBS, NFL, NumberFire)"
+Kyle Monangai,RB,6.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Kyle Pitts,TE,9.6,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Kyle Williams,WR,4.5,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Kylen Granson,TE,0.6,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Kyler Murray,QB,19.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Kyren Williams,RB,19.2,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+LaJohntay Wester,WR,0.4,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Lamar Jackson,QB,17.5,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Laquon Treadwell,WR,4.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Las Vegas Raiders,DEF,4.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Lew Nichols,RB,0.9,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Lil'Jordan Humphrey,WR,1.9,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Los Angeles Rams,DEF,7.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Luke Farrell,TE,1.2,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Luke Musgrave,TE,1.2,"Combined (CBS, NFL, NumberFire)"
+Luke Schoonmaker,TE,1.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Luther Burden,WR,12.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Mac Jones,QB,1.0,"Combined (CBS, NFL, NumberFire)"
+Makai Lemon,WR,6.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Malachi Corley,WR,0.4,"Combined (NFL, NumberFire, Sleeper)"
+Malachi Fields,WR,5.9,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Malik Benson,WR,0.5,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Malik McClain,WR,0.4,"Combined (NFL, NumberFire, Sleeper)"
+Malik Nabers,WR,14.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Malik Washington,WR,10.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Malik Willis,QB,15.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+MarShawn Lloyd,RB,4.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Mark Andrews,TE,8.9,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Marlin Klein,TE,1.9,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Marquise Brown,WR,0.5,"Combined (NFL, NumberFire, Sleeper)"
+Marvin Harrison,WR,7.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Marvin Mims,WR,4.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Mason Rudolph,QB,1.0,"Combined (CBS, NFL, NumberFire)"
+Mason Taylor,TE,5.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Matt Gay,K,8.6,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Matt Hibner,TE,2.9,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Matthew Golden,WR,15.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Matthew Hibner,TE,1.6,"Combined (CBS, NFL, NumberFire)"
+Matthew Stafford,QB,20.3,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Max Bredeson,RB,0.4,"Combined (NFL, NumberFire, Sleeper)"
+Max Bredeson,TE,0.4,"Combined (CBS, NFL, NumberFire)"
+Max Klare,TE,1.4,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Miami Dolphins,DEF,5.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Michael Burton,RB,0.9,"Combined (CBS, NFL, NumberFire)"
+Michael Carter,RB,0.4,"Combined (NFL, NumberFire, Sleeper)"
+Michael Mayer,TE,7.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Michael Penix,QB,15.9,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Michael Wilson,WR,11.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Mike Gesicki,TE,8.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Mike Washington,RB,6.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Minnesota Vikings,DEF,9.5,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Mitch Tinsley,WR,1.1,"Combined (NFL, NumberFire, Sleeper)"
+Mitch Trubisky,QB,0.4,"Combined (CBS, NFL, NumberFire)"
+Mitchell Evans,TE,2.2,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Mo Alie-Cox,TE,1.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Myles Price,WR,0.4,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Nate Adkins,TE,3.2,"Combined (CBS, NFL, NumberFire, Sleeper)"
+New England Patriots,DEF,5.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+New Orleans Saints,DEF,5.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+New York Giants,DEF,4.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+New York Jets,DEF,8.9,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Nicholas Singleton,RB,0.6,"Combined (CBS, NFL, NumberFire)"
+Nick Chubb,RB,9.1,"Combined (ESPN, NFL, NumberFire)"
+Nick Folk,K,7.6,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Nick Vannett,TE,1.1,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Nico Collins,WR,17.5,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Nikko Remigio,WR,0.3,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Noah Fant,TE,5.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Noah Gray,TE,3.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Olamide Zaccheaus,WR,3.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Ollie Gordon,RB,11.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Omar Cooper,WR,9.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Oscar Delp,TE,1.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Pat Freiermuth,TE,9.6,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Patrick Mahomes,QB,17.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Patrick Ricard,RB,0.4,"Combined (CBS, ESPN, NFL, NumberFire)"
+Payne Durham,TE,1.0,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Pharaoh Brown,TE,0.6,"Combined (NFL, NumberFire, Sleeper)"
+Philadelphia Eagles,DEF,5.6,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Pierre Strong,RB,2.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Pittsburgh Steelers,DEF,7.3,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Puka Nacua,WR,24.0,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Quinshon Judkins,RB,12.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+RJ Harvey,RB,10.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Rashee Rice,WR,10.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Rasheen Ali,RB,0.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Rashid Shaheed,WR,7.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Rashod Bateman,WR,6.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Reggie Virgil,WR,0.4,"Combined (NFL, NumberFire, Sleeper)"
+Rhamondre Stevenson,RB,11.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Rico Dowdle,RB,8.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Riley Nowakowski,RB,0.4,"Combined (NFL, NumberFire, Sleeper)"
+Riley Nowakowski,TE,0.4,"Combined (CBS, NFL, NumberFire)"
+Riley Patterson,K,5.5,"Combined (ESPN, NFL, NumberFire)"
+Robert Tonyan,TE,0.4,"Combined (NFL, NumberFire, Sleeper)"
+Rome Odunze,WR,10.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Roschon Johnson,RB,4.7,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Ryan Fitzgerald,K,8.5,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Ryan Flournoy,WR,7.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Sam Darnold,QB,15.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Sam Howell,QB,0.9,"Combined (CBS, NFL, NumberFire)"
+Sam LaPorta,TE,12.9,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Sam Roush,TE,1.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Samaje Perine,RB,5.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+San Francisco 49ers,DEF,6.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Saquon Barkley,RB,11.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Savion Williams,WR,5.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Sean Tucker,RB,1.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Seattle Seahawks,DEF,7.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Seth McGowan,RB,2.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Seydou Traore,TE,0.5,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Shedeur Sanders,QB,0.9,"Combined (CBS, NFL, NumberFire)"
+Sione Vaki,RB,3.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Spencer Rattler,QB,0.9,"Combined (CBS, NFL, NumberFire)"
+Spencer Shrader,K,8.7,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Stetson Bennett,QB,1.0,"Combined (CBS, NFL, NumberFire)"
+TJ Hockenson,TE,10.0,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Tahj Brooks,RB,0.5,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Tai Felton,WR,1.2,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Tampa Bay Buccaneers,DEF,5.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Tank Dell,WR,3.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Tanner McKee,QB,15.6,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Tay Martin,WR,0.4,"Combined (NFL, NumberFire, Sleeper)"
+Teagan Quitoriano,TE,2.4,"Combined (CBS, ESPN, NFL, NumberFire)"
+Ted Hurst,WR,6.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Tee Higgins,WR,15.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Tennessee Titans,DEF,9.0,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Tetairoa McMillan,WR,14.9,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Tez Johnson,WR,4.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Theo Johnson,TE,2.9,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Thomas Fidone,TE,1.0,"Combined (CBS, NFL, NumberFire)"
+Tim Patrick,WR,2.2,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Tip Reiman,TE,1.0,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Tommy DeVito,QB,0.5,"Combined (CBS, NFL, NumberFire)"
+Tommy Tremble,TE,5.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Tony Pollard,RB,12.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Tory Horton,WR,3.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Travis Homer,RB,0.4,"Combined (NFL, NumberFire, Sleeper)"
+Travis Kelce,TE,11.5,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Tre Tucker,WR,10.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+TreVeyon Henderson,RB,7.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Trevor Etienne,RB,1.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Trey McBride,TE,15.4,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Trey Smack,K,8.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Treyton Welch,TE,0.4,"Combined (NFL, NumberFire, Sleeper)"
+Troy Franklin,WR,4.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Tua Tagovailoa,QB,1.0,"Combined (CBS, NFL, NumberFire)"
+Tucker Kraft,TE,11.6,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Tutu Atwell,WR,3.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Ty Simpson,QB,2.3,"Combined (CBS, NFL, NumberFire)"
+Tyjae Spears,RB,6.9,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Tylan Wallace,WR,0.8,"Combined (NFL, NumberFire, Sleeper)"
+Tyler Allgeier,RB,6.9,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Tyler Badie,RB,3.0,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Tyler Conklin,TE,0.5,"Combined (NFL, NumberFire, Sleeper)"
+Tyler Goodson,RB,2.5,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Tyler Higbee,TE,9.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Tyler Huntley,QB,17.2,"Combined (CBS, NFL, NumberFire)"
+Tyler Loop,K,8.2,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Tyler Shough,QB,17.6,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Tyler Warren,TE,8.1,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Tyrod Taylor,QB,1.0,"Combined (CBS, NFL, NumberFire)"
+Tyrone Tracy,RB,6.3,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Tyson Bagent,QB,0.5,"Combined (CBS, NFL, NumberFire)"
+Wan'Dale Robinson,WR,9.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Wil Lutz,K,7.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Will Kacmarek,TE,1.8,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Will Mallory,TE,1.9,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Will Reichard,K,10.4,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Woody Marks,RB,11.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Xavier Hutchinson,WR,4.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Xavier Worthy,WR,9.8,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Zach Charbonnet,RB,7.2,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Zach Ertz,TE,1.5,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Zachariah Branch,WR,3.4,"Combined (CBS, ESPN, NFL, NumberFire, Sleeper)"
+Zane Gonzalez,K,5.6,"Combined (CBS, NFL, NumberFire, Sleeper)"
+Zavier Scott,RB,1.2,"Combined (CBS, NFL, NumberFire)"
+Zavion Thomas,WR,1.2,"Combined (ESPN, NFL, NumberFire, Sleeper)"
+Zay Flowers,WR,18.0,"Combined (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)"
+Zonovan Knight,RB,5.6,"Combined (CBS, NFL, NumberFire, Sleeper)"

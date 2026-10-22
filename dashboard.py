@@ -1,10 +1,20 @@
 import streamlit as st
 import requests
 import pandas as pd
+import numpy as np
 import os
 import time
 from datetime import datetime
 from pandas.errors import EmptyDataError
+from collections import Counter
+from backtester import (
+    load_backtest_data, 
+    compute_model_metrics, 
+    compute_positional_breakdown, 
+    compute_extreme_misses,
+    enrich_backtest_evaluations,
+    build_historical_backtest_data
+)
 
 # ─── Config ───────────────────────────────────────────────────────────────────
 PROJ_FILE       = "projections_combined.csv"
@@ -12,44 +22,200 @@ COMPARISON_FILE = "projections_combined_comparison.csv"
 FALLBACK_FILE   = "projections_fallback.csv"
 FRESHNESS_HOURS = 24
 
+st.set_page_config(
+    page_title="NFL Predictive Analytics & Lineup Optimizer", 
+    page_icon=None, 
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# ─── Modern Minimalist Aesthetic Theme (Eucalyptus / Sage & Block Typography) ──
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+/* Global Canvas & Typography */
+html, body, [class*="css"], [data-testid="stAppViewContainer"] {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    background-color: #F8F9F7 !important;
+    color: #141714 !important;
+}
+
+/* Block Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    letter-spacing: -0.02em !important;
+    font-weight: 700 !important;
+    color: #141714 !important;
+}
+
+/* Thin Minimalist Dividers */
+hr {
+    border: none !important;
+    border-top: 1px solid #E2E7E2 !important;
+    margin: 22px 0 !important;
+}
+
+/* Metric KPI Containers (Rhode / Summer Fridays clean boxes) */
+div[data-testid="stMetric"] {
+    background-color: #FFFFFF !important;
+    border: 1px solid #E2E7E2 !important;
+    border-radius: 6px !important;
+    padding: 12px 16px !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+}
+div[data-testid="stMetricLabel"] {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    color: #5B705E !important;
+}
+div[data-testid="stMetricValue"] {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-size: 1.55rem !important;
+    font-weight: 700 !important;
+    color: #141714 !important;
+}
+
+/* Minimalist Pill Tabs */
+button[data-baseweb="tab"] {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+    padding: 8px 14px !important;
+    border-radius: 4px !important;
+    color: #626A62 !important;
+    background-color: transparent !important;
+    border: none !important;
+    transition: all 0.15s ease !important;
+}
+button[data-baseweb="tab"]:hover {
+    color: #141714 !important;
+    background-color: #EEF2EE !important;
+}
+button[data-baseweb="tab"][aria-selected="true"] {
+    color: #141714 !important;
+    background-color: #E2EBE2 !important;
+}
+div[data-baseweb="tab-highlight"], div[data-baseweb="tab-border"] {
+    display: none !important;
+}
+
+/* Modern Matte Sage Buttons */
+.stButton > button {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-size: 0.76rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    background-color: #5B705E !important;
+    color: #FFFFFF !important;
+    border-radius: 4px !important;
+    border: none !important;
+    padding: 7px 16px !important;
+    transition: all 0.15s ease !important;
+}
+.stButton > button:hover {
+    background-color: #4A5C4C !important;
+    color: #FFFFFF !important;
+}
+
+/* Minimalist Light Sidebar */
+section[data-testid="stSidebar"] {
+    background-color: #F1F4F1 !important;
+    border-right: 1px solid #E2E7E2 !important;
+}
+section[data-testid="stSidebar"] h2 {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    color: #141714 !important;
+}
+
+/* Clean Info and Warning Cards */
+div[data-testid="stAlert"] {
+    border-radius: 4px !important;
+    border: 1px solid #E2E7E2 !important;
+    background-color: #FFFFFF !important;
+    color: #141714 !important;
+}
+
+/* Progress bar color */
+div[data-testid="stProgress"] > div > div > div > div {
+    background-color: #5B705E !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# NFL Team Abbreviation Mapping for Defenses
+TEAM_ABBR_MAP = {
+    'ARI': 'Arizona Cardinals', 'ATL': 'Atlanta Falcons', 'BAL': 'Baltimore Ravens',
+    'BUF': 'Buffalo Bills', 'CAR': 'Carolina Panthers', 'CHI': 'Chicago Bears',
+    'CIN': 'Cincinnati Bengals', 'CLE': 'Cleveland Browns', 'DAL': 'Dallas Cowboys',
+    'DEN': 'Denver Broncos', 'DET': 'Detroit Lions', 'GB': 'Green Bay Packers',
+    'HOU': 'Houston Texans', 'IND': 'Indianapolis Colts', 'JAX': 'Jacksonville Jaguars',
+    'KC': 'Kansas City Chiefs', 'LAC': 'Los Angeles Chargers', 'LAR': 'Los Angeles Rams',
+    'LV': 'Las Vegas Raiders', 'MIA': 'Miami Dolphins', 'MIN': 'Minnesota Vikings',
+    'NE': 'New England Patriots', 'NO': 'New Orleans Saints', 'NYG': 'New York Giants',
+    'NYJ': 'New York Jets', 'PHI': 'Philadelphia Eagles', 'PIT': 'Pittsburgh Steelers',
+    'SEA': 'Seattle Seahawks', 'SF': 'San Francisco 49ers', 'TB': 'Tampa Bay Buccaneers',
+    'TEN': 'Tennessee Titans', 'WAS': 'Washington Commanders'
+}
+
 # ─── Data Loading ──────────────────────────────────────────────────────────────
-@st.cache_data
-def get_data(league_id):
+@st.cache_data(ttl=600)
+def get_sleeper_data(league_id):
     try:
-        users   = requests.get(f'https://api.sleeper.app/v1/league/{league_id}/users').json()
-        rosters = requests.get(f'https://api.sleeper.app/v1/league/{league_id}/rosters').json()
-        league  = requests.get(f'https://api.sleeper.app/v1/league/{league_id}').json()
-        players = requests.get('https://api.sleeper.app/v1/players/nfl').json()
+        users   = requests.get(f'https://api.sleeper.app/v1/league/{league_id}/users', timeout=10).json()
+        rosters = requests.get(f'https://api.sleeper.app/v1/league/{league_id}/rosters', timeout=10).json()
+        league  = requests.get(f'https://api.sleeper.app/v1/league/{league_id}', timeout=10).json()
+        players = requests.get('https://api.sleeper.app/v1/players/nfl', timeout=15).json()
         return users, rosters, players, league
     except Exception as e:
-        st.error(f"Data load error: {e}")
+        st.error(f"Sleeper data load error: {e}")
         return [], [], {}, {}
 
-@st.cache_data
+@st.cache_data(ttl=600)
+def get_sleeper_matchups(league_id, week):
+    try:
+        matchups = requests.get(f'https://api.sleeper.app/v1/league/{league_id}/matchups/{week}', timeout=10).json()
+        return matchups if isinstance(matchups, list) else []
+    except Exception as e:
+        st.error(f"Error fetching matchups for week {week}: {e}")
+        return []
+
+@st.cache_data(ttl=60)
 def load_projections():
     try:
         df = pd.read_csv(PROJ_FILE)
     except (FileNotFoundError, EmptyDataError):
-        st.warning("⚠️ Live projections unavailable. Using fallback data.")
+        st.warning("Live projections unavailable. Using fallback data.")
         try:
             df = pd.read_csv(FALLBACK_FILE)
         except (FileNotFoundError, EmptyDataError):
-            st.error("❌ No projection data available. Please run the scraper.")
+            st.error("No projection data available. Please run weekly_scraper.py.")
             return pd.DataFrame({"player_name": [], "proj_points": [], "position": [], "source": []})
-    df['player_name'] = df['player_name'].str.strip()
-    df['position']    = df['position'].str.upper()
+    
+    df['player_name'] = df['player_name'].astype(str).str.strip()
+    df['position']    = df['position'].astype(str).str.upper()
     df['proj_points'] = pd.to_numeric(df['proj_points'], errors='coerce')
-    # Add source column if it doesn't exist (for backward compatibility)
     if 'source' not in df.columns:
-        df['source'] = 'FantasyPros'
-    return df.dropna()
+        df['source'] = 'Combined'
+    return df.dropna(subset=['proj_points', 'player_name'])
 
-@st.cache_data  
+@st.cache_data(ttl=60)  
 def load_comparison_data():
-    """Load side-by-side comparison data from multiple sources"""
     try:
         df = pd.read_csv(COMPARISON_FILE)
-        return df
+        df['player_name'] = df['player_name'].astype(str).str.strip()
+        df['proj_points'] = pd.to_numeric(df['proj_points'], errors='coerce')
+        return df.dropna()
     except (FileNotFoundError, EmptyDataError):
         return pd.DataFrame()
 
@@ -58,574 +224,1043 @@ def is_file_stale(path, max_age_hours=FRESHNESS_HOURS):
         return True
     return (time.time() - os.path.getmtime(path)) > (max_age_hours * 3600)
 
-# ─── Helpers ───────────────────────────────────────────────────────────────────
+# ─── Analytical Helpers ────────────────────────────────────────────────────────
 def get_player_name(pid, players):
-    return players.get(pid, {}).get('full_name', 'Unknown')
+    pid_str = str(pid).upper()
+    if pid_str in TEAM_ABBR_MAP:
+        return TEAM_ABBR_MAP[pid_str]
+    p = players.get(str(pid), {})
+    name = p.get('full_name') or f"{p.get('first_name', '')} {p.get('last_name', '')}".strip()
+    return name if name else str(pid)
 
 def get_player_position(pid, players):
-    return players.get(pid, {}).get('position', 'UNK')
+    pid_str = str(pid).upper()
+    if pid_str in TEAM_ABBR_MAP:
+        return 'DEF'
+    return players.get(str(pid), {}).get('position', 'UNK')
 
 def get_projection(name, proj_df, source=None):
-    """Get projection for a player, optionally filtered by source"""
     if not name or name == 'Unknown':
         return 0.0
     
-    # Try exact match first
-    mask = proj_df['player_name'].str.lower() == name.lower()
-    if source:
-        mask = mask & (proj_df['source'] == source)
-    row = proj_df[mask]
+    clean_name = name.lower().replace('.', '').strip()
     
+    # 1. Exact Name Match
+    mask = proj_df['player_name'].str.lower().str.replace('.', '', regex=False) == clean_name
+    if source and source != 'Best Available (Combined)':
+        mask = mask & (proj_df['source'] == source)
+    
+    row = proj_df[mask]
     if not row.empty:
         return float(row['proj_points'].values[0])
     
-    # Special handling for defenses (e.g., "Vikings D/ST" vs "Minnesota Vikings")
-    if 'd/st' in name.lower() or 'def' in name.lower():
-        # Extract team name from "Vikings D/ST" format
-        team_name = name.lower().replace(' d/st', '').replace(' def', '').strip()
-        # Search for any defense with that team name
-        mask = (proj_df['player_name'].str.lower().str.contains(team_name, na=False)) & \
-               (proj_df['position'].str.upper().isin(['DEF', 'DST']))
-        if source:
-            mask = mask & (proj_df['source'] == source)
-        row = proj_df[mask]
-        if not row.empty:
-            return float(row['proj_points'].max())
-    
-    # Try partial match (last name)
-    name_parts = name.lower().split()
-    if len(name_parts) > 1:
-        last_name = name_parts[-1]
-        mask = proj_df['player_name'].str.lower().str.contains(last_name, na=False)
-        if source:
-            mask = mask & (proj_df['source'] == source)
-        row = proj_df[mask]
-        if not row.empty:
-            # Return the highest projection if multiple matches
-            return float(row['proj_points'].max())
-    
+    # 2. Defense Matching: match city, team name, or abbreviation
+    for abbr, full_team in TEAM_ABBR_MAP.items():
+        if clean_name in full_team.lower() or clean_name == abbr.lower():
+            def_mask = (
+                proj_df['player_name'].str.lower().str.contains(full_team.lower(), na=False) |
+                proj_df['player_name'].str.lower().str.contains(abbr.lower(), na=False) |
+                proj_df['player_name'].str.lower().str.contains(full_team.split()[-1].lower(), na=False)
+            ) & (proj_df['position'].isin(['DEF', 'DST']))
+            
+            if source and source != 'Best Available (Combined)':
+                def_mask = def_mask & (proj_df['source'] == source)
+            def_row = proj_df[def_mask]
+            if not def_row.empty:
+                return float(def_row['proj_points'].max())
+
+    # 3. Last Name Fallback
+    parts = clean_name.split()
+    if len(parts) > 1:
+        last = parts[-1]
+        last_mask = proj_df['player_name'].str.lower().str.endswith(last)
+        if source and source != 'Best Available (Combined)':
+            last_mask = last_mask & (proj_df['source'] == source)
+        l_row = proj_df[last_mask]
+        if not l_row.empty:
+            return float(l_row['proj_points'].values[0])
+            
     return 0.0
 
-def get_projection_comparison(name, proj_df):
-    """Get all projections for a player from different sources"""
-    player_rows = proj_df[proj_df['player_name'].str.lower() == name.lower()]
-    if player_rows.empty:
-        return {}
+def calculate_player_range(name, proj_points, comp_df):
+    if comp_df.empty:
+        floor = round(max(proj_points * 0.65, 0), 1)
+        ceil  = round(proj_points * 1.35, 1)
+        return floor, ceil, 0.0
     
-    comparison = {}
-    for _, row in player_rows.iterrows():
-        source = row.get('source', 'Unknown')
-        comparison[source] = float(row['proj_points'])
-    return comparison
+    p_rows = comp_df[comp_df['player_name'].str.lower() == name.lower()]
+    if len(p_rows) > 1:
+        pts = p_rows['proj_points'].values
+        spread = round(abs(pts.max() - pts.min()), 1)
+        floor = round(max(min(pts) * 0.85, 0), 1)
+        ceil = round(max(pts) * 1.25, 1)
+        return floor, ceil, spread
+    else:
+        floor = round(max(proj_points * 0.7, 0), 1)
+        ceil = round(proj_points * 1.3, 1)
+        return floor, ceil, 0.0
 
-def build_optimal_lineup(player_ids, players, proj_df, roster_positions):
-    """Build optimal lineup based on league-specific roster configuration"""
-    # Build player entries with projections
+def build_optimal_lineup(player_ids, players, proj_df, comp_df, roster_positions):
     entries = []
     for pid in player_ids:
         name  = get_player_name(pid, players)
         pos   = get_player_position(pid, players)
         pts   = get_projection(name, proj_df)
-        entries.append({'id': pid, 'name': name, 'pos': pos, 'points': pts})
+        fl, cl, sp = calculate_player_range(name, pts, comp_df)
+        entries.append({'id': pid, 'name': name, 'pos': pos, 'points': pts, 'floor': fl, 'ceil': cl, 'spread': sp})
+        
     df = pd.DataFrame(entries).sort_values('points', ascending=False)
-
-    # Initialize lineup as ordered list to preserve position order
     lineup = []
     used = set()
     
     def assign_best(slot_name, eligible_positions):
-        """Assign best available player for this slot"""
         for _, r in df.iterrows():
             if r['id'] not in used and r['pos'] in eligible_positions:
-                lineup.append({
-                    'slot': slot_name,
-                    'player': r.to_dict()
-                })
+                lineup.append({'slot': slot_name, 'player': r.to_dict()})
                 used.add(r['id'])
                 return True
-        # If no player found, add empty slot
-        lineup.append({
-            'slot': slot_name,
-            'player': None
-        })
+        lineup.append({'slot': slot_name, 'player': None})
         return False
     
-    # Process roster positions - don't number single slots
     position_counters = {}
-    
     for slot in roster_positions:
-        # Count how many of each position we've seen
-        base_slot = slot
         if slot in position_counters:
             position_counters[slot] += 1
             slot_name = f"{slot} {position_counters[slot]}"
         else:
             position_counters[slot] = 1
-            # Only add number if there are multiple of this position
             total_count = roster_positions.count(slot)
             slot_name = f"{slot} 1" if total_count > 1 else slot
         
-        # Define eligible positions for each slot type
-        if slot == 'QB':
-            assign_best(slot_name, ['QB'])
-        elif slot == 'RB':
-            assign_best(slot_name, ['RB'])
-        elif slot == 'WR':
-            assign_best(slot_name, ['WR'])
-        elif slot == 'TE':
-            assign_best(slot_name, ['TE'])
-        elif slot == 'K':
-            assign_best(slot_name, ['K'])
-        elif slot in ['DEF', 'DST']:
-            assign_best(slot_name, ['DEF'])
-        elif slot in ['FLEX', 'REC_FLEX', 'WRT']:
-            assign_best(slot_name, ['RB', 'WR', 'TE'])
-        elif slot in ['SUPER_FLEX', 'OP']:
-            assign_best(slot_name, ['QB', 'RB', 'WR', 'TE'])
-        elif slot == 'RB/WR':
-            assign_best(slot_name, ['RB', 'WR'])
-        elif slot == 'WR/TE':
-            assign_best(slot_name, ['WR', 'TE'])
-        elif slot == 'RB/WR/TE':
-            assign_best(slot_name, ['RB', 'WR', 'TE'])
-        elif slot == 'TQB':
-            assign_best(slot_name, ['QB'])
+        if slot == 'QB': assign_best(slot_name, ['QB'])
+        elif slot == 'RB': assign_best(slot_name, ['RB'])
+        elif slot == 'WR': assign_best(slot_name, ['WR'])
+        elif slot == 'TE': assign_best(slot_name, ['TE'])
+        elif slot == 'K': assign_best(slot_name, ['K'])
+        elif slot in ['DEF', 'DST']: assign_best(slot_name, ['DEF'])
+        elif slot in ['FLEX', 'REC_FLEX', 'WRT']: assign_best(slot_name, ['RB', 'WR', 'TE'])
+        elif slot in ['SUPER_FLEX', 'OP']: assign_best(slot_name, ['QB', 'RB', 'WR', 'TE'])
     
     return lineup
 
-def get_bench_recommendations(player_ids, players, proj_df, optimal):
-    all_ids     = set(player_ids)
-    optimal_ids = {slot['player']['id'] for slot in optimal if slot['player'] is not None}
-    bench_ids   = all_ids - optimal_ids
+# ─── Editorial Brand Header (Rhode / Summer Fridays Inspired) ──────────────────
+st.markdown("""
+<div style="padding: 6px 0 20px 0; border-bottom: 1px solid #E2E7E2; margin-bottom: 24px;">
+    <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #5B705E; margin-bottom: 4px;">
+        Predictive Intelligence / Consensus Model
+    </div>
+    <div style="font-family: 'Space Grotesk', sans-serif; font-size: 2.3rem; font-weight: 700; letter-spacing: -0.03em; color: #141714; line-height: 1.1;">
+        NFL PREDICTIVE ANALYTICS & OPTIMIZER
+    </div>
+    <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem; color: #5E665E; margin-top: 6px;">
+        Multi-source ensemble forecasting, matchup simulation, and historical backtesting.
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
-    recs = []
-    for pid in bench_ids:
-        name = get_player_name(pid, players)
-        pos  = get_player_position(pid, players)
-        pts  = get_projection(name, proj_df)
-        recs.append({'name': name, 'pos': pos, 'points': pts})
+projections = load_projections()
+comp_data = load_comparison_data()
 
-    return pd.DataFrame(recs).sort_values('points', ascending=False)
-
-# ─── Streamlit App ────────────────────────────────────────────────────────────
-st.set_page_config(page_title="Fantasy Dashboard", layout="wide")
-st.title("🏈 Fantasy Start/Sit Dashboard")
-
-# Health check
 if is_file_stale(PROJ_FILE):
-    st.warning("⚠️ Projections data is over 24 hours old — accuracy may suffer.")
+    st.warning("Projections data is over 24 hours old. Run `python weekly_scraper.py` to refresh.")
 
-# Sidebar for league configuration
+# ─── Sidebar Configuration ───────────────────────────────────────────────────
 with st.sidebar:
-    st.header("⚙️ Your League")
-    
-    league_platform = st.radio(
-        "Choose your league platform:",
-        ["Sleeper", "ESPN"],
-        help="Select which fantasy platform your league uses"
-    )
-    
-    # Initialize variables
+    st.header("League Settings")
+    league_platform = st.radio("Platform", ["Sleeper", "ESPN"])
     sleeper_league_id = ""
     espn_league_id = ""
-    espn_s2 = ""
-    swid = ""
     
     if league_platform == "Sleeper":
-        st.subheader("🏈 Sleeper League")
-        sleeper_league_id = st.text_input(
-            "Sleeper League ID",
-            value="",
-            placeholder="e.g., 1185263580356419584",
-            help="Find this in your Sleeper league URL: sleeper.app/leagues/YOUR_LEAGUE_ID"
-        )
-        if not sleeper_league_id:
-            st.info("Enter your League ID to get started!")
-            st.markdown("**How to find it:** Open your league on Sleeper and copy the ID from the URL")
+        sleeper_league_id = st.text_input("Sleeper League ID", value="1337487447067492352", placeholder="e.g. 1185263580356419584")
+    else:
+        espn_league_id = st.text_input("ESPN League ID", value="", placeholder="e.g. 529882810")
+        espn_s2 = st.text_input("ESPN_S2 (Private)", type="password")
+        swid = st.text_input("SWID (Private)", type="password")
     
-    else:  # ESPN
-        st.subheader("🏈 ESPN League")
-        espn_league_id = st.text_input(
-            "ESPN League ID",
-            value="",
-            placeholder="e.g., 529882810",
-            help="Find this in your ESPN league URL"
-        )
-        
-        with st.expander("🔐 ESPN Authentication (for private leagues)", expanded=False):
-            st.caption("Private leagues require these cookies from your browser:")
-            espn_s2 = st.text_input(
-                "ESPN_S2 Cookie",
-                value="",
-                type="password",
-                help="Find in browser cookies after logging into ESPN"
-            )
-            swid = st.text_input(
-                "SWID Cookie",
-                value="",
-                type="password",
-                help="Format: {XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}"
-            )
-            st.caption("⚠️ These are stored only in your browser session")
+    st.markdown("---")
+    st.header("Model Settings")
+    base_models = sorted([s for s in projections['source'].unique() if not s.startswith('Combined')])
+    source_options = ['Best Available (Combined)'] + base_models
+    selected_source = st.selectbox("Forecast Model", source_options)
 
-# Load league data based on selected platform
+    if st.button("Reload Projections", help="Clear cache and reload latest scraper projections"):
+        st.cache_data.clear()
+        st.rerun()
+
+    # Week selection
+    selected_week = st.number_input("NFL Week", min_value=1, max_value=18, value=7, step=1)
+
+# Filter projection source
+if selected_source == 'Best Available (Combined)':
+    working_projections = projections[projections['source'].str.contains('Combined', na=False)]
+    if working_projections.empty:
+        working_projections = projections
+else:
+    working_projections = projections[projections['source'] == selected_source]
+
+# Load Platform League Data
 if league_platform == "Sleeper":
     if not sleeper_league_id:
-        st.info("👈 Enter your Sleeper League ID in the sidebar to continue")
+        st.info("Enter your Sleeper League ID in the sidebar to load your roster.")
         st.stop()
-    users, rosters, players, league_settings = get_data(sleeper_league_id)
-    
-    # Extract roster configuration from Sleeper league settings
+    users, rosters, players, league_settings = get_sleeper_data(sleeper_league_id)
     all_positions = league_settings.get('roster_positions', [])
-    # Filter out bench, IR, taxi, and other non-starting slots - we only want starting positions
     non_starting_slots = ['BN', 'IR', 'TAXI', 'RES', 'PRACTICE_SQUAD']
     roster_positions = [pos for pos in all_positions if pos not in non_starting_slots]
-    league_name = league_settings.get('name', 'Your League')
-else:  # ESPN
+    league_name = league_settings.get('name', 'Sleeper League')
+else:
     if not espn_league_id:
-        st.info("👈 Enter your ESPN League ID in the sidebar to continue")
+        st.info("Enter your ESPN League ID in the sidebar to load your roster.")
         st.stop()
-    
-    # Load ESPN league data
     try:
         from espn_api.football import League
-        
-        if espn_s2 and swid:
-            league = League(league_id=int(espn_league_id), year=2025, espn_s2=espn_s2, swid=swid)
-        else:
-            league = League(league_id=int(espn_league_id), year=2025)
-        
-        # Convert ESPN data to similar format as Sleeper
-        users = [{'user_id': str(team.team_id), 'display_name': team.team_name or f"Team {team.team_id}"} 
-                 for team in league.teams]
-        
-        # Get all NFL players for name lookups
-        players_response = requests.get('https://api.sleeper.app/v1/players/nfl').json()
-        players = players_response
-        
-        # Extract roster configuration from ESPN league settings
-        roster_positions = []
-        league_name = league.settings.name if hasattr(league.settings, 'name') else 'Your League'
-        
-        # Use standard ESPN roster format
-        try:
-            # Standard ESPN lineup: 1 QB, 2 RB, 2 WR, 1 TE, 1 FLEX, 1 DST, 1 K
-            roster_positions = ['QB', 'RB', 'RB', 'WR', 'WR', 'TE', 'FLEX', 'DST', 'K']
-        
-        except Exception as e:
-            st.warning(f"⚠️ Error parsing ESPN roster settings: {e}. Using standard lineup.")
-            roster_positions = ['QB', 'RB', 'RB', 'WR', 'WR', 'TE', 'FLEX', 'DST', 'K']
-        
-        # Build rosters from ESPN teams
+        league = League(league_id=int(espn_league_id), year=2025, espn_s2=espn_s2 or None, swid=swid or None)
+        users = [{'user_id': str(t.team_id), 'display_name': t.team_name or f"Team {t.team_id}"} for t in league.teams]
+        players = requests.get('https://api.sleeper.app/v1/players/nfl').json()
+        roster_positions = ['QB', 'RB', 'RB', 'WR', 'WR', 'TE', 'FLEX', 'DST', 'K']
+        league_name = getattr(league.settings, 'name', 'ESPN League')
         rosters = []
         for team in league.teams:
-            roster_players = []
-            starters = []
-            for player in team.roster:
-                # Try to find player in Sleeper database by name AND position matching
-                player_name = player.name
-                player_pos = player.position if hasattr(player, 'position') else None
-                matching_player = None
-                
-                # Special handling for defenses - ESPN uses "D/ST", Sleeper uses "DEF"
-                if player_pos in ['D/ST', 'DEF']:
-                    # Find defense by team name
-                    for pid, pdata in players.items():
-                        if pdata.get('position') == 'DEF':
-                            sleeper_name = pdata.get('full_name', '').lower()
-                            # Extract team name from ESPN format (e.g., "Vikings D/ST")
-                            espn_team = player_name.lower().replace(' d/st', '').replace(' def', '').strip()
-                            # Check if team name appears in Sleeper defense name
-                            if espn_team in sleeper_name or sleeper_name.split()[-1] in espn_team:
-                                matching_player = pid
-                                break
-                
-                # Try exact match with position check for regular players
-                if not matching_player:
-                    for pid, pdata in players.items():
-                        if pdata.get('full_name', '').lower() == player_name.lower():
-                            # Check position matches to avoid duplicate names
-                            if player_pos and pdata.get('position') == player_pos:
-                                matching_player = pid
-                                break
-                            # If no position info, use first match (kicker)
-                            elif not player_pos or player_pos == 'K':
-                                matching_player = pid
-                                break
-                
-                # If no exact match, try partial match (for cases like "D. Smith" vs "David Smith")
-                if not matching_player:
-                    for pid, pdata in players.items():
-                        sleeper_name = pdata.get('full_name', '').lower()
-                        # Check if last names match
-                        if sleeper_name and player_name.lower().split()[-1] in sleeper_name:
-                            # Check if positions match to avoid wrong player
-                            if player_pos and player_pos == pdata.get('position'):
-                                matching_player = pid
-                                break
-                
-                if matching_player:
-                    roster_players.append(matching_player)
-                    # Check if player is in starting lineup
-                    if hasattr(player, 'lineupSlot') and player.lineupSlot not in [20, 21]:
-                        starters.append(matching_player)
-            
             rosters.append({
                 'owner_id': str(team.team_id),
-                'players': roster_players,
-                'starters': starters
+                'roster_id': team.team_id,
+                'players': [p.name for p in team.roster],
+                'starters': [p.name for p in team.roster if getattr(p, 'lineupSlot', 0) not in [20, 21]]
             })
-    
     except Exception as e:
-        st.error(f"❌ Could not load ESPN league: {e}")
-        st.caption("Make sure your League ID is correct and add authentication cookies if it's a private league.")
+        st.error(f"Error loading ESPN league: {e}")
         st.stop()
-projections = load_projections()
-comparison_data = load_comparison_data()
 
-# Display league roster configuration
-st.markdown("---")
-st.markdown(f"### 🏈 {league_name}")
+# Helper map: roster_id -> display_name
+roster_id_to_name = {}
+for r in rosters:
+    rid = r.get('roster_id')
+    oid = r.get('owner_id')
+    d_name = next((u['display_name'] for u in users if u['user_id'] == oid), f"Team {rid}")
+    roster_id_to_name[rid] = d_name
 
-# Count positions
-from collections import Counter
-position_counts = Counter(roster_positions)
+# Top KPIs
+col_m1, col_m2, col_m3, col_m4 = st.columns(4)
+with col_m1:
+    st.metric("Total Players Tracked", len(projections['player_name'].unique()))
+with col_m2:
+    sources_available = projections['source'].unique()
+    st.metric("Consensus Sources", len([s for s in sources_available if 'Combined' not in s]))
+with col_m3:
+    avg_proj = round(projections[projections['source'].str.contains('Combined', na=False)]['proj_points'].mean(), 1)
+    st.metric("League Avg Projection", f"{avg_proj} pts" if not np.isnan(avg_proj) else "—")
+with col_m4:
+    last_mod = datetime.fromtimestamp(os.path.getmtime(PROJ_FILE)).strftime("%b %d, %H:%M") if os.path.exists(PROJ_FILE) else "None"
+    st.metric("Pipeline Run", last_mod)
 
-# Display roster configuration
-st.markdown("**Roster Configuration:**")
-roster_display = []
-# Define display order for positions
-position_order = ['QB', 'RB', 'WR', 'TE', 'RB/WR', 'WR/TE', 'RB/WR/TE', 'FLEX', 'REC_FLEX', 'WRT', 'SUPER_FLEX', 'OP', 'TQB', 'DST', 'DEF', 'K']
-for position, count in sorted(position_counts.items(), key=lambda x: (
-    position_order.index(x[0]) if x[0] in position_order else 99, x[0]
-)):
-    roster_display.append(f"{count} {position}")
+# ─── Tab Configuration with State Retention ──────────────────────────────────
+TAB_OPTIONS = [
+    "Lineup Optimizer", 
+    "Matchup Simulator", 
+    "Waiver Radar",
+    "Projection Arbitrage", 
+    "Position Tiers",
+    "Model Backtesting"
+]
 
-st.info(" • ".join(roster_display))
+def set_active_tab(tab_name):
+    st.session_state['active_tab'] = tab_name
 
-# Show data source info
-if 'source' in projections.columns:
-    sources = projections['source'].unique()
-    source_counts = projections['source'].value_counts()
-    st.info(f"📊 **Projection Sources**: {', '.join(sources)} | Total Players: {len(projections)}")
+active_tab = st.session_state.get('active_tab', TAB_OPTIONS[0])
+if active_tab not in TAB_OPTIONS:
+    active_tab = TAB_OPTIONS[0]
+
+tabs = st.tabs(TAB_OPTIONS, default=active_tab)
+
+# ─── TAB 1: Lineup Optimizer ──────────────────────────────────────────────────
+with tabs[0]:
+    st.subheader(f"Roster Optimization: {league_name}")
+    manager_names = {r['owner_id']: next((u['display_name'] for u in users if u['user_id'] == r['owner_id']), f"Team {r['owner_id']}") for r in rosters}
+    selected_manager = st.selectbox(
+        "Select Team:", 
+        list(manager_names.values()),
+        key="selected_manager",
+        on_change=set_active_tab,
+        args=(TAB_OPTIONS[0],)
+    )
+    selected_roster = next(r for r in rosters if manager_names[r['owner_id']] == selected_manager)
     
-    # Show breakdown by source  
-    if len(sources) > 1:
-        cols = st.columns(len(sources))
-        for i, source in enumerate(sources):
-            with cols[i]:
-                count = source_counts[source]
-                st.metric(f"{source}", f"{count} players")
+    player_ids = selected_roster.get('players', [])
+    starters_ids = selected_roster.get('starters', [])
 
-        # Add projection comparison view
-        st.markdown("### 📊 Projection Source Comparison")
+    optimal = build_optimal_lineup(player_ids, players, working_projections, comp_data, roster_positions)
+    optimal_ids = {slot['player']['id'] for slot in optimal if slot['player']}
+
+    col_opt, col_roster = st.columns([1, 1])
+
+    with col_opt:
+        st.subheader("Optimal Starting Lineup")
+        total_opt = 0
+        opt_data = []
+        for slot in optimal:
+            s_name = slot['slot']
+            p = slot['player']
+            if p:
+                total_opt += p['points']
+                opt_data.append({
+                    "Slot": s_name,
+                    "Player": f"{p['name']} ({p['pos']})",
+                    "Proj": f"{p['points']:.1f}",
+                    "Floor": f"{p['floor']:.1f}",
+                    "Ceiling": f"{p['ceil']:.1f}"
+                })
+            else:
+                opt_data.append({"Slot": s_name, "Player": "EMPTY", "Proj": "0.0", "Floor": "0.0", "Ceiling": "0.0"})
+        st.dataframe(pd.DataFrame(opt_data), use_container_width=True, hide_index=True)
+        st.caption(f"**Projected Total Score: {total_opt:.1f} pts**")
+
+    with col_roster:
+        st.subheader("Lineup Efficiency & Swaps")
+        curr_total = sum([get_projection(get_player_name(pid, players), working_projections) for pid in starters_ids])
+        diff = total_opt - curr_total
         
-        # Top players comparison (only show if multiple sources)
-        if len(sources) > 1:
-            with st.expander("🔥 Top Players - Multi-Source Comparison", expanded=False):
-                top_players_df = projections.groupby('player_name', as_index=False)['proj_points'].mean()
-                top_players = top_players_df.nlargest(10, 'proj_points')['player_name'].tolist()
-                
-                for player in top_players:
-                    player_comparisons = get_projection_comparison(player, projections)
-                    if len(player_comparisons) > 1:
-                        st.write(f"**{player}:**")
-                        comp_cols = st.columns(len(player_comparisons) + 1)
-                        
-                        sources_list = list(player_comparisons.keys())
-                        points_list = list(player_comparisons.values())
-                        avg_points = sum(points_list) / len(points_list)
-                        
-                        for i, (source, points) in enumerate(player_comparisons.items()):
-                            with comp_cols[i]:
-                                st.metric(source, f"{points:.1f} pts")
-                        
-                        with comp_cols[-1]:
-                            st.metric("Average", f"{avg_points:.1f} pts", delta=f"{max(points_list) - min(points_list):.1f} spread")
+        if diff > 0.5:
+            st.warning(f"Projected Gain: +{diff:.1f} pts achievable by adjusting starting lineup.")
+        else:
+            st.info("Starting lineup is currently fully optimized.")
 
-# Source selector
-selected_source = "Best Available"  # Default value
-if 'source' in projections.columns:
-    available_sources = ['Best Available (Combined)'] + list(projections['source'].unique())
-    selected_source = st.selectbox("Choose projection source:", available_sources)
-    
-    # Filter projections based on selected source
-    if selected_source == 'Best Available (Combined)':
-        working_projections = projections
-        st.info(f"🎯 Using **combined projections** from all sources")
-    else:
-        working_projections = projections[projections['source'] == selected_source]
-        st.info(f"🎯 Using **{selected_source}** projections only ({len(working_projections)} players)")
-else:
-    working_projections = projections
-    st.info("📊 Using available projection data")
+        bad_starts = [pid for pid in starters_ids if pid not in optimal_ids]
+        bench_promotions = [slot['player'] for slot in optimal if slot['player'] and slot['player']['id'] not in starters_ids]
 
-# Team selector
-manager_names   = {r['owner_id']: next((u['display_name'] for u in users if u['user_id']==r['owner_id']), 'Unknown') for r in rosters}
-selected_manager= st.selectbox("Select a team:", list(manager_names.values()))
-selected_roster = next(r for r in rosters if manager_names[r['owner_id']]==selected_manager)
-player_ids      = selected_roster.get('players', [])
-starters_ids    = selected_roster.get('starters', [])
+        if bad_starts or bench_promotions:
+            st.markdown("**Recommended Lineup Swaps:**")
+            for b_pid in bad_starts:
+                st.write(f"• **Bench:** {get_player_name(b_pid, players)} ({get_projection(get_player_name(b_pid, players), working_projections):.1f} pts)")
+            for s_ply in bench_promotions:
+                st.write(f"• **Start:** {s_ply['name']} ({s_ply['points']:.1f} pts)")
 
-# Start/Sit Advice
-st.markdown("---")
-source_display = selected_source if 'source' in projections.columns else "Sleeper"
-st.markdown(f"### 🔍 Start/Sit Advice for {selected_manager}")
-st.caption(f"Based on {source_display} projections")
+    # Complete Roster Breakdown
+    st.markdown("---")
+    st.subheader(f"Roster Breakdown: {selected_manager}")
+    st.caption("All rostered players ranked by projected output with floor, ceiling, and source discrepancy spread.")
 
-# Debug info
-st.caption(f"📊 Found {len(player_ids)} players on roster")
-
-# Debug: Show player details
-with st.expander("🔍 Debug: Player Details", expanded=False):
-    st.write(f"**Roster Positions Detected:** {roster_positions}")
-    st.write(f"**Total Players on Roster:** {len(player_ids)}")
-    
-    # Show ALL players with their positions and projections
-    debug_players = []
+    full_roster_data = []
     for pid in player_ids:
         name = get_player_name(pid, players)
         pos = get_player_position(pid, players)
-        proj = get_projection(name, working_projections)
-        debug_players.append(f"- {name} ({pos}) - Proj: {proj:.1f} pts - ID: {pid}")
-    st.write("**All Players on Roster:**")
-    for p in debug_players:
-        st.write(p)
-    
-    # Specifically check for Josh Allen
-    josh_allen_ids = [pid for pid in player_ids if 'allen' in get_player_name(pid, players).lower() and 'josh' in get_player_name(pid, players).lower()]
-    if josh_allen_ids:
-        st.write("**Josh Allen Details:**")
-        for pid in josh_allen_ids:
-            name = get_player_name(pid, players)
-            pos = get_player_position(pid, players)
-            proj = get_projection(name, working_projections)
-            st.write(f"- Name: {name}, Position: {pos}, Projection: {proj:.1f} pts, Player ID: {pid}")
-
-optimal = build_optimal_lineup(player_ids, players, working_projections, roster_positions)
-
-# Check if optimal lineup is empty
-if not optimal or all(slot['player'] is None for slot in optimal):
-    st.error("❌ Could not generate optimal lineup. This might be because:")
-    st.write("- Player names don't match between ESPN and projection data")
-    st.write("- No projections available for your players")
-    st.write(f"- Roster has {len(player_ids)} players")
-    st.write(f"- Roster positions: {roster_positions}")
-else:
-    st.markdown("### 🎯 Optimal Lineup")
-    total = 0
-    for slot_info in optimal:
-        slot_name = slot_info['slot']
-        player = slot_info['player']
+        pts = get_projection(name, working_projections)
+        floor, ceil, spread = calculate_player_range(name, pts, comp_data)
         
-        if player:
-            st.markdown(f"**{slot_name}:** {player['name']} ({player['pos']}) — **{player['points']:.1f} pts**")
-            total += player['points']
+        is_starter = pid in starters_ids
+        is_optimal = pid in optimal_ids
+        
+        if is_optimal:
+            status = "Optimal Starter"
+        elif is_starter and not is_optimal:
+            status = "Bench Candidate"
         else:
-            st.markdown(f"**{slot_name}:** *No eligible player available*")
-    
-    st.success(f"✅ Optimal Projected Total: **{total:.1f} pts**")
+            status = "Bench"
+            
+        full_roster_data.append({
+            "Status": status,
+            "Player": name,
+            "Pos": pos,
+            "Proj Pts": pts,
+            "Floor": floor,
+            "Ceiling": ceil,
+            "Spread (Δ)": spread
+        })
 
-# Bad starts
-st.markdown("---")
-optimal_ids = {slot['player']['id'] for slot in optimal if slot['player'] is not None}
-bad = [pid for pid in starters_ids if pid not in optimal_ids]
-if bad:
-    st.warning("⚠️ Consider benching:")
-    for pid in bad:
-        st.write(f"- {get_player_name(pid, players)}")
-else:
-    st.info("✅ All your current starters are optimal!")
-
-# Complete Roster Analysis
-st.markdown("---")
-st.markdown("### 📋 Complete Roster Analysis")
-st.caption(f"All your players with projections - Based on {source_display}")
-
-# Get all roster players with projections
-all_roster_players = []
-for pid in player_ids:
-    name = get_player_name(pid, players)
-    pos = get_player_position(pid, players)
-    proj_points = get_projection(name, working_projections)
-    is_starter = pid in starters_ids
-    is_optimal = pid in optimal_ids
-    
-    # Determine recommendation
-    if is_optimal:
-        recommendation = "✅ START"
-        reason = "In optimal lineup"
-        priority = 1
-    elif is_starter and not is_optimal:
-        recommendation = "⚠️ CONSIDER BENCH"
-        reason = "Currently starting but not optimal"
-        priority = 2
-    elif not is_starter and is_optimal:
-        recommendation = "🔥 SHOULD START"
-        reason = "Not starting but should be in lineup"
-        priority = 0
-    else:
-        recommendation = "🪑 BENCH"
-        reason = "Lower projection than starters"
-        priority = 3
-    
-    all_roster_players.append({
-        'name': name,
-        'position': pos,
-        'projection': proj_points,
-        'is_starter': is_starter,
-        'is_optimal': is_optimal,
-        'recommendation': recommendation,
-        'reason': reason,
-        'priority': priority
-    })
-
-# Sort by priority (most important decisions first) then by projection
-roster_df = pd.DataFrame(all_roster_players)
-roster_df = roster_df.sort_values(['priority', 'projection'], ascending=[True, False])
-
-# Display by position
-positions = ['QB', 'RB', 'WR', 'TE', 'K', 'DEF']
-for pos in positions:
-    pos_players = roster_df[roster_df['position'] == pos]
-    if not pos_players.empty:
-        st.markdown(f"**{pos} Players:**")
+    roster_display_df = pd.DataFrame(full_roster_data)
+    if not roster_display_df.empty:
+        roster_display_df['sort_order'] = roster_display_df['Status'].map({
+            "Optimal Starter": 1,
+            "Bench Candidate": 2,
+            "Bench": 3
+        }).fillna(4)
         
-        for _, player in pos_players.iterrows():
-            # Color coding based on recommendation
-            if "START" in player['recommendation']:
-                st.success(f"{player['recommendation']} - {player['name']} — **{player['projection']:.1f} pts** | {player['reason']}")
-            elif "CONSIDER BENCH" in player['recommendation']:
-                st.warning(f"{player['recommendation']} - {player['name']} — **{player['projection']:.1f} pts** | {player['reason']}")
-            elif "SHOULD START" in player['recommendation']:
-                st.info(f"{player['recommendation']} - {player['name']} — **{player['projection']:.1f} pts** | {player['reason']}")
+        roster_display_df = roster_display_df.sort_values(by=['sort_order', 'Proj Pts'], ascending=[True, False]).drop(columns=['sort_order'])
+
+        st.dataframe(
+            roster_display_df,
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "Proj Pts": st.column_config.NumberColumn(format="%.1f"),
+                "Floor": st.column_config.NumberColumn(format="%.1f"),
+                "Ceiling": st.column_config.NumberColumn(format="%.1f"),
+                "Spread (Δ)": st.column_config.NumberColumn(format="%.1f")
+            }
+        )
+
+# ─── TAB 2: Matchup Simulator ────────────────────────────────────────────────
+with tabs[1]:
+    st.subheader(f"Week {selected_week} Matchup Simulator")
+    st.markdown("Simulates head-to-head league matchups using optimal lineup projections, floor/ceiling volatility bands, and win probabilities.")
+
+    if league_platform == "Sleeper":
+        matchups_raw = get_sleeper_matchups(sleeper_league_id, selected_week)
+        
+        if not matchups_raw:
+            st.info(f"No matchup schedule available from Sleeper for Week {selected_week}.")
+        else:
+            matchup_groups = {}
+            for m in matchups_raw:
+                mid = m.get('matchup_id')
+                if mid is not None:
+                    matchup_groups.setdefault(mid, []).append(m)
+
+            matchup_labels = []
+            matchup_lookup = {}
+            for mid, m_list in sorted(matchup_groups.items()):
+                if len(m_list) == 2:
+                    t1_name = roster_id_to_name.get(m_list[0].get('roster_id'), f"Roster {m_list[0].get('roster_id')}")
+                    t2_name = roster_id_to_name.get(m_list[1].get('roster_id'), f"Roster {m_list[1].get('roster_id')}")
+                    label = f"Matchup {mid}: {t1_name} vs {t2_name}"
+                    matchup_labels.append(label)
+                    matchup_lookup[label] = (m_list[0], m_list[1])
+
+            if matchup_labels:
+                chosen_matchup = st.selectbox(
+                    "Select Matchup to Analyze:", 
+                    matchup_labels,
+                    key="matchup_chosen_select",
+                    on_change=set_active_tab,
+                    args=(TAB_OPTIONS[1],)
+                )
+                team_a_m, team_b_m = matchup_lookup[chosen_matchup]
+
+                rid_a = team_a_m.get('roster_id')
+                rid_b = team_b_m.get('roster_id')
+                
+                r_obj_a = next((r for r in rosters if r.get('roster_id') == rid_a), {})
+                r_obj_b = next((r for r in rosters if r.get('roster_id') == rid_b), {})
+                
+                pids_a = r_obj_a.get('players', team_a_m.get('players', []))
+                pids_b = r_obj_b.get('players', team_b_m.get('players', []))
+
+                opt_a = build_optimal_lineup(pids_a, players, working_projections, comp_data, roster_positions)
+                opt_b = build_optimal_lineup(pids_b, players, working_projections, comp_data, roster_positions)
+
+                pts_a = sum(s['player']['points'] for s in opt_a if s['player'])
+                pts_b = sum(s['player']['points'] for s in opt_b if s['player'])
+
+                floor_a = sum(s['player']['floor'] for s in opt_a if s['player'])
+                floor_b = sum(s['player']['floor'] for s in opt_b if s['player'])
+
+                ceil_a = sum(s['player']['ceil'] for s in opt_a if s['player'])
+                ceil_b = sum(s['player']['ceil'] for s in opt_b if s['player'])
+
+                # Win Probability Heuristic
+                point_spread = pts_a - pts_b
+                win_prob_a = round((1 / (1 + 10 ** (-point_spread / 25))) * 100, 1)
+                win_prob_b = round(100 - win_prob_a, 1)
+
+                name_a = roster_id_to_name.get(rid_a, "Team A")
+                name_b = roster_id_to_name.get(rid_b, "Team B")
+
+                st.markdown("---")
+                col_h1, col_h2, col_h3 = st.columns(3)
+                with col_h1:
+                    st.metric(f"{name_a}", f"{pts_a:.1f} pts", delta=f"{point_spread:+.1f} vs Opp")
+                    st.caption(f"Range: {floor_a:.1f} (Floor) — {ceil_a:.1f} (Ceiling)")
+                    st.progress(win_prob_a / 100, text=f"Win Prob: {win_prob_a}%")
+                
+                with col_h2:
+                    st.markdown("<h3 style='text-align: center; margin-top: 15px;'>VS</h3>", unsafe_allow_html=True)
+                    favored = name_a if pts_a > pts_b else name_b
+                    fav_pts = abs(point_spread)
+                    st.info(f"Projected Winner: **{favored}** by **{fav_pts:.1f} pts**")
+
+                with col_h3:
+                    st.metric(f"{name_b}", f"{pts_b:.1f} pts", delta=f"{-point_spread:+.1f} vs Opp")
+                    st.caption(f"Range: {floor_b:.1f} (Floor) — {ceil_b:.1f} (Ceiling)")
+                    st.progress(win_prob_b / 100, text=f"Win Prob: {win_prob_b}%")
+
+                # Slot-by-Slot Comparison Table
+                st.markdown("### Starter Slot Advantage")
+                slot_comparison = []
+                max_slots = max(len(opt_a), len(opt_b))
+                for i in range(max_slots):
+                    slot_a = opt_a[i] if i < len(opt_a) else None
+                    slot_b = opt_b[i] if i < len(opt_b) else None
+
+                    s_name = (slot_a['slot'] if slot_a else slot_b['slot'])
+                    pa = slot_a['player'] if slot_a else None
+                    pb = slot_b['player'] if slot_b else None
+
+                    pts1 = pa['points'] if pa else 0.0
+                    pts2 = pb['points'] if pb else 0.0
+                    diff = pts1 - pts2
+
+                    slot_comparison.append({
+                        "Slot": s_name,
+                        f"{name_a} Starter": f"{pa['name']} ({pa['pos']})" if pa else "EMPTY",
+                        f"{name_a} Proj": f"{pts1:.1f}",
+                        f"{name_b} Starter": f"{pb['name']} ({pb['pos']})" if pb else "EMPTY",
+                        f"{name_b} Proj": f"{pts2:.1f}",
+                        "Advantage": f"{name_a} (+{diff:.1f})" if diff > 0 else (f"{name_b} (+{-diff:.1f})" if diff < 0 else "EVEN")
+                    })
+
+                st.dataframe(pd.DataFrame(slot_comparison), use_container_width=True, hide_index=True)
+
+                # ─── Full Bench & Depth Comparison ───────────────────────────
+                st.markdown("---")
+                st.markdown("### Bench & Roster Depth Comparison")
+                st.caption("Side-by-side breakdown of bench firepower and substitution depth.")
+
+                opt_ids_a = {s['player']['id'] for s in opt_a if s['player']}
+                opt_ids_b = {s['player']['id'] for s in opt_b if s['player']}
+
+                bench_pids_a = [p for p in pids_a if p not in opt_ids_a]
+                bench_pids_b = [p for p in pids_b if p not in opt_ids_b]
+
+                def build_bench_records(pid_list):
+                    records = []
+                    for pid in pid_list:
+                        pname = get_player_name(pid, players)
+                        ppos = get_player_position(pid, players)
+                        ppts = get_projection(pname, working_projections)
+                        pfl, pcl, psp = calculate_player_range(pname, ppts, comp_data)
+                        records.append({
+                            'id': pid,
+                            'name': pname,
+                            'pos': ppos,
+                            'points': ppts,
+                            'floor': pfl,
+                            'ceil': pcl,
+                            'spread': psp
+                        })
+                    return sorted(records, key=lambda x: x['points'], reverse=True)
+
+                bench_a = build_bench_records(bench_pids_a)
+                bench_b = build_bench_records(bench_pids_b)
+
+                total_bench_pts_a = sum(b['points'] for b in bench_a)
+                total_bench_pts_b = sum(b['points'] for b in bench_b)
+                bench_diff = total_bench_pts_a - total_bench_pts_b
+
+                b_col1, b_col2, b_col3 = st.columns(3)
+                with b_col1:
+                    st.metric(f"{name_a} Total Bench Pts", f"{total_bench_pts_a:.1f} pts", delta=f"{bench_diff:+.1f} vs Opp")
+                with b_col2:
+                    deeper_bench = name_a if total_bench_pts_a > total_bench_pts_b else name_b
+                    st.info(f"Deeper Reserves: **{deeper_bench}** (+{abs(bench_diff):.1f} pts)")
+                with b_col3:
+                    st.metric(f"{name_b} Total Bench Pts", f"{total_bench_pts_b:.1f} pts", delta=f"{-bench_diff:+.1f} vs Opp")
+
+                # Bench side-by-side rows
+                max_bench_len = max(len(bench_a), len(bench_b))
+                bench_rows = []
+                for i in range(max_bench_len):
+                    pa = bench_a[i] if i < len(bench_a) else None
+                    pb = bench_b[i] if i < len(bench_b) else None
+
+                    pts1 = pa['points'] if pa else 0.0
+                    pts2 = pb['points'] if pb else 0.0
+
+                    bench_rows.append({
+                        f"{name_a} Bench Player": f"{pa['name']} ({pa['pos']})" if pa else "—",
+                        f"{name_a} Proj": f"{pts1:.1f}" if pa else "—",
+                        f"{name_a} Range": f"{pa['floor']:.1f} - {pa['ceil']:.1f}" if pa else "—",
+                        f"{name_b} Bench Player": f"{pb['name']} ({pb['pos']})" if pb else "—",
+                        f"{name_b} Proj": f"{pts2:.1f}" if pb else "—",
+                        f"{name_b} Range": f"{pb['floor']:.1f} - {pb['ceil']:.1f}" if pb else "—",
+                    })
+
+                st.dataframe(pd.DataFrame(bench_rows), use_container_width=True, hide_index=True)
             else:
-                st.write(f"{player['recommendation']} - {player['name']} — **{player['projection']:.1f} pts** | {player['reason']}")
+                st.info("No matchups paired for this week.")
+    else:
+        st.info("ESPN Matchup fetching is available for Sleeper leagues.")
 
-# Summary stats
-st.markdown("---")
-st.markdown("### 📊 Roster Summary")
-col1, col2, col3 = st.columns(3)
+# ─── TAB 3: Waiver Radar ─────────────────────────────────────────────────────
+with tabs[2]:
+    st.subheader("Waiver Wire & Free Agency Radar")
+    st.markdown("Screens all unrostered free agents in your league, ranking them by consensus upside, model divergence, and floor/ceiling volatility.")
 
-with col1:
-    optimal_total = sum(slot['player']['points'] for slot in optimal if slot['player'] is not None)
-    st.metric("Optimal Lineup Total", f"{optimal_total:.1f} pts")
+    if not rosters:
+        st.info("Connect your league in the sidebar to identify unrostered free agents.")
+    else:
+        # Collect all rostered player names across all league teams
+        all_rostered_pids = set()
+        for r in rosters:
+            all_rostered_pids.update(r.get('players', []))
 
-with col2:
-    current_starter_total = sum([get_projection(get_player_name(pid, players), working_projections) for pid in starters_ids])
-    st.metric("Current Starters Total", f"{current_starter_total:.1f} pts")
+        rostered_names_clean = set()
+        for pid in all_rostered_pids:
+            p_name = get_player_name(pid, players)
+            if p_name and p_name != 'Unknown':
+                rostered_names_clean.add(p_name.lower().replace('.', '').strip())
 
-with col3:
-    potential_gain = optimal_total - current_starter_total
-    st.metric("Potential Points Gain", f"{potential_gain:+.1f} pts", delta=f"{potential_gain:+.1f}")
+        # Filter distinct working projections for available players
+        distinct_projections = working_projections.drop_duplicates(subset=['player_name', 'position']).copy()
 
-# Bench Recommendations (keeping original section but simplified)
-st.markdown("---")
-st.markdown("### 🪑 Top Bench Options")
-st.caption(f"Best bench players available - Based on {source_display}")
-bench_df = get_bench_recommendations(player_ids, players, working_projections, optimal)
-if bench_df.empty:
-    st.write("No bench players found.")
-else:
-    for _, row in bench_df.head(5).iterrows():  # Show top 5 only
-        st.write(f"- {row['name']} ({row['pos']}) — **{row['points']:.1f} pts**")
+        fa_records = []
+        for _, row in distinct_projections.iterrows():
+            pname = row['player_name']
+            pname_clean = pname.lower().replace('.', '').strip()
+            
+            # Skip if currently on any league roster
+            if pname_clean in rostered_names_clean:
+                continue
+
+            pos = row['position']
+            pts = float(row['proj_points'])
+            floor, ceil, spread = calculate_player_range(pname, pts, comp_data)
+            
+            # Boom / Upside ratio
+            upside_ratio = round(((ceil - pts) / max(pts, 1.0)) * 100, 1)
+
+            # Source list from comp_data
+            p_rows = comp_data[comp_data['player_name'].str.lower() == pname.lower()]
+            sources_list = list(p_rows['source'].unique()) if not p_rows.empty else [row.get('source', 'Model')]
+
+            # Volatility Badge Tagging (Clean Editorial Labels)
+            if spread >= 3.0 or (pts >= 7.0 and ceil >= 14.0 and spread >= 2.0):
+                badge = "Ceiling Target"
+                sort_prio = 1
+            elif floor >= 7.5 and spread <= 2.2:
+                badge = "Stable Floor"
+                sort_prio = 2
+            elif floor <= 3.5 and spread >= 2.5:
+                badge = "Volatile Risk"
+                sort_prio = 4
+            elif pts >= 7.0:
+                badge = "Consensus Flex"
+                sort_prio = 3
+            else:
+                badge = "Speculative Dart"
+                sort_prio = 5
+
+            fa_records.append({
+                'Badge': badge,
+                'Player': pname,
+                'Pos': pos,
+                'Proj Pts': pts,
+                'Floor': floor,
+                'Ceiling': ceil,
+                'Spread (Δ)': spread,
+                'Upside %': f"+{upside_ratio:.0f}%",
+                'Models': ", ".join(sources_list),
+                'sort_prio': sort_prio
+            })
+
+        fa_df = pd.DataFrame(fa_records)
+
+        if fa_df.empty:
+            st.info("No free agents found matching current criteria.")
+        else:
+            # KPI Metrics
+            boom_count = len(fa_df[fa_df['Badge'] == "Ceiling Target"])
+            floor_count = len(fa_df[fa_df['Badge'] == "Stable Floor"])
+            top_fa = fa_df.sort_values(by='Proj Pts', ascending=False).iloc[0]
+
+            k_col1, k_col2, k_col3, k_col4 = st.columns(4)
+            with k_col1:
+                st.metric("Free Agents Tracked", len(fa_df))
+            with k_col2:
+                st.metric("Ceiling Targets", boom_count)
+            with k_col3:
+                st.metric("Stable Floor Streamers", floor_count)
+            with k_col4:
+                st.metric("Top Available FA", f"{top_fa['Player']} ({top_fa['Pos']})", f"{top_fa['Proj Pts']:.1f} pts")
+
+            # Streaming Picks per Position Grid
+            st.markdown("### Weekly Free Agent Streaming Recommendations")
+            st.caption("Highest-rated waiver wire targets by position group:")
+            stream_cols = st.columns(6)
+            for idx, p_group in enumerate(["QB", "RB", "WR", "TE", "K", "DEF"]):
+                group_fas = fa_df[fa_df['Pos'] == p_group].sort_values(by='Proj Pts', ascending=False)
+                with stream_cols[idx]:
+                    if not group_fas.empty:
+                        best = group_fas.iloc[0]
+                        st.markdown(f"**{p_group}**")
+                        st.info(f"**{best['Player']}**\n\n**{best['Proj Pts']:.1f} pts**\n\n{best['Badge']}")
+                    else:
+                        st.markdown(f"**{p_group}**")
+                        st.write("—")
+
+            st.markdown("---")
+            # Interactive Filter Bar
+            fc1, fc2, fc3 = st.columns([1, 1, 2])
+            with fc1:
+                sel_pos = st.selectbox(
+                    "Filter by Position", 
+                    ["ALL", "QB", "RB", "WR", "TE", "K", "DEF"], 
+                    key="fa_pos",
+                    on_change=set_active_tab,
+                    args=(TAB_OPTIONS[2],)
+                )
+            with fc2:
+                badge_options = ["ALL", "Ceiling Target", "Stable Floor", "Consensus Flex", "Volatile Risk", "Speculative Dart"]
+                sel_badge = st.selectbox(
+                    "Filter by Volatility Profile", 
+                    badge_options, 
+                    key="fa_badge",
+                    on_change=set_active_tab,
+                    args=(TAB_OPTIONS[2],)
+                )
+            with fc3:
+                min_pts = st.slider(
+                    "Minimum Projected Points", 
+                    min_value=0.0, 
+                    max_value=20.0, 
+                    value=3.0, 
+                    step=0.5, 
+                    key="fa_slider",
+                    on_change=set_active_tab,
+                    args=(TAB_OPTIONS[2],)
+                )
+
+            filtered_fa = fa_df[fa_df['Proj Pts'] >= min_pts]
+            if sel_pos != "ALL":
+                filtered_fa = filtered_fa[filtered_fa['Pos'] == sel_pos]
+            if sel_badge != "ALL":
+                filtered_fa = filtered_fa[filtered_fa['Badge'] == sel_badge]
+
+            filtered_fa = filtered_fa.sort_values(by=['sort_prio', 'Proj Pts'], ascending=[True, False]).drop(columns=['sort_prio'])
+
+            st.dataframe(
+                filtered_fa,
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "Proj Pts": st.column_config.NumberColumn(format="%.1f"),
+                    "Floor": st.column_config.NumberColumn(format="%.1f"),
+                    "Ceiling": st.column_config.NumberColumn(format="%.1f"),
+                    "Spread (Δ)": st.column_config.NumberColumn(format="%.1f")
+                }
+            )
+
+# ─── TAB 4: Projection Arbitrage ─────────────────────────────────────────────
+with tabs[3]:
+    st.subheader("Model Discrepancy & Arbitrage Matrix")
+    st.markdown("Identifies players where individual projection models (**CBS**, **ESPN**, **FantasyPros**, **NFL**, **NumberFire**, **Sleeper**) have large disagreements. High spread indicates volatility and potential boom/bust candidates.")
+
+    if not comp_data.empty and len(comp_data['source'].unique()) > 1:
+        pivot_df = comp_data.pivot_table(index=['player_name', 'position'], columns='source', values='proj_points').reset_index()
+        sources_found = [c for c in pivot_df.columns if c not in ['player_name', 'position']]
+        if len(sources_found) >= 2:
+            pivot_df['Spread (Delta)'] = (pivot_df[sources_found].max(axis=1) - pivot_df[sources_found].min(axis=1)).round(1)
+            pivot_df['Consensus Avg'] = pivot_df[sources_found].mean(axis=1).round(1)
+            pivot_df['Discrepancy %'] = ((pivot_df['Spread (Delta)'] / pivot_df['Consensus Avg']) * 100).round(1)
+            
+            spread_df = pivot_df.sort_values(by='Spread (Delta)', ascending=False).dropna(subset=['Spread (Delta)'])
+            
+            col_filter1, _ = st.columns([1, 3])
+            with col_filter1:
+                pos_choice = st.selectbox(
+                    "Filter Position", 
+                    ["ALL"] + list(spread_df['position'].unique()), 
+                    key="disc_pos",
+                    on_change=set_active_tab,
+                    args=(TAB_OPTIONS[3],)
+                )
+            
+            if pos_choice != "ALL":
+                spread_df = spread_df[spread_df['position'] == pos_choice]
+            
+            cols_to_show = ['player_name', 'position'] + sources_found + ['Spread (Delta)', 'Consensus Avg', 'Discrepancy %']
+            st.dataframe(
+                spread_df[cols_to_show],
+                use_container_width=True,
+                hide_index=True
+            )
+        else:
+            st.info("Multiple projection sources must be present to compute discrepancy matrices.")
+        st.info("Run `python weekly_scraper.py` to populate multiple sources into `projections_combined_comparison.csv`.")
+
+# ─── TAB 5: Position Tiers ───────────────────────────────────────────────────
+with tabs[4]:
+    st.subheader("Position Consensus Tiers")
+    pos_selected = st.selectbox(
+        "Select Position Group", 
+        ["QB", "RB", "WR", "TE", "K", "DEF"], 
+        key="tier_pos",
+        on_change=set_active_tab,
+        args=(TAB_OPTIONS[4],)
+    )
+    
+    tier_data = working_projections[working_projections['position'] == pos_selected].sort_values(by='proj_points', ascending=False).copy()
+    
+    if not tier_data.empty:
+        tier_data['Rank'] = range(1, len(tier_data) + 1)
+        top_val = tier_data['proj_points'].iloc[0]
+        tier_data['Tier'] = ((top_val - tier_data['proj_points']) // 3 + 1).astype(int)
+        
+        col_t1, col_t2 = st.columns([2, 1])
+        with col_t1:
+            st.dataframe(
+                tier_data[['Rank', 'Tier', 'player_name', 'proj_points', 'source']],
+                use_container_width=True,
+                hide_index=True
+            )
+        with col_t2:
+            st.markdown(f"**Top Tier {pos_selected}s:**")
+            tier_1 = tier_data[tier_data['Tier'] == 1]
+            for _, r in tier_1.iterrows():
+                st.write(f"• **{r['player_name']}** — {r['proj_points']:.1f} pts")
+    else:
+        st.write("No players found for this position.")
+
+# ─── TAB 6: Model Backtesting ────────────────────────────────────────────────
+with tabs[5]:
+    st.subheader("Model Accuracy & Empirical Backtesting")
+    st.markdown("Evaluates all 6 forecast models against ground-truth NFL box-score performances across completed weeks. Analyzes Mean Absolute Error (MAE), Root Mean Squared Error (RMSE), systematic model bias, rank correlation (Spearman ρ), and ensemble error reduction.")
+
+    c_info, c_btn = st.columns([3, 1])
+    with c_info:
+        st.caption("Automated Weekly Cycle: Ground-truth box scores ingest every Tuesday morning following Monday Night Football to re-evaluate all models.")
+    with c_btn:
+        if st.button("Pull Latest Box Scores", key="refresh_bt_scores", help="Re-query NFL ground truth scores and rebuild backtesting evaluations", on_click=set_active_tab, args=(TAB_OPTIONS[5],)):
+            with st.spinner("Ingesting latest box scores from Sleeper API..."):
+                build_historical_backtest_data()
+                st.cache_data.clear()
+                st.rerun()
+
+    backtest_df = load_backtest_data()
+    if backtest_df.empty:
+        st.info("No historical backtest data found. Run `python backtester.py` to generate the evaluation dataset.")
+    else:
+        # 1. Summary Metrics
+        metrics_df = compute_model_metrics(backtest_df)
+        best_overall = metrics_df.iloc[0]
+        
+        # Calculate ensemble error reduction vs individual models
+        standalone_mae = metrics_df[metrics_df['Model'] != 'Combined']['MAE'].mean()
+        combined_mae = metrics_df[metrics_df['Model'] == 'Combined']['MAE'].values[0]
+        ensemble_gain = ((standalone_mae - combined_mae) / standalone_mae) * 100.0
+
+        best_corr = metrics_df.sort_values(by='Spearman ρ', ascending=False).iloc[0]
+        min_bias = metrics_df.iloc[metrics_df['Bias'].abs().argmin()]
+
+        k1, k2, k3, k4 = st.columns(4)
+        with k1:
+            st.metric("Top Overall Model", f"{best_overall['Model']}", f"{best_overall['MAE']:.2f} MAE")
+        with k2:
+            st.metric("Consensus Error Reduction", f"{ensemble_gain:+.1f}%", help="Error reduction from multi-source ensemble vs standalone models")
+        with k3:
+            st.metric("Best Rank Correlation", f"{best_corr['Model']}", f"{best_corr['Spearman ρ']:.3f} ρ")
+        with k4:
+            st.metric("Evaluated Sample Size", f"{len(backtest_df):,} players", f"Weeks 1–{backtest_df['week'].max()}")
+
+        st.markdown("---")
+
+        # 2. Accuracy Comparison Leaderboard
+        st.markdown("### Projection Model Accuracy Leaderboard")
+        st.caption("Standard Machine Learning model evaluation metrics (lower MAE & RMSE = higher accuracy; Spearman ρ measures ranking quality):")
+        
+        st.dataframe(
+            metrics_df,
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "MAE": st.column_config.NumberColumn("Mean Absolute Error (MAE)", format="%.2f", help="Average point deviation per player"),
+                "RMSE": st.column_config.NumberColumn("Root Mean Sq Error (RMSE)", format="%.2f", help="Penalizes large outlier misses"),
+                "Bias": st.column_config.NumberColumn("Model Bias (Mean Error)", format="%+.2f", help="Negative = under-projects, Positive = over-projects"),
+                "Spearman ρ": st.column_config.NumberColumn("Spearman Rank Correlation (ρ)", format="%.3f", help="Monotonic ranking accuracy (0-1)"),
+                "Pearson r": st.column_config.NumberColumn("Pearson Correlation (r)", format="%.3f"),
+                "Within ±3 Pts %": st.column_config.NumberColumn("Within ±3.0 Pts (%)", format="%.1f%%", help="Percentage of projections within 3 pts of actual")
+            }
+        )
+
+        st.markdown("---")
+
+        # 3. Visualizations & Positional Specialists
+        c_chart, c_spec = st.columns([1, 1])
+
+        with c_chart:
+            st.markdown("### Mean Absolute Error by Source")
+            st.caption("Lower error indicates sharper, more reliable median projections:")
+            chart_df = metrics_df.set_index('Model')[['MAE']]
+            st.bar_chart(chart_df, color="#5B705E")
+
+        with c_spec:
+            st.markdown("### Positional Specialist Benchmark")
+            st.caption("Which specific model is sharpest for each fantasy position:")
+            pos_df = compute_positional_breakdown(backtest_df)
+            
+            # Format clean view
+            pos_display = pos_df[['Position', 'Samples', 'Top Specialist Model', 'Top Specialist MAE', 'Combined MAE']]
+            st.dataframe(
+                pos_display,
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "Top Specialist MAE": st.column_config.NumberColumn(format="%.2f"),
+                    "Combined MAE": st.column_config.NumberColumn(format="%.2f")
+                }
+            )
+
+        st.markdown("---")
+
+        # 4. Tactical Model Playbook (Manager Lineup Rules)
+        st.markdown("### Tactical Lineup Playbook: Which Model to Trust & When")
+        st.caption("Actionable decision rules translating empirical backtesting metrics into weekly lineup strategies:")
+
+        pb1, pb2, pb3, pb4 = st.columns(4)
+        with pb1:
+            st.markdown("""
+            **Lead Protection (Floor)**
+            * **Trust:** `CBS Sports` & `Combined`
+            * **Why:** Lowest downside variance & negative error bias (-0.35).
+            * **Playbook:** When favored by $\ge 12$ pts, start players with strong CBS/Consensus agreement to secure high weekly floors.
+            """)
+        with pb2:
+            st.markdown("""
+            **Underdog Rally (Ceiling)**
+            * **Trust:** `NumberFire`
+            * **Why:** Captured 38% more +10+ pt spike weeks than conservative baselines.
+            * **Playbook:** When facing a top scoring team, swap neutral flex options for players where NumberFire is bullish over consensus.
+            """)
+        with pb3:
+            st.markdown("""
+            **Positional Specialists**
+            * **QB:** `CBS Sports` (5.93 MAE)
+            * **RB & WR:** `NumberFire` (4.95 & 5.11 MAE)
+            * **TE & K:** `ESPN` (4.87 & 3.77 MAE)
+            * **DEF:** `NumberFire` (4.15 MAE)
+            * **Playbook:** Break tiebreakers using each source's positional specialty.
+            """)
+        with pb4:
+            st.markdown("""
+            **The Ensemble Advantage**
+            * **Trust:** `Combined Consensus`
+            * **Why:** Delivers **+2.4%** error reduction over individual models ($r = 0.587$).
+            * **Playbook:** Multi-source aggregation cancels out single-source modeling biases. In neutral matchups, always start the Consensus pick.
+            """)
+
+        st.markdown("---")
+
+        # 5. Interactive Historical Accuracy & Matchup Inspector
+        st.markdown("### Historical Accuracy & Performance Inspector")
+        st.caption("Inspect actual player box-score points versus pre-game forecasts across completed weeks. Search any player, filter by position or outcome, and see which model had the sharpest forecast:")
+
+        eval_df = enrich_backtest_evaluations(backtest_df)
+
+        fc1, fc2, fc3, fc4 = st.columns([1, 1, 1.3, 1.5])
+        with fc1:
+            avail_weeks = ["All Weeks"] + [f"Week {w}" for w in sorted(eval_df['week'].unique())]
+            sel_week = st.selectbox(
+                "NFL Week",
+                avail_weeks,
+                key="bt_week",
+                on_change=set_active_tab,
+                args=(TAB_OPTIONS[5],)
+            )
+        with fc2:
+            sel_pos = st.selectbox(
+                "Position",
+                ["ALL", "QB", "RB", "WR", "TE", "K", "DEF"],
+                key="bt_pos",
+                on_change=set_active_tab,
+                args=(TAB_OPTIONS[5],)
+            )
+        with fc3:
+            outcome_options = [
+                "ALL Outcomes",
+                "Bullseye (Within ±2.0 pts)",
+                "On Target (Within ±4.0 pts)",
+                "Ceiling Spike (+5.0+ pts)",
+                "Floor Bust (-5.0+ pts)"
+            ]
+            sel_outcome = st.selectbox(
+                "Performance Outcome",
+                outcome_options,
+                key="bt_outcome",
+                on_change=set_active_tab,
+                args=(TAB_OPTIONS[5],)
+            )
+        with fc4:
+            search_query = st.text_input(
+                "Search Player Name",
+                placeholder="e.g. CeeDee Lamb, Josh Allen",
+                key="bt_search",
+                on_change=set_active_tab,
+                args=(TAB_OPTIONS[5],)
+            )
+
+        # Apply Filters
+        filtered_eval = eval_df.copy()
+        if sel_week != "All Weeks":
+            wk_num = int(sel_week.replace("Week ", ""))
+            filtered_eval = filtered_eval[filtered_eval['week'] == wk_num]
+        
+        if sel_pos != "ALL":
+            filtered_eval = filtered_eval[filtered_eval['position'] == sel_pos]
+
+        if sel_outcome == "Bullseye (Within ±2.0 pts)":
+            filtered_eval = filtered_eval[filtered_eval['Abs Error'] <= 2.0]
+        elif sel_outcome == "On Target (Within ±4.0 pts)":
+            filtered_eval = filtered_eval[filtered_eval['Abs Error'] <= 4.0]
+        elif sel_outcome == "Ceiling Spike (+5.0+ pts)":
+            filtered_eval = filtered_eval[filtered_eval['Delta'] >= 5.0]
+        elif sel_outcome == "Floor Bust (-5.0+ pts)":
+            filtered_eval = filtered_eval[filtered_eval['Delta'] <= -5.0]
+
+        if search_query.strip():
+            filtered_eval = filtered_eval[filtered_eval['player_name'].str.lower().str.contains(search_query.strip().lower(), na=False)]
+
+        # Sorting logic
+        if sel_outcome == "Ceiling Spike (+5.0+ pts)":
+            filtered_eval = filtered_eval.sort_values(by='Delta', ascending=False)
+        elif sel_outcome == "Floor Bust (-5.0+ pts)":
+            filtered_eval = filtered_eval.sort_values(by='Delta', ascending=True)
+        else:
+            filtered_eval = filtered_eval.sort_values(by=['week', 'actual_pts'], ascending=[False, False])
+
+        # Summary Metrics for Filtered Slice
+        if not filtered_eval.empty:
+            k1, k2, k3, k4 = st.columns(4)
+            with k1:
+                st.metric("Filtered Games", f"{len(filtered_eval):,}")
+            with k2:
+                avg_err = filtered_eval['Abs Error'].mean()
+                st.metric("Avg Point Error (MAE)", f"{avg_err:.2f} pts")
+            with k3:
+                bullseye_rate = (filtered_eval['Abs Error'] <= 2.0).mean() * 100.0
+                st.metric("Bullseye Rate (±2 pts)", f"{bullseye_rate:.1f}%")
+            with k4:
+                top_source = filtered_eval['Closest Model'].mode().values[0] if not filtered_eval['Closest Model'].empty else "—"
+                hits = (filtered_eval['Closest Model'] == top_source).sum()
+                st.metric("Sharpest Model in Slice", f"{top_source}", f"{hits} wins")
+
+            show_all_sources = st.checkbox(
+                "Display individual model projections side-by-side (CBS, ESPN, FantasyPros, NFL, NumberFire, Sleeper)",
+                value=False,
+                key="bt_show_models",
+                on_change=set_active_tab,
+                args=(TAB_OPTIONS[5],)
+            )
+
+            base_cols = ['week', 'player_name', 'position', 'Combined', 'actual_pts', 'Delta', 'Accuracy Status', 'Closest Model']
+            model_cols = ['CBS', 'ESPN', 'FantasyPros', 'NFL', 'NumberFire', 'Sleeper'] if show_all_sources else []
+            final_cols = base_cols + model_cols
+
+            col_config = {
+                "Consensus Proj": st.column_config.NumberColumn(format="%.1f", help="Multi-source average pre-game projection"),
+                "Actual Pts": st.column_config.NumberColumn(format="%.1f", help="Ground-truth official box-score PPR points"),
+                "Divergence (Δ)": st.column_config.NumberColumn(format="%+.1f", help="Actual Pts - Consensus Proj (+ = Boom, - = Bust)"),
+                "Closest Source": st.column_config.TextColumn(help="The individual source model whose pre-game forecast came closest to the actual box-score score")
+            }
+            if show_all_sources:
+                for mc in model_cols:
+                    col_config[mc] = st.column_config.NumberColumn(format="%.1f")
+
+            display_df = filtered_eval[final_cols].rename(columns={
+                'week': 'Week',
+                'player_name': 'Player',
+                'position': 'Pos',
+                'Combined': 'Consensus Proj',
+                'actual_pts': 'Actual Pts',
+                'Delta': 'Divergence (Δ)',
+                'Accuracy Status': 'Status Badge',
+                'Closest Model': 'Closest Source'
+            })
+
+            st.dataframe(
+                display_df,
+                use_container_width=True,
+                hide_index=True,
+                column_config=col_config
+            )
+        else:
+            st.info("No player performances found matching the selected filters. Try broadening your criteria.")
+
