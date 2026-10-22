@@ -1144,13 +1144,19 @@ with tabs[2]:
             team_b_roster_obj = next((r for r in rosters if manager_names.get(r['owner_id']) == team_b_name), rosters[1] if len(rosters) > 1 else rosters[0])
             team_b_pids = team_b_roster_obj.get('players', [])
 
-        # Build Player Selection Options with Market Values (Grouped by Position, High-to-Low Value)
+        # Build Player Selection Options with Market Values (Grouped by Position with Position Headers)
         def build_player_trade_options(pids):
             sorted_players = trade_engine.sort_roster_by_position_and_value(pids, players, market_data, is_dynasty_flag)
             options = []
             pid_map = {}
+            current_pos = None
             for p in sorted_players:
-                label = f"[{p['pos']}] {p['name']} ({p['team']}) — {p['val']:,} pts"
+                pos = p['pos']
+                if pos != current_pos:
+                    current_pos = pos
+                    header = f"━━━ {pos} ━━━"
+                    options.append(header)
+                label = f"{p['name']} ({p['team']}) — {p['val']:,} pts"
                 options.append(label)
                 pid_map[label] = p['id']
             return options, pid_map, sorted_players
@@ -1170,9 +1176,14 @@ with tabs[2]:
                 "Select Players:", 
                 opts_a, 
                 key="tr_sel_players_a", 
-                placeholder="Choose players to send (grouped by position, high to low value)..."
+                placeholder="Choose players to send (grouped by position)..."
             )
-            chosen_pids_a = [map_a[lbl] for lbl in chosen_labels_a]
+            # Filter out separator headers if accidentally clicked
+            clean_labels_a = [lbl for lbl in chosen_labels_a if not lbl.startswith("━")]
+            if len(clean_labels_a) != len(chosen_labels_a):
+                st.session_state["tr_sel_players_a"] = clean_labels_a
+                st.rerun()
+            chosen_pids_a = [map_a[lbl] for lbl in clean_labels_a if lbl in map_a]
             
             chosen_picks_a = []
             if is_dynasty_flag and draft_pick_labels:
@@ -1184,16 +1195,35 @@ with tabs[2]:
                 )
                 chosen_picks_a = [draft_pick_map[lbl] for lbl in chosen_pick_labels_a]
 
-            with st.expander(f"View {team_a_name}'s Full Roster (Grouped by Pos)", expanded=False):
-                df_roster_a = pd.DataFrame([{
-                    "Pos": p['pos'],
-                    "Player": p['name'],
-                    "Team": p['team'],
-                    "Age": p['age'] if p['age'] is not None else "—",
-                    "Market Value": f"{p['val']:,}",
-                    "Weekly Proj": f"{get_projection(p['name'], working_projections):.1f}"
-                } for p in list_a])
-                st.dataframe(df_roster_a, use_container_width=True, hide_index=True)
+            with st.expander(f"View {team_a_name}'s Full Roster (Grouped by Position)", expanded=False):
+                pos_groups_a = {}
+                for p in list_a:
+                    pos_groups_a.setdefault(p['pos'], []).append(p)
+                
+                roster_html_a = ['<div style="background-color: #FFFFFF; border: 1px solid #E2E7E2; border-radius: 6px; padding: 10px 14px; max-height: 380px; overflow-y: auto;">']
+                for pos_key, p_group in pos_groups_a.items():
+                    roster_html_a.append(f"""
+                    <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 800; color: #141714; margin-top: 8px; margin-bottom: 4px; padding-bottom: 2px; border-bottom: 2px solid #5B705E; letter-spacing: 0.05em;">
+                        {pos_key}
+                    </div>
+                    """)
+                    for p in p_group:
+                        proj_val = get_projection(p['name'], working_projections)
+                        age_info = f" &bull; Age {p['age']}" if p.get('age') else ""
+                        roster_html_a.append(f"""
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0; font-size: 0.85rem; border-bottom: 1px solid #F4F6F4;">
+                            <div>
+                                <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; color: #141714;">{p['name']}</span>
+                                <span style="color: #6B7280; font-size: 0.78rem;"> ({p['team']}{age_info})</span>
+                            </div>
+                            <div style="text-align: right; font-family: 'Space Grotesk', sans-serif;">
+                                <span style="font-weight: 700; color: #2D3A2F;">{p['val']:,} pts</span>
+                                <span style="color: #6B7280; font-size: 0.76rem; margin-left: 6px;">({proj_val:.1f} proj)</span>
+                            </div>
+                        </div>
+                        """)
+                roster_html_a.append('</div>')
+                st.markdown("".join(roster_html_a), unsafe_allow_html=True)
 
         with col_sel_b:
             st.markdown(f"<div style='font-family:Space Grotesk; font-size:0.85rem; font-weight:700; color:#5B705E; text-transform:uppercase;'>Assets {team_b_name} Sends</div>", unsafe_allow_html=True)
@@ -1201,9 +1231,14 @@ with tabs[2]:
                 "Select Players:", 
                 opts_b, 
                 key="tr_sel_players_b", 
-                placeholder="Choose players to receive (grouped by position, high to low value)..."
+                placeholder="Choose players to receive (grouped by position)..."
             )
-            chosen_pids_b = [map_b[lbl] for lbl in chosen_labels_b]
+            # Filter out separator headers if accidentally clicked
+            clean_labels_b = [lbl for lbl in chosen_labels_b if not lbl.startswith("━")]
+            if len(clean_labels_b) != len(chosen_labels_b):
+                st.session_state["tr_sel_players_b"] = clean_labels_b
+                st.rerun()
+            chosen_pids_b = [map_b[lbl] for lbl in clean_labels_b if lbl in map_b]
             
             chosen_picks_b = []
             if is_dynasty_flag and draft_pick_labels:
@@ -1215,16 +1250,35 @@ with tabs[2]:
                 )
                 chosen_picks_b = [draft_pick_map[lbl] for lbl in chosen_pick_labels_b]
 
-            with st.expander(f"View {team_b_name}'s Full Roster (Grouped by Pos)", expanded=False):
-                df_roster_b = pd.DataFrame([{
-                    "Pos": p['pos'],
-                    "Player": p['name'],
-                    "Team": p['team'],
-                    "Age": p['age'] if p['age'] is not None else "—",
-                    "Market Value": f"{p['val']:,}",
-                    "Weekly Proj": f"{get_projection(p['name'], working_projections):.1f}"
-                } for p in list_b])
-                st.dataframe(df_roster_b, use_container_width=True, hide_index=True)
+            with st.expander(f"View {team_b_name}'s Full Roster (Grouped by Position)", expanded=False):
+                pos_groups_b = {}
+                for p in list_b:
+                    pos_groups_b.setdefault(p['pos'], []).append(p)
+                
+                roster_html_b = ['<div style="background-color: #FFFFFF; border: 1px solid #E2E7E2; border-radius: 6px; padding: 10px 14px; max-height: 380px; overflow-y: auto;">']
+                for pos_key, p_group in pos_groups_b.items():
+                    roster_html_b.append(f"""
+                    <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 800; color: #141714; margin-top: 8px; margin-bottom: 4px; padding-bottom: 2px; border-bottom: 2px solid #5B705E; letter-spacing: 0.05em;">
+                        {pos_key}
+                    </div>
+                    """)
+                    for p in p_group:
+                        proj_val = get_projection(p['name'], working_projections)
+                        age_info = f" &bull; Age {p['age']}" if p.get('age') else ""
+                        roster_html_b.append(f"""
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0; font-size: 0.85rem; border-bottom: 1px solid #F4F6F4;">
+                            <div>
+                                <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; color: #141714;">{p['name']}</span>
+                                <span style="color: #6B7280; font-size: 0.78rem;"> ({p['team']}{age_info})</span>
+                            </div>
+                            <div style="text-align: right; font-family: 'Space Grotesk', sans-serif;">
+                                <span style="font-weight: 700; color: #2D3A2F;">{p['val']:,} pts</span>
+                                <span style="color: #6B7280; font-size: 0.76rem; margin-left: 6px;">({proj_val:.1f} proj)</span>
+                            </div>
+                        </div>
+                        """)
+                roster_html_b.append('</div>')
+                st.markdown("".join(roster_html_b), unsafe_allow_html=True)
 
         st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 
