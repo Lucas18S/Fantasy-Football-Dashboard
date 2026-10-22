@@ -202,6 +202,45 @@ def get_player_trade_value(player_id_or_name: str, market_data: Dict[str, Any], 
         "source": "Estimated"
     }
 
+POS_ORDER = {"QB": 1, "RB": 2, "WR": 3, "TE": 4, "K": 5, "DEF": 6, "DST": 6}
+
+def sort_roster_by_position_and_value(
+    pids: List[str],
+    players_meta: Dict[str, Any],
+    market_data: Dict[str, Any],
+    is_dynasty: bool = True
+) -> List[Dict[str, Any]]:
+    """
+    Groups roster players by position hierarchy (QB -> RB -> WR -> TE -> K -> DEF)
+    and sorts players within each position from highest market trade value to lowest.
+    """
+    parsed = []
+    for pid in pids:
+        p_str = str(pid)
+        p_meta = players_meta.get(p_str, {}) if isinstance(players_meta, dict) else {}
+        p_name = p_meta.get('name') or p_meta.get('full_name') or p_str
+        pos = p_meta.get('pos') or p_meta.get('position', '—')
+        team = p_meta.get('team') or '—'
+        val_info = get_player_trade_value(p_str if p_str in market_data.get('by_sleeper_id', {}) else p_name, market_data, is_dynasty)
+        val = val_info.get("consensus_value", val_info.get("value", 0))
+        age = val_info.get("age")
+        trend = val_info.get("trend30Day", 0)
+
+        parsed.append({
+            "id": p_str,
+            "name": p_name,
+            "pos": pos,
+            "team": team,
+            "val": val,
+            "age": age,
+            "trend": trend,
+            "priority": POS_ORDER.get(pos, 99)
+        })
+
+    # Sort primarily by position priority, then by value descending, then by name
+    parsed.sort(key=lambda x: (x["priority"], -x["val"], x["name"]))
+    return parsed
+
 def evaluate_trade(
     team_a_name: str,
     team_b_name: str,
@@ -305,32 +344,80 @@ def evaluate_trade(
     score_b_after = sum(slot['player']['points'] for slot in opt_b_after if slot['player'])
     delta_score_b = round(score_b_after - score_b_before, 2)
 
-    # 3. Formulate Strategic Verdict
-    verdict = ""
-    verdict_badge = ""
+    # 3. Formulate Clear, Multi-Line Strategic Verdict
+    diff_str = f"+{market_diff_a:,}" if market_diff_a >= 0 else f"{market_diff_a:,}"
     
-    if fairness_pct >= 90 and abs(delta_score_a) <= 3 and abs(delta_score_b) <= 3:
-        verdict = "Balanced Win-Win: Both rosters maintain market parity and optimize their respective lineups."
+    if fairness_pct >= 90 and abs(delta_score_a) <= 2.5 and abs(delta_score_b) <= 2.5:
         verdict_badge = "FAIR & BALANCED"
+        verdict_headline = "Fair & Balanced Exchange"
+        verdict_summary = f"Both {team_a_name} and {team_b_name} exchange near-identical market equity while preserving active starting lineup integrity."
+        badge_color = "#5B705E"
     elif delta_score_a > 1.5 and delta_score_b > 1.5:
-        verdict = f"Mutual Starting Lineup Upgrade: Both managers improve their weekly starting score (+{delta_score_a:.1f} pts for {team_a_name}, +{delta_score_b:.1f} pts for {team_b_name}) by addressing positional bottlenecks."
         verdict_badge = "MUTUAL WIN-WIN"
+        verdict_headline = "Mutual Starting Lineup Upgrade"
+        verdict_summary = f"Synergistic Win-Win: Both managers improve their weekly starting score (+{delta_score_a:.1f} pts for {team_a_name}, +{delta_score_b:.1f} pts for {team_b_name}) by addressing positional bottlenecks."
+        badge_color = "#5B705E"
     elif delta_score_a > 2.0 and market_diff_a >= 0:
-        verdict = f"High-Impact Win for {team_a_name}: Enhances starting projection (+{delta_score_a:.1f} pts/wk) while netting +{market_diff_a:,} in market equity."
         verdict_badge = f"FAVORS {team_a_name.upper()}"
+        verdict_headline = f"Strong High-Impact Win for {team_a_name}"
+        verdict_summary = f"{team_a_name} captures surplus market equity (+{market_diff_a:,} pts) while improving immediate starting output (+{delta_score_a:.1f} pts/wk)."
+        badge_color = "#2D6A4F"
     elif delta_score_b > 2.0 and market_diff_a < 0:
-        verdict = f"High-Impact Win for {team_b_name}: Enhances starting projection (+{delta_score_b:.1f} pts/wk) while netting +{abs(market_diff_a):,} in market equity."
         verdict_badge = f"FAVORS {team_b_name.upper()}"
+        verdict_headline = f"Strong High-Impact Win for {team_b_name}"
+        verdict_summary = f"{team_b_name} captures surplus market equity (+{abs(market_diff_a):,} pts) while improving immediate starting output (+{delta_score_b:.1f} pts/wk)."
+        badge_color = "#2D6A4F"
+    elif delta_score_a > 2.5 and market_diff_a < -800:
+        verdict_badge = "STAR CONSOLIDATION"
+        verdict_headline = f"{team_a_name} Consolidates for Elite Starter"
+        verdict_summary = f"{team_a_name} deliberately pays a market depth premium (-{abs(market_diff_a):,} pts) to acquire an elite weekly difference-maker (+{delta_score_a:.1f} pts/wk)."
+        badge_color = "#5B705E"
+    elif delta_score_b > 2.5 and market_diff_a > 800:
+        verdict_badge = "STAR CONSOLIDATION"
+        verdict_headline = f"{team_b_name} Consolidates for Elite Starter"
+        verdict_summary = f"{team_b_name} deliberately pays a market depth premium to acquire an elite weekly difference-maker (+{delta_score_b:.1f} pts/wk)."
+        badge_color = "#5B705E"
     elif is_dynasty and avg_age_a_sends and avg_age_b_sends and avg_age_b_sends < avg_age_a_sends - 2:
-        verdict = f"Dynasty Youth Pivot: {team_a_name} gets significantly younger (Avg Age: {avg_age_b_sends} vs {avg_age_a_sends}), acquiring productive multi-year runway."
-        verdict_badge = "REBUILD / YOUTH PIVOT"
-    elif delta_score_a > 3.0 and market_diff_a < -1000:
-        verdict = f"Contender Consolidation Overpay: {team_a_name} gives up surplus market depth to acquire an elite weekly difference-maker (+{delta_score_a:.1f} pts/wk)."
-        verdict_badge = "CONTENDER CONSOLIDATION"
+        verdict_badge = "YOUTH / REBUILD PIVOT"
+        verdict_headline = f"{team_a_name} Executes Dynasty Youth Pivot"
+        verdict_summary = f"{team_a_name} successfully resets their competitive timeline, getting younger by {avg_age_a_sends - avg_age_b_sends:.1f} years on average."
+        badge_color = "#5B705E"
+    elif is_dynasty and avg_age_a_sends and avg_age_b_sends and avg_age_a_sends < avg_age_b_sends - 2:
+        verdict_badge = "WIN-NOW PUSH"
+        verdict_headline = f"{team_a_name} Buys Veteran Production"
+        verdict_summary = f"{team_a_name} trades future dynasty runway for experienced immediate veteran scoring."
+        badge_color = "#8A6D3B"
+    elif fairness_pct < 75:
+        winning_team = team_a_name if market_diff_a > 0 else team_b_name
+        losing_team = team_b_name if market_diff_a > 0 else team_a_name
+        verdict_badge = "UNEVEN TRADE"
+        verdict_headline = f"Lopsided in Favor of {winning_team}"
+        verdict_summary = f"{winning_team} captures significant surplus market capital ({abs(market_diff_a):,} pts). {losing_team} requires additional assets to reach parity."
+        badge_color = "#9C4221"
     else:
-        diff_str = f"+{market_diff_a:,}" if market_diff_a >= 0 else f"{market_diff_a:,}"
-        verdict = f"Market Value Differential: {diff_str} equity shift. Lineup effect: {delta_score_a:+.1f} pts/wk for {team_a_name}, {delta_score_b:+.1f} pts/wk for {team_b_name}."
-        verdict_badge = "SLIGHT SKEW" if fairness_pct >= 75 else "UNEVEN TRADE"
+        winning_team = team_a_name if market_diff_a > 0 else team_b_name
+        verdict_badge = "MODERATE SKEW"
+        verdict_headline = f"Market Skew Toward {winning_team} ({fairness_pct}% Parity)"
+        verdict_summary = f"Trade tilts moderately toward {winning_team} by {abs(market_diff_a):,} market points."
+        badge_color = "#8A6D3B"
+
+    # Multi-line Breakdown items
+    breakdown_lines = [
+        {
+            "category": "Market Capital",
+            "text": f"{team_a_name} receives {val_b_sends:,} pts and gives {val_a_sends:,} pts (Net: {diff_str} pts, {fairness_pct}% parity)."
+        },
+        {
+            "category": "Starting Lineup Impact",
+            "text": f"{team_a_name}: {delta_score_a:+.1f} pts/wk ({score_a_before:.1f} → {score_a_after:.1f}) | {team_b_name}: {delta_score_b:+.1f} pts/wk ({score_b_before:.1f} → {score_b_after:.1f})"
+        }
+    ]
+    if is_dynasty and avg_age_a_sends and avg_age_b_sends:
+        age_diff = round(avg_age_b_sends - avg_age_a_sends, 1)
+        breakdown_lines.append({
+            "category": "Dynasty Age Shift",
+            "text": f"{team_a_name} sends avg age {avg_age_a_sends} yrs and receives avg age {avg_age_b_sends} yrs ({age_diff:+.1f} yrs shift)."
+        })
 
     return {
         "team_a_gives": team_a_gives_assets,
@@ -347,6 +434,211 @@ def evaluate_trade(
         "delta_score_b": delta_score_b,
         "avg_age_a_sends": avg_age_a_sends,
         "avg_age_b_sends": avg_age_b_sends,
-        "verdict": verdict,
-        "verdict_badge": verdict_badge
+        "verdict": verdict_summary,
+        "verdict_headline": verdict_headline,
+        "verdict_summary": verdict_summary,
+        "verdict_badge": verdict_badge,
+        "badge_color": badge_color,
+        "breakdown_lines": breakdown_lines
     }
+
+def generate_balancing_suggestions(
+    team_a_name: str,
+    team_b_name: str,
+    team_a_roster: List[str],
+    team_b_roster: List[str],
+    team_a_sends: List[str],
+    team_b_sends: List[str],
+    trade_result: Dict[str, Any],
+    market_data: Dict[str, Any],
+    players_meta: Dict[str, Any],
+    projections: pd.DataFrame,
+    comp_data: pd.DataFrame,
+    roster_positions: List[str],
+    is_dynasty: bool,
+    build_optimal_lineup_func,
+    get_projection_func
+) -> Dict[str, Any]:
+    """
+    Generates 3 distinct tailored counter-balance suggestions to bring an uneven trade to parity:
+    1. 'Positional Need Balancer' - Targets the receiving team's weakest starting slot.
+    2. 'EV Production Anchor' - Highest projected weekly output player within budget.
+    3. 'The Leverage Sweetener' - Nudges trade slightly in the receiving team's favor (+5% to +15% over gap).
+    """
+    val_a = trade_result.get('val_a_sends', 0)
+    val_b = trade_result.get('val_b_sends', 0)
+
+    # Determine deficit team (who sends more value than they receive)
+    if val_a > val_b:
+        deficit_team = team_a_name
+        surplus_team = team_b_name
+        deficit_roster = list(team_a_roster)
+        surplus_roster = list(team_b_roster)
+        surplus_sends = list(team_b_sends)
+        target_gap = val_a - val_b
+        deficit_is_team_a = True
+    else:
+        deficit_team = team_b_name
+        surplus_team = team_a_name
+        deficit_roster = list(team_b_roster)
+        surplus_roster = list(team_a_roster)
+        surplus_sends = list(team_a_sends)
+        target_gap = val_b - val_a
+        deficit_is_team_a = False
+
+    # Collect available candidates from surplus team (not already traded)
+    available_pids = [pid for pid in surplus_roster if pid not in surplus_sends]
+    candidates = []
+    for pid in available_pids:
+        p_str = str(pid)
+        p_meta = players_meta.get(p_str, {}) if isinstance(players_meta, dict) else {}
+        p_name = p_meta.get('name') or p_meta.get('full_name') or p_str
+        pos = p_meta.get('pos') or p_meta.get('position', '—')
+        team = p_meta.get('team') or '—'
+        val_info = get_player_trade_value(p_str if p_str in market_data.get('by_sleeper_id', {}) else p_name, market_data, is_dynasty)
+        val = val_info.get("consensus_value", val_info.get("value", 0))
+        pts = get_projection_func(p_name, projections) if get_projection_func else 0.0
+        
+        candidates.append({
+            "id": p_str,
+            "name": p_name,
+            "pos": pos,
+            "team": team,
+            "val": val,
+            "pts": pts,
+            "age": val_info.get("age"),
+            "trend": val_info.get("trend30Day", 0)
+        })
+
+    def calc_recalculated_fairness(cand_val: int) -> Tuple[float, int]:
+        if deficit_is_team_a:
+            new_val_b = val_b + cand_val
+            n_max = max(val_a, new_val_b)
+            n_min = min(val_a, new_val_b)
+            fairness = round((n_min / n_max * 100), 1) if n_max > 0 else 100.0
+            shift = new_val_b - val_a
+        else:
+            new_val_a = val_a + cand_val
+            n_max = max(new_val_a, val_b)
+            n_min = min(new_val_a, val_b)
+            fairness = round((n_min / n_max * 100), 1) if n_max > 0 else 100.0
+            shift = val_b - new_val_a
+        return fairness, shift
+
+    # Fallback if no players on surplus team
+    if not candidates:
+        return {
+            "deficit_team": deficit_team,
+            "surplus_team": surplus_team,
+            "target_gap": target_gap,
+            "suggestions": []
+        }
+
+    # 1. Analyze deficit team's positional needs from starting lineup
+    pos_pts = {}
+    try:
+        opt_lineup = build_optimal_lineup_func(deficit_roster, players_meta, projections, comp_data, roster_positions)
+        for slot in opt_lineup:
+            p = slot.get('player')
+            slot_name = slot.get('slot', '')
+            slot_base = slot_name.split()[0]
+            if p and slot_base in ['QB', 'RB', 'WR', 'TE']:
+                pos_pts.setdefault(slot_base, []).append(p.get('points', 0.0))
+    except Exception as e:
+        print(f"Error computing optimal lineup for suggestions: {e}")
+
+    pos_avgs = {pos: (sum(pts) / len(pts)) for pos, pts in pos_pts.items() if pts}
+    ranked_needs = sorted(pos_avgs.keys(), key=lambda k: pos_avgs[k])  # Lowest avg scoring starter first
+    primary_need_pos = ranked_needs[0] if ranked_needs else "RB"
+    need_starter_avg = pos_avgs.get(primary_need_pos, 0.0)
+
+    # ─────────────────────────────────────────────────────────────────────────────
+    # SUGGESTION 1: Positional Need Balancer
+    # ─────────────────────────────────────────────────────────────────────────────
+    need_pool = [c for c in candidates if c['pos'] == primary_need_pos]
+    if not need_pool and len(ranked_needs) > 1:
+        need_pool = [c for c in candidates if c['pos'] == ranked_needs[1]]
+        primary_need_pos = ranked_needs[1]
+    if not need_pool:
+        need_pool = list(candidates)
+
+    # Pick candidate closest in value to target_gap
+    cand_need = min(need_pool, key=lambda c: abs(c['val'] - target_gap))
+    fairness_1, shift_1 = calc_recalculated_fairness(cand_need['val'])
+    
+    sug_1 = {
+        "name": "Positional Need Balancer",
+        "badge": "ROSTER NEED",
+        "player": cand_need,
+        "headline": f"Fills {deficit_team}'s void at {cand_need['pos']}",
+        "rationale": f"Targets {deficit_team}'s weakest starting slot ({primary_need_pos}, currently averaging {need_starter_avg:.1f} pts/starter). Adding {cand_need['name']} ({cand_need['val']:,} pts) brings trade parity to {fairness_1}%.",
+        "new_fairness": fairness_1,
+        "diff_shift": shift_1
+    }
+
+    # ─────────────────────────────────────────────────────────────────────────────
+    # SUGGESTION 2: EV Production Anchor (Highest weekly points within budget)
+    # ─────────────────────────────────────────────────────────────────────────────
+    budget_cap = max(target_gap * 1.5, 2500)
+    budget_pool = [c for c in candidates if c['val'] <= budget_cap]
+    if not budget_pool:
+        budget_pool = list(candidates)
+
+    # Sort by projected weekly points descending
+    budget_pool_sorted = sorted(budget_pool, key=lambda c: (c['pts'], c['val']), reverse=True)
+    # Prefer a different player from Sug 1 if possible
+    cand_proj = next((c for c in budget_pool_sorted if c['id'] != cand_need['id']), budget_pool_sorted[0])
+    fairness_2, shift_2 = calc_recalculated_fairness(cand_proj['val'])
+
+    sug_2 = {
+        "name": "EV Production Anchor",
+        "badge": "WEEKLY OUTPUT",
+        "player": cand_proj,
+        "headline": f"Maximizes weekly scoring (+{cand_proj['pts']:.1f} pts/wk)",
+        "rationale": f"Infuses the highest available weekly projected output ({cand_proj['pts']:.1f} pts) within budget. Provides immediate starting scoring while adjusting fairness to {fairness_2}%.",
+        "new_fairness": fairness_2,
+        "diff_shift": shift_2
+    }
+
+    # ─────────────────────────────────────────────────────────────────────────────
+    # SUGGESTION 3: The Leverage Sweetener (Nudges trade in receiving team's favor)
+    # ─────────────────────────────────────────────────────────────────────────────
+    sweet_min = target_gap * 1.02 if target_gap > 300 else target_gap + 150
+    sweet_max = max(target_gap * 1.35, target_gap + 750)
+    
+    sweet_candidates = [c for c in candidates if sweet_min <= c['val'] <= sweet_max]
+    if sweet_candidates:
+        cand_sweet = min(sweet_candidates, key=lambda c: abs(c['val'] - (target_gap * 1.15)))
+    else:
+        over_gap = [c for c in candidates if c['val'] >= target_gap]
+        if over_gap:
+            cand_sweet = min(over_gap, key=lambda c: c['val'])
+        else:
+            cand_sweet = max(candidates, key=lambda c: c['val'])
+
+    used_ids = {cand_need['id'], cand_proj['id']}
+    if cand_sweet['id'] in used_ids and len(candidates) > 2:
+        alternatives = [c for c in candidates if c['id'] not in used_ids]
+        if alternatives:
+            cand_sweet = min(alternatives, key=lambda c: abs(c['val'] - (target_gap * 1.15)))
+
+    fairness_3, shift_3 = calc_recalculated_fairness(cand_sweet['val'])
+    sweetener_bonus = max(0, cand_sweet['val'] - target_gap)
+    
+    sug_3 = {
+        "name": "The Leverage Sweetener",
+        "badge": "DEAL MAKER",
+        "player": cand_sweet,
+        "headline": f"Tips the scale in {deficit_team}'s favor",
+        "rationale": f"Nudges market equity slightly into {deficit_team}'s favor (+{sweetener_bonus:,} bonus pts over exact balance). Creates a psychological sweetener that heavily incentivizes acceptance ({fairness_3}% parity).",
+        "new_fairness": fairness_3,
+        "diff_shift": shift_3
+    }
+
+    return {
+        "deficit_team": deficit_team,
+        "surplus_team": surplus_team,
+        "target_gap": target_gap,
+        "suggestions": [sug_1, sug_2, sug_3]
+    }
+

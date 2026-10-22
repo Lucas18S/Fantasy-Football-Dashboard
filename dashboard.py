@@ -1144,24 +1144,19 @@ with tabs[2]:
             team_b_roster_obj = next((r for r in rosters if manager_names.get(r['owner_id']) == team_b_name), rosters[1] if len(rosters) > 1 else rosters[0])
             team_b_pids = team_b_roster_obj.get('players', [])
 
-        # Build Player Selection Options with Market Values
+        # Build Player Selection Options with Market Values (Grouped by Position, High-to-Low Value)
         def build_player_trade_options(pids):
+            sorted_players = trade_engine.sort_roster_by_position_and_value(pids, players, market_data, is_dynasty_flag)
             options = []
             pid_map = {}
-            for pid in pids:
-                p_meta = players.get(str(pid), {})
-                p_name = p_meta.get('name') or get_player_name(pid, players)
-                pos = p_meta.get('pos') or p_meta.get('position', '—')
-                team = p_meta.get('team') or '—'
-                val_info = trade_engine.get_player_trade_value(pid if pid in market_data.get('by_sleeper_id', {}) else p_name, market_data, is_dynasty_flag)
-                val = val_info.get("consensus_value", val_info.get("value", 0))
-                label = f"{p_name} ({pos}, {team}) — {val:,} pts"
+            for p in sorted_players:
+                label = f"[{p['pos']}] {p['name']} ({p['team']}) — {p['val']:,} pts"
                 options.append(label)
-                pid_map[label] = pid
-            return sorted(options), pid_map
+                pid_map[label] = p['id']
+            return options, pid_map, sorted_players
 
-        opts_a, map_a = build_player_trade_options(team_a_pids)
-        opts_b, map_b = build_player_trade_options(team_b_pids)
+        opts_a, map_a, list_a = build_player_trade_options(team_a_pids)
+        opts_b, map_b, list_b = build_player_trade_options(team_b_pids)
 
         draft_picks_available = market_data.get("draft_picks", [])
         draft_pick_labels = [f"{dp['name']} — {dp['value']:,} pts" for dp in draft_picks_available]
@@ -1175,7 +1170,7 @@ with tabs[2]:
                 "Select Players:", 
                 opts_a, 
                 key="tr_sel_players_a", 
-                placeholder="Choose players to send..."
+                placeholder="Choose players to send (grouped by position, high to low value)..."
             )
             chosen_pids_a = [map_a[lbl] for lbl in chosen_labels_a]
             
@@ -1189,13 +1184,24 @@ with tabs[2]:
                 )
                 chosen_picks_a = [draft_pick_map[lbl] for lbl in chosen_pick_labels_a]
 
+            with st.expander(f"View {team_a_name}'s Full Roster (Grouped by Pos)", expanded=False):
+                df_roster_a = pd.DataFrame([{
+                    "Pos": p['pos'],
+                    "Player": p['name'],
+                    "Team": p['team'],
+                    "Age": p['age'] if p['age'] is not None else "—",
+                    "Market Value": f"{p['val']:,}",
+                    "Weekly Proj": f"{get_projection(p['name'], working_projections):.1f}"
+                } for p in list_a])
+                st.dataframe(df_roster_a, use_container_width=True, hide_index=True)
+
         with col_sel_b:
             st.markdown(f"<div style='font-family:Space Grotesk; font-size:0.85rem; font-weight:700; color:#5B705E; text-transform:uppercase;'>Assets {team_b_name} Sends</div>", unsafe_allow_html=True)
             chosen_labels_b = st.multiselect(
                 "Select Players:", 
                 opts_b, 
                 key="tr_sel_players_b", 
-                placeholder="Choose players to receive..."
+                placeholder="Choose players to receive (grouped by position, high to low value)..."
             )
             chosen_pids_b = [map_b[lbl] for lbl in chosen_labels_b]
             
@@ -1208,6 +1214,17 @@ with tabs[2]:
                     placeholder="Choose draft picks to receive..."
                 )
                 chosen_picks_b = [draft_pick_map[lbl] for lbl in chosen_pick_labels_b]
+
+            with st.expander(f"View {team_b_name}'s Full Roster (Grouped by Pos)", expanded=False):
+                df_roster_b = pd.DataFrame([{
+                    "Pos": p['pos'],
+                    "Player": p['name'],
+                    "Team": p['team'],
+                    "Age": p['age'] if p['age'] is not None else "—",
+                    "Market Value": f"{p['val']:,}",
+                    "Weekly Proj": f"{get_projection(p['name'], working_projections):.1f}"
+                } for p in list_b])
+                st.dataframe(df_roster_b, use_container_width=True, hide_index=True)
 
         st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 
@@ -1231,20 +1248,33 @@ with tabs[2]:
                 build_optimal_lineup_func=build_optimal_lineup
             )
 
-            # Strategic Verdict Callout Card
-            badge_color = "#5B705E" if "WIN" in trade_result["verdict_badge"] or "FAIR" in trade_result["verdict_badge"] else "#8A6D3B"
+            # Strategic Verdict Multi-Factor Breakdown Card
+            badge_color = trade_result.get("badge_color", "#5B705E")
+            breakdown_lines_html = "".join([
+                f"""<div style="display: flex; align-items: baseline; gap: 10px; margin-top: 8px; font-size: 0.88rem; color: #374151;">
+                    <span style="font-weight: 700; color: #1F2937; min-width: 165px; display: inline-block;">&bull; {item['category']}:</span>
+                    <span style="color: #4B5563;">{item['text']}</span>
+                </div>""" for item in trade_result.get("breakdown_lines", [])
+            ])
+
             st.markdown(f"""
-            <div style="background-color: #FFFFFF; border: 1px solid #E2E7E2; border-left: 5px solid {badge_color}; border-radius: 6px; padding: 16px 20px; margin-bottom: 20px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: {badge_color};">
-                        Trade Verdict // Evaluation Summary
+            <div style="background-color: #FFFFFF; border: 1px solid #E2E7E2; border-left: 5px solid {badge_color}; border-radius: 6px; padding: 18px 22px; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: {badge_color};">
+                        Trade Verdict // Multi-Factor Analysis
                     </div>
-                    <div style="background-color: #EEF2EE; color: #2D3A2F; font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; letter-spacing: 0.05em;">
+                    <div style="background-color: #EEF2EE; color: #2D3A2F; font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 4px; letter-spacing: 0.05em;">
                         {trade_result['verdict_badge']}
                     </div>
                 </div>
-                <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.05rem; font-weight: 600; color: #141714; line-height: 1.35;">
-                    {trade_result['verdict']}
+                <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; color: #141714; margin-bottom: 6px;">
+                    {trade_result.get('verdict_headline', trade_result['verdict_badge'])}
+                </div>
+                <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.95rem; font-weight: 500; color: #374151; line-height: 1.45; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #F1F4F1;">
+                    {trade_result.get('verdict_summary', trade_result['verdict'])}
+                </div>
+                <div style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                    {breakdown_lines_html}
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -1307,6 +1337,89 @@ with tabs[2]:
                     st.caption(f"**Total Market Value Sent: {trade_result['val_b_sends']:,} pts**")
                 else:
                     st.info("No assets selected from Team B.")
+
+            # Strategic Counter-Balance Suggestions
+            trade_suggestions = trade_engine.generate_balancing_suggestions(
+                team_a_name=team_a_name,
+                team_b_name=team_b_name,
+                team_a_roster=team_a_pids,
+                team_b_roster=team_b_pids,
+                team_a_sends=chosen_pids_a,
+                team_b_sends=chosen_pids_b,
+                trade_result=trade_result,
+                market_data=market_data,
+                players_meta=players,
+                projections=working_projections,
+                comp_data=comp_data,
+                roster_positions=roster_positions,
+                is_dynasty=is_dynasty_flag,
+                build_optimal_lineup_func=build_optimal_lineup,
+                get_projection_func=get_projection
+            )
+
+            suggestions_list = trade_suggestions.get("suggestions", [])
+            if suggestions_list:
+                deficit_team = trade_suggestions.get("deficit_team", "Receiving Team")
+                surplus_team = trade_suggestions.get("surplus_team", "Trade Partner")
+                target_gap = trade_suggestions.get("target_gap", 0)
+
+                st.markdown("""
+                <div style="margin-top: 24px; margin-bottom: 8px; padding-top: 16px; border-top: 1px solid #E2E7E2;">
+                    <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #5B705E; margin-bottom: 4px;">
+                        Negotiation Intelligence // Counter-Offer Balancer
+                    </div>
+                    <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.35rem; font-weight: 700; letter-spacing: -0.01em; color: #141714;">
+                        SUGGESTED ASSETS TO BALANCE THIS TRADE
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                st.markdown(f"""
+                <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.88rem; color: #5E665E; margin-bottom: 14px;">
+                    Currently, <b>{deficit_team}</b> sends more market value than they receive (gap of <b>{target_gap:,} pts</b>). 
+                    To bring this deal into parity or incentivize {deficit_team} to accept, ask <b>{surplus_team}</b> to include one of these 3 targeted options:
+                </div>
+                """, unsafe_allow_html=True)
+
+                col_s1, col_s2, col_s3 = st.columns(3)
+                cols = [col_s1, col_s2, col_s3]
+
+                for idx, sug in enumerate(suggestions_list):
+                    with cols[idx]:
+                        p_info = sug.get("player", {})
+                        badge_label = sug.get("badge", "SUGGESTION")
+                        sug_name = sug.get("name", "Counter Suggestion")
+                        rationale = sug.get("rationale", "")
+                        new_fairness = sug.get("new_fairness", 100.0)
+
+                        st.markdown(f"""
+                        <div style="background-color: #FFFFFF; border: 1px solid #E2E7E2; border-top: 4px solid #5B705E; border-radius: 6px; padding: 14px; min-height: 210px; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                    <span style="font-family: 'Space Grotesk', sans-serif; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #5B705E;">
+                                        {sug_name}
+                                    </span>
+                                    <span style="background-color: #EEF2EE; color: #2D3A2F; font-size: 0.65rem; font-weight: 700; padding: 2px 6px; border-radius: 3px;">
+                                        {badge_label}
+                                    </span>
+                                </div>
+                                <div style="font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 700; color: #141714; margin-bottom: 2px;">
+                                    {p_info.get('name', 'Player')}
+                                </div>
+                                <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.8rem; color: #5E665E; margin-bottom: 8px;">
+                                    {p_info.get('pos', '—')} // {p_info.get('team', '—')} &bull; Value: <b>{p_info.get('val', 0):,} pts</b> &bull; Proj: <b>{p_info.get('pts', 0.0):.1f} pts/wk</b>
+                                </div>
+                                <div style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.82rem; color: #374151; line-height: 1.4; margin-bottom: 10px;">
+                                    {rationale}
+                                </div>
+                            </div>
+                            <div style="background-color: #F8F9F7; border: 1px solid #E2E7E2; border-radius: 4px; padding: 6px 10px; font-size: 0.78rem; font-weight: 600; color: #2D3A2F; text-align: center;">
+                                Resulting Parity: <b>{new_fairness}% Fair</b>
+                            </div>
+                        </div>
+                        """, unsafe_allow_html=True)
+
+            st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
 
             # Starting Lineup Shift Comparison Expander
             with st.expander("View Starting Lineup Optimization Details (Before vs After)", expanded=False):
