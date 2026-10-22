@@ -114,16 +114,7 @@ def load_users() -> Dict[str, Any]:
         if users["lucas18s"].get("role") != "admin":
             users["lucas18s"]["role"] = "admin"
             save_needed = True
-            
-    # Purge erroneously seeded leagues if present
-    unwanted_ids = {"1389358448524668928", "1312115586901213184"}
-    for u_key in users:
-        curr_leagues = users[u_key].get("saved_leagues", [])
-        filtered = [l for l in curr_leagues if str(l.get("sleeper_league_id")) not in unwanted_ids]
-        if len(filtered) != len(curr_leagues):
-            curr_leagues = filtered
-            save_needed = True
-        users[u_key]["saved_leagues"] = curr_leagues
+
 
     if save_needed:
         data["users"] = users
