@@ -305,14 +305,94 @@ def calculate_player_range(name, proj_points, comp_df):
         ceil = round(proj_points * 1.3, 1)
         return floor, ceil, 0.0
 
-def build_optimal_lineup(player_ids, players, proj_df, comp_df, roster_positions):
+@st.cache_data(ttl=3600)
+def get_nfl_schedule(week: int = 7) -> dict:
+    url = "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
+    params = {"week": week, "seasontype": 2}
+    try:
+        r = requests.get(url, params=params, timeout=5)
+        if r.status_code != 200:
+            return {}
+        data = r.json()
+        matchup_map = {}
+        for ev in data.get("events", []):
+            comps = ev.get("competitions", [])
+            if not comps:
+                continue
+            competitors = comps[0].get("competitors", [])
+            if len(competitors) == 2:
+                home_team = None
+                away_team = None
+                for c in competitors:
+                    team_abbr = c.get("team", {}).get("abbreviation")
+                    if team_abbr == "WSH":
+                        team_abbr = "WAS"
+                    if c.get("homeAway") == "home":
+                        home_team = team_abbr
+                    else:
+                        away_team = team_abbr
+                if home_team and away_team:
+                    matchup_map[home_team] = {"opp": away_team, "is_home": True, "text": f"H {away_team}"}
+                    matchup_map[away_team] = {"opp": home_team, "is_home": False, "text": f"@{away_team}"}
+                    if home_team == "WAS":
+                        matchup_map["WSH"] = matchup_map["WAS"]
+                    if away_team == "WAS":
+                        matchup_map["WSH"] = matchup_map["WAS"]
+        return matchup_map
+    except Exception:
+        return {}
+
+@st.cache_data(ttl=3600)
+def build_name_to_team_map(players):
+    m = {}
+    if isinstance(players, dict):
+        for pid, p in players.items():
+            name = p.get("full_name") or f"{p.get('first_name', '')} {p.get('last_name', '')}".strip()
+            team = p.get("team")
+            if name and team:
+                m[name.lower().replace(".", "").strip()] = team
+    for abbr, full in TEAM_ABBR_MAP.items():
+        m[abbr.lower()] = abbr
+        m[full.lower()] = abbr
+    return m
+
+def get_player_team(pid, players, player_name=None, name_to_team_map=None):
+    if pid is not None:
+        pid_str = str(pid).upper()
+        if pid_str in TEAM_ABBR_MAP:
+            return pid_str
+        if isinstance(players, dict):
+            p = players.get(str(pid), {})
+            if p.get("team"):
+                return p.get("team")
+    name = player_name or (get_player_name(pid, players) if pid else None)
+    if name and name_to_team_map:
+        clean = name.lower().replace(".", "").strip()
+        return name_to_team_map.get(clean)
+    return None
+
+def get_player_matchup(pid, players, schedule, player_name=None, name_to_team_map=None) -> str:
+    if not schedule:
+        return "—"
+    team = get_player_team(pid, players, player_name, name_to_team_map)
+    if not team:
+        return "—"
+    team_up = team.upper()
+    if team_up in schedule:
+        return schedule[team_up]["text"]
+    if team_up in TEAM_ABBR_MAP or team_up in ("WAS", "WSH", "OAK"):
+        return "BYE"
+    return "—"
+
+def build_optimal_lineup(player_ids, players, proj_df, comp_df, roster_positions, nfl_schedule=None, name_to_team_map=None):
     entries = []
     for pid in player_ids:
         name  = get_player_name(pid, players)
         pos   = get_player_position(pid, players)
         pts   = get_projection(name, proj_df)
         fl, cl, sp = calculate_player_range(name, pts, comp_df)
-        entries.append({'id': pid, 'name': name, 'pos': pos, 'points': pts, 'floor': fl, 'ceil': cl, 'spread': sp})
+        opp   = get_player_matchup(pid, players, nfl_schedule, name, name_to_team_map) if nfl_schedule else "—"
+        entries.append({'id': pid, 'name': name, 'pos': pos, 'opp': opp, 'points': pts, 'floor': fl, 'ceil': cl, 'spread': sp})
         
     df = pd.DataFrame(entries).sort_values('points', ascending=False)
     lineup = []
@@ -737,6 +817,7 @@ with st.sidebar:
 
     # Week selection
     selected_week = st.number_input("NFL Week", min_value=1, max_value=18, value=7, step=1)
+    nfl_schedule = get_nfl_schedule(selected_week)
 
 # Filter projection source
 if selected_source == 'Best Available (Combined)':
@@ -778,6 +859,9 @@ else:
     except Exception as e:
         st.error(f"Error loading ESPN league: {e}")
         st.stop()
+
+# Build player name to team dictionary for fast opponent lookups
+name_to_team_map = build_name_to_team_map(players)
 
 # Helper map: roster_id -> display_name
 roster_id_to_name = {}
@@ -853,7 +937,7 @@ with tabs[0]:
     player_ids = selected_roster.get('players', []) if selected_roster else []
     starters_ids = selected_roster.get('starters', []) if selected_roster else []
 
-    optimal = build_optimal_lineup(player_ids, players, working_projections, comp_data, roster_positions)
+    optimal = build_optimal_lineup(player_ids, players, working_projections, comp_data, roster_positions, nfl_schedule, name_to_team_map)
     optimal_ids = {slot['player']['id'] for slot in optimal if slot['player']}
 
     col_opt, col_roster = st.columns([1, 1])
@@ -867,15 +951,17 @@ with tabs[0]:
             p = slot['player']
             if p:
                 total_opt += p['points']
+                opp = p.get('opp') or get_player_matchup(p.get('id'), players, nfl_schedule, p['name'], name_to_team_map)
                 opt_data.append({
                     "Slot": s_name,
                     "Player": f"{p['name']} ({p['pos']})",
+                    "Opponent": opp,
                     "Proj": f"{p['points']:.1f}",
                     "Floor": f"{p['floor']:.1f}",
                     "Ceiling": f"{p['ceil']:.1f}"
                 })
             else:
-                opt_data.append({"Slot": s_name, "Player": "EMPTY", "Proj": "0.0", "Floor": "0.0", "Ceiling": "0.0"})
+                opt_data.append({"Slot": s_name, "Player": "EMPTY", "Opponent": "—", "Proj": "0.0", "Floor": "0.0", "Ceiling": "0.0"})
         st.dataframe(pd.DataFrame(opt_data), use_container_width=True, hide_index=True)
         st.caption(f"**Projected Total Score: {total_opt:.1f} pts**")
 
@@ -895,9 +981,14 @@ with tabs[0]:
         if bad_starts or bench_promotions:
             st.markdown("**Recommended Lineup Swaps:**")
             for b_pid in bad_starts:
-                st.write(f"• **Bench:** {get_player_name(b_pid, players)} ({get_projection(get_player_name(b_pid, players), working_projections):.1f} pts)")
+                b_name = get_player_name(b_pid, players)
+                b_opp = get_player_matchup(b_pid, players, nfl_schedule, b_name, name_to_team_map)
+                opp_txt = f"{b_opp} · " if b_opp != "—" else ""
+                st.write(f"• **Bench:** {b_name} ({opp_txt}{get_projection(b_name, working_projections):.1f} pts)")
             for s_ply in bench_promotions:
-                st.write(f"• **Start:** {s_ply['name']} ({s_ply['points']:.1f} pts)")
+                s_opp = s_ply.get('opp') or get_player_matchup(s_ply.get('id'), players, nfl_schedule, s_ply['name'], name_to_team_map)
+                opp_txt = f"{s_opp} · " if s_opp != "—" else ""
+                st.write(f"• **Start:** {s_ply['name']} ({opp_txt}{s_ply['points']:.1f} pts)")
 
     # Complete Roster Breakdown
     st.markdown("---")
@@ -910,6 +1001,7 @@ with tabs[0]:
         pos = get_player_position(pid, players)
         pts = get_projection(name, working_projections)
         floor, ceil, spread = calculate_player_range(name, pts, comp_data)
+        opp = get_player_matchup(pid, players, nfl_schedule, name, name_to_team_map)
         
         is_starter = pid in starters_ids
         is_optimal = pid in optimal_ids
@@ -925,6 +1017,7 @@ with tabs[0]:
             "Status": status,
             "Player": name,
             "Pos": pos,
+            "Opponent": opp,
             "Proj Pts": pts,
             "Floor": floor,
             "Ceiling": ceil,
@@ -946,6 +1039,7 @@ with tabs[0]:
             use_container_width=True,
             hide_index=True,
             column_config={
+                "Opponent": st.column_config.TextColumn(label="Opponent", help="Weekly NFL opponent and location: H (Home) or @ (Away)"),
                 "Proj Pts": st.column_config.NumberColumn(format="%.1f"),
                 "Floor": st.column_config.NumberColumn(format="%.1f"),
                 "Ceiling": st.column_config.NumberColumn(format="%.1f"),
@@ -999,8 +1093,8 @@ with tabs[1]:
                 pids_a = r_obj_a.get('players', team_a_m.get('players', []))
                 pids_b = r_obj_b.get('players', team_b_m.get('players', []))
 
-                opt_a = build_optimal_lineup(pids_a, players, working_projections, comp_data, roster_positions)
-                opt_b = build_optimal_lineup(pids_b, players, working_projections, comp_data, roster_positions)
+                opt_a = build_optimal_lineup(pids_a, players, working_projections, comp_data, roster_positions, nfl_schedule, name_to_team_map)
+                opt_b = build_optimal_lineup(pids_b, players, working_projections, comp_data, roster_positions, nfl_schedule, name_to_team_map)
 
                 pts_a = sum(s['player']['points'] for s in opt_a if s['player'])
                 pts_b = sum(s['player']['points'] for s in opt_b if s['player'])
@@ -1053,11 +1147,16 @@ with tabs[1]:
                     pts2 = pb['points'] if pb else 0.0
                     diff = pts1 - pts2
 
+                    opp_a = pa.get('opp', '') if pa else ''
+                    opp_b = pb.get('opp', '') if pb else ''
+                    label_a = f"{pa['name']} ({pa['pos']} · {opp_a})" if (pa and opp_a and opp_a != '—') else (f"{pa['name']} ({pa['pos']})" if pa else "EMPTY")
+                    label_b = f"{pb['name']} ({pb['pos']} · {opp_b})" if (pb and opp_b and opp_b != '—') else (f"{pb['name']} ({pb['pos']})" if pb else "EMPTY")
+
                     slot_comparison.append({
                         "Slot": s_name,
-                        f"{name_a} Starter": f"{pa['name']} ({pa['pos']})" if pa else "EMPTY",
+                        f"{name_a} Starter": label_a,
                         f"{name_a} Proj": f"{pts1:.1f}",
-                        f"{name_b} Starter": f"{pb['name']} ({pb['pos']})" if pb else "EMPTY",
+                        f"{name_b} Starter": label_b,
                         f"{name_b} Proj": f"{pts2:.1f}",
                         "Advantage": f"{name_a} (+{diff:.1f})" if diff > 0 else (f"{name_b} (+{-diff:.1f})" if diff < 0 else "EVEN")
                     })
@@ -1082,10 +1181,12 @@ with tabs[1]:
                         ppos = get_player_position(pid, players)
                         ppts = get_projection(pname, working_projections)
                         pfl, pcl, psp = calculate_player_range(pname, ppts, comp_data)
+                        popp = get_player_matchup(pid, players, nfl_schedule, pname, name_to_team_map)
                         records.append({
                             'id': pid,
                             'name': pname,
                             'pos': ppos,
+                            'opp': popp,
                             'points': ppts,
                             'floor': pfl,
                             'ceil': pcl,
@@ -1119,11 +1220,16 @@ with tabs[1]:
                     pts1 = pa['points'] if pa else 0.0
                     pts2 = pb['points'] if pb else 0.0
 
+                    opp_a = pa.get('opp', '') if pa else ''
+                    opp_b = pb.get('opp', '') if pb else ''
+                    label_a = f"{pa['name']} ({pa['pos']} · {opp_a})" if (pa and opp_a and opp_a != '—') else (f"{pa['name']} ({pa['pos']})" if pa else "—")
+                    label_b = f"{pb['name']} ({pb['pos']} · {opp_b})" if (pb and opp_b and opp_b != '—') else (f"{pb['name']} ({pb['pos']})" if pb else "—")
+
                     bench_rows.append({
-                        f"{name_a} Bench Player": f"{pa['name']} ({pa['pos']})" if pa else "—",
+                        f"{name_a} Bench Player": label_a,
                         f"{name_a} Proj": f"{pts1:.1f}" if pa else "—",
                         f"{name_a} Range": f"{pa['floor']:.1f} - {pa['ceil']:.1f}" if pa else "—",
-                        f"{name_b} Bench Player": f"{pb['name']} ({pb['pos']})" if pb else "—",
+                        f"{name_b} Bench Player": label_b,
                         f"{name_b} Proj": f"{pts2:.1f}" if pb else "—",
                         f"{name_b} Range": f"{pb['floor']:.1f} - {pb['ceil']:.1f}" if pb else "—",
                     })
@@ -1598,10 +1704,13 @@ with tabs[3]:
                 badge = "Speculative Dart"
                 sort_prio = 5
 
+            opp_str = get_player_matchup(None, players, nfl_schedule, pname, name_to_team_map)
+
             fa_records.append({
                 'Badge': badge,
                 'Player': pname,
                 'Pos': pos,
+                'Opponent': opp_str,
                 'Proj Pts': pts,
                 'Floor': floor,
                 'Ceiling': ceil,
@@ -1629,7 +1738,8 @@ with tabs[3]:
             with k_col3:
                 st.metric("Stable Floor Streamers", floor_count)
             with k_col4:
-                st.metric("Top Available FA", f"{top_fa['Player']} ({top_fa['Pos']})", f"{top_fa['Proj Pts']:.1f} pts")
+                top_opp = f" · {top_fa['Opponent']}" if top_fa['Opponent'] != '—' else ""
+                st.metric("Top Available FA", f"{top_fa['Player']} ({top_fa['Pos']}{top_opp})", f"{top_fa['Proj Pts']:.1f} pts")
 
             # Streaming Picks per Position Grid
             st.markdown("### Weekly Free Agent Streaming Recommendations")
@@ -1640,8 +1750,9 @@ with tabs[3]:
                 with stream_cols[idx]:
                     if not group_fas.empty:
                         best = group_fas.iloc[0]
+                        opp_badge = f" ({best['Opponent']})" if best['Opponent'] != '—' else ""
                         st.markdown(f"**{p_group}**")
-                        st.info(f"**{best['Player']}**\n\n**{best['Proj Pts']:.1f} pts**\n\n{best['Badge']}")
+                        st.info(f"**{best['Player']}**{opp_badge}\n\n**{best['Proj Pts']:.1f} pts**\n\n{best['Badge']}")
                     else:
                         st.markdown(f"**{p_group}**")
                         st.write("—")
@@ -1691,6 +1802,7 @@ with tabs[3]:
                 use_container_width=True,
                 hide_index=True,
                 column_config={
+                    "Opponent": st.column_config.TextColumn(label="Opponent", help="Weekly NFL opponent and location: H (Home) or @ (Away)"),
                     "Proj Pts": st.column_config.NumberColumn(format="%.1f"),
                     "Floor": st.column_config.NumberColumn(format="%.1f"),
                     "Ceiling": st.column_config.NumberColumn(format="%.1f"),
@@ -1748,6 +1860,7 @@ with tabs[4]:
 
             valid_arb['Consensus Profile'] = valid_arb['Point Spread (Gap)'].apply(get_arb_profile)
             valid_arb = valid_arb.rename(columns={'player_name': 'Player', 'position': 'Pos'})
+            valid_arb['Opponent'] = [get_player_matchup(None, players, nfl_schedule, p_name, name_to_team_map) for p_name in valid_arb['Player']]
 
             # 1. Summary KPI Cards
             col_k1, col_k2, col_k3 = st.columns(3)
@@ -1755,9 +1868,10 @@ with tabs[4]:
                 # Top disputed starter
                 disputed_pool = valid_arb[valid_arb['Consensus Proj'] >= 6.0].sort_values(by='Point Spread (Gap)', ascending=False)
                 top_disputed = disputed_pool.iloc[0] if not disputed_pool.empty else valid_arb.iloc[0]
+                top_opp = f" · {top_disputed['Opponent']}" if top_disputed['Opponent'] != '—' else ""
                 st.metric(
                     "Widest Model Disagreement", 
-                    f"{top_disputed['Player']} ({top_disputed['Pos']})",
+                    f"{top_disputed['Player']} ({top_disputed['Pos']}{top_opp})",
                     delta=f"{top_disputed['Point Spread (Gap)']:.1f} pt spread ({top_disputed['Lowest Model (Bear)'].split()[0]} vs {top_disputed['Highest Model (Bull)'].split()[0]})",
                     delta_color="off"
                 )
@@ -1765,9 +1879,10 @@ with tabs[4]:
                 # Top consensus starter
                 consensus_pool = valid_arb[valid_arb['Consensus Proj'] >= 10.0].sort_values(by='Point Spread (Gap)', ascending=True)
                 top_consensus = consensus_pool.iloc[0] if not consensus_pool.empty else valid_arb.iloc[-1]
+                top_cons_opp = f" · {top_consensus['Opponent']}" if top_consensus['Opponent'] != '—' else ""
                 st.metric(
                     "Strongest Consensus Starter", 
-                    f"{top_consensus['Player']} ({top_consensus['Pos']})",
+                    f"{top_consensus['Player']} ({top_consensus['Pos']}{top_cons_opp})",
                     delta=f"±{top_consensus['Point Spread (Gap)']:.1f} pt spread ({top_consensus['Consensus Proj']:.1f} avg)",
                     delta_color="normal"
                 )
@@ -1856,6 +1971,7 @@ with tabs[4]:
             core_cols = [
                 'Player', 
                 'Pos', 
+                'Opponent',
                 'Consensus Proj', 
                 'Point Spread (Gap)', 
                 'Projected Range', 
@@ -1869,6 +1985,10 @@ with tabs[4]:
                 display_cols = core_cols
 
             col_config = {
+                "Opponent": st.column_config.TextColumn(
+                    label="Opponent",
+                    help="Weekly NFL opponent and location: H (Home) or @ (Away)"
+                ),
                 "Consensus Proj": st.column_config.NumberColumn(
                     label="Consensus Proj",
                     help="Multi-model average projected points",
@@ -1933,19 +2053,30 @@ with tabs[5]:
         tier_data['Rank'] = range(1, len(tier_data) + 1)
         top_val = tier_data['proj_points'].iloc[0]
         tier_data['Tier'] = ((top_val - tier_data['proj_points']) // 3 + 1).astype(int)
+        tier_data['Opponent'] = [get_player_matchup(None, players, nfl_schedule, name, name_to_team_map) for name in tier_data['player_name']]
+        tier_data_display = tier_data.rename(columns={
+            'player_name': 'Player',
+            'proj_points': 'Proj Pts',
+            'source': 'Model Source'
+        })
         
-        col_t1, col_t2 = st.columns([2, 1])
+        col_t1, col_t2 = st.columns([2.2, 1])
         with col_t1:
             st.dataframe(
-                tier_data[['Rank', 'Tier', 'player_name', 'proj_points', 'source']],
+                tier_data_display[['Rank', 'Tier', 'Player', 'Opponent', 'Proj Pts', 'Model Source']],
                 use_container_width=True,
-                hide_index=True
+                hide_index=True,
+                column_config={
+                    "Opponent": st.column_config.TextColumn(label="Opponent", help="Weekly NFL opponent and location: H (Home) or @ (Away)"),
+                    "Proj Pts": st.column_config.NumberColumn(format="%.1f pts")
+                }
             )
         with col_t2:
             st.markdown(f"**Top Tier {pos_selected}s:**")
-            tier_1 = tier_data[tier_data['Tier'] == 1]
+            tier_1 = tier_data_display[tier_data_display['Tier'] == 1]
             for _, r in tier_1.iterrows():
-                st.write(f"• **{r['player_name']}** — {r['proj_points']:.1f} pts")
+                opp_txt = f" ({r['Opponent']})" if r['Opponent'] != '—' else ""
+                st.write(f"• **{r['Player']}**{opp_txt} — {r['Proj Pts']:.1f} pts")
     else:
         st.write("No players found for this position.")
 
