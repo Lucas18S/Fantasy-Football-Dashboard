@@ -230,6 +230,8 @@ def revoke_session_token(username: str, token: str):
 
 def get_user(username: str) -> Optional[Dict[str, Any]]:
     """Get full user data dictionary."""
+    if not username:
+        return None
     users = load_users()
     return users.get(username.strip().lower())
 

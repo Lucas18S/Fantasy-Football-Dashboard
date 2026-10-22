@@ -1,6 +1,6 @@
 {
   "tab_views": {
-    "Lineup Optimizer": 25,
+    "Lineup Optimizer": 27,
     "Matchup Simulator": 18,
     "Trade Analyzer": 0,
     "Waiver Radar": 15,
@@ -13,6 +13,6 @@
     "lucas18s": "2026-10-22T13:23:12.825991"
   },
   "daily_views": {
-    "2026-10-22": 1
+    "2026-10-22": 3
   }
 }

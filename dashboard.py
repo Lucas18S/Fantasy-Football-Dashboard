@@ -244,66 +244,118 @@ def get_player_position(pid, players):
         return 'DEF'
     return players.get(str(pid), {}).get('position', 'UNK')
 
+_PROJ_LOOKUP_CACHE = {}
+_COMP_LOOKUP_CACHE = {}
+
 def get_projection(name, proj_df, source=None):
-    if not name or name == 'Unknown':
+    if not name or name == 'Unknown' or proj_df is None or proj_df.empty:
         return 0.0
     
     clean_name = name.lower().replace('.', '').strip()
-    
-    # 1. Exact Name Match
-    mask = proj_df['player_name'].str.lower().str.replace('.', '', regex=False) == clean_name
-    if source and source != 'Best Available (Combined)':
-        mask = mask & (proj_df['source'] == source)
-    
-    row = proj_df[mask]
-    if not row.empty:
-        return float(row['proj_points'].values[0])
-    
-    # 2. Defense Matching: match city, team name, or abbreviation
+    df_id = id(proj_df)
+    cache_obj = _PROJ_LOOKUP_CACHE.get(df_id)
+    if cache_obj is None:
+        name_map = {}
+        def_map = {}
+        last_map = {}
+        for _, row in proj_df.iterrows():
+            pname = str(row['player_name'])
+            clean = pname.lower().replace('.', '').strip()
+            pts = float(row['proj_points'])
+            src = str(row.get('source', ''))
+            pos = str(row.get('position', '')).upper()
+            
+            # Map exact clean names
+            name_map.setdefault((clean, None), pts)
+            name_map.setdefault((clean, 'Best Available (Combined)'), pts)
+            if src:
+                name_map.setdefault((clean, src), pts)
+                
+            # Map defenses
+            if pos in ['DEF', 'DST']:
+                def_map[clean] = max(def_map.get(clean, 0.0), pts)
+                for abbr, full_team in TEAM_ABBR_MAP.items():
+                    if full_team.lower() in clean or abbr.lower() == clean or full_team.split()[-1].lower() in clean:
+                        def_map[abbr.lower()] = max(def_map.get(abbr.lower(), 0.0), pts)
+                        def_map[full_team.lower()] = max(def_map.get(full_team.lower(), 0.0), pts)
+                        
+            # Map last names
+            parts = clean.split()
+            if len(parts) > 1:
+                last = parts[-1]
+                last_map.setdefault((last, None), pts)
+                last_map.setdefault((last, 'Best Available (Combined)'), pts)
+                if src:
+                    last_map.setdefault((last, src), pts)
+                    
+        cache_obj = {'name_map': name_map, 'def_map': def_map, 'last_map': last_map, 'resolved': {}}
+        _PROJ_LOOKUP_CACHE[df_id] = cache_obj
+        
+    resolved_key = (clean_name, source)
+    if resolved_key in cache_obj['resolved']:
+        return cache_obj['resolved'][resolved_key]
+        
+    pts = cache_obj['name_map'].get(resolved_key)
+    if pts is None and source is not None and source != 'Best Available (Combined)':
+        pts = None
+    elif pts is None:
+        pts = cache_obj['name_map'].get((clean_name, None))
+        
+    if pts is not None:
+        cache_obj['resolved'][resolved_key] = pts
+        return pts
+        
+    # Check defense matching
     for abbr, full_team in TEAM_ABBR_MAP.items():
         if clean_name in full_team.lower() or clean_name == abbr.lower():
-            def_mask = (
-                proj_df['player_name'].str.lower().str.contains(full_team.lower(), na=False) |
-                proj_df['player_name'].str.lower().str.contains(abbr.lower(), na=False) |
-                proj_df['player_name'].str.lower().str.contains(full_team.split()[-1].lower(), na=False)
-            ) & (proj_df['position'].isin(['DEF', 'DST']))
-            
-            if source and source != 'Best Available (Combined)':
-                def_mask = def_mask & (proj_df['source'] == source)
-            def_row = proj_df[def_mask]
-            if not def_row.empty:
-                return float(def_row['proj_points'].max())
-
-    # 3. Last Name Fallback
+            pts = cache_obj['def_map'].get(abbr.lower()) or cache_obj['def_map'].get(full_team.lower())
+            if pts is not None:
+                cache_obj['resolved'][resolved_key] = pts
+                return pts
+                
+    # Check last name fallback
     parts = clean_name.split()
     if len(parts) > 1:
         last = parts[-1]
-        last_mask = proj_df['player_name'].str.lower().str.endswith(last)
-        if source and source != 'Best Available (Combined)':
-            last_mask = last_mask & (proj_df['source'] == source)
-        l_row = proj_df[last_mask]
-        if not l_row.empty:
-            return float(l_row['proj_points'].values[0])
+        pts = cache_obj['last_map'].get((last, source))
+        if pts is None and (source is None or source == 'Best Available (Combined)'):
+            pts = cache_obj['last_map'].get((last, None))
+        if pts is not None:
+            cache_obj['resolved'][resolved_key] = pts
+            return pts
             
+    cache_obj['resolved'][resolved_key] = 0.0
     return 0.0
 
 def calculate_player_range(name, proj_points, comp_df):
-    if comp_df.empty:
+    if comp_df.empty or not name:
         floor = round(max(proj_points * 0.65, 0), 1)
         ceil  = round(proj_points * 1.35, 1)
         return floor, ceil, 0.0
     
-    p_rows = comp_df[comp_df['player_name'].str.lower() == name.lower()]
-    if len(p_rows) > 1:
-        pts = p_rows['proj_points'].values
-        spread = round(abs(pts.max() - pts.min()), 1)
-        floor = round(max(min(pts) * 0.85, 0), 1)
-        ceil = round(max(pts) * 1.25, 1)
+    df_id = id(comp_df)
+    lookup = _COMP_LOOKUP_CACHE.get(df_id)
+    if lookup is None:
+        if 'player_name' in comp_df.columns and 'proj_points' in comp_df.columns:
+            lookup = comp_df.groupby(comp_df['player_name'].str.lower())['proj_points'].apply(list).to_dict()
+        else:
+            lookup = {}
+        _COMP_LOOKUP_CACHE[df_id] = lookup
+        
+    pts_list = lookup.get(name.lower())
+    if pts_list and len(pts_list) > 1:
+        spread = round(abs(max(pts_list) - min(pts_list)), 1)
+        floor = round(max(min(pts_list) * 0.85, 0), 1)
+        ceil = round(max(pts_list) * 1.25, 1)
         return floor, ceil, spread
     else:
         floor = round(max(proj_points * 0.7, 0), 1)
         ceil = round(proj_points * 1.3, 1)
         return floor, ceil, 0.0
+
+@st.cache_data(ttl=3600, show_spinner=False)
+def get_cached_market_values(is_dynasty: bool, num_qbs: int, ppr: float):
+    return trade_engine.fetch_market_values(is_dynasty=is_dynasty, num_qbs=num_qbs, ppr=ppr)
 
 @st.cache_data(ttl=3600)
 def get_nfl_schedule(week: int = 7) -> dict:
@@ -621,7 +673,7 @@ if is_file_stale(PROJ_FILE):
 # ─── Sidebar Configuration ───────────────────────────────────────────────────
 with st.sidebar:
     # User Profile & Logout Header
-    current_username = st.session_state.get('current_user', 'lucas')
+    current_username = st.session_state.get('current_user') or 'lucas'
     current_user_data = auth_manager.get_user(current_username) or {}
     user_display = current_user_data.get("display_name", current_username)
     is_user_admin = auth_manager.is_admin(current_username)
@@ -1294,9 +1346,8 @@ with tabs[2]:
         num_qbs_flag = 2 if "Superflex" in qb_mode else 1
         ppr_val = 1.0 if "Full" in scoring_mode else (0.5 if "Half" in scoring_mode else 0.0)
 
-        # Load Market Data (FantasyCalc & KeepTradeCut)
-        with st.spinner("Fetching market consensus trade values..."):
-            market_data = trade_engine.fetch_market_values(is_dynasty=is_dynasty_flag, num_qbs=num_qbs_flag, ppr=ppr_val)
+        # Load Market Data (FantasyCalc & KeepTradeCut with Streamlit caching)
+        market_data = get_cached_market_values(is_dynasty=is_dynasty_flag, num_qbs=num_qbs_flag, ppr=ppr_val)
 
         st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
 
@@ -1317,7 +1368,13 @@ with tabs[2]:
             team_b_pids = team_b_roster_obj.get('players', [])
 
         # Build Player Selection Options with Market Values (Grouped by Position with Position Headers)
+        _trade_opts_memo = st.session_state.setdefault("_trade_opts_memo", {})
+        _roster_html_memo = st.session_state.setdefault("_roster_html_memo", {})
+
         def build_player_trade_options(pids):
+            cache_key = (tuple(pids), is_dynasty_flag, id(market_data))
+            if cache_key in _trade_opts_memo:
+                return _trade_opts_memo[cache_key]
             sorted_players = trade_engine.sort_roster_by_position_and_value(pids, players, market_data, is_dynasty_flag)
             options = []
             pid_map = {}
@@ -1331,9 +1388,14 @@ with tabs[2]:
                 label = f"{p['name']} ({p['team']}) — {p['val']:,} pts"
                 options.append(label)
                 pid_map[label] = p['id']
-            return options, pid_map, sorted_players
+            res = (options, pid_map, sorted_players)
+            _trade_opts_memo[cache_key] = res
+            return res
 
         def render_roster_by_position_html(roster_player_list, projections_df):
+            cache_key = (tuple(p.get('id', '') for p in roster_player_list), id(projections_df))
+            if cache_key in _roster_html_memo:
+                return _roster_html_memo[cache_key]
             pos_groups = {}
             for p in roster_player_list:
                 pos_groups.setdefault(p['pos'], []).append(p)
@@ -1354,7 +1416,9 @@ with tabs[2]:
                         f'</div>'
                     )
             html.append('</div>')
-            return "".join(html)
+            rendered = "".join(html)
+            _roster_html_memo[cache_key] = rendered
+            return rendered
 
         opts_a, map_a, list_a = build_player_trade_options(team_a_pids)
         opts_b, map_b, list_b = build_player_trade_options(team_b_pids)

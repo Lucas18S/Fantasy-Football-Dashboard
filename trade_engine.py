@@ -9,6 +9,7 @@ from typing import Dict, List, Any, Tuple, Optional
 # Cache files
 TRADE_VALUES_CACHE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "trade_values_cache.json")
 CACHE_TTL_SECONDS = 10800  # 3 hours
+_MEMORY_CACHE = {}
 
 def _normalize_name(name: str) -> str:
     """Normalize player names for fuzzy cross-source matching."""
@@ -22,24 +23,29 @@ def _normalize_name(name: str) -> str:
 def fetch_market_values(is_dynasty: bool = True, num_qbs: int = 1, ppr: float = 1.0) -> Dict[str, Any]:
     """
     Fetch market trade values from FantasyCalc and KeepTradeCut.
-    Returns:
-        dict with:
-            'by_sleeper_id': {id: player_dict}
-            'by_name': {norm_name: player_dict}
-            'draft_picks': [pick_dict]
-            'meta': {'source': 'FantasyCalc & KTC', 'last_updated': ...}
+    Uses in-memory cache, persistent JSON file cache, and fast fallback to prevent UI latency.
     """
     now = time.time()
-    # Check cache
     cache_key = f"{'dynasty' if is_dynasty else 'redraft'}_{num_qbs}qb"
+
+    # 1. Check ultra-fast in-memory process cache
+    if cache_key in _MEMORY_CACHE:
+        entry = _MEMORY_CACHE[cache_key]
+        if now - entry.get('timestamp', 0) < CACHE_TTL_SECONDS:
+            return entry.get('payload', {})
+
+    stale_payload = None
+    # 2. Check persistent disk cache
     if os.path.exists(TRADE_VALUES_CACHE):
         try:
             with open(TRADE_VALUES_CACHE, 'r', encoding='utf-8') as f:
                 cached_data = json.load(f)
                 if cache_key in cached_data:
                     entry = cached_data[cache_key]
+                    stale_payload = entry.get('payload')
                     if now - entry.get('timestamp', 0) < CACHE_TTL_SECONDS:
-                        return entry.get('payload', {})
+                        _MEMORY_CACHE[cache_key] = entry
+                        return stale_payload or {}
         except Exception as e:
             print(f"Error reading trade values cache: {e}")
 
@@ -47,10 +53,10 @@ def fetch_market_values(is_dynasty: bool = True, num_qbs: int = 1, ppr: float = 
     by_name = {}
     draft_picks = []
 
-    # 1. Fetch from FantasyCalc API
+    # 3. Fetch from FantasyCalc API with fast timeout
     try:
         fc_url = f"https://api.fantasycalc.com/values/current?isDynasty={'true' if is_dynasty else 'false'}&numQbs={num_qbs}&ppr={int(ppr) if ppr in [0, 1] else ppr}"
-        fc_res = requests.get(fc_url, timeout=10)
+        fc_res = requests.get(fc_url, timeout=3.5)
         if fc_res.status_code == 200:
             fc_json = fc_res.json()
             for item in fc_json:
@@ -96,7 +102,7 @@ def fetch_market_values(is_dynasty: bool = True, num_qbs: int = 1, ppr: float = 
     if is_dynasty:
         try:
             ktc_url = "https://raw.githubusercontent.com/dynastyprocess/data/master/files/values.csv"
-            ktc_res = requests.get(ktc_url, timeout=8)
+            ktc_res = requests.get(ktc_url, timeout=3.5)
             if ktc_res.status_code == 200:
                 lines = ktc_res.text.strip().split("\n")
                 if len(lines) > 1:
@@ -145,6 +151,11 @@ def fetch_market_values(is_dynasty: bool = True, num_qbs: int = 1, ppr: float = 
         except Exception as e:
             print(f"KTC load error: {e}")
 
+    # If live fetch returned nothing, safely fall back to stale cache
+    if not by_name and stale_payload:
+        _MEMORY_CACHE[cache_key] = {"timestamp": now, "payload": stale_payload}
+        return stale_payload
+
     # Fallback to standard value if consensus not set
     for item in by_name.values():
         if "consensus_value" not in item:
@@ -157,20 +168,22 @@ def fetch_market_values(is_dynasty: bool = True, num_qbs: int = 1, ppr: float = 
         "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M")
     }
 
-    # Save to cache
-    try:
-        all_cache = {}
-        if os.path.exists(TRADE_VALUES_CACHE):
-            try:
-                with open(TRADE_VALUES_CACHE, 'r', encoding='utf-8') as f:
-                    all_cache = json.load(f)
-            except:
-                pass
-        all_cache[cache_key] = {"timestamp": now, "payload": payload}
-        with open(TRADE_VALUES_CACHE, 'w', encoding='utf-8') as f:
-            json.dump(all_cache, f)
-    except Exception as e:
-        print(f"Error writing trade cache: {e}")
+    # Save to memory and disk cache if we obtained data
+    if by_name:
+        _MEMORY_CACHE[cache_key] = {"timestamp": now, "payload": payload}
+        try:
+            all_cache = {}
+            if os.path.exists(TRADE_VALUES_CACHE):
+                try:
+                    with open(TRADE_VALUES_CACHE, 'r', encoding='utf-8') as f:
+                        all_cache = json.load(f)
+                except:
+                    pass
+            all_cache[cache_key] = {"timestamp": now, "payload": payload}
+            with open(TRADE_VALUES_CACHE, 'w', encoding='utf-8') as f:
+                json.dump(all_cache, f)
+        except Exception as e:
+            print(f"Error writing trade cache: {e}")
 
     return payload
 
