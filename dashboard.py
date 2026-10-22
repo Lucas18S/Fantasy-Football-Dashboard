@@ -360,6 +360,9 @@ if st.session_state.get("clear_local_storage"):
     try {
         window.parent.localStorage.removeItem('gridiron_session');
     } catch(e) {}
+    try {
+        window.localStorage.removeItem('gridiron_session');
+    } catch(e) {}
     </script>
     """, height=0, width=0)
     del st.session_state["clear_local_storage"]
@@ -377,14 +380,30 @@ if not st.session_state.authenticated and query_token:
 if not st.session_state.authenticated and not query_token:
     components.html("""
     <script>
+    let token = null;
     try {
-        const savedToken = window.parent.localStorage.getItem('gridiron_session');
-        if (savedToken && !window.parent.location.search.includes('session=')) {
-            const url = new URL(window.parent.location.href);
-            url.searchParams.set('session', savedToken);
-            window.parent.location.replace(url.toString());
-        }
+        token = window.parent.localStorage.getItem('gridiron_session');
     } catch(e) {}
+    if (!token) {
+        try {
+            token = window.localStorage.getItem('gridiron_session');
+        } catch(e) {}
+    }
+    if (token) {
+        try {
+            if (!window.parent.location.search.includes('session=')) {
+                const url = new URL(window.parent.location.href);
+                url.searchParams.set('session', token);
+                window.parent.location.replace(url.toString());
+            }
+        } catch(e) {
+            try {
+                if (!window.location.search.includes('session=')) {
+                    window.top.location.href = window.location.pathname + '?session=' + encodeURIComponent(token);
+                }
+            } catch(e2) {}
+        }
+    }
     </script>
     """, height=0, width=0)
 
@@ -395,6 +414,9 @@ if st.session_state.authenticated and st.session_state.get("save_token_to_storag
     <script>
     try {{
         window.parent.localStorage.setItem('gridiron_session', '{tok}');
+    }} catch(e) {{}}
+    try {{
+        window.localStorage.setItem('gridiron_session', '{tok}');
     }} catch(e) {{}}
     </script>
     """, height=0, width=0)
@@ -420,45 +442,10 @@ def render_login_screen():
         
         with tab_login:
             st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
-            
-            # 1-Click Quick Access for Lucas18S and Lucas
-            st.markdown("""
-            <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #5B705E; margin-bottom: 6px;">
-                ⚡ 1-Click Quick Sign In
-            </div>
-            """, unsafe_allow_html=True)
-            col_q1, col_q2 = st.columns(2)
-            with col_q1:
-                if st.button("Sign In as Lucas18S", use_container_width=True, key="btn_quick_admin", help="Master Admin • Loads All Saved Leagues"):
-                    st.session_state.authenticated = True
-                    st.session_state.current_user = "lucas18s"
-                    analytics_manager.track_login("lucas18s")
-                    token = auth_manager.create_session_token("lucas18s")
-                    st.query_params["session"] = token
-                    st.session_state["save_token_to_storage"] = token
-                    st.rerun()
-            with col_q2:
-                if st.button("Sign In as lucas", use_container_width=True, key="btn_quick_user", help="Standard Account • Loads All Saved Leagues"):
-                    st.session_state.authenticated = True
-                    st.session_state.current_user = "lucas"
-                    analytics_manager.track_login("lucas")
-                    token = auth_manager.create_session_token("lucas")
-                    st.query_params["session"] = token
-                    st.session_state["save_token_to_storage"] = token
-                    st.rerun()
-
-            st.markdown("""
-            <div style="display: flex; align-items: center; text-align: center; margin: 14px 0 12px 0;">
-                <div style="flex-grow: 1; border-bottom: 1px solid #E2E7E2;"></div>
-                <span style="padding: 0 10px; font-size: 0.72rem; font-weight: 700; color: #8F998F; letter-spacing: 0.05em; text-transform: uppercase;">or manual sign in</span>
-                <div style="flex-grow: 1; border-bottom: 1px solid #E2E7E2;"></div>
-            </div>
-            """, unsafe_allow_html=True)
-
             with st.form("login_form"):
-                username = st.text_input("Username", key="login_username", placeholder="e.g. Lucas18S or lucas")
+                username = st.text_input("Username", key="login_username", placeholder="Enter your username")
                 password = st.text_input("Password", type="password", key="login_password", placeholder="Enter your password")
-                save_login = st.checkbox("Remember me on this device (Auto-sign in)", value=True, key="chk_save_login")
+                save_login = st.checkbox("Save login on this device", value=True, key="chk_save_login")
                 submit_login = st.form_submit_button("Enter Dashboard", use_container_width=True)
 
                 if submit_login:
@@ -486,14 +473,6 @@ def render_login_screen():
                         st.success(msg)
                     else:
                         st.error(msg)
-                    
-            st.markdown("""
-            <div style="background-color: #F1F4F1; border: 1px solid #D6DFD6; border-radius: 4px; padding: 10px 12px; margin-top: 18px; font-size: 0.76rem; color: #4A564A;">
-                <strong>Administrator Access:</strong> Username: <code>Lucas18S</code> | Password: <code>Packers</code><br>
-                <strong>Standard Account:</strong> Username: <code>lucas</code> | Password: <code>fantasy2025</code><br>
-                <span style="font-size: 0.72rem; color: #6A756A;">Or register your own custom account under the 'Create Account' tab.</span>
-            </div>
-            """, unsafe_allow_html=True)
             
         with tab_register:
             st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
@@ -640,8 +619,7 @@ with st.sidebar:
     if selected_league_str == "+ Connect New League":
         with st.expander("⚡ Auto-Import All Sleeper Leagues", expanded=True):
             st.markdown("<div style='font-size:0.75rem; color:#5E665E; margin-bottom:6px;'>Enter your Sleeper username to automatically pull and save every active league you belong to.</div>", unsafe_allow_html=True)
-            default_sync_un = "WinterStorm97" if current_username == "lucas18s" else ""
-            sync_un = st.text_input("Sleeper Username", value=default_sync_un, placeholder="e.g. WinterStorm97", key="inp_sync_sleeper_un")
+            sync_un = st.text_input("Sleeper Username", value="", placeholder="e.g. your_sleeper_username", key="inp_sync_sleeper_un")
             sync_year = st.selectbox("Season", ["2026", "2025"], key="sel_sync_year")
             if st.button("Import All Sleeper Leagues", use_container_width=True, key="btn_sync_sleeper_leagues"):
                 ok, msg, count = auth_manager.sync_sleeper_leagues(current_username, sync_un, year=sync_year)

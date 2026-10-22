@@ -46,31 +46,11 @@ DEFAULT_LEAGUES = [
         "espn_s2": "",
         "swid": "",
         "is_default": True
-    },
-    {
-        "id": "sleeper_1389358448524668928",
-        "name": "Winterrowd Fam",
-        "platform": "Sleeper",
-        "sleeper_league_id": "1389358448524668928",
-        "espn_league_id": "",
-        "espn_s2": "",
-        "swid": "",
-        "is_default": False
-    },
-    {
-        "id": "sleeper_1312115586901213184",
-        "name": "Nonnie’s Funworld",
-        "platform": "Sleeper",
-        "sleeper_league_id": "1312115586901213184",
-        "espn_league_id": "",
-        "espn_s2": "",
-        "swid": "",
-        "is_default": False
     }
 ]
 
 def _seed_initial_database() -> Dict[str, Any]:
-    """Seed initial database with admin Lucas18S and default user with all 3 leagues."""
+    """Seed initial database with admin Lucas18S and default user."""
     users = {}
     
     # 1. Administrator Account: Lucas18S / Packers
@@ -109,7 +89,7 @@ def _seed_initial_database() -> Dict[str, Any]:
     return data
 
 def load_users() -> Dict[str, Any]:
-    """Load users dictionary, ensuring Lucas18S exists as admin and all 3 leagues are present."""
+    """Load users dictionary, ensuring Lucas18S exists as admin."""
     data = _load_data()
     users = data.get("users", {})
     save_needed = False
@@ -135,22 +115,18 @@ def load_users() -> Dict[str, Any]:
             users["lucas18s"]["role"] = "admin"
             save_needed = True
             
-    # Guarantee that both lucas18s and lucas have all 3 leagues available
-    for u_key in ["lucas18s", "lucas"]:
-        if u_key in users:
-            curr_leagues = users[u_key].get("saved_leagues", [])
-            existing_sids = {str(l.get("sleeper_league_id")) for l in curr_leagues if l.get("platform") == "Sleeper"}
-            for dl in DEFAULT_LEAGUES:
-                if dl["sleeper_league_id"] not in existing_sids:
-                    curr_leagues.append(dict(dl))
-                    existing_sids.add(dl["sleeper_league_id"])
-                    save_needed = True
-            # Update legacy name if present
-            for l in curr_leagues:
-                if l.get("sleeper_league_id") == "1337487447067492352" and l.get("name") == "Main Sleeper League":
-                    l["name"] = "Dynasty Superflex League"
-                    save_needed = True
-            users[u_key]["saved_leagues"] = curr_leagues
+    # Purge erroneously seeded leagues if present and ensure valid defaults
+    unwanted_ids = {"1389358448524668928", "1312115586901213184"}
+    for u_key in users:
+        curr_leagues = users[u_key].get("saved_leagues", [])
+        filtered = [l for l in curr_leagues if str(l.get("sleeper_league_id")) not in unwanted_ids]
+        if len(filtered) != len(curr_leagues):
+            curr_leagues = filtered
+            save_needed = True
+        if not curr_leagues:
+            curr_leagues = [dict(l) for l in DEFAULT_LEAGUES]
+            save_needed = True
+        users[u_key]["saved_leagues"] = curr_leagues
 
     if save_needed:
         data["users"] = users
