@@ -332,8 +332,8 @@ def get_nfl_schedule(week: int = 7) -> dict:
                     else:
                         away_team = team_abbr
                 if home_team and away_team:
-                    matchup_map[home_team] = {"opp": away_team, "is_home": True, "text": f"H {away_team}"}
-                    matchup_map[away_team] = {"opp": home_team, "is_home": False, "text": f"@{away_team}"}
+                    matchup_map[home_team] = {"opp": away_team, "is_home": True, "text": away_team}
+                    matchup_map[away_team] = {"opp": home_team, "is_home": False, "text": f"@{home_team}"}
                     if home_team == "WAS":
                         matchup_map["WSH"] = matchup_map["WAS"]
                     if away_team == "WAS":
@@ -1039,7 +1039,7 @@ with tabs[0]:
             use_container_width=True,
             hide_index=True,
             column_config={
-                "Opponent": st.column_config.TextColumn(label="Opponent", help="Weekly NFL opponent and location: H (Home) or @ (Away)"),
+                "Opponent": st.column_config.TextColumn(label="Opponent", help="Weekly NFL opponent: Team name (Home) or @Team (Away)"),
                 "Proj Pts": st.column_config.NumberColumn(format="%.1f"),
                 "Floor": st.column_config.NumberColumn(format="%.1f"),
                 "Ceiling": st.column_config.NumberColumn(format="%.1f"),
@@ -1802,7 +1802,7 @@ with tabs[3]:
                 use_container_width=True,
                 hide_index=True,
                 column_config={
-                    "Opponent": st.column_config.TextColumn(label="Opponent", help="Weekly NFL opponent and location: H (Home) or @ (Away)"),
+                    "Opponent": st.column_config.TextColumn(label="Opponent", help="Weekly NFL opponent: Team name (Home) or @Team (Away)"),
                     "Proj Pts": st.column_config.NumberColumn(format="%.1f"),
                     "Floor": st.column_config.NumberColumn(format="%.1f"),
                     "Ceiling": st.column_config.NumberColumn(format="%.1f"),
@@ -1987,7 +1987,7 @@ with tabs[4]:
             col_config = {
                 "Opponent": st.column_config.TextColumn(
                     label="Opponent",
-                    help="Weekly NFL opponent and location: H (Home) or @ (Away)"
+                    help="Weekly NFL opponent: Team name (Home) or @Team (Away)"
                 ),
                 "Consensus Proj": st.column_config.NumberColumn(
                     label="Consensus Proj",
@@ -2067,7 +2067,7 @@ with tabs[5]:
                 use_container_width=True,
                 hide_index=True,
                 column_config={
-                    "Opponent": st.column_config.TextColumn(label="Opponent", help="Weekly NFL opponent and location: H (Home) or @ (Away)"),
+                    "Opponent": st.column_config.TextColumn(label="Opponent", help="Weekly NFL opponent: Team name (Home) or @Team (Away)"),
                     "Proj Pts": st.column_config.NumberColumn(format="%.1f pts")
                 }
             )
