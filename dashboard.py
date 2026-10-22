@@ -1355,15 +1355,55 @@ with tabs[2]:
         all_manager_names = list(manager_names.values())
         default_team_a_idx = all_manager_names.index(selected_manager) if selected_manager in all_manager_names else 0
         
+        # Callbacks to safely reset/clean widget state before instantiation
+        def clear_trade_selection():
+            st.session_state["tr_sel_players_a"] = []
+            st.session_state["tr_sel_players_b"] = []
+            st.session_state["tr_sel_picks_a"] = []
+            st.session_state["tr_sel_picks_b"] = []
+            st.session_state["active_trade_result"] = None
+            st.session_state["active_trade_suggestions"] = None
+            st.session_state["analyzed_trade_sig"] = None
+
+        def clean_headers_a():
+            if "tr_sel_players_a" in st.session_state:
+                st.session_state["tr_sel_players_a"] = [
+                    lbl for lbl in st.session_state["tr_sel_players_a"] if not lbl.startswith("━")
+                ]
+
+        def clean_headers_b():
+            if "tr_sel_players_b" in st.session_state:
+                st.session_state["tr_sel_players_b"] = [
+                    lbl for lbl in st.session_state["tr_sel_players_b"] if not lbl.startswith("━")
+                ]
+
+        def on_team_a_change():
+            clear_trade_selection()
+
+        def on_team_b_change():
+            clear_trade_selection()
+
         col_team_a, col_team_b = st.columns(2)
         with col_team_a:
-            team_a_name = st.selectbox("Select Proposer (Team A)", all_manager_names, index=default_team_a_idx, key="sel_tr_team_a")
+            team_a_name = st.selectbox(
+                "Select Proposer (Team A)", 
+                all_manager_names, 
+                index=default_team_a_idx, 
+                key="sel_tr_team_a",
+                on_change=on_team_a_change
+            )
             team_a_roster_obj = next((r for r in rosters if manager_names.get(r['owner_id']) == team_a_name), rosters[0])
             team_a_pids = team_a_roster_obj.get('players', [])
             
         with col_team_b:
             other_team_names = [m for m in all_manager_names if m != team_a_name] or all_manager_names
-            team_b_name = st.selectbox("Select Trade Partner (Team B)", other_team_names, index=0, key="sel_tr_team_b")
+            team_b_name = st.selectbox(
+                "Select Trade Partner (Team B)", 
+                other_team_names, 
+                index=0, 
+                key="sel_tr_team_b",
+                on_change=on_team_b_change
+            )
             team_b_roster_obj = next((r for r in rosters if manager_names.get(r['owner_id']) == team_b_name), rosters[1] if len(rosters) > 1 else rosters[0])
             team_b_pids = team_b_roster_obj.get('players', [])
 
@@ -1435,13 +1475,10 @@ with tabs[2]:
                 "Select Players:", 
                 opts_a, 
                 key="tr_sel_players_a", 
+                on_change=clean_headers_a,
                 placeholder="Choose players to send (grouped by position)..."
             )
-            # Filter out separator headers if accidentally clicked
             clean_labels_a = [lbl for lbl in chosen_labels_a if not lbl.startswith("━")]
-            if len(clean_labels_a) != len(chosen_labels_a):
-                st.session_state["tr_sel_players_a"] = clean_labels_a
-                st.rerun()
             chosen_pids_a = [map_a[lbl] for lbl in clean_labels_a if lbl in map_a]
             
             chosen_picks_a = []
@@ -1463,13 +1500,10 @@ with tabs[2]:
                 "Select Players:", 
                 opts_b, 
                 key="tr_sel_players_b", 
+                on_change=clean_headers_b,
                 placeholder="Choose players to receive (grouped by position)..."
             )
-            # Filter out separator headers if accidentally clicked
             clean_labels_b = [lbl for lbl in chosen_labels_b if not lbl.startswith("━")]
-            if len(clean_labels_b) != len(chosen_labels_b):
-                st.session_state["tr_sel_players_b"] = clean_labels_b
-                st.rerun()
             chosen_pids_b = [map_b[lbl] for lbl in clean_labels_b if lbl in map_b]
             
             chosen_picks_b = []
@@ -1512,23 +1546,15 @@ with tabs[2]:
                 help="Evaluate market parity, starting lineup shifts, and trade balance suggestions."
             )
         with col_act_right:
-            clear_clicked = st.button(
+            st.button(
                 "Clear", 
+                type="secondary",
                 use_container_width=True, 
                 disabled=not has_selected_assets,
                 key="btn_clear_trade",
+                on_click=clear_trade_selection,
                 help="Reset selected players and draft picks."
             )
-
-        if clear_clicked:
-            st.session_state["tr_sel_players_a"] = []
-            st.session_state["tr_sel_players_b"] = []
-            st.session_state["tr_sel_picks_a"] = []
-            st.session_state["tr_sel_picks_b"] = []
-            st.session_state["active_trade_result"] = None
-            st.session_state["active_trade_suggestions"] = None
-            st.session_state["analyzed_trade_sig"] = None
-            st.rerun()
 
         if analyze_clicked and has_selected_assets:
             with st.spinner("Analyzing trade equity and calculating lineup impact..."):
