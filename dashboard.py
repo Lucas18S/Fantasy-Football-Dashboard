@@ -709,7 +709,16 @@ projections = load_projections()
 comp_data = load_comparison_data()
 
 if is_file_stale(PROJ_FILE):
-    st.warning("Projections data is over 24 hours old. Run `python weekly_scraper.py` to refresh.")
+    c_stale_msg, c_stale_btn = st.columns([3, 1])
+    with c_stale_msg:
+        st.warning("Projections data is over 24 hours old.")
+    with c_stale_btn:
+        if st.button("Refresh Now", key="btn_refresh_stale", use_container_width=True):
+            with st.spinner("Scraping multi-source weekly projections..."):
+                from weekly_scraper import run_pipeline
+                run_pipeline()
+                st.cache_data.clear()
+                st.rerun()
 
 # ─── Sidebar Configuration ───────────────────────────────────────────────────
 with st.sidebar:

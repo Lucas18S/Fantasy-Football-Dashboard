@@ -75,5 +75,7 @@ def sync():
     print(f"✅ Sync complete! Uploaded {uploaded} new files, updated {updated} existing files.")
     print("=" * 60)
 
+sync_project_to_gdrive = sync
+
 if __name__ == "__main__":
     sync()

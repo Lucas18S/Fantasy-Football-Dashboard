@@ -83,6 +83,8 @@ Welcome! This document provides context on the project's architecture, conventio
 - Standardized NFL opponent indicators across all 5 player-facing tabs (`KC` for home, `@BUF` for away).
 - Optimized rerun latency from ~1.5 seconds down to < 20ms using vectorized lookups and stable `@st.cache_data` tables.
 - Built automated Google Drive cloud backup pipeline (`sync_to_gdrive.py`) running on daily daemon schedule.
+- Implemented automated daily scraping pipeline (`schedule_scraper.py`) via native macOS LaunchAgent (`com.fantasy.scraper.daily.plist`) executing daily at 7:00 AM + game-day cycles, followed immediately by automatic cloud backup sync.
+- Added in-dashboard 1-click "Refresh Now" button for on-demand mid-day projection updates.
 
 ---
 
