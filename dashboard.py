@@ -244,52 +244,101 @@ def get_player_position(pid, players):
         return 'DEF'
     return players.get(str(pid), {}).get('position', 'UNK')
 
-_PROJ_LOOKUP_CACHE = {}
-_COMP_LOOKUP_CACHE = {}
+@st.cache_data(ttl=600, show_spinner=False)
+def _build_projection_cache(proj_df):
+    name_map = {}
+    def_map = {}
+    last_map = {}
+    for row in proj_df.itertuples(index=False):
+        pname = str(row.player_name)
+        clean = pname.lower().replace('.', '').strip()
+        pts = float(row.proj_points)
+        src = str(getattr(row, 'source', ''))
+        pos = str(getattr(row, 'position', '')).upper()
+        
+        # Map exact clean names
+        name_map.setdefault((clean, None), pts)
+        name_map.setdefault((clean, 'Best Available (Combined)'), pts)
+        if src:
+            name_map.setdefault((clean, src), pts)
+            
+        # Map defenses
+        if pos in ['DEF', 'DST']:
+            def_map[clean] = max(def_map.get(clean, 0.0), pts)
+            for abbr, full_team in TEAM_ABBR_MAP.items():
+                if full_team.lower() in clean or abbr.lower() == clean or full_team.split()[-1].lower() in clean:
+                    def_map[abbr.lower()] = max(def_map.get(abbr.lower(), 0.0), pts)
+                    def_map[full_team.lower()] = max(def_map.get(full_team.lower(), 0.0), pts)
+                    
+        # Map last names
+        parts = clean.split()
+        if len(parts) > 1:
+            last = parts[-1]
+            last_map.setdefault((last, None), pts)
+            last_map.setdefault((last, 'Best Available (Combined)'), pts)
+            if src:
+                last_map.setdefault((last, src), pts)
+                
+    return {'name_map': name_map, 'def_map': def_map, 'last_map': last_map, 'resolved': {}}
+
+@st.cache_data(ttl=600, show_spinner=False)
+def _build_comp_cache(comp_df):
+    if comp_df.empty or 'player_name' not in comp_df.columns or 'proj_points' not in comp_df.columns:
+        return {}
+    return comp_df.groupby(comp_df['player_name'].str.lower())['proj_points'].apply(list).to_dict()
+
+@st.cache_data(ttl=600, show_spinner=False)
+def _build_source_map(comp_df):
+    if comp_df.empty or 'player_name' not in comp_df.columns or 'source' not in comp_df.columns:
+        return {}
+    return comp_df.groupby(comp_df['player_name'].str.lower())['source'].unique().apply(list).to_dict()
+
+@st.cache_data(ttl=600, show_spinner=False)
+def compute_arbitrage_matrix(comp_df):
+    if comp_df.empty or len(comp_df['source'].unique()) <= 1:
+        return pd.DataFrame(), []
+    pivot_df = comp_df.pivot_table(index=['player_name', 'position'], columns='source', values='proj_points').reset_index()
+    sources_found = [c for c in pivot_df.columns if c not in ['player_name', 'position']]
+    if len(sources_found) < 2:
+        return pd.DataFrame(), []
+    
+    pivot_df['Source Count'] = pivot_df[sources_found].notna().sum(axis=1)
+    valid_arb = pivot_df[pivot_df['Source Count'] >= 2].copy()
+
+    valid_arb['Min Proj'] = valid_arb[sources_found].min(axis=1).round(1)
+    valid_arb['Max Proj'] = valid_arb[sources_found].max(axis=1).round(1)
+    valid_arb['Point Spread (Gap)'] = (valid_arb['Max Proj'] - valid_arb['Min Proj']).round(1)
+    valid_arb['Consensus Proj'] = valid_arb[sources_found].mean(axis=1).round(1)
+    valid_arb['Discrepancy %'] = ((valid_arb['Point Spread (Gap)'] / valid_arb['Consensus Proj'].clip(lower=1.0)) * 100).round(0).astype(int)
+
+    def get_bull_bear(row):
+        vals = {s: row[s] for s in sources_found if pd.notna(row[s])}
+        if not vals:
+            return "—", "—"
+        bull = max(vals.items(), key=lambda x: x[1])
+        bear = min(vals.items(), key=lambda x: x[1])
+        return f"{bull[0]} ({bull[1]:.1f})", f"{bear[0]} ({bear[1]:.1f})"
+
+    bb_tuples = [get_bull_bear(r) for _, r in valid_arb.iterrows()]
+    valid_arb['Highest Model (Bull)'] = [b[0] for b in bb_tuples]
+    valid_arb['Lowest Model (Bear)'] = [b[1] for b in bb_tuples]
+    valid_arb['Projected Range'] = valid_arb['Min Proj'].astype(str) + " – " + valid_arb['Max Proj'].astype(str) + " pts"
+
+    def get_arb_profile(spread):
+        if spread >= 5.0: return "High Disagreement"
+        if spread >= 2.5: return "Moderate Split"
+        return "Strong Consensus"
+
+    valid_arb['Consensus Profile'] = valid_arb['Point Spread (Gap)'].apply(get_arb_profile)
+    valid_arb = valid_arb.rename(columns={'player_name': 'Player', 'position': 'Pos'})
+    return valid_arb, sources_found
 
 def get_projection(name, proj_df, source=None):
     if not name or name == 'Unknown' or proj_df is None or proj_df.empty:
         return 0.0
     
     clean_name = name.lower().replace('.', '').strip()
-    df_id = id(proj_df)
-    cache_obj = _PROJ_LOOKUP_CACHE.get(df_id)
-    if cache_obj is None:
-        name_map = {}
-        def_map = {}
-        last_map = {}
-        for _, row in proj_df.iterrows():
-            pname = str(row['player_name'])
-            clean = pname.lower().replace('.', '').strip()
-            pts = float(row['proj_points'])
-            src = str(row.get('source', ''))
-            pos = str(row.get('position', '')).upper()
-            
-            # Map exact clean names
-            name_map.setdefault((clean, None), pts)
-            name_map.setdefault((clean, 'Best Available (Combined)'), pts)
-            if src:
-                name_map.setdefault((clean, src), pts)
-                
-            # Map defenses
-            if pos in ['DEF', 'DST']:
-                def_map[clean] = max(def_map.get(clean, 0.0), pts)
-                for abbr, full_team in TEAM_ABBR_MAP.items():
-                    if full_team.lower() in clean or abbr.lower() == clean or full_team.split()[-1].lower() in clean:
-                        def_map[abbr.lower()] = max(def_map.get(abbr.lower(), 0.0), pts)
-                        def_map[full_team.lower()] = max(def_map.get(full_team.lower(), 0.0), pts)
-                        
-            # Map last names
-            parts = clean.split()
-            if len(parts) > 1:
-                last = parts[-1]
-                last_map.setdefault((last, None), pts)
-                last_map.setdefault((last, 'Best Available (Combined)'), pts)
-                if src:
-                    last_map.setdefault((last, src), pts)
-                    
-        cache_obj = {'name_map': name_map, 'def_map': def_map, 'last_map': last_map, 'resolved': {}}
-        _PROJ_LOOKUP_CACHE[df_id] = cache_obj
+    cache_obj = _build_projection_cache(proj_df)
         
     resolved_key = (clean_name, source)
     if resolved_key in cache_obj['resolved']:
@@ -333,15 +382,7 @@ def calculate_player_range(name, proj_points, comp_df):
         ceil  = round(proj_points * 1.35, 1)
         return floor, ceil, 0.0
     
-    df_id = id(comp_df)
-    lookup = _COMP_LOOKUP_CACHE.get(df_id)
-    if lookup is None:
-        if 'player_name' in comp_df.columns and 'proj_points' in comp_df.columns:
-            lookup = comp_df.groupby(comp_df['player_name'].str.lower())['proj_points'].apply(list).to_dict()
-        else:
-            lookup = {}
-        _COMP_LOOKUP_CACHE[df_id] = lookup
-        
+    lookup = _build_comp_cache(comp_df)
     pts_list = lookup.get(name.lower())
     if pts_list and len(pts_list) > 1:
         spread = round(abs(max(pts_list) - min(pts_list)), 1)
@@ -1412,7 +1453,7 @@ with tabs[2]:
         _roster_html_memo = st.session_state.setdefault("_roster_html_memo", {})
 
         def build_player_trade_options(pids):
-            cache_key = (tuple(pids), is_dynasty_flag, id(market_data))
+            cache_key = (tuple(pids), is_dynasty_flag, num_qbs_flag, ppr_val)
             if cache_key in _trade_opts_memo:
                 return _trade_opts_memo[cache_key]
             sorted_players = trade_engine.sort_roster_by_position_and_value(pids, players, market_data, is_dynasty_flag)
@@ -1433,7 +1474,7 @@ with tabs[2]:
             return res
 
         def render_roster_by_position_html(roster_player_list, projections_df):
-            cache_key = (tuple(p.get('id', '') for p in roster_player_list), id(projections_df))
+            cache_key = (tuple(p.get('id', '') for p in roster_player_list), len(projections_df) if projections_df is not None else 0)
             if cache_key in _roster_html_memo:
                 return _roster_html_memo[cache_key]
             pos_groups = {}
@@ -1813,27 +1854,27 @@ with tabs[3]:
                 rostered_names_clean.add(p_name.lower().replace('.', '').strip())
 
         # Filter distinct working projections for available players
-        distinct_projections = working_projections.drop_duplicates(subset=['player_name', 'position']).copy()
+        distinct_projections = working_projections.drop_duplicates(subset=['player_name', 'position'])
+        source_map = _build_source_map(comp_data)
 
         fa_records = []
-        for _, row in distinct_projections.iterrows():
-            pname = row['player_name']
+        for row in distinct_projections.itertuples(index=False):
+            pname = str(row.player_name)
             pname_clean = pname.lower().replace('.', '').strip()
             
             # Skip if currently on any league roster
             if pname_clean in rostered_names_clean:
                 continue
 
-            pos = row['position']
-            pts = float(row['proj_points'])
+            pos = str(row.position)
+            pts = float(row.proj_points)
             floor, ceil, spread = calculate_player_range(pname, pts, comp_data)
             
             # Boom / Upside ratio
             upside_ratio = round(((ceil - pts) / max(pts, 1.0)) * 100, 1)
 
             # Source list from comp_data
-            p_rows = comp_data[comp_data['player_name'].str.lower() == pname.lower()]
-            sources_list = list(p_rows['source'].unique()) if not p_rows.empty else [row.get('source', 'Model')]
+            sources_list = source_map.get(pname_clean, [getattr(row, 'source', 'Model')])
 
             # Volatility Badge Tagging (Clean Editorial Labels)
             if spread >= 3.0 or (pts >= 7.0 and ceil >= 14.0 and spread >= 2.0):
@@ -1974,40 +2015,10 @@ with tabs[4]:
     </div>
     """, unsafe_allow_html=True)
 
-    if not comp_data.empty and len(comp_data['source'].unique()) > 1:
-        pivot_df = comp_data.pivot_table(index=['player_name', 'position'], columns='source', values='proj_points').reset_index()
-        sources_found = [c for c in pivot_df.columns if c not in ['player_name', 'position']]
-        
+    valid_arb_cached, sources_found = compute_arbitrage_matrix(comp_data)
+    if not valid_arb_cached.empty:
         if len(sources_found) >= 2:
-            pivot_df['Source Count'] = pivot_df[sources_found].notna().sum(axis=1)
-            valid_arb = pivot_df[pivot_df['Source Count'] >= 2].copy()
-
-            valid_arb['Min Proj'] = valid_arb[sources_found].min(axis=1).round(1)
-            valid_arb['Max Proj'] = valid_arb[sources_found].max(axis=1).round(1)
-            valid_arb['Point Spread (Gap)'] = (valid_arb['Max Proj'] - valid_arb['Min Proj']).round(1)
-            valid_arb['Consensus Proj'] = valid_arb[sources_found].mean(axis=1).round(1)
-            valid_arb['Discrepancy %'] = ((valid_arb['Point Spread (Gap)'] / valid_arb['Consensus Proj'].clip(lower=1.0)) * 100).round(0).astype(int)
-
-            def get_bull_bear(row):
-                vals = {s: row[s] for s in sources_found if pd.notna(row[s])}
-                if not vals:
-                    return "—", "—"
-                bull = max(vals.items(), key=lambda x: x[1])
-                bear = min(vals.items(), key=lambda x: x[1])
-                return f"{bull[0]} ({bull[1]:.1f})", f"{bear[0]} ({bear[1]:.1f})"
-
-            bb_tuples = [get_bull_bear(r) for _, r in valid_arb.iterrows()]
-            valid_arb['Highest Model (Bull)'] = [b[0] for b in bb_tuples]
-            valid_arb['Lowest Model (Bear)'] = [b[1] for b in bb_tuples]
-            valid_arb['Projected Range'] = valid_arb['Min Proj'].astype(str) + " – " + valid_arb['Max Proj'].astype(str) + " pts"
-
-            def get_arb_profile(spread):
-                if spread >= 5.0: return "High Disagreement"
-                if spread >= 2.5: return "Moderate Split"
-                return "Strong Consensus"
-
-            valid_arb['Consensus Profile'] = valid_arb['Point Spread (Gap)'].apply(get_arb_profile)
-            valid_arb = valid_arb.rename(columns={'player_name': 'Player', 'position': 'Pos'})
+            valid_arb = valid_arb_cached.copy()
             valid_arb['Opponent'] = [get_player_matchup(None, players, nfl_schedule, p_name, name_to_team_map) for p_name in valid_arb['Player']]
 
             # 1. Summary KPI Cards

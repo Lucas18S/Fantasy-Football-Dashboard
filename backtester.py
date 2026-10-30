@@ -6,6 +6,13 @@ from datetime import datetime, date
 from scipy.stats import spearmanr
 from weekly_scraper import normalize_player_name, get_variance_factor, POSITIONS, SEASON
 
+try:
+    import streamlit as st
+    cache_data_fn = st.cache_data(ttl=3600, show_spinner=False)
+except Exception:
+    def cache_data_fn(f):
+        return f
+
 BACKTEST_CSV = "model_accuracy_history.csv"
 
 def get_completed_nfl_week() -> int:
@@ -124,6 +131,7 @@ def build_historical_backtest_data(seasons=[SEASON], max_week=None):
     return df
 
 
+@cache_data_fn
 def load_backtest_data():
     """Load or generate cached historical accuracy data."""
     if os.path.exists(BACKTEST_CSV):
@@ -131,6 +139,7 @@ def load_backtest_data():
     return build_historical_backtest_data()
 
 
+@cache_data_fn
 def compute_model_metrics(df, models=None):
     """
     Calculate core statistical & machine learning model evaluation metrics:
@@ -168,6 +177,7 @@ def compute_model_metrics(df, models=None):
     return pd.DataFrame(results).sort_values(by='MAE', ascending=True)
 
 
+@cache_data_fn
 def compute_positional_breakdown(df, models=None):
     """Calculate MAE performance by position to identify specialized model accuracy."""
     if df.empty:
@@ -199,6 +209,7 @@ def compute_positional_breakdown(df, models=None):
     return pd.DataFrame(pos_rows)
 
 
+@cache_data_fn
 def compute_extreme_misses(df, top_n=10):
     """Identify the largest over-projections (Busts) and under-projections (Surprises/Booms)."""
     if df.empty:
@@ -212,6 +223,7 @@ def compute_extreme_misses(df, top_n=10):
     return booms, busts
 
 
+@cache_data_fn
 def enrich_backtest_evaluations(df):
     """
     Enriches historical backtest evaluations with accuracy classifications,
